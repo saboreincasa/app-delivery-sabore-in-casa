@@ -21,9 +21,17 @@ color:white;
 
 header{
 background:#c62828;
-padding:18px;
 text-align:center;
-font-size:26px;
+padding:15px;
+}
+
+.logo{
+width:130px;
+margin-bottom:5px;
+}
+
+.titulo{
+font-size:24px;
 font-weight:bold;
 }
 
@@ -110,6 +118,10 @@ margin-top:8px;
 cursor:pointer;
 }
 
+button:hover{
+background:#27ae60;
+}
+
 #botaoCarrinho{
 position:fixed;
 bottom:20px;
@@ -177,11 +189,18 @@ margin-top:15px;
 <body>
 
 <header>
-🍕 Sabore In Casa
+
+<img src="logo.png" class="logo">
+
+<div class="titulo">Sabore In Casa</div>
+
 </header>
 
 <div class="endereco">
-📍 Rua Maria de Lourdes da Cruz Nº 378
+
+📍 Rua Maria de Lourdes da Cruz Nº 378  
+Bairro Mantiqueira – Belo Horizonte
+
 </div>
 
 <div class="banner"></div>
@@ -192,10 +211,10 @@ margin-top:15px;
 
 <div class="categorias">
 
-<div class="cat" onclick="filtrar('Pizza')">🍕 Pizza</div>
+<div class="cat" onclick="filtrar('Pizza')">🍕 Pizzas</div>
 <div class="cat" onclick="filtrar('Combo')">📦 Combos</div>
 <div class="cat" onclick="filtrar('Cerveja')">🍺 Cervejas</div>
-<div class="cat" onclick="filtrar('Coca')">🥤 Refrigerante</div>
+<div class="cat" onclick="filtrar('Coca')">🥤 Refrigerantes</div>
 
 </div>
 
@@ -245,6 +264,7 @@ let produtos=[]
 async function carregarProdutos(){
 
 let resposta=await fetch("produtos.json")
+
 produtos=await resposta.json()
 
 mostrar(produtos)
@@ -355,7 +375,9 @@ ${item.nome} x${item.qtd}
 })
 
 document.getElementById("lista").innerHTML=lista
+
 document.getElementById("contador").innerText=qtd
+
 document.getElementById("total").innerText=(total+taxaEntrega).toFixed(2)
 
 }
@@ -404,6 +426,7 @@ window.open("https://wa.me/"+numero+"?text="+msg)
 }
 
 carregarProdutos()
+
 atualizar()
 
 </script>
