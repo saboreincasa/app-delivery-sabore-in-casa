@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delivery Sabor em Casa</title>
+
+<style>
+
+body{
+font-family: Arial;
+margin:0;
+background:#f4f4f4;
+}
+
+header{
+background:#d62828;
+color:white;
+padding:20px;
+text-align:center;
+font-size:22px;
+}
+
+.container{
+padding:15px;
+}
+
+.produto{
+background:white;
+padding:15px;
+margin-bottom:10px;
+border-radius:8px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+button{
+background:#2a9d8f;
+color:white;
+border:none;
+padding:8px 15px;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#21867a;
+}
+
+#carrinho{
+background:white;
+padding:15px;
+border-radius:8px;
+margin-top:20px;
+}
+
+.finalizar{
+background:#25d366;
+width:100%;
+padding:12px;
+font-size:16px;
+margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+🍕 Sabor em Casa - Delivery
+</header>
+
+<div class="container">
+
+<h2>Pizzas</h2>
+
+<div class="produto">
+<span>Pizza Calabresa - R$35</span>
+<button onclick="add('Pizza Calabresa - 35')">Adicionar</button>
+</div>
+
+<div class="produto">
+<span>Pizza Frango Catupiry - R$38</span>
+<button onclick="add('Pizza Frango Catupiry - 38')">Adicionar</button>
+</div>
+
+<div class="produto">
+<span>Pizza Portuguesa - R$40</span>
+<button onclick="add('Pizza Portuguesa - 40')">Adicionar</button>
+</div>
+
+
+<h2>Bebidas</h2>
+
+<div class="produto">
+<span>Coca Cola 2L - R$12</span>
+<button onclick="add('Coca Cola 2L - 12')">Adicionar</button>
+</div>
+
+<div class="produto">
+<span>Guaraná 2L - R$10</span>
+<button onclick="add('Guaraná 2L - 10')">Adicionar</button>
+</div>
+
+<div id="carrinho">
+<h2>Carrinho</h2>
+
+<ul id="lista"></ul>
+
+<button class="finalizar" onclick="enviar()">
+Finalizar pedido no WhatsApp
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let carrinho=[]
+
+function add(produto){
+
+carrinho.push(produto)
+
+let lista=document.getElementById("lista")
+
+let item=document.createElement("li")
+
+item.innerText=produto
+
+lista.appendChild(item)
+
+}
+
+function enviar(){
+
+let mensagem="Pedido:%0A"
+
+carrinho.forEach(p=>{
+mensagem+=p+"%0A"
+})
+
+let telefone="5599999999999"
+
+window.open(`https://wa.me/${telefone}?text=${mensagem}`)
+
+}
+
+</script>
+
+</body>
+</html>
