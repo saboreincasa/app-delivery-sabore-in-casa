@@ -1,18 +1,3 @@
-Estrutura do APP
-
-Você vai criar 3 arquivos no repositório.
-
-index.html
-manifest.json
-service-worker.js
-📱 1️⃣ Arquivo principal
-
-Crie:
-
-index.html
-
-Cole:
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -51,6 +36,11 @@ border-radius:10px;
 margin-bottom:20px;
 }
 
+.card img{
+width:100%;
+border-radius:10px;
+}
+
 .preco{
 color:#4caf50;
 font-weight:bold;
@@ -63,6 +53,7 @@ padding:10px;
 width:100%;
 border-radius:8px;
 color:white;
+margin-top:5px;
 }
 
 #carrinho{
@@ -73,14 +64,7 @@ background:#ff9800;
 padding:15px;
 border-radius:50%;
 cursor:pointer;
-}
-
-input{
-width:100%;
-padding:10px;
-margin-top:10px;
-border-radius:6px;
-border:none;
+font-size:22px;
 }
 
 </style>
@@ -96,42 +80,10 @@ border:none;
 <div class="container">
 
 <h2>Pizzas</h2>
+<div id="pizzas"></div>
 
-<div class="card">
-<h3>Pizza Calabresa</h3>
-<p class="preco">R$49,90</p>
-<button onclick="add('Pizza Calabresa')">Adicionar</button>
-</div>
-
-<div class="card">
-<h3>Pizza Frango Catupiry</h3>
-<p class="preco">R$52,90</p>
-<button onclick="add('Pizza Frango Catupiry')">Adicionar</button>
-</div>
-
-<h2>Bebidas</h2>
-
-<div class="card">
-<h3>Heineken Long Neck</h3>
-<p class="preco">R$9,90</p>
-<button onclick="add('Heineken Long Neck')">Adicionar</button>
-</div>
-
-<h3>Endereço</h3>
-
-<input id="endereco" placeholder="Digite seu endereço">
-
-<h3>Cupom</h3>
-
-<input id="cupom" placeholder="Cupom de desconto">
-
-<h3>Pagamento</h3>
-
-<select id="pagamento">
-<option>PIX</option>
-<option>Dinheiro</option>
-<option>Cartão</option>
-</select>
+<h2>Bebidas Geladas</h2>
+<div id="bebidas"></div>
 
 </div>
 
@@ -139,27 +91,78 @@ border:none;
 
 <script>
 
-let carrinho=JSON.parse(localStorage.getItem("carrinho")) || []
+let carrinho=[]
+
+fetch("produtos.json")
+.then(res=>res.json())
+.then(data=>{
+
+let pizzasHTML=""
+
+data.pizzas.forEach(p=>{
+
+pizzasHTML+=`
+<div class="card">
+
+<img src="${p.foto}">
+
+<h3>Pizza ${p.nome}</h3>
+
+<button onclick="add('Pizza ${p.nome} 25cm')">
+25cm - R$ ${p.tamanhos["25cm"]}
+</button>
+
+<button onclick="add('Pizza ${p.nome} 30cm')">
+30cm - R$ ${p.tamanhos["30cm"]}
+</button>
+
+<button onclick="add('Pizza ${p.nome} 35cm')">
+35cm - R$ ${p.tamanhos["35cm"]}
+</button>
+
+</div>
+`
+})
+
+document.getElementById("pizzas").innerHTML=pizzasHTML
+
+
+let bebidasHTML=""
+
+data.bebidas.forEach(b=>{
+
+bebidasHTML+=`
+<div class="card">
+
+<img src="${b.foto}">
+
+<h3>${b.nome}</h3>
+
+<p class="preco">R$ ${b.preco}</p>
+
+<button onclick="add('${b.nome}')">
+Adicionar
+</button>
+
+</div>
+`
+})
+
+document.getElementById("bebidas").innerHTML=bebidasHTML
+
+})
 
 function add(produto){
 
 carrinho.push(produto)
 
-localStorage.setItem("carrinho",JSON.stringify(carrinho))
-
-alert("Adicionado")
+alert("Adicionado ao carrinho")
 
 }
 
 function pedido(){
 
-let numero="5531999999999"
-
-let endereco=document.getElementById("endereco").value
-
-let pagamento=document.getElementById("pagamento").value
-
-let cupom=document.getElementById("cupom").value
+let numero="5531983391576"
 
 let msg="Pedido:%0A"
 
@@ -169,19 +172,7 @@ msg+="- "+p+"%0A"
 
 })
 
-msg+="%0AEndereço: "+endereco
-
-msg+="%0APagamento: "+pagamento
-
-msg+="%0ACupom: "+cupom
-
 window.open("https://wa.me/"+numero+"?text="+msg)
-
-}
-
-if("serviceWorker" in navigator){
-
-navigator.serviceWorker.register("service-worker.js")
 
 }
 
@@ -189,72 +180,3 @@ navigator.serviceWorker.register("service-worker.js")
 
 </body>
 </html>
-📱 2️⃣ Arquivo do aplicativo
-
-Crie:
-
-manifest.json
-
-Cole:
-
-{
-"name":"Pizzaria & Distribuidora",
-"short_name":"Delivery",
-"start_url":"index.html",
-"display":"standalone",
-"background_color":"#111",
-"theme_color":"#e53935",
-"icons":[
-{
-"src":"icon.png",
-"sizes":"192x192",
-"type":"image/png"
-}
-]
-}
-📱 3️⃣ Sistema offline
-
-Crie:
-
-service-worker.js
-
-Cole:
-
-self.addEventListener("install", function(e) {
-console.log("App instalado")
-})
-
-self.addEventListener("fetch", function(event) {
-})
-🚀 Resultado
-
-Seu app agora terá:
-
-📱 instalação no celular
-🛒 carrinho salvo
-📍 endereço do cliente
-💳 forma de pagamento
-🎟 cupom
-📲 pedido automático WhatsApp
-
-📍 Publicar grátis
-
-Suba no GitHub e ative GitHub Pages.
-
-🔥 Próximo nível (posso criar para você)
-
-Se quiser, posso transformar isso em algo muito mais poderoso:
-
-painel para cadastrar produtos
-
-painel para ver pedidos
-
-controle de entregas
-
-pagamento PIX automático
-
-app estilo iFood
-
-app publicado na Play Store
-
-E também posso criar o layout profissional que faz pizzarias faturarem muito no bairro.
