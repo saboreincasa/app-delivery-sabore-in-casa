@@ -1,106 +1,106 @@
 [
   {
-    "nome": "Pizza Calabresa",
-    "preco": 49.9,
+    "nome": "Pizza Calabresa 30cm",
+    "preco": 49.90,
     "foto": "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=800&q=80"
   },
   {
-    "nome": "Pizza Mussarela",
-    "preco": 48.9,
+    "nome": "Pizza Mussarela 30cm",
+    "preco": 48.90,
     "foto": "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=800&q=80"
   },
   {
-    "nome": "Pizza Portuguesa",
-    "preco": 52.9,
+    "nome": "Pizza Portuguesa 30cm",
+    "preco": 52.90,
     "foto": "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=800&q=80"
   },
   {
-    "nome": "Pizza Frango Catupiry",
-    "preco": 52.9,
+    "nome": "Pizza Frango Catupiry 30cm",
+    "preco": 52.90,
     "foto": "https://images.unsplash.com/photo-1548365328-9f547fb0953d?auto=format&fit=crop&w=800&q=80"
   },
   {
-    "nome": "Pizza 4 Queijos",
-    "preco": 59.9,
+    "nome": "Pizza 4 Queijos 30cm",
+    "preco": 59.90,
     "foto": "https://images.unsplash.com/photo-1601924582975-7e9c7b4f9d19?auto=format&fit=crop&w=800&q=80"
   },
   {
-    "nome": "Pizza Marguerita",
-    "preco": 48.9,
+    "nome": "Pizza Marguerita 30cm",
+    "preco": 48.90,
     "foto": "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=800&q=80"
   },
   {
-    "nome": "Pizza Napolitana",
-    "preco": 48.9,
+    "nome": "Pizza Napolitana 30cm",
+    "preco": 48.90,
     "foto": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80"
   },
   {
-    "nome": "Pizza Bacon",
-    "preco": 52.9,
+    "nome": "Pizza Bacon 30cm",
+    "preco": 52.90,
     "foto": "https://images.unsplash.com/photo-1600628422019-6a9c5f33a6ad?auto=format&fit=crop&w=800&q=80"
   },
 
   {
     "nome": "Combo Pizza + Coca Cola 2L",
-    "preco": 59.9,
+    "preco": 59.90,
     "foto": "https://images.unsplash.com/photo-1581636625402-29b2a704ef13?auto=format&fit=crop&w=800&q=80"
   },
   {
     "nome": "Combo Pizza Família + Coca Cola 2L",
-    "preco": 79.9,
+    "preco": 79.90,
     "foto": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80"
   },
 
   {
     "nome": "Cerveja Brahma Latão 473ml",
-    "preco": 7,
+    "preco": 7.00,
     "foto": "https://images.unsplash.com/photo-1584225064785-c62a8b43d148?auto=format&fit=crop&w=400&q=80"
   },
   {
     "nome": "Cerveja Heineken Latão 473ml",
-    "preco": 9,
+    "preco": 9.00,
     "foto": "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=400&q=80"
   },
   {
     "nome": "Cerveja Spaten Latão 473ml",
-    "preco": 9,
+    "preco": 9.00,
     "foto": "https://images.unsplash.com/photo-1618886614638-80e3c103d31a?auto=format&fit=crop&w=400&q=80"
   },
   {
     "nome": "Cerveja Bohemia Latão 473ml",
-    "preco": 8,
+    "preco": 8.00,
     "foto": "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=400&q=80"
   },
   {
     "nome": "Cerveja Stella Artois Latão 473ml",
-    "preco": 10,
+    "preco": 10.00,
     "foto": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=400&q=80"
   },
 
   {
-    "nome": "Coca Cola 2 Litros",
-    "preco": 12,
+    "nome": "Coca Cola 2L",
+    "preco": 12.00,
     "foto": "https://images.unsplash.com/photo-1581636625402-29b2a704ef13?auto=format&fit=crop&w=400&q=80"
   },
   {
-    "nome": "Coca Cola Zero 2 Litros",
-    "preco": 12,
+    "nome": "Coca Cola Zero 2L",
+    "preco": 12.00,
     "foto": "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?auto=format&fit=crop&w=400&q=80"
   },
   {
-    "nome": "Refrigerante Antarctica 2 Litros",
-    "preco": 11,
+    "nome": "Refrigerante Antarctica 2L",
+    "preco": 11.00,
     "foto": "https://images.unsplash.com/photo-1624517452488-04869289c4ca?auto=format&fit=crop&w=400&q=80"
   },
 
   {
-    "nome": "Água Mineral Sem Gás",
-    "preco": 3,
+    "nome": "Água Mineral Sem Gás 500ml",
+    "preco": 3.00,
     "foto": "https://images.unsplash.com/photo-1564419320408-38e24e0381f4?auto=format&fit=crop&w=400&q=80"
   },
   {
-    "nome": "Água Mineral Com Gás",
-    "preco": 3.5,
+    "nome": "Água Mineral Com Gás 500ml",
+    "preco": 3.50,
     "foto": "https://images.unsplash.com/photo-1561047029-3000c68339ca?auto=format&fit=crop&w=400&q=80"
   }
 ]
