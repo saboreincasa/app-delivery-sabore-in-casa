@@ -5,30 +5,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Sabore em Casa</title>
-
-<link rel="manifest" href="manifest.json">
+<title>Sabore In Casa</title>
 
 <style>
 
 body{
 font-family:Arial;
 margin:0;
-background:#0f0f0f;
+background:#121212;
 color:white;
 }
 
 header{
-background:#e53935;
-padding:20px;
+background:#d62828;
+padding:18px;
 text-align:center;
-font-size:24px;
+font-size:26px;
 font-weight:bold;
 }
 
 .banner{
-width:100%;
-height:180px;
+height:200px;
 background:url("https://images.unsplash.com/photo-1513104890138-7c749659a591");
 background-size:cover;
 background-position:center;
@@ -36,34 +33,36 @@ background-position:center;
 
 .container{
 padding:15px;
+max-width:900px;
+margin:auto;
+}
+
+h2{
+border-left:5px solid #ffb703;
+padding-left:10px;
+margin-top:30px;
 }
 
 .card{
-background:#1b1b1b;
+background:#1f1f1f;
 border-radius:12px;
 overflow:hidden;
 margin-bottom:20px;
-box-shadow:0 5px 15px rgba(0,0,0,0.5);
+box-shadow:0 4px 15px rgba(0,0,0,0.5);
 }
 
 .card img{
 width:100%;
-height:160px;
+height:180px;
 object-fit:cover;
 }
 
 .card-content{
-padding:12px;
-}
-
-.preco{
-color:#4caf50;
-font-size:18px;
-font-weight:bold;
+padding:15px;
 }
 
 button{
-background:#00c853;
+background:#2ecc71;
 border:none;
 padding:10px;
 width:100%;
@@ -75,30 +74,34 @@ cursor:pointer;
 }
 
 button:hover{
-background:#00b44a;
+background:#27ae60;
 }
 
 #carrinho{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#ff9800;
-width:65px;
-height:65px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
-cursor:pointer;
-box-shadow:0 5px 15px rgba(0,0,0,0.6);
-}
-
-.total-box{
-background:#222;
+background:#1f1f1f;
 padding:15px;
 border-radius:10px;
-margin-top:20px;
+margin-top:30px;
+}
+
+.item{
+display:flex;
+justify-content:space-between;
+margin-bottom:5px;
+}
+
+.remover{
+background:red;
+padding:3px 6px;
+border-radius:5px;
+border:none;
+color:white;
+cursor:pointer;
+}
+
+.total{
+font-size:20px;
+margin-top:10px;
 }
 
 input,select{
@@ -109,15 +112,20 @@ border-radius:6px;
 border:none;
 }
 
+.enviar{
+background:#25D366;
+font-size:18px;
+padding:12px;
+margin-top:15px;
+}
+
 </style>
 
 </head>
 
 <body>
 
-<header>
-🍕 Sabore em Casa 🍺
-</header>
+<header>🍕 Sabore In Casa</header>
 
 <div class="banner"></div>
 
@@ -125,136 +133,207 @@ border:none;
 
 <h2>Pizzas</h2>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1601924582975-7e9c7b4f9d19">
-<div class="card-content">
-<h3>Pizza Calabresa</h3>
+<div id="pizzas"></div>
 
-<button onclick="add('Pizza Calabresa 25cm',39.9)">
-25cm - R$39,90
-</button>
+<h2>Bebidas</h2>
 
-<button onclick="add('Pizza Calabresa 30cm',49.9)">
-30cm - R$49,90
-</button>
+<div id="bebidas"></div>
 
-<button onclick="add('Pizza Calabresa 35cm',59.9)">
-35cm - R$59,90
-</button>
+<h2>Carrinho</h2>
 
-</div>
+<div id="carrinho">
+
+<div id="lista"></div>
+
+<div class="total">
+Total: R$ <span id="total">0.00</span>
 </div>
 
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1594007654729-407eedc4fe24">
-<div class="card-content">
-<h3>Pizza Frango Catupiry</h3>
-
-<button onclick="add('Pizza Frango Catupiry 25cm',42.9)">
-25cm - R$42,90
-</button>
-
-<button onclick="add('Pizza Frango Catupiry 30cm',52.9)">
-30cm - R$52,90
-</button>
-
-<button onclick="add('Pizza Frango Catupiry 35cm',62.9)">
-35cm - R$62,90
-</button>
-
-</div>
-</div>
-
-
-<h2>Bebidas Geladas</h2>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1608270586620-248524c67de9">
-<div class="card-content">
-<h3>Heineken Long Neck</h3>
-<p class="preco">R$9,90</p>
-<button onclick="add('Heineken Long Neck',9.9)">Adicionar</button>
-</div>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1563379091339-03246963d51a">
-<div class="card-content">
-<h3>Brahma Lata</h3>
-<p class="preco">R$5,90</p>
-<button onclick="add('Brahma Lata',5.9)">Adicionar</button>
-</div>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1618886614638-80e3c103d31a">
-<div class="card-content">
-<h3>Budweiser Long Neck</h3>
-<p class="preco">R$9,90</p>
-<button onclick="add('Budweiser Long Neck',9.9)">Adicionar</button>
-</div>
-</div>
-
-
-<div class="total-box">
-
-<h3>Total: R$ <span id="total">0</span></h3>
-
-<h3>Endereço</h3>
 <input id="endereco" placeholder="Digite seu endereço">
 
-<h3>Pagamento</h3>
 <select id="pagamento">
 <option>PIX</option>
 <option>Dinheiro</option>
 <option>Cartão</option>
 </select>
 
-</div>
+<input id="troco" placeholder="Troco para quanto?">
+
+<button class="enviar" onclick="pedido()">Enviar pedido no WhatsApp</button>
 
 </div>
 
-<div id="carrinho" onclick="pedido()">🛒</div>
+</div>
 
 <script>
 
-let carrinho=[]
-let total=0
+/* CONFIGURAÇÃO */
+
+let numero="5531983391576"
 let taxaEntrega=5
 
-function add(produto,preco){
+/* PRODUTOS */
 
-carrinho.push(produto)
+let pizzas=[
+
+{
+nome:"Calabresa",
+foto:"https://images.unsplash.com/photo-1594007654729-407eedc4fe24",
+tamanhos:[
+{nome:"25cm",preco:39.9},
+{nome:"30cm",preco:49.9},
+{nome:"35cm",preco:59.9}
+]
+},
+
+{
+nome:"Frango Catupiry",
+foto:"https://images.unsplash.com/photo-1601924582975-7e9c7b4f9d19",
+tamanhos:[
+{nome:"25cm",preco:42.9},
+{nome:"30cm",preco:52.9},
+{nome:"35cm",preco:62.9}
+]
+}
+
+]
+
+let bebidas=[
+
+{
+nome:"Heineken Long Neck",
+foto:"https://images.unsplash.com/photo-1608270586620-248524c67de9",
+preco:9.9
+},
+
+{
+nome:"Brahma Lata",
+foto:"https://images.unsplash.com/photo-1563379091339-03246963d51a",
+preco:5.9
+}
+
+]
+
+/* CARRINHO */
+
+let carrinho=[]
+let total=0
+
+function carregarProdutos(){
+
+let pizzaHTML=""
+
+pizzas.forEach(p=>{
+
+pizzaHTML+=`
+<div class="card">
+<img src="${p.foto}">
+<div class="card-content">
+<h3>${p.nome}</h3>
+`
+
+p.tamanhos.forEach(t=>{
+
+pizzaHTML+=`
+<button onclick="add('${p.nome} ${t.nome}',${t.preco})">
+${t.nome} - R$${t.preco}
+</button>
+`
+
+})
+
+pizzaHTML+=`</div></div>`
+
+})
+
+document.getElementById("pizzas").innerHTML=pizzaHTML
+
+let bebidaHTML=""
+
+bebidas.forEach(b=>{
+
+bebidaHTML+=`
+<div class="card">
+<img src="${b.foto}">
+<div class="card-content">
+<h3>${b.nome}</h3>
+<button onclick="add('${b.nome}',${b.preco})">
+Adicionar - R$${b.preco}
+</button>
+</div>
+</div>
+`
+
+})
+
+document.getElementById("bebidas").innerHTML=bebidaHTML
+
+}
+
+function add(nome,preco){
+
+carrinho.push({nome,preco})
 
 total+=preco
 
-document.getElementById("total").innerText=(total+taxaEntrega).toFixed(2)
+atualizar()
 
-alert("Adicionado ao carrinho")
+}
+
+function remover(index){
+
+total-=carrinho[index].preco
+
+carrinho.splice(index,1)
+
+atualizar()
+
+}
+
+function atualizar(){
+
+let lista=""
+
+carrinho.forEach((item,index)=>{
+
+lista+=`
+<div class="item">
+${item.nome} - R$${item.preco}
+<button class="remover" onclick="remover(${index})">X</button>
+</div>
+`
+
+})
+
+document.getElementById("lista").innerHTML=lista
+
+document.getElementById("total").innerText=(total+taxaEntrega).toFixed(2)
 
 }
 
 function pedido(){
 
-let numero="5531983391576"
-
 let endereco=document.getElementById("endereco").value
 let pagamento=document.getElementById("pagamento").value
+let troco=document.getElementById("troco").value
 
-let msg="Pedido:%0A"
+let msg="🍕 Pedido - Sabore In Casa %0A%0A"
 
-carrinho.forEach(p=>{
-msg+="- "+p+"%0A"
+carrinho.forEach(item=>{
+msg+=item.nome+" - R$"+item.preco+"%0A"
 })
 
-msg+="%0ATotal: R$ "+(total+taxaEntrega).toFixed(2)
+msg+="%0ATaxa entrega: R$"+taxaEntrega
+msg+="%0ATotal: R$"+(total+taxaEntrega).toFixed(2)
 msg+="%0AEndereço: "+endereco
 msg+="%0APagamento: "+pagamento
+msg+="%0ATroco: "+troco
 
 window.open("https://wa.me/"+numero+"?text="+msg)
 
 }
+
+carregarProdutos()
 
 </script>
 
