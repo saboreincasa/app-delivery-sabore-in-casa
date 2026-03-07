@@ -1,27 +1,37 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Sabore In Casa</title>
+
+<link rel="manifest" href="manifeste.json">
 
 <style>
 
 body{
 font-family:Arial;
 margin:0;
-background:#121212;
+background:#111;
 color:white;
 }
 
 header{
-background:#d62828;
+background:#c62828;
 padding:18px;
 text-align:center;
 font-size:26px;
 font-weight:bold;
+}
+
+.endereco{
+background:#1f1f1f;
+padding:10px;
+text-align:center;
+font-size:14px;
 }
 
 .banner{
@@ -38,7 +48,7 @@ margin:auto;
 }
 
 h2{
-border-left:5px solid #ffb703;
+border-left:5px solid orange;
 padding-left:10px;
 margin-top:30px;
 }
@@ -48,7 +58,7 @@ background:#1f1f1f;
 border-radius:12px;
 overflow:hidden;
 margin-bottom:20px;
-box-shadow:0 4px 15px rgba(0,0,0,0.5);
+box-shadow:0 5px 15px rgba(0,0,0,0.5);
 }
 
 .card img{
@@ -77,6 +87,22 @@ button:hover{
 background:#27ae60;
 }
 
+#botaoCarrinho{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#ff9800;
+width:65px;
+height:65px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+cursor:pointer;
+box-shadow:0 4px 15px rgba(0,0,0,0.6);
+}
+
 #carrinho{
 background:#1f1f1f;
 padding:15px;
@@ -92,10 +118,10 @@ margin-bottom:5px;
 
 .remover{
 background:red;
-padding:3px 6px;
-border-radius:5px;
 border:none;
 color:white;
+padding:3px 6px;
+border-radius:5px;
 cursor:pointer;
 }
 
@@ -125,21 +151,27 @@ margin-top:15px;
 
 <body>
 
-<header>🍕 Sabore In Casa</header>
+<header>
+🍕 Sabore In Casa
+</header>
+
+<div class="endereco">
+
+📍 Rua Maria de Lourdes da Cruz Nº 378  
+Bairro Mantiqueira – Belo Horizonte  
+CEP 31655-230
+
+</div>
 
 <div class="banner"></div>
 
 <div class="container">
 
-<h2>Pizzas</h2>
+<h2>🍕 Cardápio</h2>
 
-<div id="pizzas"></div>
+<div id="produtos"></div>
 
-<h2>Bebidas</h2>
-
-<div id="bebidas"></div>
-
-<h2>Carrinho</h2>
+<h2>🛒 Carrinho</h2>
 
 <div id="carrinho">
 
@@ -149,124 +181,71 @@ margin-top:15px;
 Total: R$ <span id="total">0.00</span>
 </div>
 
-<input id="endereco" placeholder="Digite seu endereço">
+<input id="enderecoCliente" placeholder="Digite seu endereço">
 
 <select id="pagamento">
+
 <option>PIX</option>
 <option>Dinheiro</option>
 <option>Cartão</option>
+
 </select>
 
 <input id="troco" placeholder="Troco para quanto?">
 
-<button class="enviar" onclick="pedido()">Enviar pedido no WhatsApp</button>
+<button class="enviar" onclick="enviarPedido()">
+Enviar pedido no WhatsApp
+</button>
 
 </div>
 
 </div>
+
+<div id="botaoCarrinho" onclick="scrollCarrinho()">🛒</div>
 
 <script>
-
-/* CONFIGURAÇÃO */
 
 let numero="5531983391576"
 let taxaEntrega=5
 
-/* PRODUTOS */
-
-let pizzas=[
-
-{
-nome:"Calabresa",
-foto:"https://images.unsplash.com/photo-1594007654729-407eedc4fe24",
-tamanhos:[
-{nome:"25cm",preco:39.9},
-{nome:"30cm",preco:49.9},
-{nome:"35cm",preco:59.9}
-]
-},
-
-{
-nome:"Frango Catupiry",
-foto:"https://images.unsplash.com/photo-1601924582975-7e9c7b4f9d19",
-tamanhos:[
-{nome:"25cm",preco:42.9},
-{nome:"30cm",preco:52.9},
-{nome:"35cm",preco:62.9}
-]
-}
-
-]
-
-let bebidas=[
-
-{
-nome:"Heineken Long Neck",
-foto:"https://images.unsplash.com/photo-1608270586620-248524c67de9",
-preco:9.9
-},
-
-{
-nome:"Brahma Lata",
-foto:"https://images.unsplash.com/photo-1563379091339-03246963d51a",
-preco:5.9
-}
-
-]
-
-/* CARRINHO */
-
 let carrinho=[]
 let total=0
 
-function carregarProdutos(){
+async function carregarProdutos(){
 
-let pizzaHTML=""
+let resposta = await fetch("produtos.json")
 
-pizzas.forEach(p=>{
+let produtos = await resposta.json()
 
-pizzaHTML+=`
+let html=""
+
+produtos.forEach(p=>{
+
+html+=`
+
 <div class="card">
+
 <img src="${p.foto}">
+
 <div class="card-content">
+
 <h3>${p.nome}</h3>
-`
 
-p.tamanhos.forEach(t=>{
+<button onclick="add('${p.nome}',${p.preco})">
 
-pizzaHTML+=`
-<button onclick="add('${p.nome} ${t.nome}',${t.preco})">
-${t.nome} - R$${t.preco}
+Adicionar - R$${p.preco}
+
 </button>
+
+</div>
+
+</div>
+
 `
 
 })
 
-pizzaHTML+=`</div></div>`
-
-})
-
-document.getElementById("pizzas").innerHTML=pizzaHTML
-
-let bebidaHTML=""
-
-bebidas.forEach(b=>{
-
-bebidaHTML+=`
-<div class="card">
-<img src="${b.foto}">
-<div class="card-content">
-<h3>${b.nome}</h3>
-<button onclick="add('${b.nome}',${b.preco})">
-Adicionar - R$${b.preco}
-</button>
-</div>
-</div>
-`
-
-})
-
-document.getElementById("bebidas").innerHTML=bebidaHTML
+document.getElementById("produtos").innerHTML=html
 
 }
 
@@ -280,11 +259,11 @@ atualizar()
 
 }
 
-function remover(index){
+function remover(i){
 
-total-=carrinho[index].preco
+total-=carrinho[i].preco
 
-carrinho.splice(index,1)
+carrinho.splice(i,1)
 
 atualizar()
 
@@ -294,13 +273,18 @@ function atualizar(){
 
 let lista=""
 
-carrinho.forEach((item,index)=>{
+carrinho.forEach((item,i)=>{
 
 lista+=`
+
 <div class="item">
+
 ${item.nome} - R$${item.preco}
-<button class="remover" onclick="remover(${index})">X</button>
+
+<button class="remover" onclick="remover(${i})">X</button>
+
 </div>
+
 `
 
 })
@@ -311,22 +295,37 @@ document.getElementById("total").innerText=(total+taxaEntrega).toFixed(2)
 
 }
 
-function pedido(){
+function scrollCarrinho(){
 
-let endereco=document.getElementById("endereco").value
+document.getElementById("carrinho").scrollIntoView({
+
+behavior:"smooth"
+
+})
+
+}
+
+function enviarPedido(){
+
+let endereco=document.getElementById("enderecoCliente").value
 let pagamento=document.getElementById("pagamento").value
 let troco=document.getElementById("troco").value
 
 let msg="🍕 Pedido - Sabore In Casa %0A%0A"
 
 carrinho.forEach(item=>{
+
 msg+=item.nome+" - R$"+item.preco+"%0A"
+
 })
 
 msg+="%0ATaxa entrega: R$"+taxaEntrega
 msg+="%0ATotal: R$"+(total+taxaEntrega).toFixed(2)
+
 msg+="%0AEndereço: "+endereco
+
 msg+="%0APagamento: "+pagamento
+
 msg+="%0ATroco: "+troco
 
 window.open("https://wa.me/"+numero+"?text="+msg)
