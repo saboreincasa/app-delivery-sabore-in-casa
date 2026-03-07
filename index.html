@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pizzaria & Distribuidora</title>
+<title>Sabore em Casa</title>
 
 <link rel="manifest" href="manifest.json">
 
@@ -14,7 +15,7 @@
 body{
 font-family:Arial;
 margin:0;
-background:#111;
+background:#0f0f0f;
 color:white;
 }
 
@@ -23,48 +24,93 @@ background:#e53935;
 padding:20px;
 text-align:center;
 font-size:24px;
+font-weight:bold;
+}
+
+.banner{
+width:100%;
+height:180px;
+background:url("https://images.unsplash.com/photo-1513104890138-7c749659a591");
+background-size:cover;
+background-position:center;
 }
 
 .container{
-padding:20px;
+padding:15px;
+}
+
+h2{
+margin-top:25px;
 }
 
 .card{
-background:#1e1e1e;
-padding:15px;
-border-radius:10px;
+
+background:#1b1b1b;
+border-radius:12px;
+overflow:hidden;
 margin-bottom:20px;
+
+box-shadow:0 5px 15px rgba(0,0,0,0.5);
+
 }
 
 .card img{
 width:100%;
-border-radius:10px;
+height:160px;
+object-fit:cover;
+}
+
+.card-content{
+padding:12px;
 }
 
 .preco{
 color:#4caf50;
+font-size:18px;
 font-weight:bold;
 }
 
 button{
+
 background:#00c853;
 border:none;
 padding:10px;
 width:100%;
 border-radius:8px;
 color:white;
-margin-top:5px;
+font-size:15px;
+margin-top:6px;
+cursor:pointer;
+
+}
+
+button:hover{
+background:#00b44a;
 }
 
 #carrinho{
+
 position:fixed;
 bottom:20px;
 right:20px;
+
 background:#ff9800;
-padding:15px;
+
+width:60px;
+height:60px;
+
 border-radius:50%;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:28px;
+
 cursor:pointer;
-font-size:22px;
+
+box-shadow:0 5px 15px rgba(0,0,0,0.6);
+
 }
 
 </style>
@@ -74,83 +120,128 @@ font-size:22px;
 <body>
 
 <header>
-🍕 Pizzaria & 🍺 Distribuidora
+🍕 Sabore em Casa 🍺
 </header>
+
+<div class="banner"></div>
 
 <div class="container">
 
 <h2>Pizzas</h2>
-<div id="pizzas"></div>
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1601924582975-7e9c7b4f9d19">
+
+<div class="card-content">
+
+<h3>Pizza Calabresa</h3>
+
+<button onclick="add('Pizza Calabresa 25cm')">
+25cm - R$39,90
+</button>
+
+<button onclick="add('Pizza Calabresa 30cm')">
+30cm - R$49,90
+</button>
+
+<button onclick="add('Pizza Calabresa 35cm')">
+35cm - R$59,90
+</button>
+
+</div>
+</div>
+
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1594007654729-407eedc4fe24">
+
+<div class="card-content">
+
+<h3>Pizza Frango Catupiry</h3>
+
+<button onclick="add('Pizza Frango Catupiry 25cm')">
+25cm - R$42,90
+</button>
+
+<button onclick="add('Pizza Frango Catupiry 30cm')">
+30cm - R$52,90
+</button>
+
+<button onclick="add('Pizza Frango Catupiry 35cm')">
+35cm - R$62,90
+</button>
+
+</div>
+</div>
+
 
 <h2>Bebidas Geladas</h2>
-<div id="bebidas"></div>
 
-</div>
-
-<div id="carrinho" onclick="pedido()">🛒</div>
-
-<script>
-
-let carrinho=[]
-
-fetch("produtos.json")
-.then(res=>res.json())
-.then(data=>{
-
-let pizzasHTML=""
-
-data.pizzas.forEach(p=>{
-
-pizzasHTML+=`
 <div class="card">
 
-<img src="${p.foto}">
+<img src="https://images.unsplash.com/photo-1608270586620-248524c67de9">
 
-<h3>Pizza ${p.nome}</h3>
+<div class="card-content">
 
-<button onclick="add('Pizza ${p.nome} 25cm')">
-25cm - R$ ${p.tamanhos["25cm"]}
-</button>
+<h3>Heineken Long Neck</h3>
 
-<button onclick="add('Pizza ${p.nome} 30cm')">
-30cm - R$ ${p.tamanhos["30cm"]}
-</button>
+<p class="preco">R$9,90</p>
 
-<button onclick="add('Pizza ${p.nome} 35cm')">
-35cm - R$ ${p.tamanhos["35cm"]}
-</button>
-
-</div>
-`
-})
-
-document.getElementById("pizzas").innerHTML=pizzasHTML
-
-
-let bebidasHTML=""
-
-data.bebidas.forEach(b=>{
-
-bebidasHTML+=`
-<div class="card">
-
-<img src="${b.foto}">
-
-<h3>${b.nome}</h3>
-
-<p class="preco">R$ ${b.preco}</p>
-
-<button onclick="add('${b.nome}')">
+<button onclick="add('Heineken Long Neck')">
 Adicionar
 </button>
 
 </div>
-`
-})
+</div>
 
-document.getElementById("bebidas").innerHTML=bebidasHTML
 
-})
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1563379091339-03246963d51a">
+
+<div class="card-content">
+
+<h3>Brahma Lata</h3>
+
+<p class="preco">R$5,90</p>
+
+<button onclick="add('Brahma Lata')">
+Adicionar
+</button>
+
+</div>
+</div>
+
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1618886614638-80e3c103d31a">
+
+<div class="card-content">
+
+<h3>Budweiser Long Neck</h3>
+
+<p class="preco">R$9,90</p>
+
+<button onclick="add('Budweiser Long Neck')">
+Adicionar
+</button>
+
+</div>
+</div>
+
+</div>
+
+
+<div id="carrinho" onclick="pedido()">
+🛒
+</div>
+
+<script>
+
+let carrinho=[]
 
 function add(produto){
 
