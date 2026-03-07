@@ -8,7 +8,7 @@
 
 <title>Sabore In Casa</title>
 
-<link rel="manifest" href="manifeste.json">
+<link rel="manifest" href="manifest.json">
 
 <style>
 
@@ -35,40 +35,68 @@ font-size:14px;
 }
 
 .banner{
-height:200px;
-background:url("https://images.unsplash.com/photo-1513104890138-7c749659a591");
+height:180px;
+background:url("https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1200");
 background-size:cover;
 background-position:center;
 }
 
 .container{
 padding:15px;
-max-width:900px;
+max-width:1000px;
 margin:auto;
 }
 
-h2{
-border-left:5px solid orange;
-padding-left:10px;
-margin-top:30px;
+.busca{
+width:100%;
+padding:12px;
+border-radius:8px;
+border:none;
+margin-bottom:15px;
+}
+
+.categorias{
+display:flex;
+gap:10px;
+overflow:auto;
+margin-bottom:15px;
+}
+
+.cat{
+background:#1f1f1f;
+padding:8px 15px;
+border-radius:20px;
+cursor:pointer;
+white-space:nowrap;
+}
+
+#produtos{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
 }
 
 .card{
 background:#1f1f1f;
 border-radius:12px;
 overflow:hidden;
-margin-bottom:20px;
 box-shadow:0 5px 15px rgba(0,0,0,0.5);
 }
 
 .card img{
 width:100%;
-height:180px;
+height:140px;
 object-fit:cover;
 }
 
 .card-content{
-padding:15px;
+padding:12px;
+}
+
+.preco{
+color:#2ecc71;
+font-size:17px;
+margin-top:5px;
 }
 
 button{
@@ -78,13 +106,8 @@ padding:10px;
 width:100%;
 border-radius:8px;
 color:white;
-font-size:15px;
-margin-top:6px;
+margin-top:8px;
 cursor:pointer;
-}
-
-button:hover{
-background:#27ae60;
 }
 
 #botaoCarrinho{
@@ -103,26 +126,28 @@ cursor:pointer;
 box-shadow:0 4px 15px rgba(0,0,0,0.6);
 }
 
+#contador{
+position:absolute;
+top:-5px;
+right:-5px;
+background:red;
+color:white;
+font-size:12px;
+padding:3px 6px;
+border-radius:50%;
+}
+
 #carrinho{
 background:#1f1f1f;
 padding:15px;
 border-radius:10px;
-margin-top:30px;
+margin-top:25px;
 }
 
 .item{
 display:flex;
 justify-content:space-between;
-margin-bottom:5px;
-}
-
-.remover{
-background:red;
-border:none;
-color:white;
-padding:3px 6px;
-border-radius:5px;
-cursor:pointer;
+margin-bottom:6px;
 }
 
 .total{
@@ -156,39 +181,42 @@ margin-top:15px;
 </header>
 
 <div class="endereco">
-
-📍 Rua Maria de Lourdes da Cruz Nº 378  
-Bairro Mantiqueira – Belo Horizonte  
-CEP 31655-230
-
+📍 Rua Maria de Lourdes da Cruz Nº 378
 </div>
 
 <div class="banner"></div>
 
 <div class="container">
 
-<h2>🍕 Cardápio</h2>
+<input class="busca" id="busca" placeholder="🔎 Buscar produto">
+
+<div class="categorias">
+
+<div class="cat" onclick="filtrar('Pizza')">🍕 Pizza</div>
+<div class="cat" onclick="filtrar('Combo')">📦 Combos</div>
+<div class="cat" onclick="filtrar('Cerveja')">🍺 Cervejas</div>
+<div class="cat" onclick="filtrar('Coca')">🥤 Refrigerante</div>
+
+</div>
 
 <div id="produtos"></div>
 
-<h2>🛒 Carrinho</h2>
-
 <div id="carrinho">
+
+<h2>🛒 Carrinho</h2>
 
 <div id="lista"></div>
 
 <div class="total">
-Total: R$ <span id="total">0.00</span>
+Total + entrega: R$ <span id="total">0.00</span>
 </div>
 
 <input id="enderecoCliente" placeholder="Digite seu endereço">
 
 <select id="pagamento">
-
 <option>PIX</option>
 <option>Dinheiro</option>
 <option>Cartão</option>
-
 </select>
 
 <input id="troco" placeholder="Troco para quanto?">
@@ -201,40 +229,48 @@ Enviar pedido no WhatsApp
 
 </div>
 
-<div id="botaoCarrinho" onclick="scrollCarrinho()">🛒</div>
+<div id="botaoCarrinho" onclick="scrollCarrinho()">
+🛒
+<div id="contador">0</div>
+</div>
 
 <script>
 
 let numero="5531983391576"
 let taxaEntrega=5
 
-let carrinho=[]
-let total=0
+let carrinho=JSON.parse(localStorage.getItem("carrinho"))||[]
+let produtos=[]
 
 async function carregarProdutos(){
 
-let resposta = await fetch("produtos.json")
+let resposta=await fetch("produtos.json")
+produtos=await resposta.json()
 
-let produtos = await resposta.json()
+mostrar(produtos)
+
+}
+
+function mostrar(lista){
 
 let html=""
 
-produtos.forEach(p=>{
+lista.forEach(p=>{
 
 html+=`
 
 <div class="card">
 
-<img src="${p.foto}">
+<img src="${p.foto}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1046/1046784.png'">
 
 <div class="card-content">
 
 <h3>${p.nome}</h3>
 
+<div class="preco">R$ ${p.preco.toFixed(2)}</div>
+
 <button onclick="add('${p.nome}',${p.preco})">
-
-Adicionar - R$${p.preco}
-
+Adicionar
 </button>
 
 </div>
@@ -249,21 +285,45 @@ document.getElementById("produtos").innerHTML=html
 
 }
 
-function add(nome,preco){
+function filtrar(cat){
 
-carrinho.push({nome,preco})
+let filtrados=produtos.filter(p=>p.nome.includes(cat))
 
-total+=preco
-
-atualizar()
+mostrar(filtrados)
 
 }
 
-function remover(i){
+document.getElementById("busca").addEventListener("input",function(){
 
-total-=carrinho[i].preco
+let valor=this.value.toLowerCase()
 
-carrinho.splice(i,1)
+let filtrados=produtos.filter(p=>p.nome.toLowerCase().includes(valor))
+
+mostrar(filtrados)
+
+})
+
+function add(nome,preco){
+
+let item=carrinho.find(p=>p.nome==nome)
+
+if(item){
+
+item.qtd++
+
+}else{
+
+carrinho.push({nome,preco,qtd:1})
+
+}
+
+salvar()
+
+}
+
+function salvar(){
+
+localStorage.setItem("carrinho",JSON.stringify(carrinho))
 
 atualizar()
 
@@ -272,16 +332,21 @@ atualizar()
 function atualizar(){
 
 let lista=""
+let total=0
+let qtd=0
 
 carrinho.forEach((item,i)=>{
+
+total+=item.preco*item.qtd
+qtd+=item.qtd
 
 lista+=`
 
 <div class="item">
 
-${item.nome} - R$${item.preco}
+${item.nome} x${item.qtd}
 
-<button class="remover" onclick="remover(${i})">X</button>
+<button onclick="remover(${i})">❌</button>
 
 </div>
 
@@ -290,18 +355,22 @@ ${item.nome} - R$${item.preco}
 })
 
 document.getElementById("lista").innerHTML=lista
-
+document.getElementById("contador").innerText=qtd
 document.getElementById("total").innerText=(total+taxaEntrega).toFixed(2)
+
+}
+
+function remover(i){
+
+carrinho.splice(i,1)
+
+salvar()
 
 }
 
 function scrollCarrinho(){
 
-document.getElementById("carrinho").scrollIntoView({
-
-behavior:"smooth"
-
-})
+document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
 
 }
 
@@ -311,21 +380,23 @@ let endereco=document.getElementById("enderecoCliente").value
 let pagamento=document.getElementById("pagamento").value
 let troco=document.getElementById("troco").value
 
-let msg="🍕 Pedido - Sabore In Casa %0A%0A"
+let msg="🍕 Pedido Sabore In Casa %0A%0A"
+
+let total=0
 
 carrinho.forEach(item=>{
 
-msg+=item.nome+" - R$"+item.preco+"%0A"
+msg+=item.nome+" x"+item.qtd+"%0A"
+
+total+=item.preco*item.qtd
 
 })
 
-msg+="%0ATaxa entrega: R$"+taxaEntrega
-msg+="%0ATotal: R$"+(total+taxaEntrega).toFixed(2)
+msg+="%0ATaxa entrega: "+taxaEntrega
+msg+="%0ATotal: "+(total+taxaEntrega).toFixed(2)
 
 msg+="%0AEndereço: "+endereco
-
 msg+="%0APagamento: "+pagamento
-
 msg+="%0ATroco: "+troco
 
 window.open("https://wa.me/"+numero+"?text="+msg)
@@ -333,6 +404,7 @@ window.open("https://wa.me/"+numero+"?text="+msg)
 }
 
 carregarProdutos()
+atualizar()
 
 </script>
 
