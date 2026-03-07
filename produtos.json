@@ -1,0 +1,40 @@
+{
+  "pizzas":[
+    {
+      "nome":"Calabresa",
+      "foto":"https://images.unsplash.com/photo-1601924582975-7e9c7b4f9d19",
+      "tamanhos":{
+        "25cm":39.9,
+        "30cm":49.9,
+        "35cm":59.9
+      }
+    },
+    {
+      "nome":"Frango Catupiry",
+      "foto":"https://images.unsplash.com/photo-1594007654729-407eedc4fe24",
+      "tamanhos":{
+        "25cm":42.9,
+        "30cm":52.9,
+        "35cm":62.9
+      }
+    }
+  ],
+
+  "bebidas":[
+    {
+      "nome":"Heineken Long Neck",
+      "foto":"https://images.unsplash.com/photo-1608270586620-248524c67de9",
+      "preco":9.90
+    },
+    {
+      "nome":"Brahma Lata",
+      "foto":"https://images.unsplash.com/photo-1563379091339-03246963d51a",
+      "preco":5.90
+    },
+    {
+      "nome":"Budweiser Long Neck",
+      "foto":"https://images.unsplash.com/photo-1618886614638-80e3c103d31a",
+      "preco":9.90
+    }
+  ]
+}
