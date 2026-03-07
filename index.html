@@ -1,151 +1,187 @@
+Estrutura do APP
+
+Você vai criar 3 arquivos no repositório.
+
+index.html
+manifest.json
+service-worker.js
+📱 1️⃣ Arquivo principal
+
+Crie:
+
+index.html
+
+Cole:
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Delivery Sabor em Casa</title>
+
+<title>Pizzaria & Distribuidora</title>
+
+<link rel="manifest" href="manifest.json">
 
 <style>
 
 body{
-font-family: Arial;
+font-family:Arial;
 margin:0;
-background:#f4f4f4;
+background:#111;
+color:white;
 }
 
 header{
-background:#d62828;
-color:white;
+background:#e53935;
 padding:20px;
 text-align:center;
-font-size:22px;
+font-size:24px;
 }
 
 .container{
-padding:15px;
+padding:20px;
 }
 
-.produto{
-background:white;
+.card{
+background:#1e1e1e;
 padding:15px;
-margin-bottom:10px;
-border-radius:8px;
-display:flex;
-justify-content:space-between;
-align-items:center;
+border-radius:10px;
+margin-bottom:20px;
+}
+
+.preco{
+color:#4caf50;
+font-weight:bold;
 }
 
 button{
-background:#2a9d8f;
-color:white;
+background:#00c853;
 border:none;
-padding:8px 15px;
-border-radius:5px;
-cursor:pointer;
-}
-
-button:hover{
-background:#21867a;
+padding:10px;
+width:100%;
+border-radius:8px;
+color:white;
 }
 
 #carrinho{
-background:white;
+position:fixed;
+bottom:20px;
+right:20px;
+background:#ff9800;
 padding:15px;
-border-radius:8px;
-margin-top:20px;
+border-radius:50%;
+cursor:pointer;
 }
 
-.finalizar{
-background:#25d366;
+input{
 width:100%;
-padding:12px;
-font-size:16px;
+padding:10px;
 margin-top:10px;
+border-radius:6px;
+border:none;
 }
 
 </style>
+
 </head>
 
 <body>
 
 <header>
-🍕 Sabor em Casa - Delivery
+🍕 Pizzaria & 🍺 Distribuidora
 </header>
 
 <div class="container">
 
 <h2>Pizzas</h2>
 
-<div class="produto">
-<span>Pizza Calabresa - R$35</span>
-<button onclick="add('Pizza Calabresa - 35')">Adicionar</button>
+<div class="card">
+<h3>Pizza Calabresa</h3>
+<p class="preco">R$49,90</p>
+<button onclick="add('Pizza Calabresa')">Adicionar</button>
 </div>
 
-<div class="produto">
-<span>Pizza Frango Catupiry - R$38</span>
-<button onclick="add('Pizza Frango Catupiry - 38')">Adicionar</button>
+<div class="card">
+<h3>Pizza Frango Catupiry</h3>
+<p class="preco">R$52,90</p>
+<button onclick="add('Pizza Frango Catupiry')">Adicionar</button>
 </div>
-
-<div class="produto">
-<span>Pizza Portuguesa - R$40</span>
-<button onclick="add('Pizza Portuguesa - 40')">Adicionar</button>
-</div>
-
 
 <h2>Bebidas</h2>
 
-<div class="produto">
-<span>Coca Cola 2L - R$12</span>
-<button onclick="add('Coca Cola 2L - 12')">Adicionar</button>
+<div class="card">
+<h3>Heineken Long Neck</h3>
+<p class="preco">R$9,90</p>
+<button onclick="add('Heineken Long Neck')">Adicionar</button>
 </div>
 
-<div class="produto">
-<span>Guaraná 2L - R$10</span>
-<button onclick="add('Guaraná 2L - 10')">Adicionar</button>
+<h3>Endereço</h3>
+
+<input id="endereco" placeholder="Digite seu endereço">
+
+<h3>Cupom</h3>
+
+<input id="cupom" placeholder="Cupom de desconto">
+
+<h3>Pagamento</h3>
+
+<select id="pagamento">
+<option>PIX</option>
+<option>Dinheiro</option>
+<option>Cartão</option>
+</select>
+
 </div>
 
-<div id="carrinho">
-<h2>Carrinho</h2>
-
-<ul id="lista"></ul>
-
-<button class="finalizar" onclick="enviar()">
-Finalizar pedido no WhatsApp
-</button>
-
-</div>
-
-</div>
+<div id="carrinho" onclick="pedido()">🛒</div>
 
 <script>
 
-let carrinho=[]
+let carrinho=JSON.parse(localStorage.getItem("carrinho")) || []
 
 function add(produto){
 
 carrinho.push(produto)
 
-let lista=document.getElementById("lista")
+localStorage.setItem("carrinho",JSON.stringify(carrinho))
 
-let item=document.createElement("li")
-
-item.innerText=produto
-
-lista.appendChild(item)
+alert("Adicionado")
 
 }
 
-function enviar(){
+function pedido(){
 
-let mensagem="Pedido:%0A"
+let numero="5531999999999"
+
+let endereco=document.getElementById("endereco").value
+
+let pagamento=document.getElementById("pagamento").value
+
+let cupom=document.getElementById("cupom").value
+
+let msg="Pedido:%0A"
 
 carrinho.forEach(p=>{
-mensagem+=p+"%0A"
+
+msg+="- "+p+"%0A"
+
 })
 
-let telefone="5599999999999"
+msg+="%0AEndereço: "+endereco
 
-window.open(`https://wa.me/${telefone}?text=${mensagem}`)
+msg+="%0APagamento: "+pagamento
+
+msg+="%0ACupom: "+cupom
+
+window.open("https://wa.me/"+numero+"?text="+msg)
+
+}
+
+if("serviceWorker" in navigator){
+
+navigator.serviceWorker.register("service-worker.js")
 
 }
 
@@ -153,3 +189,72 @@ window.open(`https://wa.me/${telefone}?text=${mensagem}`)
 
 </body>
 </html>
+📱 2️⃣ Arquivo do aplicativo
+
+Crie:
+
+manifest.json
+
+Cole:
+
+{
+"name":"Pizzaria & Distribuidora",
+"short_name":"Delivery",
+"start_url":"index.html",
+"display":"standalone",
+"background_color":"#111",
+"theme_color":"#e53935",
+"icons":[
+{
+"src":"icon.png",
+"sizes":"192x192",
+"type":"image/png"
+}
+]
+}
+📱 3️⃣ Sistema offline
+
+Crie:
+
+service-worker.js
+
+Cole:
+
+self.addEventListener("install", function(e) {
+console.log("App instalado")
+})
+
+self.addEventListener("fetch", function(event) {
+})
+🚀 Resultado
+
+Seu app agora terá:
+
+📱 instalação no celular
+🛒 carrinho salvo
+📍 endereço do cliente
+💳 forma de pagamento
+🎟 cupom
+📲 pedido automático WhatsApp
+
+📍 Publicar grátis
+
+Suba no GitHub e ative GitHub Pages.
+
+🔥 Próximo nível (posso criar para você)
+
+Se quiser, posso transformar isso em algo muito mais poderoso:
+
+painel para cadastrar produtos
+
+painel para ver pedidos
+
+controle de entregas
+
+pagamento PIX automático
+
+app estilo iFood
+
+app publicado na Play Store
+
+E também posso criar o layout profissional que faz pizzarias faturarem muito no bairro.
