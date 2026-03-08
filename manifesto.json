@@ -1,15 +1,22 @@
 {
-"name": "Sabore in Casa",
-"short_name": "Sabore",
-"start_url": "index.html",
-"display": "standalone",
-"background_color": "#c40000",
-"theme_color": "#c40000",
-"icons":[
-{
-"src":"imagens/logo.png",
-"sizes":"192x192",
-"type":"image/png"
-}
-]
+  "name": "Sabore In Casa",
+  "short_name": "SaboreInCasa",
+  "description": "Delivery de Pizzas & Bebidas - Meio a Meio, Borda, Combos e Bebidas",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#c62828",
+  "theme_color": "#c62828",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "imagens/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "imagens/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
