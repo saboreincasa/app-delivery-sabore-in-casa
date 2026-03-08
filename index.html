@@ -1,70 +1,58 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="pt-br">
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Sabore In Casa</title>
+<title>Sabore in Casa</title>
+
+<link rel="stylesheet" href="style.css">
 
 <link rel="manifest" href="manifesto.json">
-<link rel="stylesheet" href="css/estilo.css">
 
 </head>
 
 <body>
 
-<header class="topo">
+<header>
 
 <img src="imagens/logo.png" class="logo">
 
-<input type="text" id="busca" placeholder="Encontre sua pizza ou bebida">
+<h1>Sabore in Casa</h1>
 
 </header>
 
-<section class="banner">
 
-<img src="imagens/banner.jpg">
+<section id="pizzas">
 
-</section>
+<h2>Pizzas</h2>
 
-<section class="categorias">
-
-<button onclick="filtrar('pizza')">🍕 Pizzas</button>
-<button onclick="filtrar('combo')">📦 Combos</button>
-<button onclick="filtrar('bebida')">🥤 Bebidas</button>
+<div id="lista-pizzas"></div>
 
 </section>
 
-<section id="produtos" class="lista-produtos"></section>
 
-<div class="carrinho-btn" onclick="abrirCarrinho()">
+<section id="bebidas">
 
-🛒 <span id="contador">0</span>
+<h2>Bebidas</h2>
 
-</div>
+<div id="lista-bebidas"></div>
 
-<div id="carrinho" class="carrinho">
+</section>
+
+
+<section id="carrinho">
 
 <h2>Seu Carrinho</h2>
 
-<div id="itensCarrinho"></div>
+<ul id="itens-carrinho"></ul>
 
-<button onclick="enviarWhats()">Finalizar Pedido</button>
+<button onclick="finalizarPedido()">Finalizar Pedido</button>
 
-</div>
+</section>
 
-<script src="js/app.js"></script>
-<script src="js/carrinho.js"></script>
-
-<script>
-
-if("serviceWorker" in navigator){
-navigator.serviceWorker.register("service-worker.js")
-}
-
-</script>
+<script src="app.js"></script>
 
 </body>
 </html>
