@@ -1,112 +1,92 @@
-{
-  "pizzas": [
-    {
-      "id": 1,
-      "nome": "A Moda",
-      "descricao": "Mussarela, milho, presunto, molho, azeitona, pimentão, cebola, calabresa e orégano",
-      "preco_media": 38,
-      "preco_grande": 42
-    },
-    {
-      "id": 2,
-      "nome": "Calabresa",
-      "descricao": "Molho de tomate, calabresa, cebola, mussarela e orégano",
-      "preco_media": 38,
-      "preco_grande": 42
-    },
-    {
-      "id": 3,
-      "nome": "Frango com Cheddar",
-      "descricao": "Molho de tomate, frango desfiado, cheddar, mussarela e orégano",
-      "preco_media": 38,
-      "preco_grande": 42
-    },
-    {
-      "id": 4,
-      "nome": "Frango com Catupiry",
-      "descricao": "Molho de tomate, frango desfiado, catupiry, mussarela e orégano",
-      "preco_media": 38,
-      "preco_grande": 42
-    },
-    {
-      "id": 5,
-      "nome": "Frango Bolonhesa",
-      "descricao": "Molho de tomate, bolonhesa, frango desfiado, mussarela e orégano",
-      "preco_media": 38,
-      "preco_grande": 42
-    },
-    {
-      "id": 6,
-      "nome": "Milho com Bacon",
-      "descricao": "Molho de tomate, milho verde, bacon crocante, mussarela e orégano",
-      "preco_media": 38,
-      "preco_grande": 42
-    },
-    {
-      "id": 7,
-      "nome": "Napolitana",
-      "descricao": "Molho de tomate, mussarela, rodelas de tomate, parmesão e orégano",
-      "preco_media": 38,
-      "preco_grande": 42
-    },
-    {
-      "id": 8,
-      "nome": "Palmito Bolonhesa",
-      "descricao": "Palmito, mussarela, molho bolonhesa e orégano",
-      "preco_media": 38,
-      "preco_grande": 42
-    },
-    {
-      "id": 9,
-      "nome": "Quatro Queijos",
-      "descricao": "Molho de tomate, mussarela, gorgonzola, parmesão, cheddar e catupiry",
-      "preco_media": 38,
-      "preco_grande": 42
-    },
-    {
-      "id": 10,
-      "nome": "Vegetariana",
-      "descricao": "Molho, tomate, pimentão, cebola, milho, azeitona, palmito e mussarela",
-      "preco_media": 38,
-      "preco_grande": 42
-    }
-  ],
-
-  "bebidas": [
-    {
-      "id": 101,
-      "nome": "Heineken Latão",
-      "preco": 10
-    },
-    {
-      "id": 102,
-      "nome": "Brahma Latão",
-      "preco": 8
-    },
-    {
-      "id": 103,
-      "nome": "Stella Artois Latão",
-      "preco": 9
-    },
-    {
-      "id": 104,
-      "nome": "Spaten Latão",
-      "preco": 9
-    },
-    {
-      "id": 105,
-      "nome": "Coca Cola 2L",
-      "preco": 10
-    },
-    {
-      "id": 106,
-      "nome": "Coca Cola Zero 2L",
-      "preco": 10
-    },
-    {
-      "id": 107,
-      "nome": "Guaraná Antarctica 2L",
-      "preco": 10
-    }
-  ]
-}
+[
+  {
+    "nome": "Margherita 30cm",
+    "preco": 25.00,
+    "foto": "imagens/margherita.jpg"
+  },
+  {
+    "nome": "Margherita 35cm",
+    "preco": 35.00,
+    "foto": "imagens/margherita.jpg"
+  },
+  {
+    "nome": "Pepperoni 30cm",
+    "preco": 28.00,
+    "foto": "imagens/pepperoni.jpg"
+  },
+  {
+    "nome": "Pepperoni 35cm",
+    "preco": 38.00,
+    "foto": "imagens/pepperoni.jpg"
+  },
+  {
+    "nome": "Frango com Catupiry 30cm",
+    "preco": 30.00,
+    "foto": "imagens/frango_catupiry.jpg"
+  },
+  {
+    "nome": "Frango com Catupiry 35cm",
+    "preco": 40.00,
+    "foto": "imagens/frango_catupiry.jpg"
+  },
+  {
+    "nome": "Calabresa 30cm",
+    "preco": 27.00,
+    "foto": "imagens/calabresa.jpg"
+  },
+  {
+    "nome": "Calabresa 35cm",
+    "preco": 37.00,
+    "foto": "imagens/calabresa.jpg"
+  },
+  {
+    "nome": "4 Queijos 30cm",
+    "preco": 32.00,
+    "foto": "imagens/4queijos.jpg"
+  },
+  {
+    "nome": "4 Queijos 35cm",
+    "preco": 42.00,
+    "foto": "imagens/4queijos.jpg"
+  },
+  {
+    "nome": "Combo 2 Pizzas + 2 Refrigerantes",
+    "preco": 75.00,
+    "foto": "imagens/combo.jpg"
+  },
+  {
+    "nome": "Heineken 473ml",
+    "preco": 8.50,
+    "foto": "imagens/heineken.jpg"
+  },
+  {
+    "nome": "Brahma 473ml",
+    "preco": 7.50,
+    "foto": "imagens/brahma.jpg"
+  },
+  {
+    "nome": "Stella Artois 473ml",
+    "preco": 9.00,
+    "foto": "imagens/stella.jpg"
+  },
+  {
+    "nome": "Spaten 473ml",
+    "preco": 8.50,
+    "foto": "imagens/spaten.jpg"
+  },
+  {
+    "nome": "Coca Cola 2L Normal",
+    "preco": 12.00,
+    "foto": "imagens/coca_normal.jpg"
+  },
+  {
+    "nome": "Coca Cola 2L Zero",
+    "preco": 12.00,
+    "foto": "imagens/coca_zero.jpg"
+  },
+  {
+    "nome": "Guaraná Antarctica 2L",
+    "preco": 10.00,
+    "foto": "imagens/guarana.jpg"
+  }
+]
