@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
 
@@ -9,50 +9,62 @@
 <title>Sabore In Casa</title>
 
 <link rel="manifest" href="manifesto.json">
-<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="css/estilo.css">
 
 </head>
 
 <body>
 
-<header>
+<header class="topo">
 
-<h1>🍕 Sabore In Casa</h1>
+<img src="imagens/logo.png" class="logo">
+
+<input type="text" id="busca" placeholder="Encontre sua pizza ou bebida">
 
 </header>
 
 <section class="banner">
 
-<h2>🔥 Promoção do Dia</h2>
-<p>2 Pizzas + Refrigerante</p>
+<img src="imagens/banner.jpg">
 
 </section>
 
-<div class="container">
+<section class="categorias">
 
-<input type="text" id="busca" placeholder="🔎 Buscar pizza">
+<button onclick="filtrar('pizza')">🍕 Pizzas</button>
+<button onclick="filtrar('combo')">📦 Combos</button>
+<button onclick="filtrar('bebida')">🥤 Bebidas</button>
 
-<div class="categorias">
+</section>
 
-<button onclick="filtrar('Pizza')">🍕 Pizzas</button>
-<button onclick="filtrar('Combo')">📦 Combos</button>
-<button onclick="filtrar('Cerveja')">🍺 Cervejas</button>
-<button onclick="filtrar('Coca')">🥤 Bebidas</button>
+<section id="produtos" class="lista-produtos"></section>
 
-</div>
+<div class="carrinho-btn" onclick="abrirCarrinho()">
 
-<div id="produtos"></div>
-
-</div>
-
-<div id="carrinhoBtn">
-
-🛒
-<span id="contador">0</span>
+🛒 <span id="contador">0</span>
 
 </div>
 
-<script src="app.js"></script>
+<div id="carrinho" class="carrinho">
+
+<h2>Seu Carrinho</h2>
+
+<div id="itensCarrinho"></div>
+
+<button onclick="enviarWhats()">Finalizar Pedido</button>
+
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/carrinho.js"></script>
+
+<script>
+
+if("serviceWorker" in navigator){
+navigator.serviceWorker.register("service-worker.js")
+}
+
+</script>
 
 </body>
 </html>
