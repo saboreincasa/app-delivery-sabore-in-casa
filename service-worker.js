@@ -1,6 +1,5 @@
-self.addEventListener("install", function(e) {
-console.log("App instalado")
-})
+self.addEventListener("install",e=>{
 
-self.addEventListener("fetch", function(event) {
+console.log("App instalado")
+
 })
