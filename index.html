@@ -17,14 +17,12 @@
 </header>
 
 <div class="endereco">
-  📍 Rua Maria de Lourdes da Cruz Nº 378  
-  Bairro Mantiqueira – Belo Horizonte
+  📍 Rua Maria de Lourdes da Cruz Nº 378 - Mantiqueira, Belo Horizonte
 </div>
 
 <div class="banner"></div>
 
 <div class="container">
-
   <input class="busca" id="busca" placeholder="🔎 Buscar produto" />
 
   <div class="categorias">
@@ -61,7 +59,6 @@
 
     <button class="enviar" onclick="enviarPedido()">Enviar pedido no WhatsApp</button>
   </div>
-
 </div>
 
 <div id="botaoCarrinho" onclick="scrollCarrinho()">
@@ -80,6 +77,14 @@
     </div>
   </div>
 </div>
+
+<!-- Menu Inferior -->
+<nav class="menuInferior">
+  <button onclick="scrollTopo()">🏠</button>
+  <button onclick="filtrar('Pizza')">🍕</button>
+  <button onclick="scrollCarrinho()">🛒</button>
+  <button onclick="enviarPedido()">💬</button>
+</nav>
 
 <script src="app.js"></script>
 </body>
