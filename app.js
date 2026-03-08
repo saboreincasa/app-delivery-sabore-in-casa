@@ -1,33 +1,67 @@
-let produtos=[]
-let carrinho=[]
+let carrinho = []
 
-async function carregar(){
+fetch("produtos.json")
+.then(res => res.json())
+.then(data => {
 
-let r=await fetch("produtos.json")
+mostrarPizzas(data.pizzas)
 
-produtos=await r.json()
+mostrarBebidas(data.bebidas)
 
-mostrar(produtos)
+})
+
+function mostrarPizzas(pizzas){
+
+let container = document.getElementById("lista-pizzas")
+
+pizzas.forEach(pizza => {
+
+container.innerHTML += `
+
+<div class="pizza">
+
+<h3>${pizza.nome}</h3>
+
+<p>${pizza.descricao}</p>
+
+<select id="tamanho-${pizza.id}">
+<option value="media">30cm Média</option>
+<option value="grande">35cm Gigante</option>
+</select>
+
+<select id="metade-${pizza.id}">
+<option value="">Pizza inteira</option>
+<option value="metade">Meio a meio</option>
+</select>
+
+<button onclick="addPizza(${pizza.id},'${pizza.nome}',${pizza.preco_media},${pizza.preco_grande})">
+
+Adicionar
+
+</button>
+
+</div>
+
+`
+})
 
 }
 
-function mostrar(lista){
+function mostrarBebidas(bebidas){
 
-let html=""
+let container = document.getElementById("lista-bebidas")
 
-lista.forEach(p=>{
+bebidas.forEach(bebida => {
 
-html+=`
+container.innerHTML += `
 
-<div class="card">
+<div class="bebida">
 
-<img src="${p.foto}">
+<h3>${bebida.nome}</h3>
 
-<h3>${p.nome}</h3>
+<p>R$ ${bebida.preco}</p>
 
-<div class="preco">R$ ${p.preco}</div>
-
-<button onclick="add('${p.nome}',${p.preco})">
+<button onclick="addCarrinho('${bebida.nome}',${bebida.preco})">
 
 Adicionar
 
@@ -39,24 +73,42 @@ Adicionar
 
 })
 
-document.getElementById("produtos").innerHTML=html
+}
+
+function addPizza(id,nome,precoMedia,precoGrande){
+
+let tamanho = document.getElementById(`tamanho-${id}`).value
+
+let preco = tamanho === "media" ? precoMedia : precoGrande
+
+addCarrinho(nome,preco)
 
 }
 
-function filtrar(cat){
-
-let f=produtos.filter(p=>p.nome.includes(cat))
-
-mostrar(f)
-
-}
-
-function add(nome,preco){
+function addCarrinho(nome,preco){
 
 carrinho.push({nome,preco})
 
-document.getElementById("contador").innerText=carrinho.length
+renderCarrinho()
 
 }
 
-carregar()
+function renderCarrinho(){
+
+let lista = document.getElementById("itens-carrinho")
+
+lista.innerHTML = ""
+
+carrinho.forEach(item => {
+
+lista.innerHTML += `<li>${item.nome} - R$ ${item.preco}</li>`
+
+})
+
+}
+
+function finalizarPedido(){
+
+alert("Pedido enviado para a pizzaria!")
+
+}
