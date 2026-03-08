@@ -1,13 +1,13 @@
 {
-"name":"Pizzaria & Distribuidora",
-"short_name":"Delivery",
-"start_url":"index.html",
+"name":"Sabore In Casa",
+"short_name":"Sabore",
+"start_url":"./index.html",
 "display":"standalone",
 "background_color":"#111",
-"theme_color":"#e53935",
+"theme_color":"#c62828",
 "icons":[
 {
-"src":"icon.png",
+"src":"imagens/logo.png",
 "sizes":"192x192",
 "type":"image/png"
 }
