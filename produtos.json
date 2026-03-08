@@ -1,92 +1,37 @@
 [
-  {
-    "nome": "Margherita 30cm",
-    "preco": 25.00,
-    "foto": "imagens/margherita.jpg"
-  },
-  {
-    "nome": "Margherita 35cm",
-    "preco": 35.00,
-    "foto": "imagens/margherita.jpg"
-  },
-  {
-    "nome": "Pepperoni 30cm",
-    "preco": 28.00,
-    "foto": "imagens/pepperoni.jpg"
-  },
-  {
-    "nome": "Pepperoni 35cm",
-    "preco": 38.00,
-    "foto": "imagens/pepperoni.jpg"
-  },
-  {
-    "nome": "Frango com Catupiry 30cm",
-    "preco": 30.00,
-    "foto": "imagens/frango_catupiry.jpg"
-  },
-  {
-    "nome": "Frango com Catupiry 35cm",
-    "preco": 40.00,
-    "foto": "imagens/frango_catupiry.jpg"
-  },
-  {
-    "nome": "Calabresa 30cm",
-    "preco": 27.00,
-    "foto": "imagens/calabresa.jpg"
-  },
-  {
-    "nome": "Calabresa 35cm",
-    "preco": 37.00,
-    "foto": "imagens/calabresa.jpg"
-  },
-  {
-    "nome": "4 Queijos 30cm",
-    "preco": 32.00,
-    "foto": "imagens/4queijos.jpg"
-  },
-  {
-    "nome": "4 Queijos 35cm",
-    "preco": 42.00,
-    "foto": "imagens/4queijos.jpg"
-  },
-  {
-    "nome": "Combo 2 Pizzas + 2 Refrigerantes",
-    "preco": 75.00,
-    "foto": "imagens/combo.jpg"
-  },
-  {
-    "nome": "Heineken 473ml",
-    "preco": 8.50,
-    "foto": "imagens/heineken.jpg"
-  },
-  {
-    "nome": "Brahma 473ml",
-    "preco": 7.50,
-    "foto": "imagens/brahma.jpg"
-  },
-  {
-    "nome": "Stella Artois 473ml",
-    "preco": 9.00,
-    "foto": "imagens/stella.jpg"
-  },
-  {
-    "nome": "Spaten 473ml",
-    "preco": 8.50,
-    "foto": "imagens/spaten.jpg"
-  },
-  {
-    "nome": "Coca Cola 2L Normal",
-    "preco": 12.00,
-    "foto": "imagens/coca_normal.jpg"
-  },
-  {
-    "nome": "Coca Cola 2L Zero",
-    "preco": 12.00,
-    "foto": "imagens/coca_zero.jpg"
-  },
-  {
-    "nome": "Guaraná Antarctica 2L",
-    "preco": 10.00,
-    "foto": "imagens/guarana.jpg"
-  }
+  {"nome":"Margherita 30cm","preco":25.00,"foto":"imagens/margherita.jpg"},
+  {"nome":"Margherita 35cm","preco":35.00,"foto":"imagens/margherita.jpg"},
+  {"nome":"Pepperoni 30cm","preco":28.00,"foto":"imagens/pepperoni.jpg"},
+  {"nome":"Pepperoni 35cm","preco":38.00,"foto":"imagens/pepperoni.jpg"},
+  {"nome":"Frango com Catupiry 30cm","preco":30.00,"foto":"imagens/frango_catupiry.jpg"},
+  {"nome":"Frango com Catupiry 35cm","preco":40.00,"foto":"imagens/frango_catupiry.jpg"},
+  {"nome":"Calabresa 30cm","preco":27.00,"foto":"imagens/calabresa.jpg"},
+  {"nome":"Calabresa 35cm","preco":37.00,"foto":"imagens/calabresa.jpg"},
+  {"nome":"4 Queijos 30cm","preco":32.00,"foto":"imagens/4queijos.jpg"},
+  {"nome":"4 Queijos 35cm","preco":42.00,"foto":"imagens/4queijos.jpg"},
+  
+  {"nome":"🔥 Combo Explosão da Semana","preco":75.00,"foto":"imagens/combo_explosao.jpg"},
+  {"nome":"🔥 Combo Dobradinha da Semana","preco":120.00,"foto":"imagens/combo_dobradinha.jpg"},
+  {"nome":"🍕 Combo Solteiro","preco":28.00,"foto":"imagens/combo_solteiro.jpg"},
+  {"nome":"🍕 Combo Solteiro Premium","preco":35.00,"foto":"imagens/combo_solteiro_premium.jpg"},
+  {"nome":"❤️ Combo Casal","preco":60.00,"foto":"imagens/combo_casal.jpg"},
+  {"nome":"❤️ Combo Casal Premium","preco":95.00,"foto":"imagens/combo_casal_premium.jpg"},
+  {"nome":"👨‍👩‍👧 Combo Família","preco":110.00,"foto":"imagens/combo_familia.jpg"},
+  {"nome":"👨‍👩‍👧 Combo Família Gigante","preco":180.00,"foto":"imagens/combo_familia_gigante.jpg"},
+  {"nome":"🍺 Combo Pizza & Cerveja","preco":85.00,"foto":"imagens/combo_pizza_cerveja.jpg"},
+  {"nome":"🍺 Combo Galera","preco":150.00,"foto":"imagens/combo_galera.jpg"},
+  {"nome":"🔥 COMBO MAIS PEDIDO","preco":65.00,"foto":"imagens/combo_mais_pedido.jpg"},
+  
+  {"nome":"Brahma Latão 473ml","preco":7.50,"foto":"imagens/brahma.jpg"},
+  {"nome":"Skol Latão 473ml","preco":7.50,"foto":"imagens/skol.jpg"},
+  {"nome":"Stella Artois Latão 473ml","preco":9.00,"foto":"imagens/stella.jpg"},
+  {"nome":"Spaten Latão 473ml","preco":9.00,"foto":"imagens/spaten.jpg"},
+  {"nome":"Bohemia Latão 473ml","preco":9.00,"foto":"imagens/bohemia.jpg"},
+  {"nome":"Budweiser Latão 473ml","preco":9.00,"foto":"imagens/budweiser.jpg"},
+  {"nome":"Coca-Cola 2L","preco":12.00,"foto":"imagens/coca_normal.jpg"},
+  {"nome":"Coca-Cola 2L Zero","preco":12.00,"foto":"imagens/coca_zero.jpg"},
+  {"nome":"Guaraná Antarctica 2L","preco":10.00,"foto":"imagens/guarana.jpg"},
+  {"nome":"Fanta Laranja 2L","preco":10.00,"foto":"imagens/fanta_laranja.jpg"},
+  {"nome":"Fanta Uva 2L","preco":10.00,"foto":"imagens/fanta_uva.jpg"},
+  {"nome":"Sprite 2L","preco":10.00,"foto":"imagens/sprite.jpg"}
 ]
