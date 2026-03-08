@@ -1,4 +1,4 @@
-self.addEventListener("install",e=>{
+self.addEventListener("install", e => {
 
 console.log("App instalado")
 
