@@ -1,25 +1,112 @@
-[
 {
-"nome":"Pizza Calabresa",
-"preco":39.90,
-"foto":"https://images.unsplash.com/photo-1594007654729-407eedc4fe24"
-},
+  "pizzas": [
+    {
+      "id": 1,
+      "nome": "A Moda",
+      "descricao": "Mussarela, milho, presunto, molho, azeitona, pimentão, cebola, calabresa e orégano",
+      "preco_media": 38,
+      "preco_grande": 42
+    },
+    {
+      "id": 2,
+      "nome": "Calabresa",
+      "descricao": "Molho de tomate, calabresa, cebola, mussarela e orégano",
+      "preco_media": 38,
+      "preco_grande": 42
+    },
+    {
+      "id": 3,
+      "nome": "Frango com Cheddar",
+      "descricao": "Molho de tomate, frango desfiado, cheddar, mussarela e orégano",
+      "preco_media": 38,
+      "preco_grande": 42
+    },
+    {
+      "id": 4,
+      "nome": "Frango com Catupiry",
+      "descricao": "Molho de tomate, frango desfiado, catupiry, mussarela e orégano",
+      "preco_media": 38,
+      "preco_grande": 42
+    },
+    {
+      "id": 5,
+      "nome": "Frango Bolonhesa",
+      "descricao": "Molho de tomate, bolonhesa, frango desfiado, mussarela e orégano",
+      "preco_media": 38,
+      "preco_grande": 42
+    },
+    {
+      "id": 6,
+      "nome": "Milho com Bacon",
+      "descricao": "Molho de tomate, milho verde, bacon crocante, mussarela e orégano",
+      "preco_media": 38,
+      "preco_grande": 42
+    },
+    {
+      "id": 7,
+      "nome": "Napolitana",
+      "descricao": "Molho de tomate, mussarela, rodelas de tomate, parmesão e orégano",
+      "preco_media": 38,
+      "preco_grande": 42
+    },
+    {
+      "id": 8,
+      "nome": "Palmito Bolonhesa",
+      "descricao": "Palmito, mussarela, molho bolonhesa e orégano",
+      "preco_media": 38,
+      "preco_grande": 42
+    },
+    {
+      "id": 9,
+      "nome": "Quatro Queijos",
+      "descricao": "Molho de tomate, mussarela, gorgonzola, parmesão, cheddar e catupiry",
+      "preco_media": 38,
+      "preco_grande": 42
+    },
+    {
+      "id": 10,
+      "nome": "Vegetariana",
+      "descricao": "Molho, tomate, pimentão, cebola, milho, azeitona, palmito e mussarela",
+      "preco_media": 38,
+      "preco_grande": 42
+    }
+  ],
 
-{
-"nome":"Pizza Quatro Queijos",
-"preco":44.90,
-"foto":"https://images.unsplash.com/photo-1548365328-9f547fb0953c"
-},
-
-{
-"nome":"Combo 2 Pizzas",
-"preco":64.90,
-"foto":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38"
-},
-
-{
-"nome":"Coca Cola 2L",
-"preco":10.00,
-"foto":"https://images.unsplash.com/photo-1580910051074-3eb694886505"
+  "bebidas": [
+    {
+      "id": 101,
+      "nome": "Heineken Latão",
+      "preco": 10
+    },
+    {
+      "id": 102,
+      "nome": "Brahma Latão",
+      "preco": 8
+    },
+    {
+      "id": 103,
+      "nome": "Stella Artois Latão",
+      "preco": 9
+    },
+    {
+      "id": 104,
+      "nome": "Spaten Latão",
+      "preco": 9
+    },
+    {
+      "id": 105,
+      "nome": "Coca Cola 2L",
+      "preco": 10
+    },
+    {
+      "id": 106,
+      "nome": "Coca Cola Zero 2L",
+      "preco": 10
+    },
+    {
+      "id": 107,
+      "nome": "Guaraná Antarctica 2L",
+      "preco": 10
+    }
+  ]
 }
-]
