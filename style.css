@@ -1,77 +1,165 @@
 body{
-margin:0;
+
 font-family:Arial;
-background:#111;
-color:white;
+margin:0;
+background:#fafafa;
+
 }
 
 .topo{
-background:#b30000;
+
 display:flex;
 align-items:center;
-padding:15px;
+justify-content:space-between;
+background:#e63946;
+color:white;
+padding:10px;
+
 }
 
 .logo{
+
 width:60px;
-margin-right:10px;
+
 }
 
 .busca{
-padding:15px;
+
+padding:10px;
+
 }
 
 .busca input{
+
 width:100%;
-padding:12px;
-border-radius:10px;
+padding:10px;
+border-radius:8px;
+border:1px solid #ccc;
+
+}
+
+.categorias{
+
+display:flex;
+overflow-x:auto;
+gap:10px;
+padding:10px;
+
+}
+
+.categorias button{
+
+background:#fff;
 border:none;
+padding:10px;
+border-radius:20px;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+cursor:pointer;
+
 }
 
 .banner{
-background:#ff7a00;
-margin:15px;
+
+background:#ffb703;
 padding:20px;
-border-radius:10px;
 text-align:center;
+color:white;
+animation:fade 1s;
+
 }
 
 .grid{
+
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:15px;
-padding:15px;
+grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+gap:10px;
+padding:10px;
+
 }
 
 .card{
-background:#1f1f1f;
-border-radius:10px;
+
+background:white;
 padding:10px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+transition:0.3s;
+
+}
+
+.card:hover{
+
+transform:scale(1.05);
+
 }
 
 .card img{
+
 width:100%;
 border-radius:10px;
+
 }
 
-.card button{
-background:#ff7a00;
+button{
+
+background:#e63946;
+color:white;
 border:none;
 padding:10px;
-width:100%;
-color:white;
 border-radius:8px;
-margin-top:10px;
+cursor:pointer;
+
 }
+
+/* carrinho lateral */
 
 .carrinho{
-background:#000;
+
+position:fixed;
+right:-320px;
+top:0;
+width:300px;
+height:100%;
+background:white;
+box-shadow:-3px 0 10px rgba(0,0,0,0.2);
 padding:20px;
+transition:0.4s;
+overflow:auto;
+
 }
 
-footer{
-background:#1a1a1a;
-padding:20px;
-text-align:center;
-font-size:14px;
+.carrinho.ativo{
+
+right:0;
+
+}
+
+/* menu inferior */
+
+.menuInferior{
+
+position:fixed;
+bottom:0;
+width:100%;
+display:flex;
+justify-content:space-around;
+background:white;
+border-top:1px solid #ccc;
+padding:10px;
+
+}
+
+.menuInferior button{
+
+background:none;
+color:#333;
+font-size:20px;
+
+}
+
+@keyframes fade{
+
+from{opacity:0}
+to{opacity:1}
+
 }
