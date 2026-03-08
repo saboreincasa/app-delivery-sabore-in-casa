@@ -1,26 +1,39 @@
-body {
-  font-family: Arial, sans-serif;
+/* Reset básico */
+* {
   margin: 0;
-  background: #111;
-  color: white;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
 }
 
+body {
+  background: #111;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
 header {
   background: #c62828;
   text-align: center;
-  padding: 15px;
+  padding: 15px 10px;
+  position: relative;
 }
 
-.logo {
-  width: 130px;
-  margin-bottom: 5px;
+header .logo {
+  width: 120px;
+  display: block;
+  margin: 0 auto 5px;
 }
 
-.titulo {
+header .titulo {
   font-size: 24px;
   font-weight: bold;
 }
 
+/* Endereço */
 .endereco {
   background: #1f1f1f;
   padding: 10px;
@@ -28,17 +41,21 @@ header {
   font-size: 14px;
 }
 
+/* Banner */
 .banner {
   height: 180px;
-  background: url("https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1200") no-repeat center center/cover;
+  margin: 15px 0;
+  background: url("imagens/banner.jpg") no-repeat center center/cover;
+  border-radius: 12px;
 }
 
+/* Container */
 .container {
   padding: 15px;
-  max-width: 1000px;
-  margin: auto;
+  flex: 1;
 }
 
+/* Busca */
 .busca {
   width: 100%;
   padding: 12px;
@@ -47,6 +64,7 @@ header {
   margin-bottom: 15px;
 }
 
+/* Categorias */
 .categorias {
   display: flex;
   gap: 10px;
@@ -63,11 +81,14 @@ header {
   transition: 0.3s;
 }
 
-.cat:hover { background: #333; }
+.cat:hover {
+  background: #c62828;
+}
 
+/* Grid produtos */
 #produtos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 15px;
 }
 
@@ -79,7 +100,9 @@ header {
   transition: transform 0.3s;
 }
 
-.card:hover { transform: scale(1.03); }
+.card:hover {
+  transform: translateY(-5px);
+}
 
 .card img {
   width: 100%;
@@ -91,30 +114,39 @@ header {
   padding: 12px;
 }
 
+.card-content h3 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
 .preco {
   color: #2ecc71;
   font-size: 17px;
-  margin-top: 5px;
+  margin-bottom: 8px;
 }
 
+/* Botões */
 button {
   background: #2ecc71;
   border: none;
   padding: 10px;
   width: 100%;
   border-radius: 8px;
-  color: white;
-  margin-top: 8px;
+  color: #fff;
+  font-weight: bold;
   cursor: pointer;
+  margin-top: 5px;
   transition: 0.3s;
 }
 
-button:hover { background: #27ae60; }
+button:hover {
+  background: #27ae60;
+}
 
 /* Carrinho flutuante */
 #botaoCarrinho {
   position: fixed;
-  bottom: 20px;
+  bottom: 80px;
   right: 20px;
   background: #25D366;
   width: 65px;
@@ -126,7 +158,7 @@ button:hover { background: #27ae60; }
   font-size: 28px;
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-  z-index: 999;
+  z-index: 1000;
 }
 
 #contador {
@@ -140,11 +172,13 @@ button:hover { background: #27ae60; }
   border-radius: 50%;
 }
 
+/* Carrinho lateral */
 #carrinho {
   background: #1f1f1f;
   padding: 15px;
-  border-radius: 10px;
-  margin-top: 25px;
+  border-radius: 12px;
+  margin-top: 20px;
+  transition: all 0.3s;
 }
 
 .item {
@@ -171,7 +205,7 @@ input, select {
   font-size: 18px;
   padding: 12px;
   margin-top: 15px;
-  border-radius: 8px;
+  color: #fff;
   cursor: pointer;
 }
 
@@ -186,7 +220,7 @@ input, select {
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 10;
+  z-index: 9999;
 }
 
 .modal-content {
@@ -195,11 +229,12 @@ input, select {
   border-radius: 12px;
   width: 90%;
   max-width: 400px;
-  color: white;
+  color: #fff;
+  animation: aparecer 0.3s ease;
 }
 
 .modal-content h3 {
-  margin-top: 0;
+  margin-bottom: 15px;
 }
 
 .modal-buttons {
@@ -211,4 +246,35 @@ input, select {
   width: 48%;
   padding: 10px;
   font-weight: bold;
+}
+
+@keyframes aparecer {
+  from {opacity:0; transform: translateY(-20px);}
+  to {opacity:1; transform: translateY(0);}
+}
+
+/* Menu inferior */
+.menuInferior {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #1f1f1f;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  border-top: 2px solid #c62828;
+  z-index: 999;
+}
+
+.menuInferior button {
+  background: none;
+  font-size: 24px;
+  width: auto;
+  color: #fff;
+  border-radius: 50%;
+}
+
+.menuInferior button:hover {
+  color: #c62828;
 }
