@@ -1,67 +1,48 @@
-let carrinho = []
+let carrinho=[]
+let total=0
 
 fetch("produtos.json")
-.then(res => res.json())
-.then(data => {
 
-mostrarPizzas(data.pizzas)
+.then(r=>r.json())
 
-mostrarBebidas(data.bebidas)
+.then(data=>{
+
+carregarPizzas(data.pizzas)
+
+carregarBebidas(data.bebidas)
 
 })
 
-function mostrarPizzas(pizzas){
 
-let container = document.getElementById("lista-pizzas")
+function carregarPizzas(pizzas){
 
-pizzas.forEach(pizza => {
+let area=document.getElementById("listaPizzas")
 
-container.innerHTML += `
+pizzas.forEach(p=>{
 
-<div class="pizza">
+area.innerHTML+=`
 
-<h3>${pizza.nome}</h3>
+<div class="card">
 
-<p>${pizza.descricao}</p>
+<img src="${p.img}">
 
-<select id="tamanho-${pizza.id}">
+<h3>${p.nome}</h3>
+
+<p>${p.descricao}</p>
+
+<select id="tam${p.id}">
 <option value="media">30cm Média</option>
-<option value="grande">35cm Gigante</option>
+<option value="gigante">35cm Gigante</option>
 </select>
 
-<select id="metade-${pizza.id}">
-<option value="">Pizza inteira</option>
-<option value="metade">Meio a meio</option>
-</select>
+<label>
 
-<button onclick="addPizza(${pizza.id},'${pizza.nome}',${pizza.preco_media},${pizza.preco_grande})">
+<input type="checkbox" id="borda${p.id}">
+Borda recheada
 
-Adicionar
+</label>
 
-</button>
-
-</div>
-
-`
-})
-
-}
-
-function mostrarBebidas(bebidas){
-
-let container = document.getElementById("lista-bebidas")
-
-bebidas.forEach(bebida => {
-
-container.innerHTML += `
-
-<div class="bebida">
-
-<h3>${bebida.nome}</h3>
-
-<p>R$ ${bebida.preco}</p>
-
-<button onclick="addCarrinho('${bebida.nome}',${bebida.preco})">
+<button onclick="addPizza(${p.id},'${p.nome}',${p.media},${p.gigante})">
 
 Adicionar
 
@@ -75,40 +56,91 @@ Adicionar
 
 }
 
-function addPizza(id,nome,precoMedia,precoGrande){
 
-let tamanho = document.getElementById(`tamanho-${id}`).value
+function carregarBebidas(bebidas){
 
-let preco = tamanho === "media" ? precoMedia : precoGrande
+let area=document.getElementById("listaBebidas")
+
+bebidas.forEach(b=>{
+
+area.innerHTML+=`
+
+<div class="card">
+
+<img src="${b.img}">
+
+<h3>${b.nome}</h3>
+
+<p>R$ ${b.preco}</p>
+
+<button onclick="addCarrinho('${b.nome}',${b.preco})">
+
+Adicionar
+
+</button>
+
+</div>
+
+`
+
+})
+
+}
+
+
+function addPizza(id,nome,media,gigante){
+
+let tamanho=document.getElementById("tam"+id).value
+
+let preco=tamanho=="media"?media:gigante
 
 addCarrinho(nome,preco)
 
 }
 
+
 function addCarrinho(nome,preco){
 
 carrinho.push({nome,preco})
 
-renderCarrinho()
+total+=preco
+
+render()
 
 }
 
-function renderCarrinho(){
 
-let lista = document.getElementById("itens-carrinho")
+function render(){
 
-lista.innerHTML = ""
+let lista=document.getElementById("carrinho")
 
-carrinho.forEach(item => {
+lista.innerHTML=""
 
-lista.innerHTML += `<li>${item.nome} - R$ ${item.preco}</li>`
+carrinho.forEach(i=>{
+
+lista.innerHTML+=`<li>${i.nome} - R$ ${i.preco}</li>`
 
 })
 
+document.getElementById("total").innerHTML="Total: R$ "+total
+
 }
 
-function finalizarPedido(){
 
-alert("Pedido enviado para a pizzaria!")
+function enviarWhats(){
+
+let texto="Pedido:%0A"
+
+carrinho.forEach(i=>{
+
+texto+=`${i.nome} - R$ ${i.preco}%0A`
+
+})
+
+texto+=`Total: R$ ${total}`
+
+let url=`https://wa.me/5531983391576?text=${texto}`
+
+window.open(url)
 
 }
