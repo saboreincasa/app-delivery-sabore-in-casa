@@ -26,6 +26,8 @@
 
 </div>
 
+<button class="abrirCarrinho" onclick="toggleCarrinho()">🛒</button>
+
 </header>
 
 
@@ -34,6 +36,18 @@
 <input type="text" placeholder="Encontre sua pizza ou bebida">
 
 </section>
+
+
+<!-- MENU CATEGORIAS -->
+
+<nav class="categorias">
+
+<button onclick="filtrar('pizza')">🍕 Pizzas</button>
+<button onclick="filtrar('combo')">🔥 Combos</button>
+<button onclick="filtrar('cerveja')">🍺 Cervejas</button>
+<button onclick="filtrar('refrigerante')">🥤 Refrigerantes</button>
+
+</nav>
 
 
 <section class="banner">
@@ -65,7 +79,9 @@
 </section>
 
 
-<section class="carrinho">
+<!-- CARRINHO LATERAL -->
+
+<aside class="carrinho" id="carrinhoBox">
 
 <h2>Seu Carrinho</h2>
 
@@ -75,7 +91,7 @@
 
 <button onclick="enviarWhats()">Finalizar Pedido</button>
 
-</section>
+</aside>
 
 
 <footer>
@@ -92,6 +108,18 @@ CEP 31655230
 <p>© Carlos Henrique</p>
 
 </footer>
+
+
+<!-- MENU INFERIOR -->
+
+<nav class="menuInferior">
+
+<button onclick="scrollTopo()">🏠</button>
+<button onclick="filtrar('pizza')">🍕</button>
+<button onclick="toggleCarrinho()">🛒</button>
+<button onclick="enviarWhats()">💬</button>
+
+</nav>
 
 
 <script src="app.js"></script>
