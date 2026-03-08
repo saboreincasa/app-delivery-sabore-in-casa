@@ -2,128 +2,85 @@
 <html lang="pt-br">
 
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>Sabore in Casa</title>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sabore In Casa</title>
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifesto.json">
-
 </head>
 
 <body>
 
-<header class="topo">
+<header>
+  <img src="imagens/logo.png" class="logo" alt="Sabore In Casa Logo" />
+  <div class="titulo">Sabore In Casa</div>
+</header>
 
-<img src="imagens/logo.png" class="logo">
+<div class="endereco">
+  📍 Rua Maria de Lourdes da Cruz Nº 378  
+  Bairro Mantiqueira – Belo Horizonte
+</div>
 
-<div>
+<div class="banner"></div>
 
-<h1>Sabore in Casa</h1>
-<p>Delivery de Pizzas & Bebidas</p>
+<div class="container">
+
+  <input class="busca" id="busca" placeholder="🔎 Buscar produto" />
+
+  <div class="categorias">
+    <div class="cat" onclick="filtrar('Pizza')">🍕 Pizzas</div>
+    <div class="cat" onclick="filtrar('Combo')">📦 Combos</div>
+    <div class="cat" onclick="filtrar('Cerveja')">🍺 Cervejas</div>
+    <div class="cat" onclick="filtrar('Refrigerante')">🥤 Refrigerantes</div>
+  </div>
+
+  <div id="produtos"></div>
+
+  <div id="carrinho">
+    <h2>🛒 Carrinho</h2>
+    <div id="lista"></div>
+
+    <div class="total">
+      Total + entrega: R$ <span id="total">0.00</span>
+    </div>
+
+    <select id="borda">
+      <option value="Sem borda">Sem borda</option>
+      <option value="Cheddar">Cheddar</option>
+      <option value="Catupiry">Catupiry</option>
+    </select>
+
+    <input id="enderecoCliente" value="Rua Maria de Lourdes da Cruz, Nº 378 - Mantiqueira, Belo Horizonte" />
+    <select id="pagamento">
+      <option>Cartão</option>
+      <option>Dinheiro</option>
+      <option>PIX</option>
+    </select>
+
+    <input id="troco" placeholder="Troco para quanto?" />
+
+    <button class="enviar" onclick="enviarPedido()">Enviar pedido no WhatsApp</button>
+  </div>
 
 </div>
 
-<button class="abrirCarrinho" onclick="toggleCarrinho()">🛒</button>
+<div id="botaoCarrinho" onclick="scrollCarrinho()">
+  🛒
+  <div id="contador">0</div>
+</div>
 
-</header>
-
-
-<section class="busca">
-
-<input type="text" placeholder="Encontre sua pizza ou bebida">
-
-</section>
-
-
-<!-- MENU CATEGORIAS -->
-
-<nav class="categorias">
-
-<button onclick="filtrar('pizza')">🍕 Pizzas</button>
-<button onclick="filtrar('combo')">🔥 Combos</button>
-<button onclick="filtrar('cerveja')">🍺 Cervejas</button>
-<button onclick="filtrar('refrigerante')">🥤 Refrigerantes</button>
-
-</nav>
-
-
-<section class="banner">
-
-<h2>Combo Especial</h2>
-
-<p>2 Pizzas + 2 Refrigerantes</p>
-
-<span>Só Hoje!</span>
-
-</section>
-
-
-<section>
-
-<h2>Pizzas</h2>
-
-<div id="listaPizzas" class="grid"></div>
-
-</section>
-
-
-<section>
-
-<h2>Bebidas</h2>
-
-<div id="listaBebidas" class="grid"></div>
-
-</section>
-
-
-<!-- CARRINHO LATERAL -->
-
-<aside class="carrinho" id="carrinhoBox">
-
-<h2>Seu Carrinho</h2>
-
-<ul id="carrinho"></ul>
-
-<h3 id="total"></h3>
-
-<button onclick="enviarWhats()">Finalizar Pedido</button>
-
-</aside>
-
-
-<footer>
-
-<p>
-Rua Maria de Lourdes da Cruz 378  
-Bairro Mantiqueira  
-Belo Horizonte  
-CEP 31655230
-</p>
-
-<p>Telefone: 31 98339-1576</p>
-
-<p>© Carlos Henrique</p>
-
-</footer>
-
-
-<!-- MENU INFERIOR -->
-
-<nav class="menuInferior">
-
-<button onclick="scrollTopo()">🏠</button>
-<button onclick="filtrar('pizza')">🍕</button>
-<button onclick="toggleCarrinho()">🛒</button>
-<button onclick="enviarWhats()">💬</button>
-
-</nav>
-
+<!-- Modal Meio a Meio -->
+<div id="modalMeioMeio">
+  <div class="modal-content">
+    <h3>Escolha a outra metade da pizza</h3>
+    <select id="segundaMetade"></select>
+    <div class="modal-buttons">
+      <button onclick="confirmarMeioMeio()">Confirmar</button>
+      <button onclick="fecharModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
 
 <script src="app.js"></script>
-
 </body>
-
 </html>
