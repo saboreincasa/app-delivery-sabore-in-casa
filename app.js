@@ -1,146 +1,97 @@
-let carrinho=[]
-let total=0
+let carrinho = []
 
-fetch("produtos.json")
+function toggleCarrinho(){
 
-.then(r=>r.json())
+document.getElementById("carrinhoBox")
+.classList.toggle("ativo")
 
-.then(data=>{
+}
 
-carregarPizzas(data.pizzas)
+function adicionar(nome, preco){
 
-carregarBebidas(data.bebidas)
+let borda = ""
+
+if(nome.includes("Pizza")){
+
+borda = prompt("Escolha a borda: \n1- Cheddar\n2- Catupiry\n3- Sem borda")
+
+if(borda == "1") borda = "Borda Cheddar"
+else if(borda == "2") borda = "Borda Catupiry"
+else borda = "Sem borda"
+
+}
+
+carrinho.push({
+
+nome:nome,
+preco:preco,
+borda:borda
 
 })
 
-
-function carregarPizzas(pizzas){
-
-let area=document.getElementById("listaPizzas")
-
-pizzas.forEach(p=>{
-
-area.innerHTML+=`
-
-<div class="card">
-
-<img src="${p.img}">
-
-<h3>${p.nome}</h3>
-
-<p>${p.descricao}</p>
-
-<select id="tam${p.id}">
-<option value="media">30cm Média</option>
-<option value="gigante">35cm Gigante</option>
-</select>
-
-<label>
-
-<input type="checkbox" id="borda${p.id}">
-Borda recheada
-
-</label>
-
-<button onclick="addPizza(${p.id},'${p.nome}',${p.media},${p.gigante})">
-
-Adicionar
-
-</button>
-
-</div>
-
-`
-
-})
+renderCarrinho()
 
 }
 
+function renderCarrinho(){
 
-function carregarBebidas(bebidas){
-
-let area=document.getElementById("listaBebidas")
-
-bebidas.forEach(b=>{
-
-area.innerHTML+=`
-
-<div class="card">
-
-<img src="${b.img}">
-
-<h3>${b.nome}</h3>
-
-<p>R$ ${b.preco}</p>
-
-<button onclick="addCarrinho('${b.nome}',${b.preco})">
-
-Adicionar
-
-</button>
-
-</div>
-
-`
-
-})
-
-}
-
-
-function addPizza(id,nome,media,gigante){
-
-let tamanho=document.getElementById("tam"+id).value
-
-let preco=tamanho=="media"?media:gigante
-
-addCarrinho(nome,preco)
-
-}
-
-
-function addCarrinho(nome,preco){
-
-carrinho.push({nome,preco})
-
-total+=preco
-
-render()
-
-}
-
-
-function render(){
-
-let lista=document.getElementById("carrinho")
+let lista = document.getElementById("carrinho")
+let total = 0
 
 lista.innerHTML=""
 
-carrinho.forEach(i=>{
+carrinho.forEach((item)=>{
 
-lista.innerHTML+=`<li>${i.nome} - R$ ${i.preco}</li>`
+let li=document.createElement("li")
+
+li.innerText=item.nome+" "+item.borda+" - R$"+item.preco
+
+lista.appendChild(li)
+
+total+=item.preco
 
 })
 
-document.getElementById("total").innerHTML="Total: R$ "+total
+document.getElementById("total").innerText="Total: R$"+total
 
 }
 
-
 function enviarWhats(){
 
-let texto="Pedido:%0A"
+let numeroPedido=Math.floor(Math.random()*9000)+1000
 
-carrinho.forEach(i=>{
+let texto=`Pedido *nº ${numeroPedido}*\n\n`
 
-texto+=`${i.nome} - R$ ${i.preco}%0A`
+texto+="*Itens:*\n"
+
+let total=0
+
+carrinho.forEach(item=>{
+
+texto+=`➡ ${item.nome} ${item.borda}\n`
+total+=item.preco
 
 })
 
-texto+=`Total: R$ ${total}`
+texto+=`\n🛵 *Delivery*\n`
+texto+=`🏠 Rua Maria de Lourdes da Cruz, Nº 378 - Mantiqueira, Belo Horizonte\n`
+texto+=`(Estimativa: *20~40 minutos*)\n\n`
 
-let url=`https://wa.me/5531983391576?text=${texto}`
+texto+=`Total: *R$ ${total}*`
+
+let url="https://wa.me/5531983391576?text="+encodeURIComponent(texto)
 
 window.open(url)
+
+}
+
+function scrollTopo(){
+
+window.scrollTo({
+
+top:0,
+behavior:"smooth"
+
+})
 
 }
