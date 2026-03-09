@@ -1,44 +1,51 @@
+[
 {
-"pizzas":[
-
-{"nome":"Calabresa","descricao":"Molho, mussarela, calabresa e cebola","media":40},
-
-{"nome":"Portuguesa","descricao":"Presunto, ovos, cebola e ervilha","media":42},
-
-{"nome":"Frango Catupiry","descricao":"Frango desfiado e catupiry","media":45}
-
-],
-
-"bebidas":[
-
-{"nome":"Heineken 473ml","preco":9},
-
-{"nome":"Brahma 473ml","preco":7},
-
-{"nome":"Stella Artois 473ml","preco":9},
-
-{"nome":"Spaten 473ml","preco":8},
-
-{"nome":"Coca Cola 2L","preco":12},
-
-{"nome":"Coca Cola Zero 2L","preco":12},
-
-{"nome":"Guaraná 2L","preco":10},
-
-{"nome":"Água Mineral","preco":3},
-
-{"nome":"Água com Gás","preco":4}
-
-],
-
-"combos":[
-
-{"nome":"Combo Solteiro","preco":45},
-
-{"nome":"Combo Casal","preco":70},
-
-{"nome":"Combo Família","preco":110}
-
-]
-
+"nome":"Pizza Calabresa",
+"categoria":"Pizza",
+"ingredientes":"Calabresa, cebola e mussarela",
+"foto":"imagens/calabresa.jpg",
+"precos":{
+"pequena":35,
+"media":45,
+"gigante":55
 }
+},
+
+{
+"nome":"Pizza Frango com Catupiry",
+"categoria":"Pizza",
+"ingredientes":"Frango desfiado, catupiry e mussarela",
+"foto":"imagens/frango.jpg",
+"precos":{
+"pequena":38,
+"media":48,
+"gigante":58
+}
+},
+
+{
+"nome":"Pizza Portuguesa",
+"categoria":"Pizza",
+"ingredientes":"Presunto, ovo, cebola, ervilha e mussarela",
+"foto":"imagens/portuguesa.jpg",
+"precos":{
+"pequena":40,
+"media":50,
+"gigante":60
+}
+},
+
+{
+"nome":"Coca Cola 2L",
+"categoria":"Bebida",
+"foto":"imagens/coca.jpg",
+"preco":12
+},
+
+{
+"nome":"Heineken 473ml",
+"categoria":"Cerveja",
+"foto":"imagens/heineken.jpg",
+"preco":9
+}
+]
