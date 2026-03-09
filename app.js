@@ -1,159 +1,145 @@
+let dados
 let carrinho=[]
-let numero="5531987620190"
+let numeroPedido=5000
 
 fetch("produtos.json")
 .then(r=>r.json())
-.then(dados=>{
+.then(d=>{
 
-mostrarPizzas(dados.pizzas)
-mostrarBebidas(dados.bebidas)
-mostrarCombos(dados.combos)
+dados=d
+mostrar("pizzas")
 
 })
 
-function mostrarPizzas(lista){
+function mostrar(tipo){
 
-let html=""
+let area=document.getElementById("lista")
+area.innerHTML=""
 
-lista.forEach(p=>{
+dados[tipo].forEach(p=>{
 
-html+=`
+area.innerHTML+=`
 
 <div class="card">
 
 <h3>${p.nome}</h3>
 
-<p class="descricao">${p.descricao}</p>
+<p>${p.descricao||""}</p>
 
-<select onchange="addPizza('${p.nome}',this.value,${p.P},${p.M},${p.GG})">
+<p>R$ ${p.preco || p.media}</p>
 
-<option>Escolha tamanho</option>
-<option value="P">P R$${p.P}</option>
-<option value="M">M R$${p.M}</option>
-<option value="GG">GG R$${p.GG}</option>
-
-</select>
-
-<select id="borda">
-
-<option>Borda normal</option>
-<option>Borda catupiry</option>
-<option>Borda cheddar</option>
-
-</select>
+<button onclick='add(${JSON.stringify(p)})'>Adicionar</button>
 
 </div>
+
 `
 
 })
 
-document.getElementById("pizzas").innerHTML=html
+}
+
+function add(p){
+
+carrinho.push(p)
+
+alert("Item adicionado")
 
 }
 
-function mostrarBebidas(lista){
+function abrirCarrinho(){
 
-let html=""
+document.getElementById("carrinho").style.display="block"
 
-lista.forEach(b=>{
+let area=document.getElementById("itens")
 
-html+=`
+area.innerHTML=""
 
-<div class="card">
-
-<h3>${b.nome}</h3>
-
-<p>R$ ${b.preco}</p>
-
-<button onclick="add('${b.nome}',${b.preco})">Adicionar</button>
-
-</div>
-`
-
-})
-
-document.getElementById("bebidas").innerHTML=html
-
-}
-
-function mostrarCombos(lista){
-
-let html=""
-
-lista.forEach(c=>{
-
-html+=`
-
-<div class="card">
-
-<h3>${c.nome}</h3>
-
-<p>${c.descricao}</p>
-
-<p>R$ ${c.preco}</p>
-
-<button onclick="add('${c.nome}',${c.preco})">Adicionar</button>
-
-</div>
-`
-
-})
-
-document.getElementById("combos").innerHTML=html
-
-}
-
-function addPizza(nome,tamanho,p,m,gg){
-
-let preco=0
-
-if(tamanho=="P") preco=p
-if(tamanho=="M") preco=m
-if(tamanho=="GG") preco=gg
-
-add(nome+" "+tamanho,preco)
-
-}
-
-function add(nome,preco){
-
-carrinho.push({nome,preco})
-
-atualizar()
-
-}
-
-function atualizar(){
-
-let lista=""
-let total=0
+let subtotal=0
 
 carrinho.forEach(i=>{
 
-lista+=`<p>${i.nome}</p>`
-total+=i.preco
+let valor=i.preco||i.media
+
+subtotal+=valor
+
+area.innerHTML+=`<p>${i.nome} - R$${valor}</p>`
 
 })
 
-document.getElementById("lista").innerHTML=lista
-document.getElementById("total").innerText=total
+document.getElementById("total").innerHTML="Subtotal: R$"+subtotal
 
 }
 
-function enviarPedido(){
+function calcularTaxa(){
 
-let endereco=document.getElementById("endereco").value
-let pagamento=document.getElementById("pagamento").value
+let taxa=7 + Math.random()*5
+return taxa
 
-let msg="Pedido Sabore in Casa%0A%0A"
+}
+
+function finalizar(){
+
+numeroPedido++
+
+let subtotal=0
 
 carrinho.forEach(i=>{
-msg+=i.nome+"%0A"
+
+subtotal+= i.preco||i.media
+
 })
 
-msg+="%0AEndereço: "+endereco
-msg+="%0APagamento: "+pagamento
+let taxaEntrega=calcularTaxa()
 
-window.open(`https://wa.me/${numero}?text=${msg}`)
+let taxaExtra=10
+
+let total=subtotal + taxaEntrega + taxaExtra
+
+let pix=gerarPix(total)
+
+let texto=`
+
+Pedido nº ${numeroPedido}
+
+Itens:
+${carrinho.map(i=>"➡ "+i.nome).join("\n")}
+
+💳 Pix
+
+🛵 Delivery (taxa: R$${taxaEntrega.toFixed(2)})
+
+📦 Taxa serviço: R$10
+
+🏠 ${document.getElementById("endereco").value}
+
+Total: R$${total.toFixed(2)}
+
+Pix:
+${pix}
+
+SABORE IN CASA
+31983391576
+
+`
+
+navigator.clipboard.writeText(texto)
+
+alert("Pedido gerado e copiado!")
+
+notificar()
+
+}
+
+function notificar(){
+
+if(Notification.permission==="granted"){
+
+new Notification("Novo pedido recebido!")
+
+}else{
+
+Notification.requestPermission()
+
+}
 
 }
