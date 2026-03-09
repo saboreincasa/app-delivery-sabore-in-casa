@@ -1,52 +1,83 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sabore In Casa</title>
-<link rel="stylesheet" href="estilo.css">
+<title>Sabore in Casa</title>
+<link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifesto.json">
 </head>
+
 <body>
 
-<header class="topo">
-  <img src="imagens/logo.png" class="logo" alt="Sabore In Casa">
-  <input type="text" id="buscar" placeholder="Buscar pizzas ou bebidas...">
+<header>
+  <img src="imagens/logo.png" class="logo">
+  <h1>Sabore in Casa</h1>
+  <input type="text" placeholder="Encontre sua pizza ou bebida" id="busca">
 </header>
 
-<!-- Menu principal -->
-<nav class="menu-categorias">
-  <button onclick="filtrar('pizza')">🍕 Pizzas</button>
-  <button onclick="filtrar('combo')">🔥 Combos</button>
-  <button onclick="filtrar('bebida')">🍺 Bebidas</button>
-  <button onclick="abrirCarrinho()">🛒 Carrinho</button>
+<nav class="categorias">
+  <button onclick="mostrarCategoria('pizza')">🍕 Pizzas</button>
+  <button onclick="mostrarCategoria('premium')">⭐ Premium</button>
+  <button onclick="mostrarCategoria('bebida')">🥤 Bebidas</button>
+  <button onclick="mostrarCategoria('combos')">🎉 Combos</button>
 </nav>
 
-<section class="banner">
-  <h2>Promoção da Semana</h2>
-</section>
-
-<!-- Produtos -->
 <section id="produtos"></section>
 
-<!-- Carrinho flutuante -->
-<div class="carrinho-flutuante" onclick="abrirCarrinho()">
-  🛒 <span id="contador">0</span>
+<div id="carrinho-flutuante" onclick="abrirCarrinho()">🛒 <span id="contador">0</span></div>
+
+<!-- Modal Pizza -->
+<div id="modalPizza" class="modal">
+  <div class="modal-content">
+    <h2 id="pizzaNome"></h2>
+    <p id="pizzaIngredientes"></p>
+
+    <label>Tamanho</label>
+    <select id="tamanho">
+      <option value="35">Grande 35cm</option>
+      <option value="30">Média 30cm</option>
+    </select>
+
+    <label>Tipo</label>
+    <select id="tipoPizza">
+      <option value="inteira">Pizza inteira</option>
+      <option value="meia">Meia a meia</option>
+    </select>
+
+    <label>Borda</label>
+    <select id="borda">
+      <option value="0">Normal</option>
+      <option value="10">Cheddar +10</option>
+      <option value="10">Catupiry +10</option>
+    </select>
+
+    <button onclick="adicionarCarrinho()">Adicionar ao carrinho</button>
+    <button onclick="fecharModal()">Fechar</button>
+  </div>
 </div>
 
-<!-- Painel do carrinho -->
-<div id="carrinho" style="display:none;">
-  <h2>Carrinho</h2>
-  <div id="listaCarrinho"></div>
-  <p>Total: R$ <span id="total">0</span></p>
-  <button onclick="finalizarPedido()">Finalizar Pedido</button>
+<!-- Carrinho -->
+<div id="carrinho">
+  <h2>Seu Pedido</h2>
+  <div id="itensCarrinho"></div>
+  <button onclick="enviarWhatsapp()">Finalizar no WhatsApp</button>
+  <button onclick="mostrarPix()">Pagar com PIX</button>
+</div>
+
+<!-- PIX -->
+<div id="pixArea" style="display:none">
+  <h2>Pagamento PIX</h2>
+  <p>Telefone PIX: 31983391576</p>
+  <img id="qrcode" src="imagens/qrcode.png" alt="QR Code PIX">
 </div>
 
 <script src="app.js"></script>
 <script src="pix.js"></script>
-<script src="mapa.js"></script>
 <script src="impressao.js"></script>
+<script src="mapa.js"></script>
 <script src="notificacao.js"></script>
-<script src="service-worker.js"></script>
+
 </body>
 </html>
