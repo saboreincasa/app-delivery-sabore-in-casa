@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
 
 <meta charset="UTF-8">
@@ -8,10 +7,11 @@
 
 <title>Sabore in Casa</title>
 
-<link rel="stylesheet" href="estilo.css">
-<link rel="manifest" href="manifesto.json">
+<link rel="stylesheet" href="style.css">
 
+<script src="app.js"></script>
 <script src="pix.js"></script>
+<script src="mapa.js"></script>
 
 </head>
 
@@ -19,39 +19,105 @@
 
 <header>
 
-<img src="imagens/logo.png" class="logo">
+<h1>Sabore in Casa 🍕</h1>
 
-<input type="text" id="busca" placeholder="Buscar pizzas, bebidas ou combos">
-
-<div class="menu">
-
-<button onclick="mostrar('pizzas')">🍕 Pizzas</button>
-<button onclick="mostrar('combos')">🔥 Combos</button>
-<button onclick="mostrar('bebidas')">🥤 Bebidas</button>
-<button onclick="abrirCarrinho()">🛒 Carrinho</button>
-
-</div>
+<input
+type="text"
+placeholder="Buscar pizzas, bebidas..."
+class="search"
+/>
 
 </header>
 
-<main id="lista"></main>
+<!-- MENU ABAIXO DA BUSCA -->
 
-<div id="carrinho" class="carrinho">
+<section class="menu">
 
-<h2>Seu Pedido</h2>
+<button>🍕 Pizzas</button>
+<button>🔥 Combos</button>
+<button>🥤 Bebidas</button>
+<button>🛒 Carrinho</button>
 
-<div id="itens"></div>
+</section>
 
-<div id="total"></div>
 
-<input id="endereco" placeholder="Digite seu endereço">
+<!-- LISTA DE PRODUTOS -->
 
-<button onclick="finalizar()">Finalizar Pedido</button>
+<section class="produtos">
+
+<div class="card">
+
+<img src="img/calabresa.png">
+
+<div>
+
+<h3>Pizza Calabresa</h3>
+<p>R$ 40,00</p>
+
+<button onclick="addCarrinho('Pizza Calabresa',40)">
+Adicionar
+</button>
 
 </div>
 
-<script src="app.js"></script>
+</div>
+
+
+<div class="card">
+
+<img src="img/meio.png">
+
+<div>
+
+<h3>Pizza Meio a Meio</h3>
+<p>R$ 44,00</p>
+
+<button onclick="addCarrinho('Pizza Meio a Meio',44)">
+Adicionar
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- BEBIDAS -->
+
+<section class="bebidas">
+
+<h2>Bebidas</h2>
+
+<div class="bebidas-scroll">
+
+<div class="bebida">
+
+<img src="img/heineken.png">
+<p>Heineken 473ml</p>
+<p>R$ 9</p>
+
+<button onclick="addCarrinho('Heineken',9)">
+Adicionar
+</button>
+
+</div>
+
+<div class="bebida">
+
+<img src="img/brahma.png">
+<p>Brahma</p>
+<p>R$ 7</p>
+
+<button onclick="addCarrinho('Brahma',7)">
+Adicionar
+</button>
+
+</div>
+
+</div>
+
+</section>
 
 </body>
-
 </html>
