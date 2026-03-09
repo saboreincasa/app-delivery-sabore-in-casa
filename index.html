@@ -8,8 +8,10 @@
 
 <title>Sabore in Casa</title>
 
-<link rel="manifest" href="manifesto.json">
 <link rel="stylesheet" href="estilo.css">
+<link rel="manifest" href="manifesto.json">
+
+<script src="pix.js"></script>
 
 </head>
 
@@ -19,67 +21,37 @@
 
 <img src="imagens/logo.png" class="logo">
 
-</header>
+<input type="text" id="busca" placeholder="Buscar pizzas, bebidas ou combos">
 
+<div class="menu">
 
-<div class="busca">
-
-<input id="buscar" placeholder="🔎 Encontre sua pizza ou bebida">
+<button onclick="mostrar('pizzas')">🍕 Pizzas</button>
+<button onclick="mostrar('combos')">🔥 Combos</button>
+<button onclick="mostrar('bebidas')">🥤 Bebidas</button>
+<button onclick="abrirCarrinho()">🛒 Carrinho</button>
 
 </div>
 
+</header>
 
-<section>
+<main id="lista"></main>
 
-<h2>🍕 Pizzas</h2>
+<div id="carrinho" class="carrinho">
 
-<div id="pizzas"></div>
+<h2>Seu Pedido</h2>
 
-</section>
+<div id="itens"></div>
 
+<div id="total"></div>
 
-<section>
+<input id="endereco" placeholder="Digite seu endereço">
 
-<h2>🍺 Bebidas</h2>
+<button onclick="finalizar()">Finalizar Pedido</button>
 
-<div id="bebidas"></div>
-
-</section>
-
-
-<section>
-
-<h2>📦 Combos</h2>
-
-<div id="combos"></div>
-
-</section>
-
-
-<section id="carrinho">
-
-<h2>🛒 Seu Pedido</h2>
-
-<div id="lista"></div>
-
-<p class="total">Total: R$ <span id="total">0</span></p>
-
-<input id="endereco" placeholder="Seu endereço">
-
-<select id="pagamento">
-
-<option>Pix</option>
-<option>Dinheiro</option>
-<option>Cartão</option>
-
-</select>
-
-<button onclick="enviarPedido()">Finalizar Pedido</button>
-
-</section>
-
+</div>
 
 <script src="app.js"></script>
 
 </body>
+
 </html>
