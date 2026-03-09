@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Sabore in Casa</title>
+<title>Sabore In Casa</title>
 
-<link rel="stylesheet" href="style.css">
-
-<script src="app.js"></script>
-<script src="pix.js"></script>
-<script src="mapa.js"></script>
+<link rel="stylesheet" href="estilo.css">
 
 </head>
 
@@ -19,105 +16,63 @@
 
 <header>
 
-<h1>Sabore in Casa 🍕</h1>
+<img src="imagens/logo.png" class="logo">
 
-<input
-type="text"
-placeholder="Buscar pizzas, bebidas..."
-class="search"
-/>
+<h1>Sabore In Casa</h1>
 
 </header>
 
-<!-- MENU ABAIXO DA BUSCA -->
 
-<section class="menu">
-
-<button>🍕 Pizzas</button>
-<button>🔥 Combos</button>
-<button>🥤 Bebidas</button>
-<button>🛒 Carrinho</button>
-
-</section>
+<div class="banner"></div>
 
 
-<!-- LISTA DE PRODUTOS -->
+<div class="container">
 
-<section class="produtos">
+<input id="busca" class="busca" placeholder="🔎 Buscar pizza">
 
-<div class="card">
+<div class="categorias">
 
-<img src="img/calabresa.png">
+<button onclick="filtrar('Pizza')">🍕 Pizzas</button>
+<button onclick="filtrar('Bebida')">🥤 Bebidas</button>
+<button onclick="filtrar('Cerveja')">🍺 Cervejas</button>
 
-<div>
+</div>
 
-<h3>Pizza Calabresa</h3>
-<p>R$ 40,00</p>
+<div id="produtos"></div>
 
-<button onclick="addCarrinho('Pizza Calabresa',40)">
-Adicionar
+</div>
+
+
+<!-- carrinho flutuante -->
+
+<div id="botaoCarrinho" onclick="abrirCarrinho()">
+
+🛒
+
+<span id="contador">0</span>
+
+</div>
+
+
+<!-- carrinho lateral -->
+
+<div id="carrinho">
+
+<h2>Seu Carrinho</h2>
+
+<div id="lista"></div>
+
+<h3>Total: R$ <span id="total">0</span></h3>
+
+<button onclick="finalizarPedido()" class="pagar">
+
+FINALIZAR PEDIDO
+
 </button>
 
 </div>
 
-</div>
-
-
-<div class="card">
-
-<img src="img/meio.png">
-
-<div>
-
-<h3>Pizza Meio a Meio</h3>
-<p>R$ 44,00</p>
-
-<button onclick="addCarrinho('Pizza Meio a Meio',44)">
-Adicionar
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- BEBIDAS -->
-
-<section class="bebidas">
-
-<h2>Bebidas</h2>
-
-<div class="bebidas-scroll">
-
-<div class="bebida">
-
-<img src="img/heineken.png">
-<p>Heineken 473ml</p>
-<p>R$ 9</p>
-
-<button onclick="addCarrinho('Heineken',9)">
-Adicionar
-</button>
-
-</div>
-
-<div class="bebida">
-
-<img src="img/brahma.png">
-<p>Brahma</p>
-<p>R$ 7</p>
-
-<button onclick="addCarrinho('Brahma',7)">
-Adicionar
-</button>
-
-</div>
-
-</div>
-
-</section>
+<script src="app.js"></script>
 
 </body>
 </html>
