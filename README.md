@@ -1,11 +1,13 @@
 # Sabore in Casa
 
-Aplicativo de delivery de pizzaria.
+App de pizzaria com:
 
-Funções:
+- pedidos online
+- cálculo de entrega
+- pagamento Pix
+- combos
+- bebidas
+- pizza meio a meio
+- painel de pedidos
 
-- Cardápio de pizzas
-- Bebidas
-- Combos
-- Carrinho
-- Pedido via WhatsApp
+Instalável no celular como aplicativo.
