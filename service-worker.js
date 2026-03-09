@@ -1,6 +1,6 @@
-const cacheName="sabore-app"
+const CACHE_NAME = "sabore-v1"
 
-const arquivos=[
+const urlsToCache = [
 
 "/",
 "/index.html",
@@ -10,23 +10,27 @@ const arquivos=[
 
 ]
 
-self.addEventListener("install",e=>{
+self.addEventListener("install",event=>{
 
-e.waitUntil(
+event.waitUntil(
 
-caches.open(cacheName)
-.then(cache=>cache.addAll(arquivos))
+caches.open(CACHE_NAME)
+.then(cache=>cache.addAll(urlsToCache))
 
 )
 
 })
 
-self.addEventListener("fetch",e=>{
+self.addEventListener("fetch",event=>{
 
-e.respondWith(
+event.respondWith(
 
-caches.match(e.request)
-.then(res=>res || fetch(e.request))
+caches.match(event.request)
+.then(response=>{
+
+return response || fetch(event.request)
+
+})
 
 )
 
