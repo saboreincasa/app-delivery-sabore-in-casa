@@ -1,142 +1,115 @@
-let carrinho=[]
 let produtos=[]
+let carrinho=[]
 
 fetch("produtos.json")
-.then(r=>r.json())
+.then(res=>res.json())
 .then(data=>{
 
 produtos=data
-mostrar(produtos)
+mostrarProdutos(produtos)
 
 })
 
-function mostrar(lista){
+function mostrarProdutos(lista){
 
-let html=""
+let area=document.getElementById("produtos")
+
+area.innerHTML=""
 
 lista.forEach(p=>{
 
-html+=`
+area.innerHTML+=`
 
-<div class="card">
+<div class="produto">
 
-<img src="${p.foto}">
-
-<div class="card-content">
+<div>
 
 <h3>${p.nome}</h3>
 
-${p.ingredientes?`<p>${p.ingredientes}</p>`:""}
+<p>R$ ${p.preco}</p>
 
-${p.precos?`
+</div>
 
-<select onchange="selecionarTamanho(this)">
-
-<option value="">Tamanho</option>
-<option value="${p.precos.pequena}">Pequena 25cm</option>
-<option value="${p.precos.media}">Média 30cm</option>
-<option value="${p.precos.gigante}">Gigante 35cm</option>
-
-</select>
-
-<select>
-
-<option value="0">Sem borda</option>
-<option value="10">Catupiry +10</option>
-<option value="10">Cheddar +10</option>
-
-</select>
-
-<button onclick="addPizza('${p.nome}',this)">
+<button onclick="addCarrinho(${p.id})">
 
 Adicionar
 
 </button>
 
-`
-
-:
-
-`<button onclick="add('${p.nome}',${p.preco})">Adicionar</button>`
-
-}
-
-</div>
-
 </div>
 
 `
 
 })
 
-document.getElementById("produtos").innerHTML=html
+}
+
+function filtrar(cat){
+
+let filtrados=produtos.filter(p=>p.categoria==cat)
+
+mostrarProdutos(filtrados)
 
 }
 
+function addCarrinho(id){
 
-function add(nome,preco){
+let produto=produtos.find(p=>p.id==id)
 
-carrinho.push({nome,preco})
+carrinho.push(produto)
 
-atualizar()
-
-}
-
-function addPizza(nome,btn){
-
-let card=btn.parentElement
-
-let tamanho=card.querySelector("select").value
-
-let borda=Number(card.querySelectorAll("select")[1].value)
-
-let preco=Number(tamanho)+borda
-
-carrinho.push({nome,preco})
-
-atualizar()
+atualizarCarrinho()
 
 }
 
-function atualizar(){
+function atualizarCarrinho(){
 
-let lista=""
+let lista=document.getElementById("listaCarrinho")
+
+lista.innerHTML=""
+
 let total=0
 
-carrinho.forEach((i,index)=>{
+carrinho.forEach(p=>{
 
-lista+=`<div>${i.nome} R$${i.preco}
-<button onclick="remover(${index})">❌</button>
-</div>`
+lista.innerHTML+=`<p>${p.nome} - R$ ${p.preco}</p>`
 
-total+=i.preco
+total+=p.preco
 
 })
 
-document.getElementById("lista").innerHTML=lista
-
-document.getElementById("total").innerText=total.toFixed(2)
+document.getElementById("total").innerText=total
 
 document.getElementById("contador").innerText=carrinho.length
 
 }
 
-function remover(i){
-
-carrinho.splice(i,1)
-
-atualizar()
-
-}
-
 function abrirCarrinho(){
 
-document.getElementById("carrinho").classList.toggle("aberto")
+let c=document.getElementById("carrinho")
+
+if(c.style.display=="block"){
+
+c.style.display="none"
+
+}else{
+
+c.style.display="block"
 
 }
 
-function finalizarPedido(){
+}
 
-alert("Aqui entra pagamento PIX ou WhatsApp")
+function enviarWhats(){
+
+let msg="Pedido:%0A"
+
+carrinho.forEach(p=>{
+
+msg+=p.nome+"%0A"
+
+})
+
+window.open("https://wa.me/5511999999999?text="+msg)
 
 }
