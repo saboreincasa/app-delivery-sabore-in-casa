@@ -1,86 +1,52 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sabore In Casa</title>
-
 <link rel="stylesheet" href="estilo.css">
 <link rel="manifest" href="manifesto.json">
-
 </head>
-
 <body>
 
-<header class="header">
-
-<div class="topo">
-
-☰
-
-<h1>Sabore In Casa</h1>
-
-🛒
-
-</div>
-
-<input id="buscar" placeholder="Encontre sua pizza ou bebida">
-
+<header class="topo">
+  <img src="imagens/logo.png" class="logo" alt="Sabore In Casa">
+  <input type="text" id="buscar" placeholder="Buscar pizzas ou bebidas...">
 </header>
 
+<!-- Menu principal -->
+<nav class="menu-categorias">
+  <button onclick="filtrar('pizza')">🍕 Pizzas</button>
+  <button onclick="filtrar('combo')">🔥 Combos</button>
+  <button onclick="filtrar('bebida')">🍺 Bebidas</button>
+  <button onclick="abrirCarrinho()">🛒 Carrinho</button>
+</nav>
 
 <section class="banner">
-
-<h2>Combo Especial</h2>
-
-<p>2 Pizzas + 2 Refrigerantes</p>
-
+  <h2>Promoção da Semana</h2>
 </section>
 
+<!-- Produtos -->
+<section id="produtos"></section>
 
-<section class="categorias">
-
-<button onclick="filtrar('pizza')">🍕 Pizzas</button>
-<button onclick="filtrar('combo')">🔥 Combos</button>
-<button onclick="filtrar('cerveja')">🍺 Cervejas</button>
-<button onclick="filtrar('refrigerante')">🥤 Refrigerantes</button>
-
-</section>
-
-
-<section id="produtos" class="produtos"></section>
-
-
+<!-- Carrinho flutuante -->
 <div class="carrinho-flutuante" onclick="abrirCarrinho()">
-
-🛒 <span id="contador">0</span>
-
+  🛒 <span id="contador">0</span>
 </div>
 
-
-<div id="carrinho" class="painel-carrinho">
-
-<h2>Seu Pedido</h2>
-
-<div id="listaCarrinho"></div>
-
-<h3>Total R$ <span id="total">0</span></h3>
-
-<button onclick="pagarPix()">Pagar com Pix</button>
-
-<button onclick="enviarWhats()">Enviar WhatsApp</button>
-
+<!-- Painel do carrinho -->
+<div id="carrinho" style="display:none;">
+  <h2>Carrinho</h2>
+  <div id="listaCarrinho"></div>
+  <p>Total: R$ <span id="total">0</span></p>
+  <button onclick="finalizarPedido()">Finalizar Pedido</button>
 </div>
-
 
 <script src="app.js"></script>
 <script src="pix.js"></script>
 <script src="mapa.js"></script>
 <script src="impressao.js"></script>
 <script src="notificacao.js"></script>
-
+<script src="service-worker.js"></script>
 </body>
 </html>
