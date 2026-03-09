@@ -1,59 +1,44 @@
 {
 "pizzas":[
 
-{"nome":"A Moda","descricao":"Mussarela, milho, presunto, molho, azeitona, pimentão, cebola, calabresa e orégano","P":23,"M":38,"GG":42},
+{"nome":"Calabresa","descricao":"Molho, mussarela, calabresa e cebola","media":40},
 
-{"nome":"Calabresa","descricao":"Molho de tomate, calabresa, cebola, mussarela e orégano","P":23,"M":38,"GG":42},
+{"nome":"Portuguesa","descricao":"Presunto, ovos, cebola e ervilha","media":42},
 
-{"nome":"Frango com Cheddar","descricao":"Molho de tomate, frango desfiado, cheddar, mussarela e orégano","P":23,"M":38,"GG":42},
-
-{"nome":"Frango com Catupiry","descricao":"Molho de tomate, frango desfiado, catupiry, mussarela e orégano","P":23,"M":38,"GG":42},
-
-{"nome":"Frango Bolonhesa","descricao":"Molho de tomate, bolonhesa, frango desfiado, mussarela e orégano","P":23,"M":38,"GG":42},
-
-{"nome":"Milho com Bacon","descricao":"Molho de tomate, milho verde, bacon crocante, mussarela e orégano","P":23,"M":38,"GG":42},
-
-{"nome":"Napolitana","descricao":"Molho de tomate, mussarela, rodelas de tomate, parmesão e orégano","P":23,"M":38,"GG":42},
-
-{"nome":"Palmito Bolonhesa","descricao":"Palmito, mussarela, molho bolonhesa e orégano","P":23,"M":38,"GG":42},
-
-{"nome":"Quatro Queijos","descricao":"Molho de tomate, mussarela, gorgonzola, parmesão, cheddar, catupiry e orégano","P":23,"M":38,"GG":42},
-
-{"nome":"Vegetariana","descricao":"Molho, tomate, pimentão, cebola, milho, azeitona, palmito, mussarela e orégano","P":23,"M":38,"GG":42}
+{"nome":"Frango Catupiry","descricao":"Frango desfiado e catupiry","media":45}
 
 ],
 
 "bebidas":[
 
-{"nome":"Heineken Latão 473ml","preco":10},
-{"nome":"Brahma Latão 473ml","preco":8},
-{"nome":"Stella Artois Latão 473ml","preco":9},
-{"nome":"Spaten Latão 473ml","preco":9},
-{"nome":"Budweiser Latão 473ml","preco":9},
-{"nome":"Skol Latão 473ml","preco":8},
-{"nome":"Antarctica Latão 473ml","preco":8},
-{"nome":"Original Latão 473ml","preco":9},
+{"nome":"Heineken 473ml","preco":9},
 
-{"nome":"Coca Cola 2L","preco":10},
-{"nome":"Coca Cola Zero 2L","preco":10},
-{"nome":"Guaraná Antarctica 2L","preco":9},
-{"nome":"Fanta Laranja 2L","preco":9},
-{"nome":"Sprite 2L","preco":9},
+{"nome":"Brahma 473ml","preco":7},
 
-{"nome":"Água Mineral sem gás","preco":3},
-{"nome":"Água Mineral com gás","preco":3}
+{"nome":"Stella Artois 473ml","preco":9},
+
+{"nome":"Spaten 473ml","preco":8},
+
+{"nome":"Coca Cola 2L","preco":12},
+
+{"nome":"Coca Cola Zero 2L","preco":12},
+
+{"nome":"Guaraná 2L","preco":10},
+
+{"nome":"Água Mineral","preco":3},
+
+{"nome":"Água com Gás","preco":4}
 
 ],
 
 "combos":[
 
-{"nome":"Combo Solteiro","descricao":"1 Pizza Média + Coca Cola 2L","preco":45},
+{"nome":"Combo Solteiro","preco":45},
 
-{"nome":"Combo Casal","descricao":"1 Pizza GG + 2 Cervejas Latão","preco":60},
+{"nome":"Combo Casal","preco":70},
 
-{"nome":"Combo Família","descricao":"2 Pizzas GG + Refrigerante 2L","preco":80},
-
-{"nome":"Combo da Semana","descricao":"2 Pizzas Médias + 2 Cervejas","preco":70}
+{"nome":"Combo Família","preco":110}
 
 ]
+
 }
