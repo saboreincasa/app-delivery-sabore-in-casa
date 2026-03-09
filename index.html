@@ -2,90 +2,84 @@
 <html lang="pt-br">
 
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Sabore In Casa</title>
-<link rel="stylesheet" href="style.css">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Sabore in Casa</title>
+
 <link rel="manifest" href="manifesto.json">
+<link rel="stylesheet" href="estilo.css">
+
 </head>
 
 <body>
 
 <header>
-  <img src="imagens/logo.png" class="logo" alt="Sabore In Casa Logo" />
-  <div class="titulo">Sabore In Casa</div>
+
+<img src="imagens/logo.png" class="logo">
+
 </header>
 
-<div class="endereco">
-  📍 Rua Maria de Lourdes da Cruz Nº 378 - Mantiqueira, Belo Horizonte
+
+<div class="busca">
+
+<input id="buscar" placeholder="🔎 Encontre sua pizza ou bebida">
+
 </div>
 
-<div class="banner"></div>
 
-<div class="container">
-  <input class="busca" id="busca" placeholder="🔎 Buscar produto" />
+<section>
 
-  <div class="categorias">
-    <div class="cat" onclick="filtrar('Pizza')">🍕 Pizzas</div>
-    <div class="cat" onclick="filtrar('Combo')">📦 Combos</div>
-    <div class="cat" onclick="filtrar('Cerveja')">🍺 Cervejas</div>
-    <div class="cat" onclick="filtrar('Refrigerante')">🥤 Refrigerantes</div>
-  </div>
+<h2>🍕 Pizzas</h2>
 
-  <div id="produtos"></div>
+<div id="pizzas"></div>
 
-  <div id="carrinho">
-    <h2>🛒 Carrinho</h2>
-    <div id="lista"></div>
+</section>
 
-    <div class="total">
-      Total + entrega: R$ <span id="total">0.00</span>
-    </div>
 
-    <select id="borda">
-      <option value="Sem borda">Sem borda</option>
-      <option value="Cheddar">Cheddar</option>
-      <option value="Catupiry">Catupiry</option>
-    </select>
+<section>
 
-    <input id="enderecoCliente" value="Rua Maria de Lourdes da Cruz, Nº 378 - Mantiqueira, Belo Horizonte" />
-    <select id="pagamento">
-      <option>Cartão</option>
-      <option>Dinheiro</option>
-      <option>PIX</option>
-    </select>
+<h2>🍺 Bebidas</h2>
 
-    <input id="troco" placeholder="Troco para quanto?" />
+<div id="bebidas"></div>
 
-    <button class="enviar" onclick="enviarPedido()">Enviar pedido no WhatsApp</button>
-  </div>
-</div>
+</section>
 
-<div id="botaoCarrinho" onclick="scrollCarrinho()">
-  🛒
-  <div id="contador">0</div>
-</div>
 
-<!-- Modal Meio a Meio -->
-<div id="modalMeioMeio">
-  <div class="modal-content">
-    <h3>Escolha a outra metade da pizza</h3>
-    <select id="segundaMetade"></select>
-    <div class="modal-buttons">
-      <button onclick="confirmarMeioMeio()">Confirmar</button>
-      <button onclick="fecharModal()">Cancelar</button>
-    </div>
-  </div>
-</div>
+<section>
 
-<!-- Menu Inferior -->
-<nav class="menuInferior">
-  <button onclick="scrollTopo()">🏠</button>
-  <button onclick="filtrar('Pizza')">🍕</button>
-  <button onclick="scrollCarrinho()">🛒</button>
-  <button onclick="enviarPedido()">💬</button>
-</nav>
+<h2>📦 Combos</h2>
+
+<div id="combos"></div>
+
+</section>
+
+
+<section id="carrinho">
+
+<h2>🛒 Seu Pedido</h2>
+
+<div id="lista"></div>
+
+<p class="total">Total: R$ <span id="total">0</span></p>
+
+<input id="endereco" placeholder="Seu endereço">
+
+<select id="pagamento">
+
+<option>Pix</option>
+<option>Dinheiro</option>
+<option>Cartão</option>
+
+</select>
+
+<button onclick="enviarPedido()">Finalizar Pedido</button>
+
+</section>
+
 
 <script src="app.js"></script>
+
 </body>
 </html>
