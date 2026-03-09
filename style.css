@@ -2,156 +2,113 @@ body{
 
 margin:0;
 font-family:Arial;
-background:#111;
+background:#1b1b1b;
 color:white;
 
 }
 
-header{
+.header{
 
-background:#c62828;
+background:#b30000;
 padding:15px;
 text-align:center;
 
 }
 
-.logo{
+#buscar{
 
-width:120px;
+width:90%;
+padding:12px;
+border-radius:25px;
+border:none;
+margin-top:10px;
 
 }
 
 .banner{
 
-height:200px;
-background:url("https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1200") center/cover;
-
-}
-
-.container{
-
+background:#ff3c00;
 padding:20px;
-
-}
-
-.busca{
-
-width:100%;
-padding:12px;
-border-radius:8px;
-border:none;
+margin:10px;
+border-radius:12px;
 
 }
 
 .categorias{
 
 display:flex;
-gap:10px;
-margin-top:10px;
+justify-content:space-around;
+padding:10px;
 
 }
 
 .categorias button{
 
-background:#222;
-color:white;
+background:#ff6a00;
 border:none;
+color:white;
 padding:10px;
-border-radius:20px;
+border-radius:10px;
 
 }
 
-#produtos{
+.produtos{
 
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:15px;
-margin-top:20px;
-
-}
-
-.card{
-
-background:#1f1f1f;
-border-radius:12px;
-overflow:hidden;
-
-}
-
-.card img{
-
-width:100%;
-height:150px;
-object-fit:cover;
-
-}
-
-.card-content{
-
+grid-template-columns:1fr;
+gap:10px;
 padding:10px;
 
 }
 
-button{
+.produto{
 
-background:#2ecc71;
+background:#2a2a2a;
+border-radius:12px;
+padding:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+}
+
+.produto img{
+
+width:90px;
+border-radius:10px;
+
+}
+
+.produto button{
+
+background:#ff8c00;
 border:none;
 padding:10px;
-border-radius:8px;
+border-radius:10px;
 color:white;
 
 }
 
-#botaoCarrinho{
+.carrinho-flutuante{
 
 position:fixed;
 bottom:20px;
 right:20px;
-width:65px;
-height:65px;
-border-radius:50%;
-background:#ff9800;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
+background:#ff3c00;
+padding:15px;
+border-radius:50px;
+font-size:18px;
 
 }
 
-#contador{
-
-position:absolute;
-top:-5px;
-right:-5px;
-background:red;
-border-radius:50%;
-padding:3px 6px;
-
-}
-
-#carrinho{
+.painel-carrinho{
 
 position:fixed;
-right:-350px;
-top:0;
-width:350px;
-height:100%;
-background:#1f1f1f;
-padding:20px;
-transition:0.3s;
-
-}
-
-#carrinho.aberto{
-
+bottom:0;
+left:0;
 right:0;
-
-}
-
-.pagar{
-
-background:#25D366;
-width:100%;
-font-size:18px;
+background:#111;
+padding:20px;
+display:none;
 
 }
