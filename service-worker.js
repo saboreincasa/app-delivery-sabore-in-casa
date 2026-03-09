@@ -1,12 +1,6 @@
-const CACHE="sabore-app"
+const cacheName="sabore-app"
 
-self.addEventListener("install",e=>{
-
-e.waitUntil(
-
-caches.open(CACHE).then(cache=>{
-
-return cache.addAll([
+const arquivos=[
 
 "/",
 "/index.html",
@@ -14,9 +8,25 @@ return cache.addAll([
 "/app.js",
 "/produtos.json"
 
-])
+]
+
+self.addEventListener("install",e=>{
+
+e.waitUntil(
+
+caches.open(cacheName)
+.then(cache=>cache.addAll(arquivos))
+
+)
 
 })
+
+self.addEventListener("fetch",e=>{
+
+e.respondWith(
+
+caches.match(e.request)
+.then(res=>res || fetch(e.request))
 
 )
 
