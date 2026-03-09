@@ -1,17 +1,10 @@
 const express = require("express")
-
 const app = express()
 
-app.use(express.json())
+app.use(express.static("."))
 
-app.post("/pedido",(req,res)=>{
+app.listen(3000, ()=>{
 
-console.log("Novo pedido:",req.body)
-
-imprimirPedido(req.body)
-
-res.send("Pedido recebido")
+console.log("Servidor rodando em http://localhost:3000")
 
 })
-
-app.listen(3000)
