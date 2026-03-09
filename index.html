@@ -9,70 +9,78 @@
 <title>Sabore In Casa</title>
 
 <link rel="stylesheet" href="estilo.css">
+<link rel="manifest" href="manifesto.json">
 
 </head>
 
 <body>
 
-<header>
+<header class="header">
 
-<img src="imagens/logo.png" class="logo">
+<div class="topo">
+
+☰
 
 <h1>Sabore In Casa</h1>
+
+🛒
+
+</div>
+
+<input id="buscar" placeholder="Encontre sua pizza ou bebida">
 
 </header>
 
 
-<div class="banner"></div>
+<section class="banner">
+
+<h2>Combo Especial</h2>
+
+<p>2 Pizzas + 2 Refrigerantes</p>
+
+</section>
 
 
-<div class="container">
+<section class="categorias">
 
-<input id="busca" class="busca" placeholder="🔎 Buscar pizza">
+<button onclick="filtrar('pizza')">🍕 Pizzas</button>
+<button onclick="filtrar('combo')">🔥 Combos</button>
+<button onclick="filtrar('cerveja')">🍺 Cervejas</button>
+<button onclick="filtrar('refrigerante')">🥤 Refrigerantes</button>
 
-<div class="categorias">
-
-<button onclick="filtrar('Pizza')">🍕 Pizzas</button>
-<button onclick="filtrar('Bebida')">🥤 Bebidas</button>
-<button onclick="filtrar('Cerveja')">🍺 Cervejas</button>
-
-</div>
-
-<div id="produtos"></div>
-
-</div>
+</section>
 
 
-<!-- carrinho flutuante -->
+<section id="produtos" class="produtos"></section>
 
-<div id="botaoCarrinho" onclick="abrirCarrinho()">
 
-🛒
+<div class="carrinho-flutuante" onclick="abrirCarrinho()">
 
-<span id="contador">0</span>
+🛒 <span id="contador">0</span>
 
 </div>
 
 
-<!-- carrinho lateral -->
+<div id="carrinho" class="painel-carrinho">
 
-<div id="carrinho">
+<h2>Seu Pedido</h2>
 
-<h2>Seu Carrinho</h2>
+<div id="listaCarrinho"></div>
 
-<div id="lista"></div>
+<h3>Total R$ <span id="total">0</span></h3>
 
-<h3>Total: R$ <span id="total">0</span></h3>
+<button onclick="pagarPix()">Pagar com Pix</button>
 
-<button onclick="finalizarPedido()" class="pagar">
-
-FINALIZAR PEDIDO
-
-</button>
+<button onclick="enviarWhats()">Enviar WhatsApp</button>
 
 </div>
+
 
 <script src="app.js"></script>
+<script src="pix.js"></script>
+<script src="mapa.js"></script>
+<script src="impressao.js"></script>
+<script src="notificacao.js"></script>
 
 </body>
 </html>
