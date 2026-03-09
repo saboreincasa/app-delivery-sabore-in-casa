@@ -1,45 +1,23 @@
-const CACHE_NAME = 'saboreincasa-cache-v1';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/app.js',
-  '/produtos.json',
-  '/manifesto.json',
-  '/imagens/logo.png'
-];
+const CACHE="sabore-app"
 
-// Instala o SW e adiciona os arquivos ao cache
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log('Cache aberto');
-      return cache.addAll(urlsToCache);
-    })
-  );
-});
+self.addEventListener("install",e=>{
 
-// Intercepta requisições e retorna do cache se disponível
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
-  );
-});
+e.waitUntil(
 
-// Atualiza o cache ao ativar o SW
-self.addEventListener('activate', (event) => {
-  const cacheWhitelist = [CACHE_NAME];
-  event.waitUntil(
-    caches.keys().then((cacheNames) =>
-      Promise.all(
-        cacheNames.map((cacheName) => {
-          if (!cacheWhitelist.includes(cacheName)) {
-            return caches.delete(cacheName);
-          }
-        })
-      )
-    )
-  );
-});
+caches.open(CACHE).then(cache=>{
+
+return cache.addAll([
+
+"/",
+"/index.html",
+"/estilo.css",
+"/app.js",
+"/produtos.json"
+
+])
+
+})
+
+)
+
+})
