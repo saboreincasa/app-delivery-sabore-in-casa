@@ -1,17 +1,8 @@
 {
-"name":"Sabore in Casa",
+"name":"Sabore In Casa",
 "short_name":"Sabore",
-"start_url":"index.html",
 "display":"standalone",
-"theme_color":"#c62828",
-"background_color":"#ffffff",
-
-"icons":[
-{
-"src":"imagens/logo.png",
-"sizes":"512x512",
-"type":"image/png"
-}
-]
-
+"start_url":"index.html",
+"background_color":"#000",
+"theme_color":"#b30000"
 }
