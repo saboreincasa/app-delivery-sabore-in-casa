@@ -1,3 +1,163 @@
+[
 {
-"pizzas":10
+"nome":"Pizza Calabresa Tradicional",
+"preco":49.90,
+"foto":"imagens/pizza-calabresa.jpg"
+},
+
+{
+"nome":"Pizza Frango com Catupiry Tradicional",
+"preco":54.90,
+"foto":"imagens/pizza-frango.jpg"
+},
+
+{
+"nome":"Pizza Portuguesa Tradicional",
+"preco":52.90,
+"foto":"imagens/pizza-portuguesa.jpg"
+},
+
+{
+"nome":"Pizza Marguerita Tradicional",
+"preco":48.90,
+"foto":"imagens/pizza-marguerita.jpg"
+},
+
+{
+"nome":"Pizza Bacon Tradicional",
+"preco":53.90,
+"foto":"imagens/pizza-bacon.jpg"
+},
+
+{
+"nome":"Pizza Milho com Bacon Tradicional",
+"preco":54.90,
+"foto":"imagens/pizza-milho-bacon.jpg"
+},
+
+{
+"nome":"Pizza Napolitana Tradicional",
+"preco":49.90,
+"foto":"imagens/pizza-napolitana.jpg"
+},
+
+{
+"nome":"Pizza Pepperoni Tradicional",
+"preco":55.90,
+"foto":"imagens/pizza-pepperoni.jpg"
+},
+
+{
+"nome":"Pizza Vegetariana Tradicional",
+"preco":51.90,
+"foto":"imagens/pizza-vegetariana.jpg"
+},
+
+{
+"nome":"Pizza Quatro Queijos Tradicional",
+"preco":56.90,
+"foto":"imagens/pizza-quatro-queijos.jpg"
+},
+
+{
+"nome":"Pizza Picanha Premium",
+"preco":69.90,
+"foto":"imagens/pizza-picanha.jpg"
+},
+
+{
+"nome":"Pizza Camarão Premium",
+"preco":74.90,
+"foto":"imagens/pizza-camarao.jpg"
+},
+
+{
+"nome":"Pizza Parma Premium",
+"preco":72.90,
+"foto":"imagens/pizza-parma.jpg"
+},
+
+{
+"nome":"Pizza Frango Especial Premium",
+"preco":67.90,
+"foto":"imagens/pizza-frango-premium.jpg"
+},
+
+{
+"nome":"Pizza Suprema Premium",
+"preco":75.90,
+"foto":"imagens/pizza-suprema.jpg"
+},
+
+{
+"nome":"Coca Cola 2L",
+"preco":12.00,
+"foto":"imagens/coca2l.jpg"
+},
+
+{
+"nome":"Coca Cola Lata 350ml",
+"preco":6.00,
+"foto":"imagens/coca-lata.jpg"
+},
+
+{
+"nome":"Guaraná Antarctica 2L",
+"preco":11.00,
+"foto":"imagens/guarana2l.jpg"
+},
+
+{
+"nome":"Fanta Laranja 2L",
+"preco":11.00,
+"foto":"imagens/fanta2l.jpg"
+},
+
+{
+"nome":"Heineken Latão 473ml",
+"preco":9.00,
+"foto":"imagens/heineken-lata.jpg"
+},
+
+{
+"nome":"Bohemia Latão 473ml",
+"preco":8.00,
+"foto":"imagens/bohemia-lata.jpg"
+},
+
+{
+"nome":"Combo Pizza Casal",
+"preco":79.90,
+"foto":"imagens/combo-casal.jpg"
+},
+
+{
+"nome":"Combo Pizza Família",
+"preco":119.90,
+"foto":"imagens/combo-familia.jpg"
+},
+
+{
+"nome":"Combo Pizza + Coca 2L",
+"preco":59.90,
+"foto":"imagens/combo-pizza-coca.jpg"
+},
+
+{
+"nome":"Combo Duas Pizzas Gigantes",
+"preco":139.90,
+"foto":"imagens/combo-duplo.jpg"
+},
+
+{
+"nome":"Promo Pizza Calabresa",
+"preco":39.90,
+"foto":"imagens/promo-calabresa.jpg"
+},
+
+{
+"nome":"Promo Pizza Frango",
+"preco":39.90,
+"foto":"imagens/promo-frango.jpg"
 }
+]
