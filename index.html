@@ -1,83 +1,126 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sabore in Casa</title>
-<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Sabore In Casa</title>
+
+<link rel="stylesheet" href="estilo.css">
+
 <link rel="manifest" href="manifesto.json">
+
 </head>
 
 <body>
 
 <header>
-  <img src="imagens/logo.png" class="logo">
-  <h1>Sabore in Casa</h1>
-  <input type="text" placeholder="Encontre sua pizza ou bebida" id="busca">
+
+<img src="imagens/logo.png" class="logo">
+
+<h1>Sabore In Casa</h1>
+
 </header>
 
-<nav class="categorias">
-  <button onclick="mostrarCategoria('pizza')">🍕 Pizzas</button>
-  <button onclick="mostrarCategoria('premium')">⭐ Premium</button>
-  <button onclick="mostrarCategoria('bebida')">🥤 Bebidas</button>
-  <button onclick="mostrarCategoria('combos')">🎉 Combos</button>
-</nav>
+<div class="endereco">
 
-<section id="produtos"></section>
+📍 Rua Maria de Lourdes da Cruz Nº 378  
+Bairro Mantiqueira – Belo Horizonte
 
-<div id="carrinho-flutuante" onclick="abrirCarrinho()">🛒 <span id="contador">0</span></div>
-
-<!-- Modal Pizza -->
-<div id="modalPizza" class="modal">
-  <div class="modal-content">
-    <h2 id="pizzaNome"></h2>
-    <p id="pizzaIngredientes"></p>
-
-    <label>Tamanho</label>
-    <select id="tamanho">
-      <option value="35">Grande 35cm</option>
-      <option value="30">Média 30cm</option>
-    </select>
-
-    <label>Tipo</label>
-    <select id="tipoPizza">
-      <option value="inteira">Pizza inteira</option>
-      <option value="meia">Meia a meia</option>
-    </select>
-
-    <label>Borda</label>
-    <select id="borda">
-      <option value="0">Normal</option>
-      <option value="10">Cheddar +10</option>
-      <option value="10">Catupiry +10</option>
-    </select>
-
-    <button onclick="adicionarCarrinho()">Adicionar ao carrinho</button>
-    <button onclick="fecharModal()">Fechar</button>
-  </div>
 </div>
 
-<!-- Carrinho -->
+<div class="banner"></div>
+
+<div class="container">
+
+<input class="busca" id="busca" placeholder="🔎 Buscar produto">
+
+<div class="categorias">
+
+<div class="cat" onclick="filtrar('Pizza')">🍕 Pizzas</div>
+
+<div class="cat" onclick="filtrar('Combo')">📦 Combos</div>
+
+<div class="cat" onclick="filtrar('Cerveja')">🍺 Cervejas</div>
+
+<div class="cat" onclick="filtrar('Coca')">🥤 Refrigerantes</div>
+
+<div class="cat" onclick="filtrar('Água')">💧 Águas</div>
+
+</div>
+
+<div id="produtos"></div>
+
 <div id="carrinho">
-  <h2>Seu Pedido</h2>
-  <div id="itensCarrinho"></div>
-  <button onclick="enviarWhatsapp()">Finalizar no WhatsApp</button>
-  <button onclick="mostrarPix()">Pagar com PIX</button>
+
+<h2>🛒 Carrinho</h2>
+
+<div id="lista"></div>
+
+<p class="total">
+
+Total + entrega: R$ <span id="total">0.00</span>
+
+</p>
+
+<input id="enderecoCliente" placeholder="Digite seu endereço">
+
+<select id="pagamento">
+
+<option>PIX</option>
+
+<option>Dinheiro</option>
+
+<option>Cartão</option>
+
+</select>
+
+<input id="troco" placeholder="Troco para quanto?">
+
+<button class="enviar" onclick="enviarPedido()">
+
+Enviar pedido no WhatsApp
+
+</button>
+
 </div>
 
-<!-- PIX -->
-<div id="pixArea" style="display:none">
-  <h2>Pagamento PIX</h2>
-  <p>Telefone PIX: 31983391576</p>
-  <img id="qrcode" src="imagens/qrcode.png" alt="QR Code PIX">
 </div>
+
+<div id="botaoCarrinho" onclick="scrollCarrinho()">
+
+🛒
+
+<div id="contador">0</div>
+
+</div>
+
+<footer>
+
+📍 Rua Maria de Lourdes da Cruz Nº 378  
+Bairro Mantiqueira  
+CEP 31655230  
+Belo Horizonte - MG
+
+<br><br>
+
+© Aplicativo desenvolvido por  
+<strong>Carlos Henrique</strong>
+
+</footer>
 
 <script src="app.js"></script>
-<script src="pix.js"></script>
-<script src="impressao.js"></script>
+
 <script src="mapa.js"></script>
+
+<script src="pix.js"></script>
+
 <script src="notificacao.js"></script>
 
+<script src="impressao.js"></script>
+
 </body>
+
 </html>
