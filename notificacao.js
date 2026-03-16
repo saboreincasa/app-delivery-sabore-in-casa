@@ -1,15 +1,13 @@
-if(Notification.permission!=="granted"){
+function notificar(){
 
-Notification.requestPermission()
+Notification.requestPermission().then(p=>{
 
-}
+if(p==="granted"){
 
-function notificar(msg){
-
-if(Notification.permission==="granted"){
-
-new Notification(msg)
+new Notification("Pedido recebido 🍕");
 
 }
+
+});
 
 }
