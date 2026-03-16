@@ -1,46 +1,119 @@
 body{
-
-font-family:Arial;
-background:#8b0000;
-color:white;
-margin:0;
-
+  font-family:Arial;
+  background:#8b0000;
+  color:white;
+  margin:0;
 }
 
 header{
-
-text-align:center;
-padding:20px;
-
+  background:#b30000;
+  padding:15px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
 }
 
-.logo{
-
-width:80px;
-
+header input{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:none;
 }
 
-.container{
-
-padding:20px;
-
+.btn-flutuantes{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  padding:10px;
 }
 
-select{
-
-width:100%;
-padding:10px;
-margin-bottom:10px;
-
+.btn-flutuantes .linha{
+  display:flex;
+  gap:10px;
 }
 
-.btn{
+.btn-flutuantes button{
+  flex:1;
+  background:#ff9900;
+  border:none;
+  padding:12px 0;
+  border-radius:10px;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.2s;
+}
 
-background:orange;
-border:none;
-padding:15px;
-width:100%;
-font-size:18px;
-border-radius:10px;
+.btn-flutuantes button:hover{
+  background:#e68a00;
+}
 
+.banner{
+  background:#ff3300;
+  padding:20px;
+  text-align:center;
+}
+
+.categorias{
+  display:flex;
+  gap:10px;
+  padding:10px;
+}
+
+.categoria{
+  background:#1c1c1c;
+  padding:20px;
+  border-radius:10px;
+  flex:1;
+  text-align:center;
+}
+
+.destaques{
+  padding:10px;
+}
+
+.produto{
+  background:#1c1c1c;
+  padding:15px;
+  margin:10px 0;
+  border-radius:10px;
+}
+
+.menu{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#990000;
+  display:flex;
+  justify-content:space-around;
+  padding:10px 0;
+}
+
+.carrinho-flutuante{
+  position:fixed;
+  bottom:70px;
+  right:15px;
+  background:#ff9900;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:24px;
+  cursor:pointer;
+}
+
+.carrinho-flutuante span{
+  position:absolute;
+  top:-5px;
+  right:-5px;
+  background:red;
+  color:white;
+  font-size:14px;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
