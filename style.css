@@ -1,5 +1,6 @@
+/* Estilo geral */
 body {
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   margin: 0;
   background: #111;
   color: white;
@@ -11,9 +12,17 @@ header {
   padding: 15px;
 }
 
-.logo { width: 130px; margin-bottom:5px; }
-.titulo { font-size: 24px; font-weight:bold; }
+.logo {
+  width: 130px;
+  margin-bottom: 5px;
+}
 
+.titulo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Endereço em branco */
 .endereco {
   background: #fff;
   padding: 10px;
@@ -22,110 +31,226 @@ header {
   color: #111;
 }
 
+/* Banner */
 .banner {
-  height:180px;
+  height: 180px;
   background: url("https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1200") no-repeat center center/cover;
 }
 
-.container { padding:15px; max-width:1000px; margin:auto; }
+.container {
+  padding: 15px;
+  max-width: 1000px;
+  margin: auto;
+}
 
+/* Campo de busca branco */
 .busca {
   width: 100%;
   padding: 12px;
   border-radius: 8px;
   border: none;
   margin-bottom: 15px;
-  background:#fff;
-  color:#111;
+  background: #fff;
+  color: #111;
+  font-size: 16px;
 }
 
+/* Botões flutuantes abaixo da busca */
 .categorias {
-  display:flex;
-  gap:10px;
-  overflow-x:auto;
-  margin-bottom:15px;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  margin-bottom: 15px;
 }
 
 .cat {
   background: #ff9900;
-  padding:8px 15px;
-  border-radius:20px;
-  cursor:pointer;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
   white-space: nowrap;
-  color:white;
-  text-align:center;
+  color: white;
+  text-align: center;
+  font-weight: bold;
 }
 
-#produtos { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; }
+#produtos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
 
+/* Card de produtos */
 .card {
-  background:#1f1f1f;
-  border-radius:12px;
-  overflow:hidden;
-  box-shadow:0 5px 15px rgba(0,0,0,0.5);
+  background: #1f1f1f;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 }
 
-.card img { width:100%; height:140px; object-fit:cover; }
+.card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
 
-.card-content { padding:12px; }
-.preco { color:#2ecc71; font-size:17px; margin-top:5px; }
+.card-content {
+  padding: 12px;
+}
 
-button { background:#ff9900; border:none; padding:10px; width:100%; border-radius:8px; color:white; margin-top:8px; cursor:pointer; }
-button:hover { background:#e68a00; }
+.preco {
+  color: #2ecc71;
+  font-size: 17px;
+  margin-top: 5px;
+}
 
+/* Botões de adicionar */
+button {
+  background: #ff9900;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 8px;
+  color: white;
+  margin-top: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #e68a00;
+}
+
+/* Carrinho flutuante */
 #botaoCarrinho {
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#ff9900;
-  width:65px; height:65px;
-  border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  font-size:28px; cursor:pointer;
-  box-shadow:0 4px 15px rgba(0,0,0,0.6);
-  color:white;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ff9900;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+  color: white;
 }
+
 #contador {
-  position:absolute; top:-5px; right:-5px;
-  background:white; color:#ff9900;
-  font-size:12px; padding:3px 6px; border-radius:50%;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #fff;
+  color: #ff9900;
+  font-size: 12px;
+  padding: 3px 6px;
+  border-radius: 50%;
 }
 
-#carrinho { background:#fff; padding:15px; border-radius:10px; margin-top:25px; color:#111; }
+/* Carrinho lateral */
+#carrinho {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 25px;
+  color: #111;
+}
 
-.item { display:flex; justify-content:space-between; margin-bottom:6px; }
+.item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
 
-.total { font-size:20px; margin-top:10px; }
+.total {
+  font-size: 20px;
+  margin-top: 10px;
+}
 
+/* Inputs e selects */
 input, select {
-  width:100%; padding:10px; margin-top:10px;
-  border-radius:6px; border:none;
-  background:#fff; color:#111;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 6px;
+  border: none;
+  background: #fff;
+  color: #111;
 }
 
+/* Botão enviar pedido */
 .enviar {
-  background:#ff9900;
-  font-size:18px; padding:12px;
-  margin-top:15px; border-radius:10px;
-  color:white;
+  background: #ff9900;
+  font-size: 18px;
+  padding: 12px;
+  margin-top: 15px;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 
+/* Modal Meio a Meio */
 #modalMeioMeio {
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,0.85); display:none;
-  align-items:center; justify-content:center; z-index:10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
 }
-.modal-content { background:#1f1f1f; padding:20px; border-radius:12px; width:90%; max-width:400px; color:white; }
-.modal-content h3 { margin-top:0; }
-.modal-content select { margin-top:10px; margin-bottom:20px; }
-.modal-buttons { display:flex; justify-content:space-between; }
-.modal-buttons button { width:48%; padding:10px; font-weight:bold; }
 
+.modal-content {
+  background: #1f1f1f;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  color: white;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+}
+
+.modal-content select {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-buttons button {
+  width: 48%;
+  padding: 10px;
+  font-weight: bold;
+}
+
+/* Botão flutuante voltar */
 #botaoVoltar {
-  position: fixed; bottom:20px; left:20px;
-  background:#ff9900; width:65px; height:65px;
-  border-radius:50%; display:flex; align-items:center; justify-content:center;
-  font-size:16px; font-weight:bold; cursor:pointer;
-  color:white;
-  box-shadow:0 4px 15px rgba(0,0,0,0.6);
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #ff9900;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.6);
 }
