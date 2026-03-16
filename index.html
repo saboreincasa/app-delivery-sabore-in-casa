@@ -161,6 +161,10 @@ header {
   color: white; /* carrinho branco */
 }
 
+#botaoCarrinho span {
+  color: white; /* garante que o ícone carrinho seja branco */
+}
+
 #contador {
   position: absolute;
   top: -5px;
@@ -326,7 +330,7 @@ input, select {
 </div>
 
 <div id="botaoCarrinho" onclick="scrollCarrinho()">
-  🛒
+  <span>🛒</span>
   <div id="contador">0</div>
 </div>
 
