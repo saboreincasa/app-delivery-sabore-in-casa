@@ -197,21 +197,22 @@ input, select {
   color: white;
 }
 
-/* Inputs endereço e troco em branco */
+/* Inputs endereço, troco e select de pagamento em branco */
 #enderecoCliente,
-#troco {
+#troco,
+#pagamento {
   background: #fff;
   color: #111;
 }
 
 /* Botão enviar pedido no WhatsApp melhorado */
 .enviar {
-  background: #25D366;       /* Verde WhatsApp */
-  color: #fff;                /* Texto branco */
+  background: #25D366;
+  color: #fff;
   font-size: 18px;
   padding: 14px;
   margin-top: 15px;
-  border-radius: 20px;        /* Pontas arredondadas */
+  border-radius: 20px;
   border: none;
   font-weight: bold;
   cursor: pointer;
@@ -219,7 +220,7 @@ input, select {
 }
 
 .enviar:hover {
-  background: #1ebe57;        /* Tom verde mais escuro ao passar o mouse */
+  background: #1ebe57;
 }
 
 /* Modal Meio a Meio */
@@ -306,7 +307,7 @@ input, select {
       Total + entrega: R$ <span id="total">0.00</span>
     </div>
 
-    <!-- Campos endereço e troco em branco -->
+    <!-- Campos endereço, troco e select de pagamento em branco -->
     <input id="enderecoCliente" placeholder="Digite seu endereço" />
     <select id="pagamento">
       <option>PIX</option>
@@ -315,7 +316,7 @@ input, select {
     </select>
     <input id="troco" placeholder="Troco para quanto?" />
 
-    <!-- Botão enviar pedido no WhatsApp melhorado -->
+    <!-- Botão enviar pedido no WhatsApp -->
     <button class="enviar" onclick="enviarPedido()">Enviar pedido no WhatsApp</button>
   </div>
 
@@ -340,7 +341,7 @@ input, select {
 
 <script>
 let numero = "5531983391576"
-let taxaEntrega = 5
+let taxaEntrega = 7.99
 let carrinho = JSON.parse(localStorage.getItem("carrinho")) || []
 let produtos = []
 let metade1 = null
