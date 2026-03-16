@@ -8,9 +8,9 @@ let produtos = []
 
 async function carregarProdutos(){
 
-let resposta = await fetch("produtos.json")
+let r = await fetch("produtos.json")
 
-produtos = await resposta.json()
+produtos = await r.json()
 
 mostrar(produtos)
 
@@ -32,7 +32,7 @@ html+=`
 
 <h3>${p.nome}</h3>
 
-<div class="preco">R$ ${p.preco.toFixed(2)}</div>
+<p class="preco">R$ ${p.preco.toFixed(2)}</p>
 
 <button onclick="add('${p.nome}',${p.preco})">
 
@@ -54,7 +54,7 @@ document.getElementById("produtos").innerHTML=html
 
 function filtrar(cat){
 
-let filtrados = produtos.filter(p => p.nome.includes(cat))
+let filtrados = produtos.filter(p=>p.nome.includes(cat))
 
 mostrar(filtrados)
 
@@ -62,9 +62,9 @@ mostrar(filtrados)
 
 document.getElementById("busca").addEventListener("input",function(){
 
-let valor=this.value.toLowerCase()
+let v=this.value.toLowerCase()
 
-let filtrados = produtos.filter(p => p.nome.toLowerCase().includes(valor))
+let filtrados=produtos.filter(p=>p.nome.toLowerCase().includes(v))
 
 mostrar(filtrados)
 
@@ -74,9 +74,15 @@ function add(nome,preco){
 
 let item=carrinho.find(p=>p.nome===nome)
 
-if(item) item.qtd++
+if(item){
 
-else carrinho.push({nome,preco,qtd:1})
+item.qtd++
+
+}else{
+
+carrinho.push({nome,preco,qtd:1})
+
+}
 
 salvar()
 
@@ -100,11 +106,11 @@ let qtd=0
 
 carrinho.forEach((item,i)=>{
 
+lista+=`${item.nome} x${item.qtd}<br>`
+
 total+=item.preco*item.qtd
 
 qtd+=item.qtd
-
-lista+=`${item.nome} x${item.qtd}<br>`
 
 })
 
@@ -119,6 +125,20 @@ document.getElementById("total").innerText=(total+taxaEntrega).toFixed(2)
 function scrollCarrinho(){
 
 document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
+
+}
+
+function enviarPedido(){
+
+let msg="🍕 Pedido Sabore In Casa %0A"
+
+carrinho.forEach(i=>{
+
+msg+=`${i.nome} x${i.qtd}%0A`
+
+})
+
+window.open("https://wa.me/"+numero+"?text="+msg)
 
 }
 
