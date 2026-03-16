@@ -1,9 +1,31 @@
+const CACHE = "sabore-v1"
+
+const arquivos = [
+"/",
+"/index.html",
+"/style.css",
+"/app.js",
+"/produtos.json"
+]
+
 self.addEventListener("install",e=>{
 
-console.log("App instalado");
+e.waitUntil(
 
-});
+caches.open(CACHE)
+.then(cache => cache.addAll(arquivos))
+
+)
+
+})
 
 self.addEventListener("fetch",e=>{
 
-});
+e.respondWith(
+
+caches.match(e.request)
+.then(res => res || fetch(e.request))
+
+)
+
+})
