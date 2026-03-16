@@ -1,20 +1,17 @@
-// mapa.js
+function calcularTaxa(km){
 
-// Função simples para simular localização de entrega
-function mostrarEntrega() {
-  const mapaDiv = document.getElementById("mapa");
-  if (!mapaDiv) {
-    const div = document.createElement("div");
-    div.id = "mapa";
-    div.style.height = "200px";
-    div.style.background = "#eee";
-    div.innerText = "Mapa do entregador (simulado)";
-    document.body.appendChild(div);
-  }
+if(km<=2){
+
+return 5
+
 }
 
-// Chamar quando pedido for finalizado
-function pedidoSaiuParaEntrega() {
-  mostrarEntrega();
-  notificar("Seu pedido está a caminho!");
+if(km<=5){
+
+return 6.99
+
+}
+
+return 9.99
+
 }
