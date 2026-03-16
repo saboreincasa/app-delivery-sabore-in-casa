@@ -197,11 +197,29 @@ input, select {
   color: white;
 }
 
+/* Inputs endereço e troco em branco */
+#enderecoCliente,
+#troco {
+  background: #fff;
+  color: #111;
+}
+
+/* Botão enviar pedido no WhatsApp melhorado */
 .enviar {
-  background: #25D366;
+  background: #25D366;       /* Verde WhatsApp */
+  color: #fff;                /* Texto branco */
   font-size: 18px;
-  padding: 12px;
+  padding: 14px;
   margin-top: 15px;
+  border-radius: 20px;        /* Pontas arredondadas */
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.enviar:hover {
+  background: #1ebe57;        /* Tom verde mais escuro ao passar o mouse */
 }
 
 /* Modal Meio a Meio */
@@ -287,6 +305,8 @@ input, select {
     <div class="total">
       Total + entrega: R$ <span id="total">0.00</span>
     </div>
+
+    <!-- Campos endereço e troco em branco -->
     <input id="enderecoCliente" placeholder="Digite seu endereço" />
     <select id="pagamento">
       <option>PIX</option>
@@ -294,6 +314,8 @@ input, select {
       <option>Cartão</option>
     </select>
     <input id="troco" placeholder="Troco para quanto?" />
+
+    <!-- Botão enviar pedido no WhatsApp melhorado -->
     <button class="enviar" onclick="enviarPedido()">Enviar pedido no WhatsApp</button>
   </div>
 
