@@ -2,58 +2,116 @@
 <html lang="pt-BR">
 
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sabore In Casa</title>
-
 <link rel="stylesheet" href="estilo.css">
-
-<link rel="manifest" href="manifesto.json">
-
 </head>
 
 <body>
 
+<!-- HEADER -->
 <header>
-
-<img src="imagens/logo.png" class="logo">
-
-<h1>Sabore In Casa</h1>
-
+  <h1>Sabore In Casa</h1>
+  <input type="text" placeholder="Buscar pizza, bebida...">
 </header>
 
+<!-- BOTOES FLUTUANTES -->
+<div class="btn-flutuantes">
+  <div class="linha">
+    <button onclick="abrirPizza()">🍕 Pizzas</button>
+    <button onclick="abrirBebidas()">🥤 Bebidas</button>
+  </div>
+  <div class="linha">
+    <button onclick="abrirCombos()">🎁 Combos</button>
+    <button onclick="abrirPromocoes()">🔥 Promoções</button>
+  </div>
+</div>
+
+<!-- BANNER PROMOCIONAL -->
 <section class="banner">
+  <h2>Combo Especial</h2>
+  <p>2 Pizzas + 2 Refrigerantes</p>
+</section>
 
-<h2>Peça sua pizza agora 🍕</h2>
+<!-- CATEGORIAS -->
+<section class="categorias">
+  <a href="pizza.html"><div class="categoria">🍕 Pizzas Tradicionais</div></a>
+  <a href="pizza.html"><div class="categoria">🔥 Pizzas Premium</div></a>
+  <a href="bebidas.html"><div class="categoria">🥤 Bebidas</div></a>
+</section>
 
-<p>Entrega rápida na sua casa</p>
+<!-- DESTAQUES -->
+<section class="destaques">
+  <h2>Destaques</h2>
+
+  <div class="produto">
+    <h3>Pepperoni Explosiva</h3>
+    <p>R$ 45,90</p>
+    <button onclick="abrirPizza()">Adicionar</button>
+  </div>
+
+  <div class="produto">
+    <h3>Combo Família</h3>
+    <p>R$ 59,90</p>
+    <button onclick="abrirCombos()">Adicionar</button>
+  </div>
+
+  <div class="produto">
+    <h3>Marguerita Especial</h3>
+    <p>R$ 42,90</p>
+    <button onclick="abrirPizza()">Adicionar</button>
+  </div>
 
 </section>
 
-<section class="menu">
+<!-- CARRINHO FLUTUANTE -->
+<div class="carrinho-flutuante" onclick="abrirCarrinho()">
+  🛒
+  <span id="qtd-carrinho">0</span>
+</div>
 
-<a href="pizza.html">
+<!-- MENU INFERIOR -->
+<nav class="menu">
+  <button onclick="abrirPizza()">🏠 Início</button>
+  <button onclick="abrirCombos()">🍕 Combos</button>
+  <button onclick="abrirCarrinho()">📦 Pedidos</button>
+  <button onclick="abrirConta()">👤 Conta</button>
+</nav>
 
-<button class="btn">
-
-🍕 Montar Pizza
-
-</button>
-
-</a>
-
-<button class="btn" onclick="abrirCarrinho()">
-
-🛒 Carrinho
-
-</button>
-
-</section>
-
+<!-- SCRIPTS -->
 <script src="app.js"></script>
+<script>
+function abrirPizza(){ window.location="pizza.html"; }
+function abrirBebidas(){ window.location="bebidas.html"; }
+function abrirCombos(){ alert('Página de Combos'); }
+function abrirPromocoes(){ alert('Página de Promoções'); }
+function abrirConta(){ alert('Minha conta'); }
+
+function abrirCarrinho(){
+  let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+  if(carrinho.length === 0){
+    alert("Carrinho vazio!");
+    return;
+  }
+  let texto = "Pedido:%0A";
+  carrinho.forEach(p=>{
+    if(p.tipo==="bebida"){
+      texto += `Bebida: ${p.produto}%0A`;
+    } else {
+      texto += `${p.tamanho} ${p.sabor1} / ${p.sabor2} ${p.preco}%0A`;
+    }
+  });
+  window.open("https://wa.me/5531983391576?text="+texto);
+}
+
+// Atualiza quantidade do carrinho flutuante
+function atualizarCarrinho(){
+  let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+  document.getElementById("qtd-carrinho").innerText = carrinho.length;
+}
+atualizarCarrinho();
+</script>
 
 </body>
-
 </html>
