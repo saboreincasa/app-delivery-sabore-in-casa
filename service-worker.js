@@ -1,19 +1,22 @@
-const CACHE = "sabore-v1"
-
-const arquivos = [
-"/",
-"/index.html",
-"/style.css",
-"/app.js",
-"/produtos.json"
-]
+const CACHE="sabore-v1"
 
 self.addEventListener("install",e=>{
 
 e.waitUntil(
 
-caches.open(CACHE)
-.then(cache => cache.addAll(arquivos))
+caches.open(CACHE).then(c=>c.addAll([
+
+"/",
+
+"index.html",
+
+"estilo.css",
+
+"app.js",
+
+"produtos.json"
+
+]))
 
 )
 
@@ -23,8 +26,7 @@ self.addEventListener("fetch",e=>{
 
 e.respondWith(
 
-caches.match(e.request)
-.then(res => res || fetch(e.request))
+caches.match(e.request).then(r=>r||fetch(e.request))
 
 )
 
