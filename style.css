@@ -1,256 +1,217 @@
-/* Estilo geral */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #111;
-  color: white;
+body{
+font-family:Arial;
+margin:0;
+background:#111;
+color:white;
 }
 
-header {
-  background: #c62828;
-  text-align: center;
-  padding: 15px;
+header{
+background:#c62828;
+text-align:center;
+padding:15px;
 }
 
-.logo {
-  width: 130px;
-  margin-bottom: 5px;
+.logo{
+width:120px;
 }
 
-.titulo {
-  font-size: 24px;
-  font-weight: bold;
+.titulo{
+font-size:22px;
+font-weight:bold;
 }
 
-/* Endereço em branco */
-.endereco {
-  background: #fff;
-  padding: 10px;
-  text-align: center;
-  font-size: 14px;
-  color: #111;
+.endereco{
+background:#1f1f1f;
+padding:10px;
+text-align:center;
+font-size:14px;
 }
 
-/* Banner */
-.banner {
-  height: 180px;
-  background: url("https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1200") no-repeat center center/cover;
+.banner{
+height:170px;
+background:url("https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1200") center/cover;
+margin:10px;
+border-radius:10px;
 }
 
-.container {
-  padding: 15px;
-  max-width: 1000px;
-  margin: auto;
+.container{
+padding:15px;
 }
 
-/* Campo de busca branco */
-.busca {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  margin-bottom: 15px;
-  background: #fff;
-  color: #111;
-  font-size: 16px;
+.busca{
+width:100%;
+padding:12px;
+border-radius:8px;
+border:none;
+margin-bottom:15px;
 }
 
-/* Botões flutuantes abaixo da busca */
-.categorias {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  margin-bottom: 15px;
+.categorias{
+margin-bottom:15px;
 }
 
-.cat {
-  background: #ff9900;
-  padding: 8px 15px;
-  border-radius: 20px;
-  cursor: pointer;
-  white-space: nowrap;
-  color: white;
-  text-align: center;
-  font-weight: bold;
+.linha{
+display:flex;
+gap:10px;
+margin-bottom:10px;
 }
 
-#produtos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
+.linha button{
+
+flex:1;
+
+padding:12px;
+
+border:none;
+
+border-radius:25px;
+
+background:linear-gradient(45deg,#ff9800,#ff5722);
+
+color:white;
+
+font-weight:bold;
+
+cursor:pointer;
+
 }
 
-/* Card de produtos */
-.card {
-  background: #1f1f1f;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+.bannerPromo{
+
+background:#ff5722;
+
+padding:12px;
+
+text-align:center;
+
+border-radius:10px;
+
+font-weight:bold;
+
+margin-bottom:15px;
+
 }
 
-.card img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
+#produtos{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+
+gap:15px;
+
 }
 
-.card-content {
-  padding: 12px;
+.card{
+
+background:#1f1f1f;
+
+border-radius:12px;
+
+overflow:hidden;
+
 }
 
-.preco {
-  color: #2ecc71;
-  font-size: 17px;
-  margin-top: 5px;
+.card img{
+
+width:100%;
+
+height:140px;
+
+object-fit:cover;
+
 }
 
-/* Botões de adicionar */
-button {
-  background: #ff9900;
-  border: none;
-  padding: 10px;
-  width: 100%;
-  border-radius: 8px;
-  color: white;
-  margin-top: 8px;
-  cursor: pointer;
-  font-weight: bold;
+.card-content{
+
+padding:10px;
+
 }
 
-button:hover {
-  background: #e68a00;
+.preco{
+
+color:#2ecc71;
+
+font-size:17px;
+
+margin-top:5px;
+
 }
 
-/* Carrinho flutuante */
-#botaoCarrinho {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #ff9900;
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-  color: white;
+.card-content button{
+
+background:#ff9800;
+
+border:none;
+
+padding:10px;
+
+width:100%;
+
+border-radius:8px;
+
+color:white;
+
+margin-top:8px;
+
+cursor:pointer;
+
+font-weight:bold;
+
 }
 
-#contador {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  background: #fff;
-  color: #ff9900;
-  font-size: 12px;
-  padding: 3px 6px;
-  border-radius: 50%;
+#botaoCarrinho{
+
+position:fixed;
+
+bottom:20px;
+
+right:20px;
+
+background:#ff9800;
+
+width:65px;
+
+height:65px;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:28px;
+
+cursor:pointer;
+
 }
 
-/* Carrinho lateral */
-#carrinho {
-  background: #fff;
-  padding: 15px;
-  border-radius: 10px;
-  margin-top: 25px;
-  color: #111;
-}
+#contador{
 
-.item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 6px;
-}
+position:absolute;
 
-.total {
-  font-size: 20px;
-  margin-top: 10px;
-}
+top:-5px;
 
-/* Inputs e selects */
-input, select {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 6px;
-  border: none;
-  background: #fff;
-  color: #111;
-}
+right:-5px;
 
-/* Botão enviar pedido */
-.enviar {
-  background: #ff9900;
-  font-size: 18px;
-  padding: 12px;
-  margin-top: 15px;
-  border-radius: 10px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
+background:red;
 
-/* Modal Meio a Meio */
-#modalMeioMeio {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.85);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-}
+color:white;
 
-.modal-content {
-  background: #1f1f1f;
-  padding: 20px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 400px;
-  color: white;
-}
+width:20px;
 
-.modal-content h3 {
-  margin-top: 0;
-}
+height:20px;
 
-.modal-content select {
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
+border-radius:50%;
 
-.modal-buttons {
-  display: flex;
-  justify-content: space-between;
-}
+font-size:12px;
 
-.modal-buttons button {
-  width: 48%;
-  padding: 10px;
-  font-weight: bold;
-}
+display:flex;
 
-/* Botão flutuante voltar */
-#botaoVoltar {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  background: #ff9900;
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  color: white;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+align-items:center;
+
+justify-content:center;
+
 }
