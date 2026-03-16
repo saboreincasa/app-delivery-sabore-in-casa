@@ -1,14 +1,9 @@
-const chavePix = "31983391576"
+function pagarPix(){
 
-function mostrarPix(){
+let chave="31983391576"
 
-alert(
-"Pagamento via PIX\n\n"+
-"Chave PIX:\n"+
-chavePix+
-"\n\nApós pagar envie o comprovante no WhatsApp."
-)
+navigator.clipboard.writeText(chave)
 
-navigator.clipboard.writeText(chavePix)
+alert("PIX copiado: "+chave)
 
 }
