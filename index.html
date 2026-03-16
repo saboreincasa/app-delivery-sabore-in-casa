@@ -37,6 +37,7 @@ header {
   text-align: center;
   font-size: 14px;
   margin-bottom: 10px;
+  border-radius: 6px;
 }
 
 .banner {
@@ -142,11 +143,12 @@ header {
   background: #e68a00;
 }
 
+/* Carrinho flutuante */
 #botaoCarrinho {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: #ff9800;
+  background: #ff9800; /* botão laranja */
   width: 65px;
   height: 65px;
   border-radius: 50%;
@@ -155,7 +157,8 @@ header {
   justify-content: center;
   font-size: 28px;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+  color: white; /* carrinho branco */
 }
 
 #contador {
@@ -169,6 +172,7 @@ header {
   border-radius: 50%;
 }
 
+/* Carrinho lateral */
 #carrinho {
   background: #1f1f1f;
   padding: 15px;
@@ -187,6 +191,7 @@ header {
   margin-top: 10px;
 }
 
+/* Inputs e select */
 input, select {
   width: 100%;
   padding: 10px;
@@ -197,7 +202,7 @@ input, select {
   color: white;
 }
 
-/* Inputs endereço, troco e select de pagamento em branco */
+/* Campos endereço, troco e select em branco */
 #enderecoCliente,
 #troco,
 #pagamento {
@@ -205,7 +210,7 @@ input, select {
   color: #111;
 }
 
-/* Botão enviar pedido no WhatsApp melhorado */
+/* Botão enviar pedido no WhatsApp */
 .enviar {
   background: #25D366;
   color: #fff;
@@ -286,7 +291,7 @@ input, select {
 
   <input class="busca" id="busca" placeholder="🔎 Buscar produto" />
 
-  <!-- BOTÕES FLUTUANTES EM DUAS LINHAS -->
+  <!-- Botões flutuantes em duas linhas -->
   <div class="btn-flutuantes">
     <div class="linha">
       <button onclick="filtrar('Pizza')">🍕 Pizzas</button>
@@ -307,7 +312,6 @@ input, select {
       Total + entrega: R$ <span id="total">0.00</span>
     </div>
 
-    <!-- Campos endereço, troco e select de pagamento em branco -->
     <input id="enderecoCliente" placeholder="Digite seu endereço" />
     <select id="pagamento">
       <option>PIX</option>
@@ -316,7 +320,6 @@ input, select {
     </select>
     <input id="troco" placeholder="Troco para quanto?" />
 
-    <!-- Botão enviar pedido no WhatsApp -->
     <button class="enviar" onclick="enviarPedido()">Enviar pedido no WhatsApp</button>
   </div>
 
