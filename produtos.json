@@ -1,58 +1,176 @@
 [
-  {
-    "id":1,"nome":"Calabresa","categoria":"pizza","preco":45.90,
-    "ingredientes":"calabresa, cebola, mussarela","imagem":"imagens/calabresa.jpg"
-  },
-  {
-    "id":2,"nome":"Mussarela","categoria":"pizza","preco":42.90,
-    "ingredientes":"mussarela, tomate, orégano","imagem":"imagens/mussarela.jpg"
-  },
-  {
-    "id":3,"nome":"Portuguesa","categoria":"pizza","preco":46.90,
-    "ingredientes":"presunto, ovo, cebola, ervilha","imagem":"imagens/portuguesa.jpg"
-  },
-  {
-    "id":4,"nome":"Marguerita","categoria":"pizza","preco":43.90,
-    "ingredientes":"mussarela, tomate, manjericão","imagem":"imagens/marguerita.jpg"
-  },
-  {
-    "id":5,"nome":"Frango Catupiry","categoria":"pizza","preco":49.90,
-    "ingredientes":"frango desfiado, catupiry","imagem":"imagens/frango.jpg"
-  },
-  {
-    "id":6,"nome":"Bacon","categoria":"pizza","preco":50.90,
-    "ingredientes":"bacon, mussarela","imagem":"imagens/bacon.jpg"
-  },
-  {
-    "id":7,"nome":"Presunto Queijo","categoria":"pizza","preco":44.90,
-    "ingredientes":"presunto, mussarela","imagem":"imagens/presunto.jpg"
-  },
-  {
-    "id":8,"nome":"Milho Bacon","categoria":"pizza","preco":48.90,
-    "ingredientes":"milho, bacon, mussarela","imagem":"imagens/milho.jpg"
-  },
-  {
-    "id":9,"nome":"Napolitana","categoria":"pizza","preco":45.90,
-    "ingredientes":"tomate, parmesão, alho","imagem":"imagens/napolitana.jpg"
-  },
-  {
-    "id":10,"nome":"Atum","categoria":"pizza","preco":46.90,
-    "ingredientes":"atum, cebola, mussarela","imagem":"imagens/atum.jpg"
-  },
+{
+"nome": "Pizza A Moda",
+"categoria": "Pizza",
+"preco": 42.00,
+"foto": "imagens/pizza-moda.jpg"
+},
 
-  {"id":11,"nome":"Heineken 473ml","categoria":"bebida","preco":9.90,"imagem":"imagens/heineken.jpg"},
-  {"id":12,"nome":"Stella 473ml","categoria":"bebida","preco":9.90,"imagem":"imagens/stella.jpg"},
-  {"id":13,"nome":"Brahma 473ml","categoria":"bebida","preco":7.90,"imagem":"imagens/brahma.jpg"},
-  {"id":14,"nome":"Spaten 473ml","categoria":"bebida","preco":8.90,"imagem":"imagens/spaten.jpg"},
-  {"id":15,"nome":"Boemia 473ml","categoria":"bebida","preco":8.90,"imagem":"imagens/boemia.jpg"},
-  {"id":16,"nome":"Água Sem Gás","categoria":"bebida","preco":4.50,"imagem":"imagens/agua_sem_gas.jpg"},
-  {"id":17,"nome":"Água Com Gás","categoria":"bebida","preco":5.00,"imagem":"imagens/agua_com_gas.jpg"},
-  {"id":18,"nome":"Coca-Cola 2L","categoria":"bebida","preco":12.90,"imagem":"imagens/coca2l.jpg"},
-  {"id":19,"nome":"Coca-Cola Zero 2L","categoria":"bebida","preco":12.90,"imagem":"imagens/cocazero2l.jpg"},
-  {"id":20,"nome":"Fanta 2L","categoria":"bebida","preco":11.90,"imagem":"imagens/fanta2l.jpg"},
-  {"id":21,"nome":"Coca-Cola Lata","categoria":"bebida","preco":5.90,"imagem":"imagens/cocalata.jpg"},
-  {"id":22,"nome":"Pepsi Lata","categoria":"bebida","preco":5.90,"imagem":"imagens/pepsilata.jpg"},
-  {"id":23,"nome":"Guaraná Lata","categoria":"bebida","preco":5.90,"imagem":"imagens/guarana.jpg"},
-  {"id":24,"nome":"Combo 2 Pizzas + 2 Refrigerantes","categoria":"combos","preco":99.90,"imagem":"imagens/combo1.jpg"},
-  {"id":25,"nome":"Combo 1 Pizza + 1 Bebida","categoria":"combos","preco":54.90,"imagem":"imagens/combo2.jpg"}
+{
+"nome": "Pizza Calabresa",
+"categoria": "Pizza",
+"preco": 42.00,
+"foto": "imagens/pizza-calabresa.jpg"
+},
+
+{
+"nome": "Pizza Frango com Cheddar",
+"categoria": "Pizza",
+"preco": 42.00,
+"foto": "imagens/pizza-frango-cheddar.jpg"
+},
+
+{
+"nome": "Pizza Frango com Catupiry",
+"categoria": "Pizza",
+"preco": 42.00,
+"foto": "imagens/pizza-frango-catupiry.jpg"
+},
+
+{
+"nome": "Pizza Frango Bolonhesa",
+"categoria": "Pizza",
+"preco": 42.00,
+"foto": "imagens/pizza-frango-bolonhesa.jpg"
+},
+
+{
+"nome": "Pizza Milho com Bacon",
+"categoria": "Pizza",
+"preco": 42.00,
+"foto": "imagens/pizza-milho-bacon.jpg"
+},
+
+{
+"nome": "Pizza Napolitana",
+"categoria": "Pizza",
+"preco": 42.00,
+"foto": "imagens/pizza-napolitana.jpg"
+},
+
+{
+"nome": "Pizza Palmito Bolonhesa",
+"categoria": "Pizza",
+"preco": 42.00,
+"foto": "imagens/pizza-palmito.jpg"
+},
+
+{
+"nome": "Pizza Quatro Queijos",
+"categoria": "Pizza",
+"preco": 42.00,
+"foto": "imagens/pizza-4queijos.jpg"
+},
+
+{
+"nome": "Pizza Vegetariana",
+"categoria": "Pizza",
+"preco": 42.00,
+"foto": "imagens/pizza-vegetariana.jpg"
+},
+
+{
+"nome": "Combo Solteiro",
+"categoria": "Combo",
+"preco": 45.00,
+"foto": "imagens/combo-solteiro.jpg"
+},
+
+{
+"nome": "Combo Casal",
+"categoria": "Combo",
+"preco": 79.00,
+"foto": "imagens/combo-casal.jpg"
+},
+
+{
+"nome": "Combo Família",
+"categoria": "Combo",
+"preco": 119.00,
+"foto": "imagens/combo-familia.jpg"
+},
+
+{
+"nome": "Combo Amigos",
+"categoria": "Combo",
+"preco": 99.00,
+"foto": "imagens/combo-amigos.jpg"
+},
+
+{
+"nome": "Combo Churrasco",
+"categoria": "Combo",
+"preco": 120.00,
+"foto": "imagens/combo-churrasco.jpg"
+},
+
+{
+"nome": "Bohemia 473ml",
+"categoria": "Cerveja",
+"preco": 5.50,
+"foto": "imagens/bohemia.jpg"
+},
+
+{
+"nome": "Spaten 473ml",
+"categoria": "Cerveja",
+"preco": 5.99,
+"foto": "imagens/spaten.jpg"
+},
+
+{
+"nome": "Stella Artois 473ml",
+"categoria": "Cerveja",
+"preco": 6.99,
+"foto": "imagens/stella.jpg"
+},
+
+{
+"nome": "Brahma 473ml",
+"categoria": "Cerveja",
+"preco": 4.99,
+"foto": "imagens/brahma.jpg"
+},
+
+{
+"nome": "Heineken 473ml",
+"categoria": "Cerveja",
+"preco": 7.99,
+"foto": "imagens/heineken.jpg"
+},
+
+{
+"nome": "Coca Cola 2L",
+"categoria": "Refrigerante",
+"preco": 10.00,
+"foto": "imagens/coca2l.jpg"
+},
+
+{
+"nome": "Coca Cola Lata",
+"categoria": "Refrigerante",
+"preco": 5.00,
+"foto": "imagens/cocalata.jpg"
+},
+
+{
+"nome": "Pepsi Twist Lata",
+"categoria": "Refrigerante",
+"preco": 4.50,
+"foto": "imagens/pepsitwist.jpg"
+},
+
+{
+"nome": "Água sem gás",
+"categoria": "Bebida",
+"preco": 3.00,
+"foto": "imagens/agua.jpg"
+},
+
+{
+"nome": "Água com gás",
+"categoria": "Bebida",
+"preco": 3.50,
+"foto": "imagens/aguagas.jpg"
+}
 ]
