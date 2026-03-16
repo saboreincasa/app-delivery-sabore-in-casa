@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Escolher Pizza</title>
+
+<link rel="stylesheet" href="estilo.css">
+
+</head>
+
+<body>
+
+<div class="pizza-container">
+
+<img src="imagens/pizza-calabresa.jpg" class="pizza-img">
+
+<h2>Escolha o tamanho da pizza</h2>
+
+<select id="tamanho" onchange="atualizarPreco()">
+
+<option value="media">Pizza Média 30cm - R$ 54,90</option>
+<option value="gigante">Pizza Gigante 35cm - R$ 64,90</option>
+
+</select>
+
+<h3 id="preco">R$ 54,90</h3>
+
+<hr>
+
+<h3>Escolha o 1º sabor</h3>
+
+<select id="sabor1" onchange="mostrarIngredientes(1)">
+
+<option value="calabresa">Calabresa</option>
+<option value="quatroqueijos">Quatro Queijos</option>
+<option value="frango">Frango com Catupiry</option>
+<option value="portuguesa">Portuguesa</option>
+<option value="marguerita">Marguerita</option>
+<option value="pepperoni">Pepperoni</option>
+<option value="bacon">Bacon</option>
+<option value="napolitana">Napolitana</option>
+<option value="milhobacon">Milho com Bacon</option>
+<option value="vegetariana">Vegetariana</option>
+
+</select>
+
+<div class="ingredientes">
+
+<strong>Ingredientes:</strong>
+
+<p id="ingredientes1"></p>
+
+</div>
+
+<h3>Escolha o 2º sabor</h3>
+
+<select id="sabor2" onchange="mostrarIngredientes(2)">
+
+<option value="calabresa">Calabresa</option>
+<option value="quatroqueijos">Quatro Queijos</option>
+<option value="frango">Frango com Catupiry</option>
+<option value="portuguesa">Portuguesa</option>
+<option value="marguerita">Marguerita</option>
+<option value="pepperoni">Pepperoni</option>
+<option value="bacon">Bacon</option>
+<option value="napolitana">Napolitana</option>
+<option value="milhobacon">Milho com Bacon</option>
+<option value="vegetariana">Vegetariana</option>
+
+</select>
+
+<div class="ingredientes">
+
+<strong>Ingredientes:</strong>
+
+<p id="ingredientes2"></p>
+
+</div>
+
+<hr>
+
+<div class="extras">
+
+<label>
+
+<input type="checkbox" id="borda">
+Borda Recheada (+R$8)
+
+</label>
+
+<label>
+
+<input type="checkbox" id="cheddar">
+Extra Cheddar (+R$5)
+
+</label>
+
+</div>
+
+<button class="btn-carrinho" onclick="adicionarCarrinho()">
+
+Adicionar ao Carrinho 🍕
+
+</button>
+
+</div>
+
+<script src="pizza.js"></script>
+
+</body>
+
+</html>
