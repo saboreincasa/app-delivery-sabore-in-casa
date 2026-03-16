@@ -1,9 +1,7 @@
-function pagarPix(){
+function gerarPix(){
 
-let chave="31983391576"
+let chave="31983391576";
 
-navigator.clipboard.writeText(chave)
-
-alert("PIX copiado: "+chave)
+alert("Pague no PIX: "+chave);
 
 }
