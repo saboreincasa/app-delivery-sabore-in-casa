@@ -8,127 +8,8 @@
 
 <title>Sabore In Casa</title>
 
-<style>
-
-body{
-font-family:Arial;
-margin:0;
-background:#111;
-color:white;
-}
-
-header{
-background:#c62828;
-padding:15px;
-text-align:center;
-}
-
-.logo{
-font-size:28px;
-font-weight:bold;
-}
-
-.status{
-font-size:14px;
-margin-top:5px;
-}
-
-.banner{
-height:180px;
-background:url("https://images.unsplash.com/photo-1513104890138-7c749659a591");
-background-size:cover;
-background-position:center;
-}
-
-.container{
-max-width:900px;
-margin:auto;
-padding:15px;
-}
-
-.card{
-background:#1f1f1f;
-border-radius:10px;
-margin-bottom:15px;
-overflow:hidden;
-}
-
-.card img{
-width:100%;
-height:160px;
-object-fit:cover;
-}
-
-.card-content{
-padding:10px;
-}
-
-button{
-background:#2ecc71;
-border:none;
-padding:10px;
-width:100%;
-border-radius:6px;
-color:white;
-margin-top:6px;
-}
-
-#carrinhoBotao{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#ff9800;
-width:60px;
-height:60px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:26px;
-}
-
-#contador{
-position:absolute;
-top:-5px;
-right:-5px;
-background:red;
-border-radius:50%;
-padding:3px 7px;
-font-size:12px;
-}
-
-#carrinho{
-background:#1f1f1f;
-padding:15px;
-border-radius:10px;
-margin-top:20px;
-}
-
-input,select,textarea{
-width:100%;
-padding:10px;
-margin-top:8px;
-border-radius:6px;
-border:none;
-}
-
-.total{
-font-size:20px;
-margin-top:10px;
-}
-
-.whatsapp{
-position:fixed;
-left:20px;
-bottom:20px;
-background:#25D366;
-padding:14px;
-border-radius:50px;
-color:white;
-font-weight:bold;
-}
-
-</style>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="estilo.css">
 
 </head>
 
@@ -136,311 +17,83 @@ font-weight:bold;
 
 <header>
 
-<div class="logo">🍕 Sabore In Casa</div>
+<img src="imagens/logo.png" class="logo">
 
-<div class="status" id="status"></div>
+<div class="titulo">Sabore In Casa</div>
 
 </header>
+
+<div class="endereco">
+📍 Rua Maria de Lourdes da Cruz Nº 378  
+Bairro Mantiqueira – Belo Horizonte
+</div>
 
 <div class="banner"></div>
 
 <div class="container">
 
-<h2>🍕 Pizzas Tradicionais</h2>
+<input class="busca" id="busca" placeholder="🔎 Buscar produto">
 
-<div id="pizzas"></div>
+<div class="categorias">
 
-<h2>⭐ Pizza Premium</h2>
+<div class="linha">
 
-<div id="premium"></div>
+<button onclick="filtrar('Pizza')">🍕 Pizzas</button>
+<button onclick="filtrar('Coca')">🥤 Bebidas</button>
 
-<h2>🔥 Combos</h2>
+</div>
 
-<div id="combos"></div>
+<div class="linha">
 
-<h2>🍺 Bebidas</h2>
+<button onclick="filtrar('Combo')">🎁 Combos</button>
+<button onclick="filtrar('Promo')">🔥 Promoções</button>
 
-<div id="bebidas"></div>
+</div>
 
-<h2>🛒 Carrinho</h2>
+</div>
+
+<div class="bannerPromo">
+
+🔥 PROMOÇÕES DO DIA
+
+</div>
+
+<div id="produtos"></div>
 
 <div id="carrinho">
+
+<h2>🛒 Carrinho</h2>
 
 <div id="lista"></div>
 
 <div class="total">
-
-Total: R$ <span id="total">0.00</span>
-
+Total + entrega: R$ <span id="total">0.00</span>
 </div>
 
-<select id="bairro">
+<input id="enderecoCliente" placeholder="Digite seu endereço">
 
-<option>Selecione seu bairro</option>
-
-<option value="5">Mantiqueira</option>
-<option value="6">Planalto</option>
-<option value="6">Venda Nova</option>
-<option value="6">Jardim Europa</option>
-<option value="7">Rio Branco</option>
-<option value="7">Céu Azul</option>
-<option value="7">Santa Mônica</option>
-<option value="8">São João Batista</option>
-<option value="8">Copacabana</option>
-<option value="8">Lagoinha Leblon</option>
-
+<select id="pagamento">
+<option>PIX</option>
+<option>Dinheiro</option>
+<option>Cartão</option>
 </select>
 
-<input id="endereco" placeholder="Digite seu endereço">
+<input id="troco" placeholder="Troco para quanto?">
 
-<textarea id="obs" placeholder="Observação do pedido"></textarea>
-
-<button onclick="enviarPedido()">Enviar pedido no WhatsApp</button>
-
-</div>
-
-</div>
-
-<div id="carrinhoBotao">
-
-🛒 <span id="contador">0</span>
-
-</div>
-
-<a class="whatsapp" href="https://wa.me/5531983391576">
-
-WhatsApp
-
-</a>
-
-<script>
-
-let carrinho=[]
-let total=0
-
-let pizzas=[
-
-"Calabresa",
-"Mussarela",
-"Frango Catupiry",
-"Portuguesa",
-"Marguerita",
-"Napolitana",
-"Bacon",
-"Milho com Bacon",
-"Presunto e Queijo",
-"Atum"
-
-]
-
-function carregar(){
-
-let html=""
-
-pizzas.forEach(p=>{
-
-html+=`
-
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1594007654729-407eedc4fe24">
-
-<div class="card-content">
-
-<h3>${p}</h3>
-
-<button onclick="add('${p}',49.9)">Adicionar</button>
-
-<button onclick="meia('${p}')">Meia Pizza</button>
+<button class="enviar" onclick="enviarPedido()">
+Enviar pedido no WhatsApp
+</button>
 
 </div>
 
 </div>
 
-`
-
-})
-
-document.getElementById("pizzas").innerHTML=html
-
-document.getElementById("premium").innerHTML=`
-
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3">
-
-<div class="card-content">
-
-<h3>Pizza Premium 4 Queijos</h3>
-
-<button onclick="add('Pizza Premium 4 Queijos',59.9)">Adicionar</button>
-
+<div id="botaoCarrinho" onclick="scrollCarrinho()">
+🛒
+<div id="contador">0</div>
 </div>
 
-</div>
-
-`
-
-document.getElementById("combos").innerHTML=`
-
-<div class="card">
-
-<div class="card-content">
-
-<h3>Combo Pizza + Coca Cola 2L</h3>
-
-<button onclick="add('Combo Pizza + Coca 2L',59.9)">Adicionar</button>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="card-content">
-
-<h3>Combo 3 Cervejas Heineken</h3>
-
-<button onclick="add('Combo 3 Heineken',27)">Adicionar</button>
-
-</div>
-
-</div>
-
-`
-
-document.getElementById("bebidas").innerHTML=`
-
-<div class="card">
-
-<div class="card-content">
-
-<h3>Cerveja Brahma Latão</h3>
-
-<button onclick="add('Brahma Latão',7)">Adicionar</button>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="card-content">
-
-<h3>Cerveja Heineken Latão</h3>
-
-<button onclick="add('Heineken Latão',9)">Adicionar</button>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="card-content">
-
-<h3>Coca Cola 2L</h3>
-
-<button onclick="add('Coca Cola 2L',12)">Adicionar</button>
-
-</div>
-
-</div>
-
-`
-
-}
-
-function add(nome,preco){
-
-carrinho.push({nome,preco})
-
-total+=preco
-
-atualizar()
-
-}
-
-function meia(sabor){
-
-let nome=prompt("Escolha o outro sabor")
-
-add("Meia "+sabor+" / "+nome,49.9)
-
-}
-
-function atualizar(){
-
-let lista=""
-
-carrinho.forEach((i)=>{
-
-lista+=`<div>${i.nome} - R$${i.preco}</div>`
-
-})
-
-document.getElementById("lista").innerHTML=lista
-
-document.getElementById("total").innerText=total.toFixed(2)
-
-document.getElementById("contador").innerText=carrinho.length
-
-}
-
-function enviarPedido(){
-
-let bairro=document.getElementById("bairro")
-
-let taxa=parseFloat(bairro.value)
-
-let endereco=document.getElementById("endereco").value
-
-let obs=document.getElementById("obs").value
-
-let msg="Pedido Sabore In Casa %0A"
-
-carrinho.forEach(i=>{
-
-msg+=i.nome+" - R$"+i.preco+"%0A"
-
-})
-
-msg+="%0ATaxa entrega: "+taxa
-
-msg+="%0ATotal: "+(total+taxa)
-
-msg+="%0AEndereço: "+endereco
-
-msg+="%0AObs: "+obs
-
-window.open("https://wa.me/5531983391576?text="+msg)
-
-}
-
-function horario(){
-
-let h=new Date().getHours()
-
-let status=document.getElementById("status")
-
-if(h>=18 && h<=23){
-
-status.innerText="🟢 Aberto agora"
-
-}else{
-
-status.innerText="🔴 Fechado agora"
-
-}
-
-}
-
-carregar()
-
-horario()
-
-</script>
+<script src="app.js"></script>
 
 </body>
-
 </html>
