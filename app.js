@@ -1,61 +1,39 @@
-let produtos=[]
-let carrinho=[]
+let carrinho = [];
 
 fetch("produtos.json")
-.then(r=>r.json())
-.then(data=>{
-produtos=data
-mostrar(produtos)
-})
+.then(res => res.json())
+.then(produtos => {
 
-function mostrar(lista){
+let area = document.getElementById("produtos");
 
-let html=""
+produtos.forEach(pizza => {
 
-lista.forEach(p=>{
+area.innerHTML += `
 
-html+=`
+<div class="produto">
 
-<div class="card">
+<h3>${pizza.nome}</h3>
 
-<img src="${p.foto}">
+<p>${pizza.ingredientes.join(", ")}</p>
 
-<div class="info">
+<p>R$ ${pizza.preco}</p>
 
-<h3>${p.nome}</h3>
-
-<p>R$ ${p.preco}</p>
-
-<button onclick='add(${JSON.stringify(p)})'>
+<button onclick="adicionarCarrinho(${pizza.id})">
 Adicionar
 </button>
 
 </div>
 
-</div>
+`;
 
-`
+});
 
-})
+});
 
-document.getElementById("produtos").innerHTML=html
+function adicionarCarrinho(id){
 
-}
+carrinho.push(id);
 
-function add(p){
-
-carrinho.push(p)
-
-alert("Adicionado ao carrinho")
+alert("Produto adicionado");
 
 }
-
-document.getElementById("busca").addEventListener("input",e=>{
-
-let termo=e.target.value.toLowerCase()
-
-let filtrado=produtos.filter(p=>p.nome.toLowerCase().includes(termo))
-
-mostrar(filtrado)
-
-})
