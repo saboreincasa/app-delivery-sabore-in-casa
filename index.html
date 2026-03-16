@@ -19,20 +19,20 @@
 
 <img src="imagens/logo.png" class="logo">
 
-<div class="titulo">Sabore In Casa</div>
+<h1>Sabore In Casa</h1>
 
-</header>
-
-<div class="endereco">
+<p class="endereco">
 📍 Rua Maria de Lourdes da Cruz Nº 378  
 Bairro Mantiqueira – Belo Horizonte
-</div>
+</p>
+
+</header>
 
 <div class="banner"></div>
 
 <div class="container">
 
-<input class="busca" id="busca" placeholder="🔎 Buscar produto">
+<input id="busca" placeholder="🔎 Buscar produto" class="busca">
 
 <div class="categorias">
 
@@ -53,9 +53,7 @@ Bairro Mantiqueira – Belo Horizonte
 </div>
 
 <div class="bannerPromo">
-
-🔥 PROMOÇÕES DO DIA
-
+🔥 Promoções do dia
 </div>
 
 <div id="produtos"></div>
@@ -66,21 +64,21 @@ Bairro Mantiqueira – Belo Horizonte
 
 <div id="lista"></div>
 
-<div class="total">
-Total + entrega: R$ <span id="total">0.00</span>
-</div>
+<p>Total + entrega: R$ <span id="total">0.00</span></p>
 
 <input id="enderecoCliente" placeholder="Digite seu endereço">
 
 <select id="pagamento">
+
 <option>PIX</option>
 <option>Dinheiro</option>
 <option>Cartão</option>
+
 </select>
 
 <input id="troco" placeholder="Troco para quanto?">
 
-<button class="enviar" onclick="enviarPedido()">
+<button onclick="enviarPedido()" class="enviar">
 Enviar pedido no WhatsApp
 </button>
 
@@ -89,11 +87,15 @@ Enviar pedido no WhatsApp
 </div>
 
 <div id="botaoCarrinho" onclick="scrollCarrinho()">
+
 🛒
-<div id="contador">0</div>
+
+<span id="contador">0</span>
+
 </div>
 
 <script src="app.js"></script>
 
 </body>
+
 </html>
