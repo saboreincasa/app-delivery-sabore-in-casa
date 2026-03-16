@@ -1,119 +1,131 @@
-body{
-  font-family:Arial;
-  background:#8b0000;
-  color:white;
-  margin:0;
+body {
+  font-family: Arial;
+  margin: 0;
+  background: #111;
+  color: white;
 }
 
-header{
-  background:#b30000;
-  padding:15px;
+header {
+  background: #c62828;
+  text-align: center;
+  padding: 15px;
+}
+
+.logo { width: 130px; margin-bottom:5px; }
+.titulo { font-size: 24px; font-weight:bold; }
+
+.endereco {
+  background: #fff;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+  color: #111;
+}
+
+.banner {
+  height:180px;
+  background: url("https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1200") no-repeat center center/cover;
+}
+
+.container { padding:15px; max-width:1000px; margin:auto; }
+
+.busca {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 15px;
+  background:#fff;
+  color:#111;
+}
+
+.categorias {
   display:flex;
-  flex-direction:column;
   gap:10px;
+  overflow-x:auto;
+  margin-bottom:15px;
 }
 
-header input{
-  width:100%;
-  padding:10px;
-  border-radius:8px;
-  border:none;
-}
-
-.btn-flutuantes{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  padding:10px;
-}
-
-.btn-flutuantes .linha{
-  display:flex;
-  gap:10px;
-}
-
-.btn-flutuantes button{
-  flex:1;
-  background:#ff9900;
-  border:none;
-  padding:12px 0;
-  border-radius:10px;
-  font-size:16px;
+.cat {
+  background: #ff9900;
+  padding:8px 15px;
+  border-radius:20px;
   cursor:pointer;
-  transition:0.2s;
-}
-
-.btn-flutuantes button:hover{
-  background:#e68a00;
-}
-
-.banner{
-  background:#ff3300;
-  padding:20px;
+  white-space: nowrap;
+  color:white;
   text-align:center;
 }
 
-.categorias{
-  display:flex;
-  gap:10px;
-  padding:10px;
+#produtos { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; }
+
+.card {
+  background:#1f1f1f;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 5px 15px rgba(0,0,0,0.5);
 }
 
-.categoria{
-  background:#1c1c1c;
-  padding:20px;
-  border-radius:10px;
-  flex:1;
-  text-align:center;
-}
+.card img { width:100%; height:140px; object-fit:cover; }
 
-.destaques{
-  padding:10px;
-}
+.card-content { padding:12px; }
+.preco { color:#2ecc71; font-size:17px; margin-top:5px; }
 
-.produto{
-  background:#1c1c1c;
-  padding:15px;
-  margin:10px 0;
-  border-radius:10px;
-}
+button { background:#ff9900; border:none; padding:10px; width:100%; border-radius:8px; color:white; margin-top:8px; cursor:pointer; }
+button:hover { background:#e68a00; }
 
-.menu{
+#botaoCarrinho {
   position:fixed;
-  bottom:0;
-  width:100%;
-  background:#990000;
-  display:flex;
-  justify-content:space-around;
-  padding:10px 0;
-}
-
-.carrinho-flutuante{
-  position:fixed;
-  bottom:70px;
-  right:15px;
+  bottom:20px;
+  right:20px;
   background:#ff9900;
-  width:60px;
-  height:60px;
+  width:65px; height:65px;
   border-radius:50%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:24px;
-  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  font-size:28px; cursor:pointer;
+  box-shadow:0 4px 15px rgba(0,0,0,0.6);
+  color:white;
+}
+#contador {
+  position:absolute; top:-5px; right:-5px;
+  background:white; color:#ff9900;
+  font-size:12px; padding:3px 6px; border-radius:50%;
 }
 
-.carrinho-flutuante span{
-  position:absolute;
-  top:-5px;
-  right:-5px;
-  background:red;
+#carrinho { background:#fff; padding:15px; border-radius:10px; margin-top:25px; color:#111; }
+
+.item { display:flex; justify-content:space-between; margin-bottom:6px; }
+
+.total { font-size:20px; margin-top:10px; }
+
+input, select {
+  width:100%; padding:10px; margin-top:10px;
+  border-radius:6px; border:none;
+  background:#fff; color:#111;
+}
+
+.enviar {
+  background:#ff9900;
+  font-size:18px; padding:12px;
+  margin-top:15px; border-radius:10px;
   color:white;
-  font-size:14px;
-  width:20px;
-  height:20px;
-  border-radius:50%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+}
+
+#modalMeioMeio {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.85); display:none;
+  align-items:center; justify-content:center; z-index:10;
+}
+.modal-content { background:#1f1f1f; padding:20px; border-radius:12px; width:90%; max-width:400px; color:white; }
+.modal-content h3 { margin-top:0; }
+.modal-content select { margin-top:10px; margin-bottom:20px; }
+.modal-buttons { display:flex; justify-content:space-between; }
+.modal-buttons button { width:48%; padding:10px; font-weight:bold; }
+
+#botaoVoltar {
+  position: fixed; bottom:20px; left:20px;
+  background:#ff9900; width:65px; height:65px;
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:16px; font-weight:bold; cursor:pointer;
+  color:white;
+  box-shadow:0 4px 15px rgba(0,0,0,0.6);
 }
