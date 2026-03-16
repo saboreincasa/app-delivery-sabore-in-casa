@@ -1,39 +1,15 @@
-let carrinho = [];
+function abrirCarrinho(){
 
-fetch("produtos.json")
-.then(res => res.json())
-.then(produtos => {
+let carrinho=JSON.parse(localStorage.getItem("carrinho"))||[];
 
-let area = document.getElementById("produtos");
+let texto="Pedido:%0A";
 
-produtos.forEach(pizza => {
+carrinho.forEach(p=>{
 
-area.innerHTML += `
-
-<div class="produto">
-
-<h3>${pizza.nome}</h3>
-
-<p>${pizza.ingredientes.join(", ")}</p>
-
-<p>R$ ${pizza.preco}</p>
-
-<button onclick="adicionarCarrinho(${pizza.id})">
-Adicionar
-</button>
-
-</div>
-
-`;
+texto+=p.tamanho+" "+p.sabor1+" / "+p.sabor2+" "+p.preco+"%0A";
 
 });
 
-});
-
-function adicionarCarrinho(id){
-
-carrinho.push(id);
-
-alert("Produto adicionado");
+window.open("https://wa.me/5531983391576?text="+texto);
 
 }
