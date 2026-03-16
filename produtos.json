@@ -1,163 +1,33 @@
 [
-{
-"nome":"Pizza Calabresa Tradicional",
-"preco":49.90,
-"foto":"imagens/pizza-calabresa.jpg"
-},
+{"categoria":"pizza","nome":"Pizza Calabresa 30cm","foto":"https://images.unsplash.com/photo-1594007654729-407eedc4fe24","preco":49.9},
+{"categoria":"pizza","nome":"Pizza Mussarela 30cm","foto":"https://images.unsplash.com/photo-1548365328-9f547fb0953d","preco":48.9},
+{"categoria":"pizza","nome":"Pizza Frango Catupiry 30cm","foto":"https://images.unsplash.com/photo-1601924582975-7e9c7b4f9d19","preco":52.9},
+{"categoria":"pizza","nome":"Pizza Portuguesa 30cm","foto":"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e","preco":52.9},
+{"categoria":"pizza","nome":"Pizza Marguerita 30cm","foto":"https://images.unsplash.com/photo-1604382354936-07c5d9983bd3","preco":48.9},
+{"categoria":"pizza","nome":"Pizza Napolitana 30cm","foto":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38","preco":48.9},
+{"categoria":"pizza","nome":"Pizza Milho com Bacon 30cm","foto":"https://images.unsplash.com/photo-1574071318508-1cdbab80d002","preco":51.9},
+{"categoria":"pizza","nome":"Pizza Presunto e Queijo 30cm","foto":"https://images.unsplash.com/photo-1590947132387-155cc02f3212","preco":48.9},
+{"categoria":"pizza","nome":"Pizza Atum 30cm","foto":"https://images.unsplash.com/photo-1541745537411-b8046dc6d66c","preco":53.9},
+{"categoria":"pizza","nome":"Pizza Bacon 30cm","foto":"https://images.unsplash.com/photo-1600628422019-6a9c5f33a6ad","preco":52.9},
 
-{
-"nome":"Pizza Frango com Catupiry Tradicional",
-"preco":54.90,
-"foto":"imagens/pizza-frango.jpg"
-},
+{"categoria":"pizza_premium","nome":"Pizza Premium 4 Queijos 30cm","foto":"https://images.unsplash.com/photo-1604382354936-07c5d9983bd3","preco":59.9},
 
-{
-"nome":"Pizza Portuguesa Tradicional",
-"preco":52.90,
-"foto":"imagens/pizza-portuguesa.jpg"
-},
+{"categoria":"combo","nome":"Combo Pizza + Coca Cola 2L","foto":"https://images.unsplash.com/photo-1581636625402-29b2a704ef13","preco":59.9},
+{"categoria":"combo","nome":"Combo Pizza Família + Coca Cola 2L","foto":"https://images.unsplash.com/photo-1513104890138-7c749659a591","preco":79.9},
 
-{
-"nome":"Pizza Marguerita Tradicional",
-"preco":48.90,
-"foto":"imagens/pizza-marguerita.jpg"
-},
+{"categoria":"combo_cerveja","nome":"Combo 3 Cervejas Brahma Latão","foto":"https://images.unsplash.com/photo-1584225064785-c62a8b43d148","preco":18},
+{"categoria":"combo_cerveja","nome":"Combo 3 Cervejas Heineken Latão","foto":"https://images.unsplash.com/photo-1608270586620-248524c67de9","preco":27},
 
-{
-"nome":"Pizza Bacon Tradicional",
-"preco":53.90,
-"foto":"imagens/pizza-bacon.jpg"
-},
+{"categoria":"cerveja","nome":"Cerveja Brahma Latão 473ml","foto":"https://images.unsplash.com/photo-1584225064785-c62a8b43d148","preco":7},
+{"categoria":"cerveja","nome":"Cerveja Heineken Latão 473ml","foto":"https://images.unsplash.com/photo-1608270586620-248524c67de9","preco":9},
+{"categoria":"cerveja","nome":"Cerveja Spaten Latão 473ml","foto":"https://images.unsplash.com/photo-1618886614638-80e3c103d31a","preco":9},
+{"categoria":"cerveja","nome":"Cerveja Bohemia Latão 473ml","foto":"https://images.unsplash.com/photo-1618160702438-9b02ab6515c9","preco":8},
+{"categoria":"cerveja","nome":"Cerveja Stella Artois Latão 473ml","foto":"https://images.unsplash.com/photo-1587049352846-4a222e784d38","preco":10},
 
-{
-"nome":"Pizza Milho com Bacon Tradicional",
-"preco":54.90,
-"foto":"imagens/pizza-milho-bacon.jpg"
-},
+{"categoria":"refrigerante","nome":"Coca Cola 2 Litros","foto":"https://images.unsplash.com/photo-1581636625402-29b2a704ef13","preco":12},
+{"categoria":"refrigerante","nome":"Coca Cola Zero 2 Litros","foto":"https://images.unsplash.com/photo-1629203851122-3726ecdf080e","preco":12},
+{"categoria":"refrigerante","nome":"Refrigerante Antarctica 2 Litros","foto":"https://images.unsplash.com/photo-1624517452488-04869289c4ca","preco":11},
 
-{
-"nome":"Pizza Napolitana Tradicional",
-"preco":49.90,
-"foto":"imagens/pizza-napolitana.jpg"
-},
-
-{
-"nome":"Pizza Pepperoni Tradicional",
-"preco":55.90,
-"foto":"imagens/pizza-pepperoni.jpg"
-},
-
-{
-"nome":"Pizza Vegetariana Tradicional",
-"preco":51.90,
-"foto":"imagens/pizza-vegetariana.jpg"
-},
-
-{
-"nome":"Pizza Quatro Queijos Tradicional",
-"preco":56.90,
-"foto":"imagens/pizza-quatro-queijos.jpg"
-},
-
-{
-"nome":"Pizza Picanha Premium",
-"preco":69.90,
-"foto":"imagens/pizza-picanha.jpg"
-},
-
-{
-"nome":"Pizza Camarão Premium",
-"preco":74.90,
-"foto":"imagens/pizza-camarao.jpg"
-},
-
-{
-"nome":"Pizza Parma Premium",
-"preco":72.90,
-"foto":"imagens/pizza-parma.jpg"
-},
-
-{
-"nome":"Pizza Frango Especial Premium",
-"preco":67.90,
-"foto":"imagens/pizza-frango-premium.jpg"
-},
-
-{
-"nome":"Pizza Suprema Premium",
-"preco":75.90,
-"foto":"imagens/pizza-suprema.jpg"
-},
-
-{
-"nome":"Coca Cola 2L",
-"preco":12.00,
-"foto":"imagens/coca2l.jpg"
-},
-
-{
-"nome":"Coca Cola Lata 350ml",
-"preco":6.00,
-"foto":"imagens/coca-lata.jpg"
-},
-
-{
-"nome":"Guaraná Antarctica 2L",
-"preco":11.00,
-"foto":"imagens/guarana2l.jpg"
-},
-
-{
-"nome":"Fanta Laranja 2L",
-"preco":11.00,
-"foto":"imagens/fanta2l.jpg"
-},
-
-{
-"nome":"Heineken Latão 473ml",
-"preco":9.00,
-"foto":"imagens/heineken-lata.jpg"
-},
-
-{
-"nome":"Bohemia Latão 473ml",
-"preco":8.00,
-"foto":"imagens/bohemia-lata.jpg"
-},
-
-{
-"nome":"Combo Pizza Casal",
-"preco":79.90,
-"foto":"imagens/combo-casal.jpg"
-},
-
-{
-"nome":"Combo Pizza Família",
-"preco":119.90,
-"foto":"imagens/combo-familia.jpg"
-},
-
-{
-"nome":"Combo Pizza + Coca 2L",
-"preco":59.90,
-"foto":"imagens/combo-pizza-coca.jpg"
-},
-
-{
-"nome":"Combo Duas Pizzas Gigantes",
-"preco":139.90,
-"foto":"imagens/combo-duplo.jpg"
-},
-
-{
-"nome":"Promo Pizza Calabresa",
-"preco":39.90,
-"foto":"imagens/promo-calabresa.jpg"
-},
-
-{
-"nome":"Promo Pizza Frango",
-"preco":39.90,
-"foto":"imagens/promo-frango.jpg"
-}
+{"categoria":"agua","nome":"Água Mineral Sem Gás","foto":"https://images.unsplash.com/photo-1564419320408-38e24e0381f4","preco":3},
+{"categoria":"agua","nome":"Água Mineral Com Gás","foto":"https://images.unsplash.com/photo-1561047029-3000c68339ca","preco":3.5}
 ]
