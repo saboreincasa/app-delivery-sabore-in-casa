@@ -1,17 +1,7 @@
-function calcularTaxa(km){
+function calcularEntrega(){
 
-if(km<=2){
+let taxa=5;
 
-return 5
-
-}
-
-if(km<=5){
-
-return 6.99
-
-}
-
-return 9.99
+return taxa;
 
 }
