@@ -3,124 +3,477 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Sabore In Casa</title>
 
-<link rel="stylesheet" href="estilo.css">
+<link rel="manifest" href="manifest.json" />
 
-<link rel="manifest" href="manifesto.json">
+<style>
+body {
+  font-family: Arial;
+  margin: 0;
+  background: #111;
+  color: white;
+}
+
+header {
+  background: #c62828;
+  text-align: center;
+  padding: 15px;
+}
+
+.logo {
+  width: 130px;
+  margin-bottom: 5px;
+}
+
+.titulo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.endereco {
+  background: #1f1f1f;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.banner {
+  height: 180px;
+  background: url("https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1200") no-repeat center center/cover;
+}
+
+.container {
+  padding: 15px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.busca {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 15px;
+}
+
+.categorias {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  margin-bottom: 15px;
+}
+
+.cat {
+  background: #1f1f1f;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+#produtos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: #1f1f1f;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 12px;
+}
+
+.preco {
+  color: #2ecc71;
+  font-size: 17px;
+  margin-top: 5px;
+}
+
+button {
+  background: #2ecc71;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 8px;
+  color: white;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #27ae60;
+}
+
+#botaoCarrinho {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ff9800;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+}
+
+#contador {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  padding: 3px 6px;
+  border-radius: 50%;
+}
+
+#carrinho {
+  background: #1f1f1f;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 25px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.total {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+.enviar {
+  background: #25D366;
+  font-size: 18px;
+  padding: 12px;
+  margin-top: 15px;
+}
+
+/* Modal Meio a Meio */
+#modalMeioMeio {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.modal-content {
+  background: #1f1f1f;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  color: white;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+}
+
+.modal-content select {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-buttons button {
+  width: 48%;
+  padding: 10px;
+  font-weight: bold;
+}
+</style>
 
 </head>
 
 <body>
 
 <header>
-
-<img src="imagens/logo.png" class="logo">
-
-<h1>Sabore In Casa</h1>
-
+  <img src="logo.png" class="logo" alt="Sabore In Casa Logo" />
+  <div class="titulo">Sabore In Casa</div>
 </header>
 
 <div class="endereco">
-
-📍 Rua Maria de Lourdes da Cruz Nº 378  
-Bairro Mantiqueira – Belo Horizonte
-
+  📍 Rua Maria de Lourdes da Cruz Nº 378  
+  Bairro Mantiqueira – Belo Horizonte
 </div>
 
 <div class="banner"></div>
 
 <div class="container">
 
-<input class="busca" id="busca" placeholder="🔎 Buscar produto">
+  <input class="busca" id="busca" placeholder="🔎 Buscar produto" />
 
-<div class="categorias">
+  <div class="categorias">
+    <div class="cat" onclick="filtrar('Pizza')">🍕 Pizzas</div>
+    <div class="cat" onclick="filtrar('Combo')">📦 Combos</div>
+    <div class="cat" onclick="filtrar('Cerveja')">🍺 Cervejas</div>
+    <div class="cat" onclick="filtrar('Coca')">🥤 Refrigerantes</div>
+  </div>
 
-<div class="cat" onclick="filtrar('Pizza')">🍕 Pizzas</div>
+  <div id="produtos"></div>
 
-<div class="cat" onclick="filtrar('Combo')">📦 Combos</div>
+  <div id="carrinho">
+    <h2>🛒 Carrinho</h2>
+    <div id="lista"></div>
 
-<div class="cat" onclick="filtrar('Cerveja')">🍺 Cervejas</div>
+    <div class="total">
+      Total + entrega: R$ <span id="total">0.00</span>
+    </div>
 
-<div class="cat" onclick="filtrar('Coca')">🥤 Refrigerantes</div>
+    <input id="enderecoCliente" placeholder="Digite seu endereço" />
+    <select id="pagamento">
+      <option>PIX</option>
+      <option>Dinheiro</option>
+      <option>Cartão</option>
+    </select>
 
-<div class="cat" onclick="filtrar('Água')">💧 Águas</div>
+    <input id="troco" placeholder="Troco para quanto?" />
 
-</div>
-
-<div id="produtos"></div>
-
-<div id="carrinho">
-
-<h2>🛒 Carrinho</h2>
-
-<div id="lista"></div>
-
-<p class="total">
-
-Total + entrega: R$ <span id="total">0.00</span>
-
-</p>
-
-<input id="enderecoCliente" placeholder="Digite seu endereço">
-
-<select id="pagamento">
-
-<option>PIX</option>
-
-<option>Dinheiro</option>
-
-<option>Cartão</option>
-
-</select>
-
-<input id="troco" placeholder="Troco para quanto?">
-
-<button class="enviar" onclick="enviarPedido()">
-
-Enviar pedido no WhatsApp
-
-</button>
-
-</div>
+    <button class="enviar" onclick="enviarPedido()">
+      Enviar pedido no WhatsApp
+    </button>
+  </div>
 
 </div>
 
 <div id="botaoCarrinho" onclick="scrollCarrinho()">
-
-🛒
-
-<div id="contador">0</div>
-
+  🛒
+  <div id="contador">0</div>
 </div>
 
-<footer>
+<!-- Modal para pizza meio a meio -->
+<div id="modalMeioMeio">
+  <div class="modal-content">
+    <h3>Escolha a outra metade da pizza</h3>
+    <select id="segundaMetade">
+      <!-- Opções preenchidas via JS -->
+    </select>
+    <div class="modal-buttons">
+      <button onclick="confirmarMeioMeio()">Confirmar</button>
+      <button onclick="fecharModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
 
-📍 Rua Maria de Lourdes da Cruz Nº 378  
-Bairro Mantiqueira  
-CEP 31655230  
-Belo Horizonte - MG
+<script>
 
-<br><br>
+let numero = "5531983391576"
+let taxaEntrega = 5
 
-© Aplicativo desenvolvido por  
-<strong>Carlos Henrique</strong>
+let carrinho = JSON.parse(localStorage.getItem("carrinho")) || []
+let produtos = []
 
-</footer>
+// Variáveis para meio a meio
+let metade1 = null
 
-<script src="app.js"></script>
+async function carregarProdutos() {
+  let resposta = await fetch("produtos.json")
+  produtos = await resposta.json()
+  mostrar(produtos)
+}
 
-<script src="mapa.js"></script>
+function mostrar(lista) {
+  let html = ""
 
-<script src="pix.js"></script>
+  lista.forEach(p => {
+    html += `
+    <div class="card">
+      <img src="${p.foto}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1046/1046784.png'" alt="${p.nome}">
+      <div class="card-content">
+        <h3>${p.nome}</h3>
+        <div class="preco">R$ ${p.preco.toFixed(2)}</div>
+        ${p.nome.toLowerCase().includes("pizza") ? 
+          `<button onclick="abrirModalMeioMeio('${p.nome}', ${p.preco})">Adicionar Meio a Meio</button>
+          <button onclick="add('${p.nome}', ${p.preco})">Adicionar Normal</button>` 
+          : 
+          `<button onclick="add('${p.nome}', ${p.preco})">Adicionar</button>`
+        }
+      </div>
+    </div>`
+  })
 
-<script src="notificacao.js"></script>
+  document.getElementById("produtos").innerHTML = html
+}
 
-<script src="impressao.js"></script>
+function filtrar(cat) {
+  let filtrados = produtos.filter(p => p.nome.includes(cat))
+  mostrar(filtrados)
+}
+
+document.getElementById("busca").addEventListener("input", function () {
+  let valor = this.value.toLowerCase()
+  let filtrados = produtos.filter(p => p.nome.toLowerCase().includes(valor))
+  mostrar(filtrados)
+})
+
+function add(nome, preco, metade2 = null) {
+  let descricao = nome
+  if (metade2) descricao = `${nome} / ${metade2} (Meio a meio)`
+
+  let item = carrinho.find(p => p.nome === descricao)
+  if (item) {
+    item.qtd++
+  } else {
+    carrinho.push({ nome: descricao, preco: preco, qtd: 1 })
+  }
+  salvar()
+}
+
+function salvar() {
+  localStorage.setItem("carrinho", JSON.stringify(carrinho))
+  atualizar()
+}
+
+function atualizar() {
+  let lista = ""
+  let total = 0
+  let qtd = 0
+
+  carrinho.forEach((item, i) => {
+    total += item.preco * item.qtd
+    qtd += item.qtd
+
+    lista += `
+      <div class="item">
+        ${item.nome} x${item.qtd}
+        <button onclick="remover(${i})">❌</button>
+      </div>
+    `
+  })
+
+  document.getElementById("lista").innerHTML = lista
+  document.getElementById("contador").innerText = qtd
+  document.getElementById("total").innerText = (total + taxaEntrega).toFixed(2)
+}
+
+function remover(i) {
+  carrinho.splice(i, 1)
+  salvar()
+}
+
+function scrollCarrinho() {
+  document.getElementById("carrinho").scrollIntoView({ behavior: "smooth" })
+}
+
+function enviarPedido() {
+  let endereco = document.getElementById("enderecoCliente").value
+  let pagamento = document.getElementById("pagamento").value
+  let troco = document.getElementById("troco").value
+
+  if (carrinho.length === 0) {
+    alert("Adicione algum produto antes de enviar o pedido.")
+    return
+  }
+  if (!endereco) {
+    alert("Por favor, informe o endereço.")
+    return
+  }
+
+  let msg = "🍕 Pedido Sabore In Casa %0A%0A"
+  let total = 0
+
+  carrinho.forEach(item => {
+    msg += item.nome + " x" + item.qtd + "%0A"
+    total += item.preco * item.qtd
+  })
+
+  msg += "%0ATaxa entrega: R$" + taxaEntrega.toFixed(2)
+  msg += "%0ATotal: R$" + (total + taxaEntrega).toFixed(2)
+  msg += "%0AEndereço: " + endereco
+  msg += "%0APagamento: " + pagamento
+  msg += "%0ATroco: " + troco
+
+  window.open("https://wa.me/" + numero + "?text=" + msg)
+}
+
+// Funções meio a meio
+
+function abrirModalMeioMeio(nome, preco) {
+  metade1 = { nome, preco }
+  const select = document.getElementById("segundaMetade")
+  select.innerHTML = ""
+
+  // Preencher opções, exceto a primeira metade selecionada
+  produtos.filter(p => p.nome.toLowerCase().includes("pizza") && p.nome !== nome).forEach(p => {
+    let option = document.createElement("option")
+    option.value = p.nome
+    option.textContent = p.nome
+    select.appendChild(option)
+  })
+
+  document.getElementById("modalMeioMeio").style.display = "flex"
+}
+
+function fecharModal() {
+  document.getElementById("modalMeioMeio").style.display = "none"
+  metade1 = null
+}
+
+function confirmarMeioMeio() {
+  const select = document.getElementById("segundaMetade")
+  const nomeMetade2 = select.value
+  if (!nomeMetade2) {
+    alert("Selecione a segunda metade da pizza.")
+    return
+  }
+  const metade2 = produtos.find(p => p.nome === nomeMetade2)
+  if (!metade2) {
+    alert("Erro: produto não encontrado.")
+    return
+  }
+
+  // Calcula preço médio das duas metades (pode ajustar fórmula se quiser)
+  const precoMedio = ((metade1.preco + metade2.preco) / 2).toFixed(2)
+
+  add(metade1.nome, Number(precoMedio), metade2.nome)
+
+  fecharModal()
+}
+
+// Inicializa
+carregarProdutos()
+atualizar()
+
+</script>
 
 </body>
-
 </html>
