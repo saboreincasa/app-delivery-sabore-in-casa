@@ -1,48 +1,193 @@
-function enviarPedido(){
+let numero="5531983391576"
 
-let endereco = document.getElementById("enderecoCliente").value
-let pagamento = document.getElementById("pagamento").value
-let troco = document.getElementById("troco").value
+let carrinho=JSON.parse(localStorage.getItem("carrinho"))||[]
 
-if(carrinho.length == 0){
-alert("Adicione produtos ao carrinho")
-return
+let produtos=[]
+
+let taxaEntrega=6.99
+
+async function carregarProdutos(){
+
+let r=await fetch("produtos.json")
+
+produtos=await r.json()
+
+mostrar(produtos)
+
 }
 
-let pedido = Math.floor(Math.random()*9000)+1000
+function mostrar(lista){
 
-let msg = `🍕 *SABORE IN CASA*%0A`
-msg += `Pedido Nº ${pedido}%0A%0A`
+let html=""
 
-msg += `📋 *Itens do Pedido*%0A`
+lista.forEach(p=>{
 
-let total = 0
+html+=`
 
-carrinho.forEach(item=>{
-msg += `➡ ${item.qtd}x ${item.nome}%0A`
-total += item.preco*item.qtd
+<div class="card">
+
+<img src="${p.foto}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1046/1046784.png'">
+
+<div class="card-content">
+
+<h3>${p.nome}</h3>
+
+<div class="preco">R$ ${p.preco.toFixed(2)}</div>
+
+<button onclick="add('${p.nome}',${p.preco})">
+
+Adicionar
+
+</button>
+
+</div>
+
+</div>
+
+`
+
 })
 
-let taxa = 6.99
+document.getElementById("produtos").innerHTML=html
 
-msg += `%0A💰 *Resumo*%0A`
-msg += `Subtotal: R$ ${total.toFixed(2)}%0A`
-msg += `Entrega: R$ ${taxa}%0A`
-
-msg += `%0A💵 *Total:* R$ ${(total+taxa).toFixed(2)}%0A%0A`
-
-msg += `📍 *Endereço*%0A${endereco}%0A%0A`
-
-msg += `💳 *Pagamento*%0A${pagamento}%0A`
-
-if(pagamento=="Dinheiro"){
-msg+=`Troco para: ${troco}%0A`
 }
 
-msg += `%0A⏱ Tempo estimado: 20 a 40 minutos%0A`
+function filtrar(cat){
 
-msg += `%0A🙏 Obrigado pela preferência!%0A`
-msg += `Seu pedido entrou na fila de preparo 🍕🔥`
+let filtrados=produtos.filter(p=>p.nome.includes(cat))
 
-window.open(`https://wa.me/5531983391576?text=${msg}`)
+mostrar(filtrados)
+
 }
+
+document.getElementById("busca").addEventListener("input",function(){
+
+let v=this.value.toLowerCase()
+
+let filtrados=produtos.filter(p=>p.nome.toLowerCase().includes(v))
+
+mostrar(filtrados)
+
+})
+
+function add(nome,preco){
+
+let item=carrinho.find(i=>i.nome==nome)
+
+if(item){
+
+item.qtd++
+
+}else{
+
+carrinho.push({nome,preco,qtd:1})
+
+}
+
+salvar()
+
+}
+
+function salvar(){
+
+localStorage.setItem("carrinho",JSON.stringify(carrinho))
+
+atualizar()
+
+}
+
+function atualizar(){
+
+let lista=""
+
+let total=0
+
+let qtd=0
+
+carrinho.forEach((i,index)=>{
+
+lista+=`
+
+<div>
+
+${i.nome} x${i.qtd}
+
+<button onclick="remover(${index})">❌</button>
+
+</div>
+
+`
+
+total+=i.preco*i.qtd
+
+qtd+=i.qtd
+
+})
+
+document.getElementById("lista").innerHTML=lista
+
+document.getElementById("contador").innerText=qtd
+
+document.getElementById("total").innerText=(total+taxaEntrega).toFixed(2)
+
+}
+
+function remover(i){
+
+carrinho.splice(i,1)
+
+salvar()
+
+}
+
+function scrollCarrinho(){
+
+document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
+
+}
+
+function enviarPedido(){
+
+let endereco=document.getElementById("enderecoCliente").value
+
+let pagamento=document.getElementById("pagamento").value
+
+let troco=document.getElementById("troco").value
+
+if(carrinho.length==0){
+
+alert("Adicione algum produto")
+
+return
+
+}
+
+let msg="🍕 *Pedido Sabore In Casa*%0A%0A"
+
+let total=0
+
+carrinho.forEach(i=>{
+
+msg+=`${i.nome} x${i.qtd}%0A`
+
+total+=i.preco*i.qtd
+
+})
+
+msg+=`%0ATaxa entrega: R$ ${taxaEntrega}`
+
+msg+=`%0ATotal: R$ ${(total+taxaEntrega).toFixed(2)}`
+
+msg+=`%0AEndereço: ${endereco}`
+
+msg+=`%0APagamento: ${pagamento}`
+
+msg+=`%0ATroco: ${troco}`
+
+window.open(`https://wa.me/${numero}?text=${msg}`)
+
+}
+
+carregarProdutos()
+
+atualizar()
