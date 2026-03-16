@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
 
 <meta charset="UTF-8">
@@ -8,20 +7,177 @@
 
 <title>Sabore In Casa</title>
 
-<link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="css/estilo.css">
+<style>
+
+body{
+background:#121212;
+font-family:Arial;
+margin:0;
+color:white;
+}
+
+header{
+text-align:center;
+padding:20px;
+background:#8b0000;
+}
+
+.logo{
+width:200px;
+margin-bottom:10px;
+}
+
+.endereco{
+background:#1e1e1e;
+padding:12px;
+text-align:center;
+font-size:14px;
+}
+
+.banner{
+margin:15px;
+height:200px;
+border-radius:12px;
+background:url("https://images.unsplash.com/photo-1513104890138-7c749659a591") center/cover;
+}
+
+.container{
+padding:15px;
+max-width:900px;
+margin:auto;
+}
+
+.busca{
+width:100%;
+padding:14px;
+border-radius:8px;
+border:none;
+margin-bottom:15px;
+}
+
+.btn-categorias{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-bottom:20px;
+}
+
+.btn-categorias button{
+padding:14px;
+border:none;
+border-radius:10px;
+background:#ff9800;
+font-size:16px;
+color:white;
+cursor:pointer;
+}
+
+.produtos{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+}
+
+.card{
+
+background:#1f1f1f;
+border-radius:12px;
+overflow:hidden;
+
+}
+
+.card img{
+width:100%;
+height:140px;
+object-fit:cover;
+}
+
+.card-info{
+padding:10px;
+}
+
+.preco{
+color:#2ecc71;
+font-size:18px;
+margin-top:5px;
+}
+
+.card button{
+background:#ff9800;
+border:none;
+padding:10px;
+width:100%;
+border-radius:8px;
+color:white;
+margin-top:8px;
+}
+
+#carrinho{
+margin-top:30px;
+background:#1f1f1f;
+padding:15px;
+border-radius:10px;
+}
+
+.enviar{
+background:#25D366;
+padding:15px;
+border:none;
+border-radius:20px;
+font-size:18px;
+color:white;
+width:100%;
+margin-top:15px;
+}
+
+#botaoCarrinho{
+
+position:fixed;
+bottom:20px;
+right:20px;
+
+background:#ff9800;
+
+width:65px;
+height:65px;
+
+border-radius:50%;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:28px;
+color:white;
+
+box-shadow:0 4px 15px rgba(0,0,0,0.6);
+}
+
+#contador{
+position:absolute;
+top:-5px;
+right:-5px;
+background:red;
+color:white;
+font-size:12px;
+padding:4px 7px;
+border-radius:50%;
+}
+
+</style>
 
 </head>
 
 <body>
 
 <header>
-<img src="imagens/logo.png" class="logo">
-<div class="titulo">Sabore In Casa</div>
+
+<img src="logo.png" class="logo">
+
 </header>
 
 <div class="endereco">
-📍 Rua Maria de Lourdes da Cruz Nº 378  
+📍 Rua Maria de Lourdes da Cruz 378  
 Bairro Mantiqueira – Belo Horizonte
 </div>
 
@@ -29,45 +185,64 @@ Bairro Mantiqueira – Belo Horizonte
 
 <div class="container">
 
-<input class="busca" id="busca" placeholder="🔎 Buscar produto">
+<input class="busca" placeholder="🔎 Buscar pizza ou bebida">
 
-<div class="btn-flutuantes">
+<div class="btn-categorias">
 
-<div class="linha">
-<button onclick="filtrar('Pizza')">🍕 Pizzas</button>
-<button onclick="filtrar('Coca')">🥤 Bebidas</button>
-</div>
+<button>🍕 Pizzas</button>
+<button>🥤 Bebidas</button>
 
-<div class="linha">
-<button onclick="filtrar('Combo')">🎁 Combos</button>
-<button onclick="filtrar('Promo')">🔥 Promoções</button>
-</div>
+<button>🎁 Combos</button>
+<button>🔥 Promoções</button>
 
 </div>
 
-<div id="produtos"></div>
+<div class="produtos">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1594007654729-407eedc4be65">
+<div class="card-info">
+<h3>Pizza Calabresa</h3>
+<div class="preco">R$49,90</div>
+<button>Adicionar</button>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1601924928376-09e3c0b3f5cb">
+<div class="card-info">
+<h3>Pizza Frango</h3>
+<div class="preco">R$52,90</div>
+<button>Adicionar</button>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1585238342024-78d387f4a707">
+<div class="card-info">
+<h3>Coca Cola 2L</h3>
+<div class="preco">R$10,00</div>
+<button>Adicionar</button>
+</div>
+</div>
+
+</div>
 
 <div id="carrinho">
 
 <h2>🛒 Carrinho</h2>
 
-<div id="lista"></div>
+<div>Total: R$ 0,00</div>
 
-<div class="total">
-Total + entrega: R$ <span id="total">0.00</span>
-</div>
+<input placeholder="Seu endereço">
 
-<input id="enderecoCliente" placeholder="Digite seu endereço">
-
-<select id="pagamento">
+<select>
 <option>PIX</option>
 <option>Dinheiro</option>
 <option>Cartão</option>
 </select>
 
-<input id="troco" placeholder="Troco para quanto?">
-
-<button class="enviar" onclick="enviarPedido()">
+<button class="enviar">
 Enviar pedido no WhatsApp
 </button>
 
@@ -75,12 +250,13 @@ Enviar pedido no WhatsApp
 
 </div>
 
-<div id="botaoCarrinho" onclick="scrollCarrinho()">
-🛒
-<div id="contador">0</div>
-</div>
+<div id="botaoCarrinho">
 
-<script src="js/app.js"></script>
+🛒
+
+<div id="contador">0</div>
+
+</div>
 
 </body>
 </html>
