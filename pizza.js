@@ -1,125 +1,87 @@
 const pizzas = {
 
-calabresa:{
-ingredientes:"Molho de tomate, mussarela, calabresa, cebola e orégano"
-},
+Calabresa:"Molho, mussarela, calabresa, cebola",
 
-quatroqueijos:{
-ingredientes:"Mussarela, parmesão, gorgonzola e catupiry"
-},
+"Quatro Queijos":"Mussarela, parmesão, gorgonzola, catupiry",
 
-frango:{
-ingredientes:"Frango desfiado, catupiry, mussarela e orégano"
-},
+Frango:"Frango desfiado, catupiry",
 
-portuguesa:{
-ingredientes:"Presunto, ovo, cebola, ervilha, azeitona e mussarela"
-},
+Portuguesa:"Presunto, ovo, cebola, ervilha",
 
-marguerita:{
-ingredientes:"Mussarela, tomate e manjericão"
-},
+Marguerita:"Mussarela, tomate, manjericão",
 
-pepperoni:{
-ingredientes:"Molho de tomate, mussarela e pepperoni"
-},
+Pepperoni:"Molho, mussarela, pepperoni",
 
-bacon:{
-ingredientes:"Mussarela, bacon crocante e molho de tomate"
-},
+Bacon:"Mussarela, bacon",
 
-napolitana:{
-ingredientes:"Tomate, alho, parmesão e orégano"
-},
+Napolitana:"Tomate, alho, parmesão",
 
-milhobacon:{
-ingredientes:"Milho, bacon, mussarela e molho"
-},
+"Milho com Bacon":"Milho, bacon",
 
-vegetariana:{
-ingredientes:"Pimentão, cebola, tomate, milho, azeitona e mussarela"
-}
+Vegetariana:"Pimentão, cebola, tomate"
 
 };
 
-function mostrarIngredientes(numero){
+const sabores = Object.keys(pizzas);
 
-let sabor = document.getElementById("sabor"+numero).value;
+let s1 = document.getElementById("sabor1");
+let s2 = document.getElementById("sabor2");
 
-let texto = pizzas[sabor].ingredientes;
+sabores.forEach(s=>{
 
-document.getElementById("ingredientes"+numero).innerText = texto;
+s1.innerHTML+=`<option>${s}</option>`;
+s2.innerHTML+=`<option>${s}</option>`;
+
+});
+
+function mostrarIngredientes(n){
+
+let sabor=document.getElementById("sabor"+n).value;
+
+document.getElementById("ingredientes"+n).innerText=pizzas[sabor];
 
 }
 
 mostrarIngredientes(1);
 mostrarIngredientes(2);
 
-document.getElementById("borda").addEventListener("change", atualizarPreco);
-document.getElementById("cheddar").addEventListener("change", atualizarPreco);
+document.getElementById("catupiry").addEventListener("change",atualizarPreco);
+document.getElementById("cheddar").addEventListener("change",atualizarPreco);
 
 function atualizarPreco(){
 
-let tamanho = document.getElementById("tamanho").value;
+let tamanho=document.getElementById("tamanho").value;
 
-let preco = 0;
+let preco=0;
 
-if(tamanho === "media"){
+if(tamanho=="pequena")preco=39.90;
+if(tamanho=="media")preco=54.90;
+if(tamanho=="gigante")preco=64.90;
 
-preco = 54.90;
+if(catupiry.checked)preco+=10;
+if(cheddar.checked)preco+=10;
 
-}
-
-if(tamanho === "gigante"){
-
-preco = 64.90;
-
-}
-
-if(document.getElementById("borda").checked){
-
-preco += 8;
-
-}
-
-if(document.getElementById("cheddar").checked){
-
-preco += 5;
-
-}
-
-document.getElementById("preco").innerText =
-"R$ " + preco.toFixed(2);
+document.getElementById("preco").innerText="R$ "+preco.toFixed(2);
 
 }
 
 function adicionarCarrinho(){
 
-let tamanho = document.getElementById("tamanho").value;
+let pedido={
 
-let sabor1 = document.getElementById("sabor1").value;
-let sabor2 = document.getElementById("sabor2").value;
-
-let borda = document.getElementById("borda").checked;
-let cheddar = document.getElementById("cheddar").checked;
-
-let pedido = {
-
-tamanho:tamanho,
-sabor1:sabor1,
-sabor2:sabor2,
-borda:borda,
-cheddar:cheddar,
-preco:document.getElementById("preco").innerText
+tamanho:tamanho.value,
+sabor1:sabor1.value,
+sabor2:sabor2.value,
+preco:preco.innerText
 
 };
 
-let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+let carrinho=JSON.parse(localStorage.getItem("carrinho"))||[];
 
 carrinho.push(pedido);
 
-localStorage.setItem("carrinho", JSON.stringify(carrinho));
+localStorage.setItem("carrinho",JSON.stringify(carrinho));
 
-alert("Pizza adicionada ao carrinho 🍕");
+alert("Pizza adicionada");
 
 }
