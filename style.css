@@ -1,6 +1,11 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
 body{
 font-family:Arial;
-margin:0;
 background:#111;
 color:white;
 }
@@ -12,7 +17,7 @@ padding:15px;
 }
 
 .logo{
-width:140px;
+width:120px;
 }
 
 .titulo{
@@ -22,17 +27,29 @@ font-weight:bold;
 
 .endereco{
 background:#1f1f1f;
-padding:10px;
+padding:12px;
 text-align:center;
+color:white;
 font-size:14px;
 margin:10px;
+border-radius:8px;
+}
+
+.endereco button{
+margin-top:8px;
+padding:8px 12px;
+border:none;
 border-radius:6px;
+background:#ff9800;
+color:white;
+cursor:pointer;
 }
 
 .banner{
 height:180px;
 border-radius:12px;
 margin:10px;
+background-image:url("https://images.unsplash.com/photo-1513104890138-7c749659a591");
 background-size:cover;
 background-position:center;
 }
@@ -46,14 +63,11 @@ margin:auto;
 .busca{
 width:100%;
 padding:12px;
-border-radius:8px;
+border-radius:10px;
 border:none;
 margin-bottom:15px;
-background:white;
-color:#111;
 }
 
-/* 🔥 BOTÕES */
 .btn-flutuantes{
 display:flex;
 flex-direction:column;
@@ -77,11 +91,17 @@ font-size:16px;
 cursor:pointer;
 }
 
-/* 🔥 PRODUTOS */
 #produtos{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
 gap:15px;
+}
+
+#combosSemana{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+margin-bottom:20px;
 }
 
 .card{
@@ -116,65 +136,6 @@ margin-top:8px;
 cursor:pointer;
 }
 
-/* 🔥 CARRINHO */
-#carrinho{
-background:#1f1f1f;
-padding:15px;
-border-radius:10px;
-margin-top:25px;
-}
-
-.item{
-display:flex;
-justify-content:space-between;
-margin-bottom:6px;
-}
-
-.total{
-font-size:20px;
-margin-top:10px;
-}
-
-/* 🚀 AQUI ESTÁ A CORREÇÃO DAS BARRAS */
-input, select{
-width:100%;
-height:48px;
-padding:12px;
-margin-top:10px;
-border-radius:10px;
-border:none;
-box-sizing:border-box;
-font-size:15px;
-}
-
-/* mesma aparência */
-#enderecoCliente,
-#troco,
-#pagamento{
-background:white;
-color:#111;
-}
-
-/* foco premium */
-input:focus, select:focus{
-outline:none;
-box-shadow:0 0 0 2px #ff9800;
-}
-
-/* BOTÃO */
-.enviar{
-background:#25D366;
-color:white;
-font-size:18px;
-padding:14px;
-margin-top:15px;
-border-radius:20px;
-border:none;
-font-weight:bold;
-cursor:pointer;
-}
-
-/* CARRINHO FLUTUANTE */
 #botaoCarrinho{
 position:fixed;
 bottom:20px;
@@ -199,6 +160,38 @@ color:white;
 font-size:12px;
 padding:4px 6px;
 border-radius:50%;
+}
+
+#carrinho{
+background:#1f1f1f;
+padding:15px;
+border-radius:10px;
+margin-top:25px;
+}
+
+.total{
+font-size:20px;
+margin-top:10px;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:6px;
+border:none;
+}
+
+.enviar{
+background:#25D366;
+color:white;
+font-size:18px;
+padding:14px;
+margin-top:15px;
+border-radius:20px;
+border:none;
+font-weight:bold;
+cursor:pointer;
 }
 
 footer{
