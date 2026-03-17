@@ -1,13 +1,7 @@
-function notificar(){
+```javascript
+if("Notification" in window){
 
-Notification.requestPermission().then(p=>{
-
-if(p==="granted"){
-
-new Notification("Pedido recebido 🍕");
+Notification.requestPermission()
 
 }
-
-});
-
-}
+```
