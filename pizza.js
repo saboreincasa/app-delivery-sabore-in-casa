@@ -1,122 +1,133 @@
-const pizzas = {
-  Calabresa: "Molho de tomate, mussarela, calabresa fatiada e cebola",
-  "Quatro Queijos": "Mussarela, parmesão, gorgonzola e catupiry",
-  Frango: "Frango desfiado temperado com catupiry",
-  Portuguesa: "Presunto, ovo, cebola, ervilha e azeitona",
-  Marguerita: "Mussarela, tomate e manjericão",
-  Pepperoni: "Molho de tomate, mussarela e pepperoni",
-  Bacon: "Mussarela e bacon crocante",
-  Napolitana: "Tomate, alho e parmesão",
-  "Milho com Bacon": "Milho verde e bacon",
-  Vegetariana: "Pimentão, cebola, tomate e azeitona"
+let pizzas=[
+
+{
+nome:"Calabresa",
+ingredientes:"Mussarela, calabresa artesanal, cebola e orégano",
+preco:39.90
+},
+
+{
+nome:"Frango Catupiry",
+ingredientes:"Frango desfiado, catupiry e mussarela",
+preco:42.90
+},
+
+{
+nome:"Portuguesa",
+ingredientes:"Presunto, ovo, cebola e ervilha",
+preco:44.90
+},
+
+{
+nome:"Quatro Queijos",
+ingredientes:"Mussarela, parmesão, gorgonzola e catupiry",
+preco:46.90
+},
+
+{
+nome:"Marguerita",
+ingredientes:"Tomate, mussarela e manjericão",
+preco:41.90
+},
+
+{
+nome:"Pepperoni",
+ingredientes:"Pepperoni americano e mussarela",
+preco:48.90
+},
+
+{
+nome:"Milho com Bacon",
+ingredientes:"Milho verde, bacon e mussarela",
+preco:43.90
+},
+
+{
+nome:"Carne Seca",
+ingredientes:"Carne seca desfiada, cebola roxa e catupiry",
+preco:49.90
+},
+
+{
+nome:"Bacon Cheddar",
+ingredientes:"Bacon crocante e cheddar cremoso",
+preco:47.90
+},
+
+{
+nome:"Pizza do Chef",
+ingredientes:"Molho especial da casa, mussarela premium, picanha fatiada, cebola caramelizada e catupiry",
+preco:54.90
 }
 
-const sabores = Object.keys(pizzas)
+]
 
-const s1 = document.getElementById("sabor1")
-const s2 = document.getElementById("sabor2")
-const catupiry = document.getElementById("catupiry")
-const cheddar = document.getElementById("cheddar")
-const tamanho = document.getElementById("tamanho")
-const precoEl = document.getElementById("preco")
+let lista=document.getElementById("lista-pizzas")
 
-/* carregar sabores */
+pizzas.forEach(p=>{
 
-sabores.forEach(s => {
+lista.innerHTML+=`
 
-s1.innerHTML += `<option>${s}</option>`
-s2.innerHTML += `<option>${s}</option>`
+<div class="card">
+
+<h3>${p.nome}</h3>
+
+<p>${p.ingredientes}</p>
+
+<p>R$ ${p.preco}</p>
+
+<button onclick="escolher('${p.nome}',${p.preco})">
+
+Escolher
+
+</button>
+
+</div>
+
+`
 
 })
 
-/* mostrar ingredientes */
+function escolher(nome,preco){
 
-function mostrarIngredientes(n){
+document.getElementById("opcoes").innerHTML=`
 
-const sabor = document.getElementById("sabor"+n).value
+<h2>${nome}</h2>
 
-document.getElementById("ingredientes"+n).innerText =
-pizzas[sabor]
+<label>
 
-}
+<input type="radio" name="tipo">
 
-mostrarIngredientes(1)
-mostrarIngredientes(2)
+Pizza Inteira
 
-s1.addEventListener("change",()=>mostrarIngredientes(1))
-s2.addEventListener("change",()=>mostrarIngredientes(2))
+</label>
 
-catupiry.addEventListener("change",atualizarPreco)
-cheddar.addEventListener("change",atualizarPreco)
-tamanho.addEventListener("change",atualizarPreco)
+<label>
 
-/* calcular preço */
+<input type="radio" name="tipo">
 
-function atualizarPreco(){
+Meio a Meio
 
-let preco = 0
+</label>
 
-switch(tamanho.value){
+<h3>Borda</h3>
 
-case "pequena":
-preco = 39.90
-break
+<select>
 
-case "media":
-preco = 54.90
-break
+<option>Sem borda</option>
 
-case "gigante":
-preco = 64.90
-break
+<option>Borda Catupiry +10</option>
 
-}
+<option>Borda Cheddar +10</option>
 
-if(catupiry.checked) preco += 10
-if(cheddar.checked) preco += 10
+</select>
 
-precoEl.innerText = "R$ "+preco.toFixed(2)
+<button>
 
-return preco
+Adicionar ao Carrinho
 
-}
+</button>
 
-/* adicionar ao carrinho */
-
-function adicionarCarrinho(){
-
-const precoNum = atualizarPreco()
-
-let descricao =
-`Pizza ${tamanho.value} ${s1.value} / ${s2.value}`
-
-if(catupiry.checked) descricao += " | borda catupiry"
-
-if(cheddar.checked) descricao += " | borda cheddar"
-
-let carrinho =
-JSON.parse(localStorage.getItem("carrinho")) || []
-
-let item = carrinho.find(p => p.nome === descricao)
-
-if(item){
-
-item.qtd++
-
-}else{
-
-carrinho.push({
-
-nome: descricao,
-preco: precoNum,
-qtd: 1
-
-})
-
-}
-
-localStorage.setItem("carrinho",JSON.stringify(carrinho))
-
-alert("🍕 Pizza adicionada ao carrinho!")
+`
 
 }
