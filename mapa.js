@@ -1,7 +1,7 @@
-function calcularEntrega(){
+```javascript
+function abrirMapa(){
 
-let taxa=5;
-
-return taxa;
+window.open("https://maps.google.com/?q=Rua+Maria+de+Lourdes+da+Cruz+378+Belo+Horizonte")
 
 }
+```
