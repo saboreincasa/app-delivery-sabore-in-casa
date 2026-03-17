@@ -1,14 +1,230 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Sabore in Casa</title>
+<title>Sabore In Casa</title>
 
-<link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#111;
+color:white;
+}
+
+header{
+background:#c62828;
+text-align:center;
+padding:15px;
+}
+
+.logo{
+width:150px;
+}
+
+.titulo{
+font-size:26px;
+font-weight:bold;
+margin-top:5px;
+}
+
+.endereco{
+background:#1f1f1f;
+padding:10px;
+text-align:center;
+font-size:14px;
+border-radius:6px;
+margin:10px;
+}
+
+.banner{
+height:180px;
+background:url("https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1200") center/cover;
+border-radius:12px;
+margin:10px;
+}
+
+.container{
+padding:15px;
+max-width:1000px;
+margin:auto;
+}
+
+.busca{
+width:100%;
+padding:12px;
+border-radius:8px;
+border:none;
+margin-bottom:15px;
+background:white;
+color:#111;
+}
+
+.btn-flutuantes{
+display:flex;
+flex-direction:column;
+gap:8px;
+margin-bottom:15px;
+}
+
+.linha{
+display:flex;
+gap:10px;
+}
+
+.linha button{
+flex:1;
+background:#ff9800;
+border:none;
+padding:12px;
+border-radius:10px;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+#produtos{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+}
+
+.card{
+background:#1f1f1f;
+border-radius:12px;
+overflow:hidden;
+}
+
+.card img{
+width:100%;
+height:140px;
+object-fit:cover;
+}
+
+.card-content{
+padding:12px;
+}
+
+.preco{
+color:#2ecc71;
+font-size:17px;
+}
+
+.card button{
+background:#ff9800;
+border:none;
+padding:10px;
+width:100%;
+border-radius:8px;
+color:white;
+margin-top:8px;
+cursor:pointer;
+}
+
+#botaoCarrinho{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#ff9800;
+width:65px;
+height:65px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+cursor:pointer;
+}
+
+#contador{
+position:absolute;
+top:-5px;
+right:-5px;
+background:red;
+color:white;
+font-size:12px;
+padding:4px 6px;
+border-radius:50%;
+}
+
+#carrinho{
+background:#1f1f1f;
+padding:15px;
+border-radius:10px;
+margin-top:25px;
+}
+
+.item{
+display:flex;
+justify-content:space-between;
+margin-bottom:6px;
+}
+
+.total{
+font-size:20px;
+margin-top:10px;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:6px;
+border:none;
+}
+
+#enderecoCliente,#troco,#pagamento{
+background:white;
+color:#111;
+}
+
+.enviar{
+background:#25D366;
+color:white;
+font-size:18px;
+padding:14px;
+margin-top:15px;
+border-radius:20px;
+border:none;
+font-weight:bold;
+cursor:pointer;
+}
+
+footer{
+text-align:center;
+margin-top:30px;
+font-size:13px;
+color:#aaa;
+}
+
+#modalMeioMeio{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+display:none;
+align-items:center;
+justify-content:center;
+}
+
+.modal-content{
+background:#1f1f1f;
+padding:20px;
+border-radius:12px;
+width:90%;
+max-width:400px;
+}
+
+</style>
 
 </head>
 
@@ -18,36 +234,248 @@
 
 <img src="imagens/logo.png" class="logo">
 
+<div class="titulo">Sabore In Casa</div>
+
 </header>
 
-<div class="busca">
+<div class="endereco">
+📍 Rua Maria de Lourdes da Cruz Nº 378  
+Bairro Mantiqueira – Belo Horizonte
+</div>
 
-<input type="text" placeholder="Encontre sua pizza ou bebida">
+<div class="banner"></div>
+
+<div class="container">
+
+<input class="busca" id="busca" placeholder="🔎 Buscar pizza ou bebida">
+
+<div class="btn-flutuantes">
+
+<div class="linha">
+<button onclick="filtrarCategoria('pizza')">🍕 Pizzas</button>
+<button onclick="filtrarCategoria('cerveja')">🍺 Bebidas</button>
+</div>
+
+<div class="linha">
+<button onclick="filtrarCategoria('combo')">🎁 Combos</button>
+<button onclick="mostrar(produtos)">🔥 Todos</button>
+</div>
 
 </div>
 
-<section class="menu-principal">
+<div id="produtos"></div>
 
-<button onclick="abrirCategoria('pizzas')">🍕 Pizzas</button>
+<div id="carrinho">
 
-<button onclick="abrirCategoria('bebidas')">🍺 Bebidas</button>
+<h2>🛒 Carrinho</h2>
 
-<button onclick="abrirCategoria('combos')">🔥 Combos</button>
+<div id="lista"></div>
 
-<button onclick="abrirCategoria('promocoes')">⭐ Promoções</button>
+<div class="total">
+Total + entrega: R$ <span id="total">0.00</span>
+</div>
 
-</section>
+<input id="enderecoCliente" placeholder="Digite seu endereço">
 
-<section id="produtos">
+<select id="pagamento">
+<option>PIX</option>
+<option>Dinheiro</option>
+<option>Cartão</option>
+</select>
 
-</section>
+<input id="troco" placeholder="Troco para quanto?">
 
-<div class="carrinho" onclick="abrirCarrinho()">
+<button class="enviar" onclick="enviarPedido()">
+Enviar pedido no WhatsApp
+</button>
+
+</div>
+
+</div>
+
+<div id="botaoCarrinho" onclick="scrollCarrinho()">
 🛒
-<span id="contador">0</span>
+<div id="contador">0</div>
 </div>
 
-<script src="app.js"></script>
+<footer>
+
+Desenvolvido por <b>Carlos Henrique</b>
+
+</footer>
+
+<div id="modalMeioMeio">
+
+<div class="modal-content">
+
+<h3>Escolha a segunda metade</h3>
+
+<select id="segundaMetade"></select>
+
+<button onclick="confirmarMeioMeio()">Confirmar</button>
+
+<button onclick="fecharModal()">Cancelar</button>
+
+</div>
+
+</div>
+
+<script>
+
+let numero="5531983391576"
+let taxaEntrega=6.99
+let carrinho=JSON.parse(localStorage.getItem("carrinho"))||[]
+let produtos=[]
+let metade1=null
+
+async function carregarProdutos(){
+
+let res=await fetch("produtos.json")
+produtos=await res.json()
+mostrar(produtos)
+
+}
+
+function mostrar(lista){
+
+let html=""
+
+lista.forEach(p=>{
+
+html+=`
+<div class="card">
+
+<img src="${p.foto}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1046/1046784.png'">
+
+<div class="card-content">
+
+<h3>${p.nome}</h3>
+
+<div class="preco">R$ ${p.preco.toFixed(2)}</div>
+
+<button onclick="add('${p.nome}',${p.preco})">
+Adicionar
+</button>
+
+</div>
+
+</div>
+`
+
+})
+
+document.getElementById("produtos").innerHTML=html
+
+}
+
+function filtrarCategoria(cat){
+
+let filtrados=produtos.filter(p=>p.categoria==cat)
+mostrar(filtrados)
+
+}
+
+document.getElementById("busca").addEventListener("input",e=>{
+
+let v=e.target.value.toLowerCase()
+
+let filtrados=produtos.filter(p=>p.nome.toLowerCase().includes(v))
+
+mostrar(filtrados)
+
+})
+
+function add(nome,preco){
+
+let item=carrinho.find(p=>p.nome===nome)
+
+if(item)item.qtd++
+else carrinho.push({nome,preco,qtd:1})
+
+salvar()
+
+}
+
+function salvar(){
+
+localStorage.setItem("carrinho",JSON.stringify(carrinho))
+
+atualizar()
+
+}
+
+function atualizar(){
+
+let lista=""
+let total=0
+let qtd=0
+
+carrinho.forEach((item,i)=>{
+
+total+=item.preco*item.qtd
+qtd+=item.qtd
+
+lista+=`<div class="item">${item.nome} x${item.qtd}
+<button onclick="remover(${i})">❌</button>
+</div>`
+
+})
+
+document.getElementById("lista").innerHTML=lista
+document.getElementById("contador").innerText=qtd
+document.getElementById("total").innerText=(total+taxaEntrega).toFixed(2)
+
+}
+
+function remover(i){
+
+carrinho.splice(i,1)
+
+salvar()
+
+}
+
+function scrollCarrinho(){
+
+document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
+
+}
+
+function enviarPedido(){
+
+let endereco=document.getElementById("enderecoCliente").value
+let pagamento=document.getElementById("pagamento").value
+let troco=document.getElementById("troco").value
+
+if(carrinho.length===0){
+alert("Adicione produtos")
+return
+}
+
+let msg="🍕 *Pedido Sabore In Casa*%0A%0A"
+
+let total=0
+
+carrinho.forEach(i=>{
+msg+=`➡ ${i.nome} x${i.qtd}%0A`
+total+=i.preco*i.qtd
+})
+
+msg+=`%0A🛵 Entrega: R$ ${taxaEntrega}`
+msg+=`%0A💰 Total: R$ ${(total+taxaEntrega).toFixed(2)}`
+msg+=`%0A📍 ${endereco}`
+msg+=`%0A💳 ${pagamento}`
+msg+=`%0A💵 Troco: ${troco}`
+
+window.open(`https://wa.me/${numero}?text=${msg}`)
+
+}
+
+carregarProdutos()
+atualizar()
+
+</script>
 
 </body>
+
 </html>
