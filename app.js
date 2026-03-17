@@ -1,46 +1,32 @@
-let numero = "5531983391576"
+let produtos=[]
 
-let taxaEntrega = 7.99
+async function carregar(){
 
-let carrinho = JSON.parse(localStorage.getItem("carrinho")) || []
+let r=await fetch("produtos.json")
 
-let produtos = []
+produtos=await r.json()
 
-async function carregarProdutos(){
-
-let r = await fetch("produtos.json")
-
-produtos = await r.json()
-
-mostrar(produtos)
+mostrarCombos()
 
 }
 
-function mostrar(lista){
+function mostrarCombos(){
+
+let combos=produtos.filter(p=>p.categoria=="combo")
 
 let html=""
 
-lista.forEach(p=>{
+combos.forEach(p=>{
 
 html+=`
 
 <div class="card">
 
-<img src="${p.foto}">
-
-<div class="card-content">
-
 <h3>${p.nome}</h3>
 
-<p class="preco">R$ ${p.preco.toFixed(2)}</p>
+<p>${p.descricao}</p>
 
-<button onclick="add('${p.nome}',${p.preco})">
-
-Adicionar
-
-</button>
-
-</div>
+<p>R$ ${p.preco}</p>
 
 </div>
 
@@ -54,94 +40,36 @@ document.getElementById("produtos").innerHTML=html
 
 function filtrar(cat){
 
-let filtrados = produtos.filter(p=>p.nome.includes(cat))
+let lista=produtos.filter(p=>p.categoria==cat)
 
-mostrar(filtrados)
+let html=""
 
-}
+lista.forEach(p=>{
 
-document.getElementById("busca").addEventListener("input",function(){
+html+=`
 
-let v=this.value.toLowerCase()
+<div class="card">
 
-let filtrados=produtos.filter(p=>p.nome.toLowerCase().includes(v))
+<h3>${p.nome}</h3>
 
-mostrar(filtrados)
+<p>${p.descricao}</p>
 
-})
+<p>R$ ${p.preco}</p>
 
-function add(nome,preco){
+</div>
 
-let item=carrinho.find(p=>p.nome===nome)
-
-if(item){
-
-item.qtd++
-
-}else{
-
-carrinho.push({nome,preco,qtd:1})
-
-}
-
-salvar()
-
-}
-
-function salvar(){
-
-localStorage.setItem("carrinho",JSON.stringify(carrinho))
-
-atualizar()
-
-}
-
-function atualizar(){
-
-let lista=""
-
-let total=0
-
-let qtd=0
-
-carrinho.forEach((item,i)=>{
-
-lista+=`${item.nome} x${item.qtd}<br>`
-
-total+=item.preco*item.qtd
-
-qtd+=item.qtd
+`
 
 })
 
-document.getElementById("lista").innerHTML=lista
-
-document.getElementById("contador").innerText=qtd
-
-document.getElementById("total").innerText=(total+taxaEntrega).toFixed(2)
+document.getElementById("produtos").innerHTML=html
 
 }
 
-function scrollCarrinho(){
+function abrirPizzas(){
 
-document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
-
-}
-
-function enviarPedido(){
-
-let msg="🍕 Pedido Sabore In Casa %0A"
-
-carrinho.forEach(i=>{
-
-msg+=`${i.nome} x${i.qtd}%0A`
-
-})
-
-window.open("https://wa.me/"+numero+"?text="+msg)
+window.location="pizza.html"
 
 }
 
-carregarProdutos()
-
-atualizar()
+carregar()
