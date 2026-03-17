@@ -1,0 +1,92 @@
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Monte sua Pizza</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>Monte sua Pizza</h1>
+
+</header>
+
+<div class="container">
+
+<h2 id="nomePizza"></h2>
+
+<h3>Tamanho</h3>
+
+<select id="tamanho">
+
+<option value="25">Pequena 25cm</option>
+<option value="30">Grande 30cm</option>
+<option value="35">Gigante 35cm</option>
+
+</select>
+
+<h3>Borda</h3>
+
+<select id="borda">
+
+<option value="0">Sem borda</option>
+<option value="10">Catupiry +10</option>
+<option value="10">Cheddar +10</option>
+
+</select>
+
+<button class="enviar" onclick="addPizza()">
+
+Adicionar ao carrinho
+
+</button>
+
+</div>
+
+<script>
+
+let pizza=localStorage.getItem("pizzaEscolhida")
+
+document.getElementById("nomePizza").innerText=pizza
+
+function addPizza(){
+
+let borda=parseFloat(document.getElementById("borda").value)
+
+let carrinho=JSON.parse(localStorage.getItem("carrinho"))||[]
+
+let preco=40+borda
+
+carrinho.push({
+
+nome:pizza,
+
+preco:preco,
+
+qtd:1
+
+})
+
+localStorage.setItem("carrinho",JSON.stringify(carrinho))
+
+alert("Pizza adicionada")
+
+window.location="index.html"
+
+}
+
+</script>
+
+</body>
+</html>
+```
