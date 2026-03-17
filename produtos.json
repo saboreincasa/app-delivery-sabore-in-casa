@@ -1,29 +1,25 @@
 [
 {
 "nome":"Combo Casal",
-"descricao":"2 Pizzas Grandes + Coca 2L",
+"categoria":"combo",
 "preco":79.90,
-"categoria":"combo"
+"descricao":"2 pizzas grandes + refrigerante",
+"foto":"https://images.unsplash.com/photo-1601924582975-7e6b1e6f6c4d"
 },
 
 {
-"nome":"Combo Família",
-"descricao":"3 Pizzas Grandes + Coca 2L",
-"preco":109.90,
-"categoria":"combo"
-},
-
-{
-"nome":"Coca Cola 2L",
-"descricao":"Refrigerante gelado",
-"preco":12,
-"categoria":"bebida"
+"nome":"Combo Solteiro",
+"categoria":"combo",
+"preco":39.90,
+"descricao":"1 pizza grande + coca cola",
+"foto":"https://images.unsplash.com/photo-1548365328-9f547fb0953d"
 },
 
 {
 "nome":"Batata Frita",
-"descricao":"Porção crocante",
-"preco":15,
-"categoria":"snak"
+"categoria":"snaks",
+"preco":18.90,
+"descricao":"Batata frita crocante",
+"foto":"https://images.unsplash.com/photo-1576107232684-1279f390859f"
 }
 ]
