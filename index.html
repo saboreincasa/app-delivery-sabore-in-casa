@@ -1,8 +1,8 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sabore In Casa</title>
@@ -22,6 +22,8 @@
 
 </header>
 
+<!-- ENDEREÇO -->
+
 <div class="endereco">
 
 📍 Rua Maria de Lourdes da Cruz Nº 378  
@@ -31,11 +33,15 @@ Bairro Mantiqueira – Belo Horizonte
 
 </div>
 
+<!-- BANNER -->
+
 <div id="banner" class="banner"></div>
 
 <div class="container">
 
 <input class="busca" id="busca" placeholder="🔎 Buscar produto">
+
+<!-- BOTÕES -->
 
 <div class="btn-flutuantes">
 
@@ -49,7 +55,7 @@ Bairro Mantiqueira – Belo Horizonte
 <div class="linha">
 
 <button onclick="filtrar('combo')">🎁 Combos</button>
-<button onclick="mostrar(produtos)">🔥 Todos</button>
+<button onclick="filtrar('snaks')">🍟 Snaks</button>
 
 </div>
 
@@ -60,6 +66,8 @@ Bairro Mantiqueira – Belo Horizonte
 <div id="combosSemana"></div>
 
 <div id="produtos"></div>
+
+<!-- CARRINHO -->
 
 <div id="carrinho">
 
@@ -89,6 +97,8 @@ Enviar pedido no WhatsApp
 
 </div>
 
+<!-- BOTÃO FLUTUANTE -->
+
 <div id="botaoCarrinho" onclick="scrollCarrinho()">
 
 🛒
@@ -110,4 +120,3 @@ Desenvolvido por <b>Carlos Henrique</b>
 
 </body>
 </html>
-```
