@@ -25,46 +25,69 @@ Sabore In Casa
 
 </header>
 
+
 <div class="endereco">
 
-📍 Rua Maria de Lourdes da Cruz Nº 378<br>
+📍 Rua Maria de Lourdes da Cruz Nº 378  
 Bairro Mantiqueira – Belo Horizonte
 
-<br>
-
-<button onclick="abrirMapa()">📍 Ver no mapa</button>
+<button onclick="abrirMapa()">
+📍 Ver no mapa
+</button>
 
 </div>
 
-<div id="banner" class="banner"></div>
+
+<div id="banner" class="banner">
+
+<img src="imagens/banner.jpg">
+
+</div>
+
 
 <div class="container">
 
+
 <input class="busca" id="busca" placeholder="🔎 Buscar produto">
+
 
 <div class="btn-flutuantes">
 
 <div class="linha">
 
-<button onclick="abrirPizzas()">🍕 Pizzas</button>
-<button onclick="filtrar('bebidas')">🥤 Bebidas</button>
+<button onclick="abrirPizzas()">
+🍕 Pizzas
+</button>
+
+<button onclick="filtrar('bebidas')">
+🥤 Bebidas
+</button>
 
 </div>
+
 
 <div class="linha">
 
-<button onclick="filtrar('combo')">🎁 Combos</button>
-<button onclick="filtrar('snaks')">🍟 Snaks</button>
+<button onclick="filtrar('combo')">
+🎁 Combos
+</button>
+
+<button onclick="filtrar('snaks')">
+🍟 Snaks
+</button>
 
 </div>
 
 </div>
+
 
 <h2>⭐ Combos da Semana</h2>
 
 <div id="combosSemana"></div>
 
+
 <div id="produtos"></div>
+
 
 <div id="carrinho">
 
@@ -73,26 +96,38 @@ Bairro Mantiqueira – Belo Horizonte
 <div id="lista"></div>
 
 <div class="total">
-Total + entrega: R$ <span id="total">0.00</span>
+
+Total + entrega:  
+R$ <span id="total">0.00</span>
+
 </div>
+
 
 <input id="enderecoCliente" placeholder="Digite seu endereço">
 
 <select id="pagamento">
+
 <option>PIX</option>
 <option>Dinheiro</option>
 <option>Cartão</option>
+
 </select>
+
 
 <input id="troco" placeholder="Troco para quanto?">
 
+
 <button class="enviar" onclick="enviarPedido()">
+
 Enviar pedido no WhatsApp
+
 </button>
 
+
 </div>
 
 </div>
+
 
 <div id="botaoCarrinho" onclick="scrollCarrinho()">
 
@@ -102,16 +137,17 @@ Enviar pedido no WhatsApp
 
 </div>
 
+
 <footer>
 
-© Sabore In Casa<br>
+© Sabore In Casa  
 Desenvolvido por <b>Carlos Henrique</b>
 
 </footer>
 
+
 <script src="app.js"></script>
 <script src="mapa.js"></script>
-<script src="notificacao.js"></script>
 
 </body>
 </html>
