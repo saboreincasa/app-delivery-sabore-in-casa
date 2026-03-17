@@ -2,10 +2,8 @@
 <html lang="pt-br">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Sabore In Casa</title>
 
 <link rel="manifest" href="manifest.json">
@@ -26,13 +24,12 @@ padding:15px;
 }
 
 .logo{
-width:150px;
+width:140px;
 }
 
 .titulo{
-font-size:26px;
+font-size:24px;
 font-weight:bold;
-margin-top:5px;
 }
 
 .endereco{
@@ -40,15 +37,16 @@ background:#1f1f1f;
 padding:10px;
 text-align:center;
 font-size:14px;
-border-radius:6px;
 margin:10px;
+border-radius:6px;
 }
 
 .banner{
 height:180px;
-background:url("https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1200") center/cover;
 border-radius:12px;
 margin:10px;
+background-size:cover;
+background-position:center;
 }
 
 .container{
@@ -199,33 +197,12 @@ cursor:pointer;
 
 footer{
 text-align:center;
-margin-top:30px;
+margin-top:40px;
 font-size:13px;
 color:#aaa;
 }
 
-#modalMeioMeio{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.85);
-display:none;
-align-items:center;
-justify-content:center;
-}
-
-.modal-content{
-background:#1f1f1f;
-padding:20px;
-border-radius:12px;
-width:90%;
-max-width:400px;
-}
-
 </style>
-
 </head>
 
 <body>
@@ -239,29 +216,36 @@ max-width:400px;
 </header>
 
 <div class="endereco">
+
 📍 Rua Maria de Lourdes da Cruz Nº 378  
-Bairro Mantiqueira – Belo Horizonte
+Bairro Mantiqueira – Belo Horizonte  
+
+<button onclick="abrirMapa()">📍 Ver no mapa</button>
+
 </div>
 
-<div class="banner"></div>
+<div id="banner" class="banner"></div>
 
 <div class="container">
 
-<input class="busca" id="busca" placeholder="🔎 Buscar pizza ou bebida">
+<input class="busca" id="busca" placeholder="🔎 Buscar produto">
 
 <div class="btn-flutuantes">
 
 <div class="linha">
-<button onclick="filtrarCategoria('pizza')">🍕 Pizzas</button>
-<button onclick="filtrarCategoria('cerveja')">🍺 Bebidas</button>
+<button onclick="filtrar('pizza')">🍕 Pizzas</button>
+<button onclick="filtrar('cerveja')">🍺 Bebidas</button>
 </div>
 
 <div class="linha">
-<button onclick="filtrarCategoria('combo')">🎁 Combos</button>
+<button onclick="filtrar('combo')">🎁 Combos</button>
 <button onclick="mostrar(produtos)">🔥 Todos</button>
 </div>
 
 </div>
+
+<h2>⭐ Combos da Semana</h2>
+<div id="combosSemana"></div>
 
 <div id="produtos"></div>
 
@@ -300,39 +284,53 @@ Enviar pedido no WhatsApp
 
 <footer>
 
+© Sabore In Casa  
 Desenvolvido por <b>Carlos Henrique</b>
 
 </footer>
-
-<div id="modalMeioMeio">
-
-<div class="modal-content">
-
-<h3>Escolha a segunda metade</h3>
-
-<select id="segundaMetade"></select>
-
-<button onclick="confirmarMeioMeio()">Confirmar</button>
-
-<button onclick="fecharModal()">Cancelar</button>
-
-</div>
-
-</div>
 
 <script>
 
 let numero="5531983391576"
 let taxaEntrega=6.99
+
 let carrinho=JSON.parse(localStorage.getItem("carrinho"))||[]
+
 let produtos=[]
-let metade1=null
+
+let banners=[
+"https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1200",
+"https://images.unsplash.com/photo-1548365328-9f547fb0953d?w=1200",
+"https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=1200"
+]
+
+function bannerAutomatico(){
+
+let b=document.getElementById("banner")
+
+let i=0
+
+setInterval(()=>{
+
+b.style.backgroundImage=`url(${banners[i]})`
+
+i++
+
+if(i>=banners.length)i=0
+
+},4000)
+
+}
 
 async function carregarProdutos(){
 
 let res=await fetch("produtos.json")
+
 produtos=await res.json()
+
 mostrar(produtos)
+
+mostrarCombos()
 
 }
 
@@ -345,7 +343,7 @@ lista.forEach(p=>{
 html+=`
 <div class="card">
 
-<img src="${p.foto}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1046/1046784.png'">
+<img src="${p.foto}">
 
 <div class="card-content">
 
@@ -368,28 +366,52 @@ document.getElementById("produtos").innerHTML=html
 
 }
 
-function filtrarCategoria(cat){
+function filtrar(cat){
 
 let filtrados=produtos.filter(p=>p.categoria==cat)
+
 mostrar(filtrados)
 
 }
 
-document.getElementById("busca").addEventListener("input",e=>{
+function mostrarCombos(){
 
-let v=e.target.value.toLowerCase()
+let combos=produtos.filter(p=>p.categoria=="combo")
 
-let filtrados=produtos.filter(p=>p.nome.toLowerCase().includes(v))
+let html=""
 
-mostrar(filtrados)
+combos.forEach(c=>{
+
+html+=`<div class="card">
+
+<img src="${c.foto}">
+
+<div class="card-content">
+
+<h3>${c.nome}</h3>
+
+<div class="preco">R$ ${c.preco.toFixed(2)}</div>
+
+<button onclick="add('${c.nome}',${c.preco})">
+Adicionar
+</button>
+
+</div>
+
+</div>`
 
 })
 
+document.getElementById("combosSemana").innerHTML=html
+
+}
+
 function add(nome,preco){
 
-let item=carrinho.find(p=>p.nome===nome)
+let item=carrinho.find(p=>p.nome==nome)
 
 if(item)item.qtd++
+
 else carrinho.push({nome,preco,qtd:1})
 
 salvar()
@@ -407,22 +429,27 @@ atualizar()
 function atualizar(){
 
 let lista=""
+
 let total=0
+
 let qtd=0
 
-carrinho.forEach((item,i)=>{
+carrinho.forEach((i,idx)=>{
 
-total+=item.preco*item.qtd
-qtd+=item.qtd
+total+=i.preco*i.qtd
 
-lista+=`<div class="item">${item.nome} x${item.qtd}
-<button onclick="remover(${i})">❌</button>
+qtd+=i.qtd
+
+lista+=`<div class="item">${i.nome} x${i.qtd}
+<button onclick="remover(${idx})">❌</button>
 </div>`
 
 })
 
 document.getElementById("lista").innerHTML=lista
+
 document.getElementById("contador").innerText=qtd
+
 document.getElementById("total").innerText=(total+taxaEntrega).toFixed(2)
 
 }
@@ -441,15 +468,26 @@ document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
 
 }
 
+function abrirMapa(){
+
+window.open("https://maps.google.com/?q=Rua+Maria+de+Lourdes+da+Cruz+378+Belo+Horizonte")
+
+}
+
 function enviarPedido(){
 
 let endereco=document.getElementById("enderecoCliente").value
+
 let pagamento=document.getElementById("pagamento").value
+
 let troco=document.getElementById("troco").value
 
-if(carrinho.length===0){
+if(carrinho.length==0){
+
 alert("Adicione produtos")
+
 return
+
 }
 
 let msg="🍕 *Pedido Sabore In Casa*%0A%0A"
@@ -457,25 +495,40 @@ let msg="🍕 *Pedido Sabore In Casa*%0A%0A"
 let total=0
 
 carrinho.forEach(i=>{
+
 msg+=`➡ ${i.nome} x${i.qtd}%0A`
+
 total+=i.preco*i.qtd
+
 })
 
 msg+=`%0A🛵 Entrega: R$ ${taxaEntrega}`
+
 msg+=`%0A💰 Total: R$ ${(total+taxaEntrega).toFixed(2)}`
+
 msg+=`%0A📍 ${endereco}`
+
 msg+=`%0A💳 ${pagamento}`
+
 msg+=`%0A💵 Troco: ${troco}`
 
 window.open(`https://wa.me/${numero}?text=${msg}`)
 
+if(Notification.permission==="granted"){
+
+new Notification("Pedido enviado com sucesso!")
+
 }
 
+}
+
+bannerAutomatico()
+
 carregarProdutos()
+
 atualizar()
 
 </script>
 
 </body>
-
 </html>
