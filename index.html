@@ -2,8 +2,10 @@
 <html lang="pt-br">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Sabore In Casa</title>
 
 <link rel="manifest" href="manifest.json">
@@ -14,14 +16,24 @@
 <body>
 
 <header>
+
 <img src="imagens/logo.png" class="logo">
-<div class="titulo">Sabore In Casa</div>
+
+<div class="titulo">
+Sabore In Casa
+</div>
+
 </header>
 
 <div class="endereco">
-📍 Rua Maria de Lourdes da Cruz Nº 378  
-Bairro Mantiqueira – Belo Horizonte  
+
+📍 Rua Maria de Lourdes da Cruz Nº 378<br>
+Bairro Mantiqueira – Belo Horizonte
+
+<br>
+
 <button onclick="abrirMapa()">📍 Ver no mapa</button>
+
 </div>
 
 <div id="banner" class="banner"></div>
@@ -33,18 +45,23 @@ Bairro Mantiqueira – Belo Horizonte
 <div class="btn-flutuantes">
 
 <div class="linha">
-<button onclick="filtrar('pizza')">🍕 Pizzas</button>
-<button onclick="filtrar('cerveja')">🍺 Bebidas</button>
+
+<button onclick="abrirPizzas()">🍕 Pizzas</button>
+<button onclick="filtrar('bebidas')">🥤 Bebidas</button>
+
 </div>
 
 <div class="linha">
+
 <button onclick="filtrar('combo')">🎁 Combos</button>
-<button onclick="mostrar(produtos)">🔥 Todos</button>
+<button onclick="filtrar('snaks')">🍟 Snaks</button>
+
 </div>
 
 </div>
 
 <h2>⭐ Combos da Semana</h2>
+
 <div id="combosSemana"></div>
 
 <div id="produtos"></div>
@@ -78,13 +95,18 @@ Enviar pedido no WhatsApp
 </div>
 
 <div id="botaoCarrinho" onclick="scrollCarrinho()">
+
 🛒
+
 <div id="contador">0</div>
+
 </div>
 
 <footer>
-© Sabore In Casa  
+
+© Sabore In Casa<br>
 Desenvolvido por <b>Carlos Henrique</b>
+
 </footer>
 
 <script src="app.js"></script>
