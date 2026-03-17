@@ -3,255 +3,51 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Pizzaria & Distribuidora</title>
+<title>Sabore in Casa</title>
 
-<style>
-
-body{
-font-family:Arial;
-margin:0;
-background:#111;
-color:white;
-}
-
-header{
-background:#e53935;
-padding:20px;
-text-align:center;
-font-size:24px;
-font-weight:bold;
-}
-
-.banner{
-background:#ff9800;
-text-align:center;
-padding:10px;
-font-weight:bold;
-}
-
-.menu{
-display:flex;
-justify-content:center;
-gap:10px;
-background:#000;
-padding:10px;
-}
-
-.menu button{
-padding:10px 15px;
-border:none;
-background:#333;
-color:white;
-border-radius:6px;
-cursor:pointer;
-}
-
-.menu button:hover{
-background:#ff9800;
-}
-
-.container{
-padding:20px;
-}
-
-.card{
-background:#1e1e1e;
-border-radius:10px;
-padding:15px;
-margin-bottom:20px;
-}
-
-.card img{
-width:100%;
-border-radius:10px;
-}
-
-.preco{
-color:#4caf50;
-font-size:18px;
-font-weight:bold;
-}
-
-button.add{
-background:#00c853;
-border:none;
-padding:10px;
-width:100%;
-border-radius:8px;
-margin-top:10px;
-color:white;
-font-size:16px;
-}
-
-#carrinho{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#ff9800;
-padding:15px;
-border-radius:50%;
-font-size:22px;
-cursor:pointer;
-}
-
-#contador{
-font-size:12px;
-background:red;
-padding:3px 6px;
-border-radius:50%;
-position:absolute;
-margin-top:-25px;
-margin-left:15px;
-}
-
-.footer{
-background:#000;
-text-align:center;
-padding:20px;
-}
-
-.footer a{
-display:block;
-color:#4caf50;
-text-decoration:none;
-margin:5px;
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
 
 </head>
 
 <body>
 
 <header>
-🍕 Pizzaria & 🍺 Distribuidora
+
+<img src="imagens/logo.png" class="logo">
+
 </header>
 
-<div class="banner">
-🔥 PROMOÇÃO: Pizza GG + Coca 2L por R$59,90
-</div>
+<div class="busca">
 
-<div class="menu">
-
-<button onclick="mostrar('pizzas')">🍕 Pizzas</button>
-<button onclick="mostrar('bebidas')">🍺 Bebidas</button>
-<button onclick="mostrar('promo')">🔥 Promoções</button>
+<input type="text" placeholder="Encontre sua pizza ou bebida">
 
 </div>
 
-<div class="container">
+<section class="menu-principal">
 
-<div id="pizzas">
+<button onclick="abrirCategoria('pizzas')">🍕 Pizzas</button>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1601924638867-3ec2f2e3e8d1">
-<h3>Pizza Calabresa</h3>
-<p class="preco">R$49,90</p>
-<button class="add" onclick="add('Pizza Calabresa')">Adicionar</button>
-</div>
+<button onclick="abrirCategoria('bebidas')">🍺 Bebidas</button>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1594007654729-407eedc4be65">
-<h3>Pizza Frango Catupiry</h3>
-<p class="preco">R$52,90</p>
-<button class="add" onclick="add('Pizza Frango Catupiry')">Adicionar</button>
-</div>
+<button onclick="abrirCategoria('combos')">🔥 Combos</button>
 
-</div>
+<button onclick="abrirCategoria('promocoes')">⭐ Promoções</button>
 
-<div id="bebidas" style="display:none">
+</section>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1608270586620-248524c67de9">
-<h3>Heineken Long Neck</h3>
-<p class="preco">R$9,90</p>
-<button class="add" onclick="add('Heineken Long Neck')">Adicionar</button>
-</div>
+<section id="produtos">
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1584225064785-c62a8b43d148">
-<h3>Combo 12 Cervejas</h3>
-<p class="preco">R$89,90</p>
-<button class="add" onclick="add('Combo 12 Cervejas')">Adicionar</button>
-</div>
+</section>
 
-</div>
-
-<div id="promo" style="display:none">
-
-<div class="card">
-<h3>Combo Churrasco</h3>
-<p>12 cervejas + gelo</p>
-<p class="preco">R$79,90</p>
-<button class="add" onclick="add('Combo Churrasco')">Adicionar</button>
-</div>
-
-</div>
-
-</div>
-
-<div id="carrinho" onclick="enviarPedido()">
+<div class="carrinho" onclick="abrirCarrinho()">
 🛒
-<div id="contador">0</div>
+<span id="contador">0</span>
 </div>
 
-<div class="footer">
-
-<a href="tel:+5531999999999">📞 Ligar</a>
-
-<a href="https://wa.me/5531999999999">💬 WhatsApp</a>
-
-<a href="https://maps.google.com">📍 Localização</a>
-
-</div>
-
-<script>
-
-let carrinho=[]
-
-function mostrar(sec){
-
-document.getElementById("pizzas").style.display="none"
-document.getElementById("bebidas").style.display="none"
-document.getElementById("promo").style.display="none"
-
-document.getElementById(sec).style.display="block"
-
-}
-
-function add(produto){
-
-carrinho.push(produto)
-
-document.getElementById("contador").innerText=carrinho.length
-
-}
-
-function enviarPedido(){
-
-if(carrinho.length==0){
-
-alert("Carrinho vazio")
-
-return
-
-}
-
-let numero="5531999999999"
-
-let msg="Olá quero pedir:%0A"
-
-carrinho.forEach(p=>{
-msg+="- "+p+"%0A"
-})
-
-window.open("https://wa.me/"+numero+"?text="+msg)
-
-}
-
-</script>
+<script src="app.js"></script>
 
 </body>
 </html>
