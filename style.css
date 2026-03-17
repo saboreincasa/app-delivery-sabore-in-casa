@@ -1,69 +1,67 @@
 body{
 font-family:Arial;
-margin:0;
 background:#111;
 color:white;
+margin:0;
 }
 
 header{
-background:#c40000;
+background:#d32f2f;
 padding:15px;
 text-align:center;
 }
 
 .logo{
-height:60px;
+width:120px;
 }
 
 .busca{
-padding:10px;
-}
-
-.busca input{
-width:100%;
-padding:12px;
-border-radius:10px;
-border:none;
-}
-
-.menu-principal{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-padding:10px;
-}
-
-.menu-principal button{
-padding:15px;
-font-size:18px;
-background:#ff7b00;
-border:none;
-border-radius:10px;
-color:white;
-}
-
-.produto{
-
-background:#222;
+width:90%;
 margin:10px;
 padding:10px;
-border-radius:10px;
-
+border-radius:8px;
 }
 
-.produto img{
-width:100%;
-border-radius:10px;
+.menu{
+display:flex;
+justify-content:space-around;
+margin:10px;
 }
 
-.carrinho{
+button{
+background:#ff9800;
+border:none;
+padding:10px;
+border-radius:8px;
+color:white;
+cursor:pointer;
+}
 
+#produtos{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+padding:10px;
+}
+
+.card{
+background:#1f1f1f;
+border-radius:10px;
+padding:10px;
+}
+
+.carrinho-btn{
 position:fixed;
 bottom:20px;
 right:20px;
-background:#ff7b00;
+background:#ff9800;
 padding:15px;
 border-radius:50%;
-font-size:25px;
+font-size:22px;
+}
 
+.pizza-topo{
+width:200px;
+display:block;
+margin:auto;
 }
