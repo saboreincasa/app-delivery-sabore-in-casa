@@ -10,6 +10,7 @@ body{
 font-family:Arial, Helvetica, sans-serif;
 background:#111;
 color:white;
+padding-bottom:90px; /* evita barra cobrir conteúdo */
 }
 
 /* HEADER */
@@ -140,7 +141,6 @@ transition:0.2s;
 transform:scale(1.03);
 }
 
-/* 🔥 IMAGEM DO CARD */
 .card img{
 width:100%;
 height:140px;
@@ -178,7 +178,6 @@ transition:0.2s;
 background:#e68900;
 }
 
-/* 🔥 DESTAQUE DOS COMBOS */
 .destaque{
 border:2px solid #ff9800;
 }
@@ -189,8 +188,6 @@ background:#1f1f1f;
 padding:15px;
 border-radius:10px;
 margin-top:25px;
-
-/* NOVO */
 box-shadow:0 0 20px rgba(0,0,0,0.6);
 }
 
@@ -198,11 +195,9 @@ box-shadow:0 0 20px rgba(0,0,0,0.6);
 margin-top:10px;
 }
 
-/* ============================= */
-/* 🔥 CARRINHO NOVO PROFISSIONAL */
-/* ============================= */
-
+/* ITEM CARRINHO */
 .item-carrinho{
+display:flex;
 flex-direction:column;
 align-items:flex-start;
 background:#1e1e1e;
@@ -220,10 +215,6 @@ align-items:center;
 margin-bottom:8px;
 }
 
-.info-item b{
-font-size:14px;
-}
-
 .preco-item{
 color:#ff5252;
 font-weight:bold;
@@ -238,6 +229,7 @@ width:100%;
 margin:8px 0;
 }
 
+/* BOTÕES + E - (PADRÃO LARANJA) */
 .btn-qtd{
 width:36px;
 height:36px;
@@ -249,17 +241,9 @@ cursor:pointer;
 display:flex;
 align-items:center;
 justify-content:center;
+background:#ff9800;
+color:white;
 transition:0.2s;
-}
-
-.btn-qtd.mais{
-background:#2ecc71;
-color:white;
-}
-
-.btn-qtd.menos{
-background:#e74c3c;
-color:white;
 }
 
 .btn-qtd:hover{
@@ -285,20 +269,26 @@ font-size:13px;
 color:#bbb;
 }
 
+/* BOTÃO REMOVER NOVO */
 .btn-remover{
-background:linear-gradient(45deg,#ff1744,#d50000);
-border:none;
-padding:6px 12px;
-border-radius:8px;
-color:white;
-font-size:12px;
+background:transparent;
+border:1px solid #ff5252;
+width:32px;
+height:32px;
+border-radius:50%;
+color:#ff5252;
+font-size:16px;
 cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
 transition:0.2s;
 }
 
 .btn-remover:hover{
-transform:scale(1.05);
-filter:brightness(1.1);
+background:#ff5252;
+color:white;
+transform:scale(1.1);
 }
 
 /* TOTAL */
@@ -333,8 +323,6 @@ border-radius:20px;
 border:none;
 font-weight:bold;
 cursor:pointer;
-
-/* NOVO */
 box-shadow:0 4px 15px rgba(0,0,0,0.4);
 letter-spacing:1px;
 }
@@ -357,8 +345,6 @@ align-items:center;
 justify-content:center;
 font-size:28px;
 cursor:pointer;
-
-/* NOVO */
 box-shadow:0 4px 15px rgba(0,0,0,0.5);
 transition:0.2s;
 }
@@ -379,55 +365,7 @@ padding:4px 6px;
 border-radius:50%;
 }
 
-/* FOOTER */
-footer{
-text-align:center;
-margin-top:40px;
-font-size:13px;
-color:#aaa;
-padding-bottom:20px;
-}
-
-/* RESPONSIVO */
-@media (max-width:600px){
-#produtos{
-grid-template-columns:1fr;
-}
-
-#combosSemana{
-grid-template-columns:1fr;
-}
-
-.banner{
-height:150px;
-}
-}
-/* 🔥 BOTÕES + e - LARANJA */
-.btn-qtd.mais,
-.btn-qtd.menos{
-background:#ff9800;
-color:white;
-}
-
-/* 🔥 BOTÃO REMOVER BONITO */
-.btn-remover{
-background:transparent;
-border:1px solid #ff5252;
-padding:6px 10px;
-border-radius:50%;
-color:#ff5252;
-font-size:14px;
-cursor:pointer;
-transition:0.2s;
-}
-
-.btn-remover:hover{
-background:#ff5252;
-color:white;
-transform:scale(1.1);
-}
-
-/* 🔥 BARRA FIXA */
+/* BARRA FIXA */
 .barra-final{
 position:fixed;
 bottom:0;
@@ -465,7 +403,26 @@ background:#e68900;
 transform:scale(1.05);
 }
 
-/* NÃO DEIXA A BARRA COBRIR O CONTEÚDO */
-body{
-padding-bottom:90px;
+/* FOOTER */
+footer{
+text-align:center;
+margin-top:40px;
+font-size:13px;
+color:#aaa;
+padding-bottom:20px;
+}
+
+/* RESPONSIVO */
+@media (max-width:600px){
+#produtos{
+grid-template-columns:1fr;
+}
+
+#combosSemana{
+grid-template-columns:1fr;
+}
+
+.banner{
+height:150px;
+}
 }
