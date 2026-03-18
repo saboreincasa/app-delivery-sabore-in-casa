@@ -88,7 +88,7 @@ function abrirMontagemPizza(nome){
     </select>
 
     <br><br>
-    <button onclick="adicionarPizza('${nome}')">
+    <button onclick="adicionarPizza('${nome}')" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:10px 20px; cursor:pointer;">
         Adicionar ao Carrinho
     </button>
 
@@ -99,7 +99,7 @@ function abrirMontagemPizza(nome){
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 ADICIONAR PIZZA (AGORA COM QUANTIDADE)
+// 🍕 ADICIONAR PIZZA
 function adicionarPizza(nome){
     let tamanho = document.getElementById("tamanho").value
     let borda = document.getElementById("borda").value
@@ -148,7 +148,7 @@ function filtrar(tipo){
                 <div class="card-content">
                     <h3>${b.nome}</h3>
                     <p class="preco">R$ ${b.preco}</p>
-                    <button onclick="addCarrinho('${b.nome}', ${b.preco})">Adicionar</button>
+                    <button onclick="addCarrinho('${b.nome}', ${b.preco})" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">Adicionar</button>
                 </div>
             </div>
             `
@@ -168,7 +168,7 @@ function filtrar(tipo){
                 <div class="card-content">
                     <h3>${s.nome}</h3>
                     <p class="preco">R$ ${s.preco}</p>
-                    <button onclick="addCarrinho('${s.nome}', ${s.preco})">Adicionar</button>
+                    <button onclick="addCarrinho('${s.nome}', ${s.preco})" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">Adicionar</button>
                 </div>
             </div>
             `
@@ -199,7 +199,7 @@ function carregarCombosSemana(){
             <div class="card-content">
                 <h3>${c.nome}</h3>
                 <p class="preco">R$ ${c.preco}</p>
-                <button onclick="addCarrinho('${c.nome}', ${c.preco})">Adicionar</button>
+                <button onclick="addCarrinho('${c.nome}', ${c.preco})" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">Adicionar</button>
             </div>
         </div>
         `
@@ -241,23 +241,28 @@ function atualizarCarrinho(){
     let contador = document.getElementById("contador")
     let total = 0
     lista.innerHTML = ""
+
     carrinho.forEach((item, index)=>{
         let subtotal = item.preco * item.qtd
         lista.innerHTML += `
-        <div>
-            <b>${item.nome}</b><br>
-            <button onclick="diminuir(${index})">➖</button>
-            ${item.qtd}
-            <button onclick="aumentar(${index})">➕</button>
-            <br>
-            Subtotal: R$ ${subtotal.toFixed(2)}
-            <br>
-            <button onclick="removerItem(${index})">❌ Remover</button>
-            <hr>
+        <div class="item-carrinho" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+            
+            <div class="item-info" style="flex:1;">
+                <b>${item.nome}</b><br>
+                Subtotal: R$ ${subtotal.toFixed(2)}
+            </div>
+
+            <div class="item-controles" style="display:flex; align-items:center; gap:5px;">
+                <button onclick="diminuir(${index})" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">➖</button>
+                <span>${item.qtd}</span>
+                <button onclick="aumentar(${index})" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">➕</button>
+                <button onclick="removerItem(${index})" style="background:transparent; color:red; border:none; font-weight:bold; margin-left:10px; cursor:pointer;">❌ Remover item</button>
+            </div>
         </div>
         `
         total += subtotal
     })
+
     contador.innerText = carrinho.length
     document.getElementById("total").innerText = total.toFixed(2)
 }
