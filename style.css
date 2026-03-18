@@ -140,7 +140,7 @@ transition:0.2s;
 transform:scale(1.03);
 }
 
-/* 🔥 IMAGEM DO CARD */
+/* IMAGEM DO CARD */
 .card img{
 width:100%;
 height:140px;
@@ -178,7 +178,7 @@ transition:0.2s;
 background:#e68900;
 }
 
-/* 🔥 DESTAQUE DOS COMBOS */
+/* DESTAQUE DOS COMBOS */
 .destaque{
 border:2px solid #ff9800;
 }
@@ -224,7 +224,7 @@ color:#2ecc71;
 .controle{
 display:flex;
 align-items:center;
-gap:8px;
+gap:5px;
 }
 
 .controle button{
@@ -236,10 +236,17 @@ height:28px;
 border-radius:50%;
 font-size:16px;
 cursor:pointer;
+transition:0.2s;
+}
+
+.controle button:hover{
+background:#e68900;
 }
 
 .controle span{
 font-size:14px;
+min-width:20px;
+text-align:center;
 }
 
 /* BOTÃO REMOVER */
