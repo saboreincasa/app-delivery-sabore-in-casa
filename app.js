@@ -93,7 +93,7 @@ function abrirMontagemPizza(nome){
     </button>
 
     <br><br>
-    <button onclick="abrirPizzas()">⬅ Voltar</button>
+    <button onclick="abrirPizzas()" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:10px 20px; cursor:pointer;">⬅ Voltar</button>
     `
 
     document.getElementById("produtos").innerHTML = html
@@ -256,7 +256,7 @@ function atualizarCarrinho(){
                 <button onclick="diminuir(${index})" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">➖</button>
                 <span>${item.qtd}</span>
                 <button onclick="aumentar(${index})" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">➕</button>
-                <button onclick="removerItem(${index})" style="background:white; color:red; border:none; font-weight:bold; margin-left:10px; cursor:pointer;">❌ Remover item</button>
+                <button onclick="removerItem(${index})" style="background:transparent; border:none; font-weight:bold; margin-left:10px; cursor:pointer;">❌<span style="color:white;"> Remover item</span></button>
             </div>
         </div>
         `
