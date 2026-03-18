@@ -1,4 +1,3 @@
-
 // 🛒 CARRINHO
 let carrinho = []
 
@@ -21,7 +20,7 @@ carregarCombosSemana()
 document.getElementById("produtos").innerHTML = ""
 }
 
-// 🍕 PIZZAS (AGORA PROFISSIONAL)
+// 🍕 PIZZAS
 function abrirPizzas(){
 esconderCombos()
 
@@ -103,7 +102,7 @@ Adicionar ao Carrinho
 document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 ADICIONAR PIZZA
+// 🍕 ADICIONAR PIZZA (AGORA COM QUANTIDADE)
 function adicionarPizza(nome){
 
 let tamanho = document.getElementById("tamanho").value
@@ -128,12 +127,7 @@ if(borda == 10){
 nomeFinal += " / Borda recheada"
 }
 
-carrinho.push({
-nome: nomeFinal,
-preco: preco
-})
-
-atualizarCarrinho()
+addCarrinho(nomeFinal, preco)
 
 abrirPizzas()
 }
@@ -253,7 +247,24 @@ bannerIndex = 0
 
 setInterval(trocarBanner, 3000)
 
-// 🛒 CARRINHO
+// 🛒 CARRINHO PROFISSIONAL
+function addCarrinho(nome, preco){
+
+let itemExistente = carrinho.find(i => i.nome === nome)
+
+if(itemExistente){
+itemExistente.qtd++
+}else{
+carrinho.push({
+nome: nome,
+preco: preco,
+qtd: 1
+})
+}
+
+atualizarCarrinho()
+}
+
 function atualizarCarrinho(){
 
 let lista = document.getElementById("lista")
@@ -262,19 +273,50 @@ let total = 0
 
 lista.innerHTML = ""
 
-carrinho.forEach(item=>{
+carrinho.forEach((item, index)=>{
+
+let subtotal = item.preco * item.qtd
+
 lista.innerHTML += `
-<div>${item.nome} - R$ ${item.preco}</div>
+<div>
+<b>${item.nome}</b><br>
+
+<button onclick="diminuir(${index})">➖</button>
+${item.qtd}
+<button onclick="aumentar(${index})">➕</button>
+
+<br>
+Subtotal: R$ ${subtotal.toFixed(2)}
+
+<br>
+<button onclick="removerItem(${index})">❌ Remover</button>
+<hr>
+</div>
 `
-total += item.preco
+
+total += subtotal
 })
 
 contador.innerText = carrinho.length
 document.getElementById("total").innerText = total.toFixed(2)
 }
 
-function addCarrinho(nome, preco){
-carrinho.push({nome, preco})
+function aumentar(index){
+carrinho[index].qtd++
+atualizarCarrinho()
+}
+
+function diminuir(index){
+if(carrinho[index].qtd > 1){
+carrinho[index].qtd--
+}else{
+carrinho.splice(index,1)
+}
+atualizarCarrinho()
+}
+
+function removerItem(index){
+carrinho.splice(index,1)
 atualizarCarrinho()
 }
 
@@ -288,7 +330,7 @@ let total = document.getElementById("total").innerText
 let msg = "🍕 *Pedido Sabore In Casa*%0A%0A"
 
 carrinho.forEach(item=>{
-msg += `${item.nome} - R$ ${item.preco}%0A`
+msg += `${item.nome} (x${item.qtd}) - R$ ${item.preco * item.qtd}%0A`
 })
 
 msg += `%0ATotal: R$ ${total}`
