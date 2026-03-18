@@ -34,7 +34,6 @@ font-weight:bold;
 background:#1f1f1f;
 padding:12px;
 text-align:center;
-color:white;
 font-size:14px;
 margin:10px;
 border-radius:8px;
@@ -48,13 +47,7 @@ border:none;
 border-radius:8px;
 background:#ff9800;
 color:white;
-font-size:14px;
 cursor:pointer;
-transition:0.2s;
-}
-
-.endereco button:hover{
-background:#e68900;
 }
 
 /* BANNER */
@@ -64,7 +57,6 @@ border-radius:12px;
 margin:10px;
 background-size:cover;
 background-position:center;
-background-image:url("https://images.unsplash.com/photo-1513104890138-7c749659a591");
 }
 
 /* CONTAINER */
@@ -113,7 +105,6 @@ transition:0.2s;
 
 .linha button:hover{
 background:#e68900;
-transform:scale(1.02);
 }
 
 /* TÍTULOS */
@@ -121,13 +112,14 @@ h2{
 margin:15px 0 10px 0;
 }
 
-/* LISTA PRODUTOS */
+/* PRODUTOS */
 #produtos{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
 gap:15px;
 }
 
+/* COMBOS */
 #combosSemana{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
@@ -135,7 +127,7 @@ gap:15px;
 margin-bottom:20px;
 }
 
-/* CARD PRODUTO */
+/* CARD */
 .card{
 background:#1f1f1f;
 border-radius:12px;
@@ -148,6 +140,7 @@ transition:0.2s;
 transform:scale(1.03);
 }
 
+/* 🔥 IMAGEM DO CARD */
 .card img{
 width:100%;
 height:140px;
@@ -161,11 +154,6 @@ padding:12px;
 .card h3{
 font-size:18px;
 margin-bottom:5px;
-}
-
-.card p{
-font-size:14px;
-color:#ccc;
 }
 
 .preco{
@@ -183,12 +171,16 @@ border-radius:8px;
 color:white;
 margin-top:8px;
 cursor:pointer;
-font-size:15px;
 transition:0.2s;
 }
 
 .card button:hover{
 background:#e68900;
+}
+
+/* 🔥 DESTAQUE DOS COMBOS */
+.destaque{
+border:2px solid #ff9800;
 }
 
 /* CARRINHO */
@@ -212,18 +204,11 @@ background:#2a2a2a;
 padding:10px;
 border-radius:8px;
 margin-bottom:8px;
-transition:0.2s;
-gap:10px;
-}
-
-.item-carrinho:hover{
-background:#333;
 }
 
 .info-item{
 display:flex;
 flex-direction:column;
-flex:1;
 }
 
 .nome-item{
@@ -235,7 +220,7 @@ font-size:13px;
 color:#2ecc71;
 }
 
-/* CONTROLE + - */
+/* CONTROLE */
 .controle{
 display:flex;
 align-items:center;
@@ -251,36 +236,21 @@ height:28px;
 border-radius:50%;
 font-size:16px;
 cursor:pointer;
-transition:0.2s;
-}
-
-.controle button:hover{
-background:#e68900;
 }
 
 .controle span{
 font-size:14px;
 }
 
-/* BOTÃO EXCLUIR */
+/* BOTÃO REMOVER */
 .btn-remover{
 background:#ff4d4d;
 border:none;
 color:white;
-width:26px;
-height:26px;
+width:28px;
+height:28px;
 border-radius:50%;
-font-size:14px;
 cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:center;
-transition:0.2s;
-}
-
-.btn-remover:hover{
-background:#cc0000;
-transform:scale(1.1);
 }
 
 /* TOTAL */
@@ -298,9 +268,6 @@ margin-top:10px;
 border-radius:6px;
 border:none;
 font-size:14px;
-}
-
-#enderecoCliente,#troco,#pagamento{
 background:white;
 color:black;
 }
@@ -316,14 +283,13 @@ border-radius:20px;
 border:none;
 font-weight:bold;
 cursor:pointer;
-transition:0.2s;
 }
 
 .enviar:hover{
 background:#1ebe5d;
 }
 
-/* BOTÃO CARRINHO */
+/* BOTÃO FLUTUANTE */
 #botaoCarrinho{
 position:fixed;
 bottom:20px;
@@ -337,7 +303,6 @@ align-items:center;
 justify-content:center;
 font-size:28px;
 cursor:pointer;
-box-shadow:0 0 10px rgba(0,0,0,0.5);
 }
 
 /* CONTADOR */
@@ -363,7 +328,6 @@ padding-bottom:20px;
 
 /* RESPONSIVO */
 @media (max-width:600px){
-
 #produtos{
 grid-template-columns:1fr;
 }
@@ -375,5 +339,4 @@ grid-template-columns:1fr;
 .banner{
 height:150px;
 }
-
 }
