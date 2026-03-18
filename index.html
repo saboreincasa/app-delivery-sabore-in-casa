@@ -2,15 +2,207 @@
 <html lang="pt-br">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Sabore In Casa</title>
 
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="style.css">
 
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#111;
+color:white;
+}
+
+header{
+background:#c62828;
+text-align:center;
+padding:15px;
+}
+
+.logo{
+width:140px;
+}
+
+.titulo{
+font-size:24px;
+font-weight:bold;
+}
+
+.endereco{
+background:#1f1f1f;
+padding:10px;
+text-align:center;
+font-size:14px;
+margin:10px;
+border-radius:6px;
+}
+
+.banner{
+height:180px;
+border-radius:12px;
+margin:10px;
+background-size:cover;
+background-position:center;
+}
+
+.container{
+padding:15px;
+max-width:1000px;
+margin:auto;
+}
+
+.busca{
+width:100%;
+padding:12px;
+border-radius:8px;
+border:none;
+margin-bottom:15px;
+background:white;
+color:#111;
+}
+
+.btn-flutuantes{
+display:flex;
+flex-direction:column;
+gap:8px;
+margin-bottom:15px;
+}
+
+.linha{
+display:flex;
+gap:10px;
+}
+
+.linha button{
+flex:1;
+background:#ff9800;
+border:none;
+padding:12px;
+border-radius:10px;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+#produtos{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+}
+
+.card{
+background:#1f1f1f;
+border-radius:12px;
+overflow:hidden;
+}
+
+.card img{
+width:100%;
+height:140px;
+object-fit:cover;
+}
+
+.card-content{
+padding:12px;
+}
+
+.preco{
+color:#2ecc71;
+font-size:17px;
+}
+
+.card button{
+background:#ff9800;
+border:none;
+padding:10px;
+width:100%;
+border-radius:8px;
+color:white;
+margin-top:8px;
+cursor:pointer;
+}
+
+#botaoCarrinho{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#ff9800;
+width:65px;
+height:65px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+cursor:pointer;
+}
+
+#contador{
+position:absolute;
+top:-5px;
+right:-5px;
+background:red;
+color:white;
+font-size:12px;
+padding:4px 6px;
+border-radius:50%;
+}
+
+#carrinho{
+background:#1f1f1f;
+padding:15px;
+border-radius:10px;
+margin-top:25px;
+}
+
+.item{
+display:flex;
+justify-content:space-between;
+margin-bottom:6px;
+}
+
+.total{
+font-size:20px;
+margin-top:10px;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:6px;
+border:none;
+}
+
+#enderecoCliente,#troco,#pagamento{
+background:white;
+color:#111;
+}
+
+.enviar{
+background:#25D366;
+color:white;
+font-size:18px;
+padding:14px;
+margin-top:15px;
+border-radius:20px;
+border:none;
+font-weight:bold;
+cursor:pointer;
+}
+
+footer{
+text-align:center;
+margin-top:40px;
+font-size:13px;
+color:#aaa;
+}
+
+</style>
 </head>
 
 <body>
@@ -19,18 +211,14 @@
 
 <img src="imagens/logo.png" class="logo">
 
-<div class="titulo">
-Sabore In Casa
-</div>
+<div class="titulo">Sabore In Casa</div>
 
 </header>
 
 <div class="endereco">
 
-📍 Rua Maria de Lourdes da Cruz Nº 378<br>
-Bairro Mantiqueira – Belo Horizonte
-
-<br>
+📍 Rua Maria de Lourdes da Cruz Nº 378  
+Bairro Mantiqueira – Belo Horizonte  
 
 <button onclick="abrirMapa()">📍 Ver no mapa</button>
 
@@ -45,23 +233,18 @@ Bairro Mantiqueira – Belo Horizonte
 <div class="btn-flutuantes">
 
 <div class="linha">
-
 <button onclick="abrirPizzas()">🍕 Pizzas</button>
-<button onclick="filtrar('bebidas')">🥤 Bebidas</button>
-
+<button onclick="filtrar('cerveja')">🍺 Bebidas</button>
 </div>
 
 <div class="linha">
-
 <button onclick="filtrar('combo')">🎁 Combos</button>
-<button onclick="filtrar('snaks')">🍟 Snaks</button>
-
+<button onclick="mostrar(produtos)">🔥 Todos</button>
 </div>
 
 </div>
 
 <h2>⭐ Combos da Semana</h2>
-
 <div id="combosSemana"></div>
 
 <div id="produtos"></div>
@@ -95,23 +278,18 @@ Enviar pedido no WhatsApp
 </div>
 
 <div id="botaoCarrinho" onclick="scrollCarrinho()">
-
 🛒
-
 <div id="contador">0</div>
-
 </div>
 
 <footer>
 
-© Sabore In Casa<br>
+© Sabore In Casa  
 Desenvolvido por <b>Carlos Henrique</b>
 
 </footer>
 
 <script src="app.js"></script>
-<script src="mapa.js"></script>
-<script src="notificacao.js"></script>
 
 </body>
 </html>
