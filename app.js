@@ -1,156 +1,127 @@
-let produtos=[]
 let carrinho=[]
-let taxaEntrega=6.99
+let total=0
+let pizzaSelecionada=""
 
-fetch("produtos.json")
-.then(r=>r.json())
-.then(d=>{
+const pizzas = [
 
-produtos=d
+{nome:"A Moda",desc:"Mussarela, milho, presunto, molho, azeitona, cebola, calabresa e orégano",img:"https://images.unsplash.com/photo-1594007654729-407eedc4fe24"},
 
-mostrarCombosSemana()
-mostrar(produtos)
+{nome:"Calabresa",desc:"Molho, calabresa, cebola, mussarela e orégano",img:"https://images.unsplash.com/photo-1548365328-9f547fb0953d"},
 
-})
+{nome:"Frango com Cheddar",desc:"Frango, cheddar, mussarela e orégano",img:"https://images.unsplash.com/photo-1601924638867-3ec2bcd05c15"},
 
-function filtrar(cat){
+{nome:"Frango com Catupiry",desc:"Frango, catupiry, mussarela e orégano",img:"https://images.unsplash.com/photo-1513104890138-7c749659a591"},
 
-let filtrados=produtos.filter(p=>p.categoria==cat)
+{nome:"Frango Bolonhesa",desc:"Molho bolonhesa, frango e mussarela",img:"https://images.unsplash.com/photo-1604382355076-af4b0eb60143"},
 
-mostrar(filtrados)
+{nome:"Milho com Bacon",desc:"Milho, bacon, mussarela e orégano",img:"https://images.unsplash.com/photo-1590947132387-155cc02f3212"},
 
-}
+{nome:"Napolitana",desc:"Tomate, parmesão, mussarela",img:"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e"},
 
-function mostrar(lista){
+{nome:"Palmito Bolonhesa",desc:"Palmito, bolonhesa e mussarela",img:"https://images.unsplash.com/photo-1601924582975-7c4c2d6a8f36"},
 
-let area=document.getElementById("produtos")
+{nome:"Quatro Queijos",desc:"Mussarela, gorgonzola, parmesão, cheddar",img:"https://images.unsplash.com/photo-1513104890138-7c749659a591"},
 
-area.innerHTML=""
+{nome:"Vegetariana",desc:"Tomate, cebola, milho, azeitona e palmito",img:"https://images.unsplash.com/photo-1548365328-9f547fb0953d"}
 
-lista.forEach(p=>{
+]
 
-area.innerHTML+=`
+function abrirPizzas(){
 
-<div class="card">
+let html="<h2>🍕 Cardápio</h2>"
 
-<img src="${p.foto}">
+pizzas.forEach(p=>{
 
-<div class="card-content">
+html+=`
+<div class="card-pizza" onclick="abrirModal('${p.nome}','${p.img}')">
 
+<img src="${p.img}">
+
+<div>
 <h3>${p.nome}</h3>
-
-<p>${p.descricao}</p>
-
-<div class="preco">R$ ${p.preco}</div>
-
-<button onclick="addCarrinho('${p.nome}',${p.preco})">
-Adicionar
-</button>
-
+<p>${p.desc}</p>
+<p><b>P R$23 | M R$38 | G R$42</b></p>
 </div>
 
 </div>
-
 `
 
 })
 
-}
-
-function mostrarCombosSemana(){
-
-let area=document.getElementById("combosSemana")
-
-let combos=produtos.filter(p=>p.categoria=="combo")
-
-area.innerHTML=""
-
-combos.forEach(p=>{
-
-area.innerHTML+=`
-
-<div class="card">
-
-<img src="${p.foto}">
-
-<div class="card-content">
-
-<h3>${p.nome}</h3>
-
-<div class="preco">R$ ${p.preco}</div>
-
-<button onclick="addCarrinho('${p.nome}',${p.preco})">
-Adicionar
-</button>
-
-</div>
-
-</div>
-
-`
-
-})
+document.getElementById("produtos").innerHTML=html
 
 }
 
-function addCarrinho(nome,preco){
+function abrirModal(nome,img){
+
+pizzaSelecionada=nome
+
+document.getElementById("nomePizza").innerText=nome
+document.getElementById("imgPizza").src=img
+
+document.getElementById("modalPizza").style.display="flex"
+
+}
+
+function fecharModal(){
+document.getElementById("modalPizza").style.display="none"
+}
+
+function confirmarPizza(){
+
+let tamanho=parseFloat(document.getElementById("tamanho").value)
+let borda=parseFloat(document.getElementById("borda").value)
+let meia=document.getElementById("meiaPizza").value
+
+let preco=tamanho + borda
+
+let nome=pizzaSelecionada
+
+if(meia){
+nome+=" / "+meia
+}
 
 carrinho.push({nome,preco})
+total+=preco
 
 atualizarCarrinho()
+fecharModal()
 
 }
 
 function atualizarCarrinho(){
 
-let lista=document.getElementById("lista")
+let html=""
 
-lista.innerHTML=""
-
-let total=taxaEntrega
-
-carrinho.forEach(i=>{
-
-lista.innerHTML+=`
-<div>${i.nome} - R$ ${i.preco}</div>
-`
-
-total+=i.preco
-
+carrinho.forEach(p=>{
+html+=`<div>${p.nome} - R$${p.preco}</div>`
 })
 
+document.getElementById("lista").innerHTML=html
 document.getElementById("total").innerText=total.toFixed(2)
 document.getElementById("contador").innerText=carrinho.length
 
 }
 
-function scrollCarrinho(){
-
-document.getElementById("carrinho").scrollIntoView()
-
-}
-
-function abrirPizzas(){
-
-window.location="pizza.html"
-
-}
-
 function enviarPedido(){
 
-let pagamento=document.getElementById("pagamento").value
 let endereco=document.getElementById("enderecoCliente").value
+let pagamento=document.getElementById("pagamento").value
 
-let msg="Pedido%20Sabore%20In%20Casa%0A%0A"
+let msg="Pedido Sabore In Casa %0A"
 
-carrinho.forEach(i=>{
-msg+=i.nome+"%20-%20R$"+i.preco+"%0A"
+carrinho.forEach(p=>{
+msg+=p.nome+" - R$"+p.preco+"%0A"
 })
 
-msg+="%0AEntrega:%20R$6.99"
-msg+="%0AEndereco:%20"+endereco
-msg+="%0APagamento:%20"+pagamento
+msg+="Total: R$"+total
+msg+="%0APagamento: "+pagamento
+msg+="%0AEndereço: "+endereco
 
 window.open("https://wa.me/5531983391576?text="+msg)
 
+}
+
+function scrollCarrinho(){
+document.getElementById("carrinho").scrollIntoView()
 }
