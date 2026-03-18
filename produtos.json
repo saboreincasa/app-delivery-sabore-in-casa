@@ -1,7 +1,7 @@
 [
 {
 "nome":"Combo Casal",
-"categoria":"combo",
+"categoria":"combos",
 "preco":79.90,
 "descricao":"2 pizzas grandes + refrigerante",
 "foto":"https://images.unsplash.com/photo-1601924582975-7e6b1e6f6c4d"
@@ -9,17 +9,41 @@
 
 {
 "nome":"Combo Solteiro",
-"categoria":"combo",
+"categoria":"combos",
 "preco":39.90,
 "descricao":"1 pizza grande + coca cola",
 "foto":"https://images.unsplash.com/photo-1548365328-9f547fb0953d"
 },
 
 {
-"nome":"Batata Frita",
+"nome":"Batata Frita Crocante",
 "categoria":"snaks",
 "preco":18.90,
-"descricao":"Batata frita crocante",
+"descricao":"Porção de batata frita crocante",
 "foto":"https://images.unsplash.com/photo-1576107232684-1279f390859f"
+},
+
+{
+"nome":"Nuggets de Frango",
+"categoria":"snaks",
+"preco":22.90,
+"descricao":"10 nuggets crocantes",
+"foto":"https://images.unsplash.com/photo-1606755962773-d324e2d53c8e"
+},
+
+{
+"nome":"Coca Cola 2L",
+"categoria":"bebidas",
+"preco":12.00,
+"descricao":"Refrigerante",
+"foto":"https://images.unsplash.com/photo-1580910051074-3eb694886505"
+},
+
+{
+"nome":"Guaraná Antarctica 2L",
+"categoria":"bebidas",
+"preco":11.00,
+"descricao":"Refrigerante",
+"foto":"https://images.unsplash.com/photo-1610878180933-123728e8c2c8"
 }
 ]
