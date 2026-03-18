@@ -3,9 +3,10 @@ let carrinho = []
 // 🚀 INICIALIZA
 window.onload = function(){
 carregarCombosSemana()
+trocarBanner()
 }
 
-// 🛒 ATUALIZA CARRINHO
+// 🛒 CARRINHO
 function atualizarCarrinho(){
 
 let lista = document.getElementById("lista")
@@ -30,7 +31,6 @@ let item = agrupado[nome]
 
 lista.innerHTML += `
 <div class="item-carrinho">
-
 <div class="info-item">
 <span class="nome-item">${nome}</span>
 <span class="preco-item">R$ ${(item.preco * item.qtd).toFixed(2)}</span>
@@ -43,7 +43,6 @@ lista.innerHTML += `
 </div>
 
 <button class="btn-remover" onclick="removerItemTotal('${nome}')">✕</button>
-
 </div>
 `
 
@@ -53,16 +52,13 @@ total += item.preco * item.qtd
 
 contador.innerText = carrinho.length
 document.getElementById("total").innerText = total.toFixed(2)
-
 }
 
-// ➕ ADICIONAR
 function addCarrinho(nome, preco){
 carrinho.push({nome, preco})
 atualizarCarrinho()
 }
 
-// ➕ AUMENTAR
 function aumentarItem(nome){
 let item = carrinho.find(p => p.nome === nome)
 if(item){
@@ -71,7 +67,6 @@ carrinho.push({nome:item.nome, preco:item.preco})
 atualizarCarrinho()
 }
 
-// ➖ DIMINUIR
 function diminuirItem(nome){
 let index = carrinho.findIndex(p => p.nome === nome)
 if(index > -1){
@@ -80,14 +75,19 @@ carrinho.splice(index,1)
 atualizarCarrinho()
 }
 
-// ❌ REMOVER TUDO
 function removerItemTotal(nome){
 carrinho = carrinho.filter(item => item.nome !== nome)
 atualizarCarrinho()
 }
 
+// 🔥 ESCONDER COMBOS
+function esconderCombos(){
+document.getElementById("combosSemana").style.display = "none"
+}
+
 // 🍕 PIZZAS
 function abrirPizzas(){
+esconderCombos()
 
 let html = "<h2>🍕 Pizzas</h2>"
 
@@ -112,8 +112,14 @@ html += `
 document.getElementById("produtos").innerHTML = html
 }
 
-// FILTROS
+// 🥤🍟🎁 FILTROS
 function filtrar(tipo){
+
+if(tipo !== "combo"){
+esconderCombos()
+}else{
+document.getElementById("combosSemana").style.display = "grid"
+}
 
 let html = ""
 
@@ -138,27 +144,6 @@ html += `
 </div>
 `
 })
-
-}
-
-if(tipo==="combo"){
-
-html += "<h2>🎁 Combos</h2>"
-
-const combos = getCombos()
-
-combos.forEach(c=>{
-html += `
-<div class="card destaque">
-<div class="card-content">
-<h3>${c.nome}</h3>
-<p class="preco">R$ ${c.preco}</p>
-<button onclick="addCarrinho('${c.nome}', ${c.preco})">Adicionar</button>
-</div>
-</div>
-`
-})
-
 }
 
 if(tipo==="snaks"){
@@ -181,23 +166,22 @@ html += `
 </div>
 `
 })
-
 }
 
 document.getElementById("produtos").innerHTML = html
 }
 
-// COMBOS
+// 🎁 COMBOS
 function getCombos(){
 return [
-{nome:"Combo Família 🍕🍕🥤",preco:79},
-{nome:"Combo Casal 🍕🥤",preco:49},
-{nome:"Combo Amigos 🍕🍕🍟🥤",preco:89},
-{nome:"Combo Solteiro 🍕🥤",preco:35}
+{nome:"Combo Família 🍕🍕🥤",preco:79,img:"https://images.unsplash.com/photo-1513104890138-7c749659a591"},
+{nome:"Combo Casal 🍕🥤",preco:49,img:"https://images.unsplash.com/photo-1594007654729-407eedc4fe24"},
+{nome:"Combo Amigos 🍕🍕🍟🥤",preco:89,img:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092"},
+{nome:"Combo Solteiro 🍕🥤",preco:35,img:"https://images.unsplash.com/photo-1548365328-9f547fb0953d"}
 ]
 }
 
-// CARREGAR HOME
+// ⭐ HOME
 function carregarCombosSemana(){
 
 let combos = getCombos()
@@ -206,6 +190,7 @@ let html = ""
 combos.forEach(c=>{
 html += `
 <div class="card destaque">
+<img src="${c.img}">
 <div class="card-content">
 <h3>${c.nome}</h3>
 <p class="preco">R$ ${c.preco}</p>
@@ -218,7 +203,28 @@ html += `
 document.getElementById("combosSemana").innerHTML = html
 }
 
-// WHATSAPP
+// 🎬 BANNER
+let banners = [
+"https://images.unsplash.com/photo-1513104890138-7c749659a591",
+"https://images.unsplash.com/photo-1601924582975-7e9c7b4f9d19",
+"https://images.unsplash.com/photo-1548365328-9f547fb0953d"
+]
+
+let bannerIndex = 0
+
+function trocarBanner(){
+let banner = document.getElementById("banner")
+banner.style.backgroundImage = `url(${banners[bannerIndex]})`
+
+bannerIndex++
+if(bannerIndex >= banners.length){
+bannerIndex = 0
+}
+}
+
+setInterval(trocarBanner, 3000)
+
+// 📲 WHATSAPP
 function enviarPedido(){
 
 let endereco = document.getElementById("enderecoCliente").value
@@ -238,12 +244,12 @@ msg += `%0APagamento: ${pagamento}`
 window.open(`https://wa.me/5531999999999?text=${msg}`)
 }
 
-// MAPA
+// 📍 MAPA
 function abrirMapa(){
 window.open("https://maps.google.com?q=Rua+Maria+de+Lourdes+da+Cruz+378")
 }
 
-// SCROLL
+// 🛒 SCROLL
 function scrollCarrinho(){
 document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
 }
