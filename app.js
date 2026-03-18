@@ -1,127 +1,123 @@
+let produtos=[]
 let carrinho=[]
-let total=0
-let pizzaSelecionada=""
 
-const pizzas = [
+fetch("produtos.json")
+.then(r=>r.json())
+.then(d=>{
 
-{nome:"A Moda",desc:"Mussarela, milho, presunto, molho, azeitona, cebola, calabresa e orégano",img:"https://images.unsplash.com/photo-1594007654729-407eedc4fe24"},
+produtos=d
 
-{nome:"Calabresa",desc:"Molho, calabresa, cebola, mussarela e orégano",img:"https://images.unsplash.com/photo-1548365328-9f547fb0953d"},
+mostrar("combos")
 
-{nome:"Frango com Cheddar",desc:"Frango, cheddar, mussarela e orégano",img:"https://images.unsplash.com/photo-1601924638867-3ec2bcd05c15"},
+})
 
-{nome:"Frango com Catupiry",desc:"Frango, catupiry, mussarela e orégano",img:"https://images.unsplash.com/photo-1513104890138-7c749659a591"},
+function mostrar(cat){
 
-{nome:"Frango Bolonhesa",desc:"Molho bolonhesa, frango e mussarela",img:"https://images.unsplash.com/photo-1604382355076-af4b0eb60143"},
+let area=document.getElementById("produtos")
 
-{nome:"Milho com Bacon",desc:"Milho, bacon, mussarela e orégano",img:"https://images.unsplash.com/photo-1590947132387-155cc02f3212"},
+area.innerHTML=""
 
-{nome:"Napolitana",desc:"Tomate, parmesão, mussarela",img:"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e"},
+produtos
+.filter(p=>p.categoria==cat)
+.forEach(p=>{
 
-{nome:"Palmito Bolonhesa",desc:"Palmito, bolonhesa e mussarela",img:"https://images.unsplash.com/photo-1601924582975-7c4c2d6a8f36"},
+area.innerHTML+=`
 
-{nome:"Quatro Queijos",desc:"Mussarela, gorgonzola, parmesão, cheddar",img:"https://images.unsplash.com/photo-1513104890138-7c749659a591"},
+<div class="card">
 
-{nome:"Vegetariana",desc:"Tomate, cebola, milho, azeitona e palmito",img:"https://images.unsplash.com/photo-1548365328-9f547fb0953d"}
+<img src="${p.foto}">
 
-]
+<div class="card-body">
 
-function abrirPizzas(){
-
-let html="<h2>🍕 Cardápio</h2>"
-
-pizzas.forEach(p=>{
-
-html+=`
-<div class="card-pizza" onclick="abrirModal('${p.nome}','${p.img}')">
-
-<img src="${p.img}">
-
-<div>
 <h3>${p.nome}</h3>
-<p>${p.desc}</p>
-<p><b>P R$23 | M R$38 | G R$42</b></p>
+
+<p>${p.descricao}</p>
+
+<div class="preco">R$ ${p.preco}</div>
+
+<button onclick="add('${p.nome}',${p.preco})">
+Adicionar
+</button>
+
 </div>
 
 </div>
+
 `
 
 })
 
-document.getElementById("produtos").innerHTML=html
-
 }
 
-function abrirModal(nome,img){
-
-pizzaSelecionada=nome
-
-document.getElementById("nomePizza").innerText=nome
-document.getElementById("imgPizza").src=img
-
-document.getElementById("modalPizza").style.display="flex"
-
-}
-
-function fecharModal(){
-document.getElementById("modalPizza").style.display="none"
-}
-
-function confirmarPizza(){
-
-let tamanho=parseFloat(document.getElementById("tamanho").value)
-let borda=parseFloat(document.getElementById("borda").value)
-let meia=document.getElementById("meiaPizza").value
-
-let preco=tamanho + borda
-
-let nome=pizzaSelecionada
-
-if(meia){
-nome+=" / "+meia
-}
+function add(nome,preco){
 
 carrinho.push({nome,preco})
-total+=preco
 
-atualizarCarrinho()
-fecharModal()
+atualizar()
 
 }
 
-function atualizarCarrinho(){
+function atualizar(){
 
-let html=""
+let lista=document.getElementById("listaCarrinho")
 
-carrinho.forEach(p=>{
-html+=`<div>${p.nome} - R$${p.preco}</div>`
+lista.innerHTML=""
+
+let total=0
+
+carrinho.forEach(i=>{
+
+lista.innerHTML+=`
+
+<div>
+${i.nome} - R$ ${i.preco}
+</div>
+
+`
+
+total+=i.preco
+
 })
 
-document.getElementById("lista").innerHTML=html
 document.getElementById("total").innerText=total.toFixed(2)
+
 document.getElementById("contador").innerText=carrinho.length
+
+}
+
+function abrirCarrinho(){
+
+let c=document.getElementById("carrinho")
+
+c.style.display=c.style.display=="block"?"none":"block"
+
+}
+
+function irPizzas(){
+
+window.location="pizza.html"
 
 }
 
 function enviarPedido(){
 
-let endereco=document.getElementById("enderecoCliente").value
 let pagamento=document.getElementById("pagamento").value
 
-let msg="Pedido Sabore In Casa %0A"
+let endereco=document.getElementById("endereco").value
 
-carrinho.forEach(p=>{
-msg+=p.nome+" - R$"+p.preco+"%0A"
+let texto="Pedido%20Sabore%20In%20Casa%0A%0A"
+
+carrinho.forEach(i=>{
+
+texto+=i.nome+"%20-%20R$"+i.preco+"%0A"
+
 })
 
-msg+="Total: R$"+total
-msg+="%0APagamento: "+pagamento
-msg+="%0AEndereço: "+endereco
+texto+="%0APagamento:%20"+pagamento
+texto+="%0AEndereco:%20"+endereco
 
-window.open("https://wa.me/5531983391576?text="+msg)
+let url="https://wa.me/5531983391576?text="+texto
 
-}
+window.open(url)
 
-function scrollCarrinho(){
-document.getElementById("carrinho").scrollIntoView()
 }
