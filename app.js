@@ -1,5 +1,10 @@
 let carrinho = []
 
+// 🚀 INICIALIZA APP
+window.onload = function(){
+carregarCombosSemana()
+}
+
 // 🛒 ATUALIZA CARRINHO
 function atualizarCarrinho(){
 
@@ -9,7 +14,6 @@ let total = 0
 
 lista.innerHTML = ""
 
-// AGRUPAR ITENS
 let agrupado = {}
 
 carrinho.forEach(item=>{
@@ -20,7 +24,6 @@ agrupado[item.nome].qtd++
 }
 })
 
-// MONTAR HTML
 Object.keys(agrupado).forEach(nome=>{
 
 let item = agrupado[nome]
@@ -34,12 +37,12 @@ lista.innerHTML += `
 </div>
 
 <div class="controle">
-
 <button onclick="diminuirItem('${nome}')">−</button>
 <span>${item.qtd}</span>
 <button onclick="aumentarItem('${nome}')">+</button>
-
 </div>
+
+<button class="btn-remover" onclick="removerItemTotal('${nome}')">✕</button>
 
 </div>
 `
@@ -63,22 +66,24 @@ atualizarCarrinho()
 function aumentarItem(nome){
 let item = carrinho.find(p => p.nome === nome)
 if(item){
-carrinho.push({nome:item.nome, preco:item.preco})
+carrinho.push(item)
 }
 atualizarCarrinho()
 }
 
 // ➖ DIMINUIR
 function diminuirItem(nome){
-
 let index = carrinho.findIndex(p => p.nome === nome)
-
 if(index > -1){
 carrinho.splice(index,1)
 }
-
 atualizarCarrinho()
+}
 
+// ❌ REMOVER TUDO
+function removerItemTotal(nome){
+carrinho = carrinho.filter(item => item.nome !== nome)
+atualizarCarrinho()
 }
 
 // 🍕 PIZZAS
@@ -95,9 +100,11 @@ const pizzas = [
 pizzas.forEach(p=>{
 html += `
 <div class="card">
+<div class="card-content">
 <h3>${p.nome}</h3>
-<p>R$ ${p.preco}</p>
+<p class="preco">R$ ${p.preco}</p>
 <button onclick="addCarrinho('${p.nome}', ${p.preco})">Adicionar</button>
+</div>
 </div>
 `
 })
@@ -105,7 +112,7 @@ html += `
 document.getElementById("produtos").innerHTML = html
 }
 
-// FILTROS
+// 🥤🍟🎁 FILTROS
 function filtrar(tipo){
 
 let html = ""
@@ -123,9 +130,11 @@ const bebidas = [
 bebidas.forEach(b=>{
 html += `
 <div class="card">
+<div class="card-content">
 <h3>${b.nome}</h3>
-<p>R$ ${b.preco}</p>
+<p class="preco">R$ ${b.preco}</p>
 <button onclick="addCarrinho('${b.nome}', ${b.preco})">Adicionar</button>
+</div>
 </div>
 `
 })
@@ -136,19 +145,16 @@ if(tipo==="combo"){
 
 html += "<h2>🎁 Combos</h2>"
 
-const combos = [
-{nome:"Combo Família 🍕🍕🥤",preco:79},
-{nome:"Combo Casal 🍕🥤",preco:49},
-{nome:"Combo Amigos 🍕🍕🍟🥤",preco:89},
-{nome:"Combo Solteiro 🍕🥤",preco:35}
-]
+const combos = getCombos()
 
 combos.forEach(c=>{
 html += `
 <div class="card destaque">
+<div class="card-content">
 <h3>${c.nome}</h3>
-<p>R$ ${c.preco}</p>
+<p class="preco">R$ ${c.preco}</p>
 <button onclick="addCarrinho('${c.nome}', ${c.preco})">Adicionar</button>
+</div>
 </div>
 `
 })
@@ -167,9 +173,11 @@ const snaks = [
 snaks.forEach(s=>{
 html += `
 <div class="card">
+<div class="card-content">
 <h3>${s.nome}</h3>
-<p>R$ ${s.preco}</p>
+<p class="preco">R$ ${s.preco}</p>
 <button onclick="addCarrinho('${s.nome}', ${s.preco})">Adicionar</button>
+</div>
 </div>
 `
 })
@@ -179,12 +187,42 @@ html += `
 document.getElementById("produtos").innerHTML = html
 }
 
+// 🎁 COMBOS
+function getCombos(){
+return [
+{nome:"Combo Família 🍕🍕🥤",preco:79},
+{nome:"Combo Casal 🍕🥤",preco:49},
+{nome:"Combo Amigos 🍕🍕🍟🥤",preco:89},
+{nome:"Combo Solteiro 🍕🥤",preco:35}
+]
+}
+
+// ⭐ COMBOS NA TELA INICIAL
+function carregarCombosSemana(){
+
+let combos = getCombos()
+let html = ""
+
+combos.forEach(c=>{
+html += `
+<div class="card destaque">
+<div class="card-content">
+<h3>${c.nome}</h3>
+<p class="preco">R$ ${c.preco}</p>
+<button onclick="addCarrinho('${c.nome}', ${c.preco})">Adicionar</button>
+</div>
+</div>
+`
+})
+
+document.getElementById("combosSemana").innerHTML = html
+}
+
 // 📲 WHATSAPP
 function enviarPedido(){
 
 let endereco = document.getElementById("enderecoCliente").value
 let pagamento = document.getElementById("pagamento").value
-
 let total = document.getElementById("total").innerText
 
 let msg = "🍕 *Pedido Sabore In Casa*%0A%0A"
@@ -198,7 +236,6 @@ msg += `%0AEndereço: ${endereco}`
 msg += `%0APagamento: ${pagamento}`
 
 window.open(`https://wa.me/5531999999999?text=${msg}`)
-
 }
 
 // 📍 MAPA
