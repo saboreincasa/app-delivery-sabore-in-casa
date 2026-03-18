@@ -1,65 +1,241 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Sabore In Casa</title>
 
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="styles.css">
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#0f0f0f;
+color:white;
+}
+
+header{
+background:#d32f2f;
+padding:20px;
+text-align:center;
+font-size:26px;
+font-weight:bold;
+letter-spacing:1px;
+}
+
+.banner{
+width:100%;
+height:200px;
+background:url("https://images.unsplash.com/photo-1593560708920-61dd98c46a4e");
+background-size:cover;
+background-position:center;
+}
+
+.container{
+padding:15px;
+}
+
+h2{
+margin-top:25px;
+}
+
+.card{
+background:#1c1c1c;
+border-radius:12px;
+overflow:hidden;
+margin-bottom:20px;
+box-shadow:0 4px 10px rgba(0,0,0,0.6);
+}
+
+.card img{
+width:100%;
+height:160px;
+object-fit:cover;
+}
+
+.card-content{
+padding:12px;
+}
+
+.preco{
+color:#4caf50;
+font-size:18px;
+font-weight:bold;
+}
+
+button{
+background:#00c853;
+border:none;
+padding:10px;
+width:100%;
+border-radius:8px;
+color:white;
+font-size:15px;
+margin-top:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#00a844;
+}
+
+#carrinho{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#ff9800;
+width:70px;
+height:70px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+cursor:pointer;
+box-shadow:0 5px 15px rgba(0,0,0,0.7);
+}
+
+#contador{
+position:absolute;
+top:-5px;
+right:-5px;
+background:red;
+color:white;
+width:22px;
+height:22px;
+border-radius:50%;
+font-size:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.total-box{
+background:#1f1f1f;
+padding:15px;
+border-radius:10px;
+margin-top:20px;
+}
+
+input,select,textarea{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:6px;
+border:none;
+}
+
+.lista{
+font-size:14px;
+margin-top:10px;
+}
+
+</style>
+
 </head>
 
 <body>
 
 <header>
-<img src="imagens/logo.png" class="logo">
-<div class="titulo">Sabore In Casa</div>
+🍕 SABORE IN CASA 🍺
 </header>
 
-<div class="endereco">
-📍 Rua Maria de Lourdes da Cruz Nº 378<br>
-Bairro Mantiqueira – Belo Horizonte
-<br>
-<button onclick="abrirMapa()">📍 Ver no mapa</button>
-</div>
-
-<div id="banner" class="banner"></div>
+<div class="banner"></div>
 
 <div class="container">
 
-<input class="busca" id="busca" placeholder="🔎 Buscar produto">
+<h2>Pizzas</h2>
 
-<div class="btn-flutuantes">
+<div class="card">
+<img src="https://images.unsplash.com/photo-1601924582975-7e9c7b4f9d19">
+<div class="card-content">
 
-<div class="linha">
-<button onclick="abrirPizzas()">🍕 Pizzas</button>
-<button onclick="filtrar('bebidas')">🥤 Bebidas</button>
+<h3>Pizza Calabresa</h3>
+
+<button onclick="add('Pizza Calabresa 25cm',39.9)">
+25cm - R$39,90
+</button>
+
+<button onclick="add('Pizza Calabresa 30cm',49.9)">
+30cm - R$49,90
+</button>
+
+<button onclick="add('Pizza Calabresa 35cm',59.9)">
+35cm - R$59,90
+</button>
+
+</div>
 </div>
 
-<div class="linha">
-<button onclick="filtrar('combo')">🎁 Combos</button>
-<button onclick="filtrar('snaks')">🍟 Snaks</button>
-</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1594007654729-407eedc4fe24">
+<div class="card-content">
+
+<h3>Pizza Frango Catupiry</h3>
+
+<button onclick="add('Pizza Frango Catupiry 25cm',42.9)">
+25cm - R$42,90
+</button>
+
+<button onclick="add('Pizza Frango Catupiry 30cm',52.9)">
+30cm - R$52,90
+</button>
+
+<button onclick="add('Pizza Frango Catupiry 35cm',62.9)">
+35cm - R$62,90
+</button>
 
 </div>
-
-<h2 id="tituloCombos">⭐ Combos da Semana</h2>
-<div id="combosSemana"></div>
-
-<div id="produtos"></div>
-
-<div id="carrinho">
-<h2>🛒 Carrinho</h2>
-
-<div id="lista"></div>
-
-<div class="total">
-Total + entrega: R$ <span id="total">0.00</span>
 </div>
 
-<input id="enderecoCliente" placeholder="Digite seu endereço">
+
+<h2>Bebidas Geladas</h2>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1608270586620-248524c67de9">
+<div class="card-content">
+<h3>Heineken Long Neck</h3>
+<p class="preco">R$9,90</p>
+<button onclick="add('Heineken Long Neck',9.9)">Adicionar</button>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1563379091339-03246963d51a">
+<div class="card-content">
+<h3>Brahma Lata</h3>
+<p class="preco">R$5,90</p>
+<button onclick="add('Brahma Lata',5.9)">Adicionar</button>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1618886614638-80e3c103d31a">
+<div class="card-content">
+<h3>Budweiser Long Neck</h3>
+<p class="preco">R$9,90</p>
+<button onclick="add('Budweiser Long Neck',9.9)">Adicionar</button>
+</div>
+</div>
+
+
+<div class="total-box">
+
+<h3>Itens do Pedido</h3>
+
+<div class="lista" id="lista"></div>
+
+<h3>Total: R$ <span id="total">0</span></h3>
+
+<h3>Endereço</h3>
+<input id="endereco" placeholder="Digite seu endereço">
+
+<h3>Forma de pagamento</h3>
 
 <select id="pagamento">
 <option>PIX</option>
@@ -67,26 +243,82 @@ Total + entrega: R$ <span id="total">0.00</span>
 <option>Cartão</option>
 </select>
 
-<input id="troco" placeholder="Troco para quanto?">
+<h3>Observação</h3>
 
-<button class="enviar" onclick="enviarPedido()">
-Enviar pedido no WhatsApp
-</button>
+<textarea id="obs" placeholder="Ex: sem cebola"></textarea>
 
-</div>
+<button onclick="limpar()">Limpar Carrinho</button>
 
 </div>
 
-<div id="botaoCarrinho" onclick="scrollCarrinho()">
-🛒 <div id="contador">0</div>
 </div>
 
-<footer>
-© Sabore In Casa<br>
-Desenvolvido por <b>Carlos Henrique</b>
-</footer>
+<div id="carrinho" onclick="pedido()">
+🛒
+<div id="contador">0</div>
+</div>
 
-<script src="app.js"></script>
+<script>
+
+let carrinho=[]
+let total=0
+let taxaEntrega=5
+
+function add(produto,preco){
+
+carrinho.push(produto)
+
+total+=preco
+
+document.getElementById("total").innerText=(total+taxaEntrega).toFixed(2)
+
+document.getElementById("contador").innerText=carrinho.length
+
+let lista=""
+
+carrinho.forEach(p=>{
+lista+=p+"<br>"
+})
+
+document.getElementById("lista").innerHTML=lista
+
+}
+
+function limpar(){
+
+carrinho=[]
+total=0
+
+document.getElementById("total").innerText="0"
+document.getElementById("contador").innerText="0"
+document.getElementById("lista").innerHTML=""
+
+}
+
+function pedido(){
+
+let numero="5531983391576"
+
+let endereco=document.getElementById("endereco").value
+let pagamento=document.getElementById("pagamento").value
+let obs=document.getElementById("obs").value
+
+let msg="*Pedido SABORE IN CASA*%0A%0A"
+
+carrinho.forEach(p=>{
+msg+="- "+p+"%0A"
+})
+
+msg+="%0ATotal: R$ "+(total+taxaEntrega).toFixed(2)
+msg+="%0AEndereço: "+endereco
+msg+="%0APagamento: "+pagamento
+msg+="%0AObs: "+obs
+
+window.open("https://wa.me/"+numero+"?text="+msg)
+
+}
+
+</script>
 
 </body>
 </html>
