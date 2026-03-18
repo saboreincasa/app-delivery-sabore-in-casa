@@ -1,123 +1,168 @@
-let produtos=[]
-let carrinho=[]
+let carrinho = []
+let total = 0
 
-fetch("produtos.json")
-.then(r=>r.json())
-.then(d=>{
+// 🔄 ATUALIZA CARRINHO
+function atualizarCarrinho(){
 
-produtos=d
+let lista = document.getElementById("lista")
+let contador = document.getElementById("contador")
 
-mostrar("combos")
+lista.innerHTML = ""
+total = 0
 
+carrinho.forEach(item=>{
+lista.innerHTML += `<p>${item.nome} - R$ ${item.preco.toFixed(2)}</p>`
+total += item.preco
 })
 
-function mostrar(cat){
+contador.innerText = carrinho.length
+document.getElementById("total").innerText = total.toFixed(2)
 
-let area=document.getElementById("produtos")
+}
 
-area.innerHTML=""
+// ➕ ADICIONAR
+function addCarrinho(nome, preco){
+carrinho.push({nome, preco})
+atualizarCarrinho()
+}
 
-produtos
-.filter(p=>p.categoria==cat)
-.forEach(p=>{
+// 🍕 PIZZAS
+function abrirPizzas(){
 
-area.innerHTML+=`
+let html = "<h2>🍕 Pizzas</h2>"
 
+const pizzas = [
+{nome:"Calabresa",preco:38},
+{nome:"Frango com Catupiry",preco:40},
+{nome:"4 Queijos",preco:42}
+]
+
+pizzas.forEach(p=>{
+html += `
 <div class="card">
-
-<img src="${p.foto}">
-
-<div class="card-body">
-
 <h3>${p.nome}</h3>
-
-<p>${p.descricao}</p>
-
-<div class="preco">R$ ${p.preco}</div>
-
-<button onclick="add('${p.nome}',${p.preco})">
-Adicionar
-</button>
-
+<p>R$ ${p.preco}</p>
+<button onclick="addCarrinho('${p.nome}', ${p.preco})">Adicionar</button>
 </div>
-
-</div>
-
 `
+})
 
+document.getElementById("produtos").innerHTML = html
+}
+
+// 🧠 FILTROS
+function filtrar(tipo){
+
+let html = ""
+
+if(tipo === "bebidas"){
+
+html += "<h2>🥤 Bebidas</h2>"
+
+const bebidas = [
+{nome:"Coca-Cola 2L",preco:12},
+{nome:"Guaraná 2L",preco:10},
+{nome:"Suco Natural",preco:8}
+]
+
+bebidas.forEach(b=>{
+html += `
+<div class="card">
+<h3>${b.nome}</h3>
+<p>R$ ${b.preco}</p>
+<button onclick="addCarrinho('${b.nome}', ${b.preco})">Adicionar</button>
+</div>
+`
 })
 
 }
 
-function add(nome,preco){
+if(tipo === "combo"){
 
-carrinho.push({nome,preco})
+html += "<h2>🎁 Combos</h2>"
 
-atualizar()
+const combos = [
+{nome:"Combo Família 🍕🍕🥤",preco:79},
+{nome:"Combo Casal 🍕🥤",preco:49},
+{nome:"Combo Amigos 🍕🍕🍟🥤",preco:89},
+{nome:"Combo Solteiro 🍕🥤",preco:35}
+]
+
+combos.forEach(c=>{
+html += `
+<div class="card destaque">
+<h3>${c.nome}</h3>
+<p>R$ ${c.preco}</p>
+<button onclick="addCarrinho('${c.nome}', ${c.preco})">Adicionar</button>
+</div>
+`
+})
 
 }
 
-function atualizar(){
+if(tipo === "snaks"){
 
-let lista=document.getElementById("listaCarrinho")
+html += "<h2>🍟 Snaks</h2>"
 
-lista.innerHTML=""
+const snaks = [
+{nome:"Batata Frita",preco:15},
+{nome:"Hambúrguer",preco:20}
+]
 
-let total=0
-
-carrinho.forEach(i=>{
-
-lista.innerHTML+=`
-
-<div>
-${i.nome} - R$ ${i.preco}
+snaks.forEach(s=>{
+html += `
+<div class="card">
+<h3>${s.nome}</h3>
+<p>R$ ${s.preco}</p>
+<button onclick="addCarrinho('${s.nome}', ${s.preco})">Adicionar</button>
 </div>
-
 `
+})
 
-total+=i.preco
+}
+
+document.getElementById("produtos").innerHTML = html
+
+}
+
+// 🔎 BUSCA
+document.getElementById("busca").addEventListener("input", function(){
+
+let termo = this.value.toLowerCase()
+let cards = document.querySelectorAll(".card")
+
+cards.forEach(card=>{
+card.style.display = card.innerText.toLowerCase().includes(termo) ? "block" : "none"
+})
 
 })
 
-document.getElementById("total").innerText=total.toFixed(2)
-
-document.getElementById("contador").innerText=carrinho.length
-
-}
-
-function abrirCarrinho(){
-
-let c=document.getElementById("carrinho")
-
-c.style.display=c.style.display=="block"?"none":"block"
-
-}
-
-function irPizzas(){
-
-window.location="pizza.html"
-
-}
-
+// 📲 WHATSAPP
 function enviarPedido(){
 
-let pagamento=document.getElementById("pagamento").value
+let endereco = document.getElementById("enderecoCliente").value
+let pagamento = document.getElementById("pagamento").value
 
-let endereco=document.getElementById("endereco").value
+let msg = "🍕 *Pedido Sabore In Casa*%0A%0A"
 
-let texto="Pedido%20Sabore%20In%20Casa%0A%0A"
-
-carrinho.forEach(i=>{
-
-texto+=i.nome+"%20-%20R$"+i.preco+"%0A"
-
+carrinho.forEach(item=>{
+msg += `${item.nome} - R$ ${item.preco}%0A`
 })
 
-texto+="%0APagamento:%20"+pagamento
-texto+="%0AEndereco:%20"+endereco
+msg += `%0ATotal: R$ ${total.toFixed(2)}`
+msg += `%0AEndereço: ${endereco}`
+msg += `%0APagamento: ${pagamento}`
 
-let url="https://wa.me/5531983391576?text="+texto
+window.open(`https://wa.me/5531999999999?text=${msg}`)
 
-window.open(url)
+}
 
+// 📍 MAPA
+function abrirMapa(){
+window.open("https://maps.google.com?q=Rua+Maria+de+Lourdes+da+Cruz+378")
+}
+
+// 🛒 SCROLL
+function scrollCarrinho(){
+document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
 }
