@@ -1,50 +1,47 @@
-```javascript
-let pizzas=[
+let nomePizza = localStorage.getItem("pizzaSelecionada")
 
-"Calabresa",
-"Frango Catupiry",
-"Portuguesa",
-"Quatro Queijos",
-"Marguerita",
-"Pepperoni",
-"Milho Bacon",
-"Carne Seca",
-"Bacon Cheddar",
-"Pizza do Chef"
+document.getElementById("nomePizza").innerText = "🍕 " + nomePizza
 
-]
+function adicionarPizza(){
 
-let lista=document.getElementById("listaPizzas")
+let tamanho = document.getElementById("tamanho").value
+let borda = document.getElementById("borda").value
+let meio = document.getElementById("meio").value
 
-pizzas.forEach(p=>{
+let preco = 0
 
-lista.innerHTML+=`
+if(tamanho == 25) preco = 30
+if(tamanho == 30) preco = 40
+if(tamanho == 35) preco = 50
 
-<div class="card">
+preco += Number(borda)
 
-<div class="card-content">
+let nomeFinal = `${nomePizza} ${tamanho}cm`
 
-<h3>${p}</h3>
+if(meio){
+nomeFinal += " / Meio a Meio com " + meio
+}
 
-<button onclick="montar('${p}')">
+if(borda == 10){
+nomeFinal += " / Borda recheada"
+}
 
-Montar pizza
+// pega carrinho existente
+let carrinho = JSON.parse(localStorage.getItem("carrinho")) || []
 
-</button>
-
-</div>
-
-</div>
-
-`
-
+carrinho.push({
+nome: nomeFinal,
+preco: preco
 })
 
-function montar(nome){
+// salva
+localStorage.setItem("carrinho", JSON.stringify(carrinho))
 
-localStorage.setItem("pizzaEscolhida",nome)
+alert("Pizza adicionada!")
 
-window.location="montar-pizza.html"
-
+window.location.href = "index.html"
 }
-```
+
+function voltar(){
+window.location.href = "index.html"
+}
