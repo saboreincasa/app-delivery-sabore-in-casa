@@ -1,0 +1,36 @@
+function abrirPizzas(){
+
+esconderCombos()
+
+let html = "<h2>🍕 Escolha sua Pizza</h2>"
+
+const pizzas = [
+"Calabresa",
+"Frango com Catupiry",
+"4 Queijos",
+"Portuguesa",
+"Marguerita",
+"Baiana",
+"Napolitana",
+"Atum",
+"Milho com Bacon",
+"Moda da Casa"
+]
+
+pizzas.forEach(nome=>{
+html += `
+<div class="card">
+<div class="card-content">
+<h3>${nome}</h3>
+
+<button onclick="irParaMontagem('${nome}')">
+🍕 Montar Pizza
+</button>
+
+</div>
+</div>
+`
+})
+
+document.getElementById("produtos").innerHTML = html
+}
