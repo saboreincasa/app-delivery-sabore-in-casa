@@ -183,10 +183,10 @@ function filtrar(tipo){
 // 🎁 COMBOS
 function getCombos(){
     return [
-        {nome:"Combo Família 🍕🍕🥤",preco:79,img:"imagens/combos/combo-familia.png"},
-        {nome:"Combo Casal 🍕🥤",preco:49,img:"imagens/combos/combo-casal.png"},
-        {nome:"Combo Amigos 🍕🍕🍟🥤",preco:89,img:"imagens/combos/combo-amigos.png"},
-        {nome:"Combo Solteiro 🍕🥤",preco:35,img:"imagens/combos/combo-solteiro.png"}
+        {nome:"Combo Família 🍕🍕🥤",preco:99.90,img:"imagens/combos/combo-familia.png"},
+        {nome:"Combo Casal 🍕🥤",preco:79.90,img:"imagens/combos/combo-casal.png"},
+        {nome:"Combo Amigos 🍕🍕🍟🥤",preco:89.90,img:"imagens/combos/combo-amigos.png"},
+        {nome:"Combo Solteiro 🍕🥤",preco:39.90,img:"imagens/combos/combo-solteiro.png"}
     ]
 }
 
@@ -213,6 +213,7 @@ function carregarCombosSemana(){
 let banners = [
     "imagens/combos/combo-familia.png",
     "imagens/combos/combo-casal.png",
+    "imagens/combos/combo-amigos.png",
     "imagens/combos/combo-solteiro.png"
 ]
 
