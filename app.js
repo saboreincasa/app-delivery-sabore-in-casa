@@ -138,13 +138,14 @@ function filtrar(tipo){
     if(tipo==="bebidas"){
         html += "<h2>🥤 Bebidas</h2>"
         const bebidas = [
-            {nome:"Coca-Cola 2L",preco:12},
-            {nome:"Guaraná 2L",preco:10},
-            {nome:"Suco Natural",preco:8}
+            {nome:"Coca-Cola 2L",preco:12,foto:"imagens/bebidas/coca-cola-2l.png"},
+            {nome:"Guaraná 2L",preco:10,foto:"imagens/bebidas/guarana-2l.png"},
+            {nome:"Suco Natural",preco:8,foto:"imagens/bebidas/suco-natural.png"}
         ]
         bebidas.forEach(b=>{
             html += `
             <div class="card">
+                <img src="${b.foto}">
                 <div class="card-content">
                     <h3>${b.nome}</h3>
                     <p class="preco">R$ ${b.preco}</p>
@@ -159,12 +160,13 @@ function filtrar(tipo){
     if(tipo==="snaks"){
         html += "<h2>🍟 Snaks</h2>"
         const snaks = [
-            {nome:"Batata Frita",preco:15},
-            {nome:"Hambúrguer",preco:20}
+            {nome:"Batata Frita",preco:15,foto:"imagens/snaks/batata-frita.png"},
+            {nome:"Hambúrguer",preco:20,foto:"imagens/snaks/hamburguer.png"}
         ]
         snaks.forEach(s=>{
             html += `
             <div class="card">
+                <img src="${s.foto}">
                 <div class="card-content">
                     <h3>${s.nome}</h3>
                     <p class="preco">R$ ${s.preco}</p>
@@ -181,10 +183,10 @@ function filtrar(tipo){
 // 🎁 COMBOS
 function getCombos(){
     return [
-        {nome:"Combo Família 🍕🍕🥤",preco:79,img:"https://images.unsplash.com/photo-1513104890138-7c749659a591"},
-        {nome:"Combo Casal 🍕🥤",preco:49,img:"https://images.unsplash.com/photo-1594007654729-407eedc4fe24"},
-        {nome:"Combo Amigos 🍕🍕🍟🥤",preco:89,img:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092"},
-        {nome:"Combo Solteiro 🍕🥤",preco:35,img:"https://images.unsplash.com/photo-1548365328-9f547fb0953d"}
+        {nome:"Combo Família 🍕🍕🥤",preco:79,img:"imagens/combos/combo-familia.png"},
+        {nome:"Combo Casal 🍕🥤",preco:49,img:"imagens/combos/combo-casal.png"},
+        {nome:"Combo Amigos 🍕🍕🍟🥤",preco:89,img:"imagens/combos/combo-amigos.png"},
+        {nome:"Combo Solteiro 🍕🥤",preco:35,img:"imagens/combos/combo-solteiro.png"}
     ]
 }
 
@@ -209,9 +211,9 @@ function carregarCombosSemana(){
 
 // 🎬 BANNER
 let banners = [
-    "https://images.unsplash.com/photo-1513104890138-7c749659a591",
-    "https://images.unsplash.com/photo-1601924582975-7e9c7b4f9d19",
-    "https://images.unsplash.com/photo-1548365328-9f547fb0953d"
+    "imagens/combos/combo-familia.png",
+    "imagens/combos/combo-casal.png",
+    "imagens/combos/combo-solteiro.png"
 ]
 
 let bannerIndex = 0
