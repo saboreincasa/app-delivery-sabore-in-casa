@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
 
 <meta charset="UTF-8">
@@ -9,31 +8,22 @@
 <title>Sabore In Casa</title>
 
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="estilo.css">
 
 </head>
 
 <body>
 
 <header>
-
 <img src="imagens/logo.png" class="logo">
-
-<div class="titulo">
-Sabore In Casa
-</div>
-
+<div class="titulo">Sabore In Casa</div>
 </header>
 
 <div class="endereco">
-
 📍 Rua Maria de Lourdes da Cruz Nº 378<br>
 Bairro Mantiqueira – Belo Horizonte
-
 <br>
-
 <button onclick="abrirMapa()">📍 Ver no mapa</button>
-
 </div>
 
 <div id="banner" class="banner"></div>
@@ -45,38 +35,26 @@ Bairro Mantiqueira – Belo Horizonte
 <div class="btn-flutuantes">
 
 <div class="linha">
-
 <button onclick="abrirPizzas()">🍕 Pizzas</button>
 <button onclick="filtrar('bebidas')">🥤 Bebidas</button>
-
 </div>
 
 <div class="linha">
-
-<!-- 🔥 ALTERADO AQUI -->
 <button onclick="mostrarTodosCombos()">🎁 Combos</button>
 <button onclick="filtrar('snaks')">🍟 Snaks</button>
-
 </div>
 
 </div>
 
-<!-- 🔥 ALTERADO AQUI -->
-<h2>🔥 Combos em Destaque</h2>
-
-<!-- 🔥 ALTERADO ID -->
-<div id="combosDestaque"></div>
-
-<div id="produtos"></div>
+<!-- AREA DINAMICA -->
+<div id="areaConteudo"></div>
 
 <div id="carrinho">
-
 <h2>🛒 Carrinho</h2>
-
 <div id="lista"></div>
 
 <div class="total">
-Total + entrega: R$ <span id="total">0.00</span>
+Total: R$ <span id="total">0.00</span>
 </div>
 
 <input id="enderecoCliente" placeholder="Digite seu endereço">
@@ -89,32 +67,52 @@ Total + entrega: R$ <span id="total">0.00</span>
 
 <input id="troco" placeholder="Troco para quanto?">
 
-<button class="enviar" onclick="enviarPedido()">
-Enviar pedido no WhatsApp
-</button>
+<button onclick="enviarPedido()">Enviar no WhatsApp</button>
 
 </div>
 
 </div>
 
 <div id="botaoCarrinho" onclick="scrollCarrinho()">
-
-🛒
-
-<div id="contador">0</div>
-
+🛒 <div id="contador">0</div>
 </div>
 
-<footer>
+<!-- MODAL PIZZA -->
+<div id="modalPizza" class="modal">
+<div class="modal-content">
 
-© Sabore In Casa<br>
-Desenvolvido por <b>Carlos Henrique</b>
+<h3 id="pizzaNome"></h3>
 
-</footer>
+<select id="tamanho">
+<option value="23">P - R$23</option>
+<option value="38">M - R$38</option>
+<option value="42">G - R$42</option>
+<option value="65">GG - R$65</option>
+</select>
+
+<input id="meia" placeholder="Outro sabor (meio a meio)">
+<select id="borda">
+<option value="0">Sem borda</option>
+<option value="5">Borda recheada +5</option>
+</select>
+
+<select id="cheddar">
+<option value="0">Sem cheddar</option>
+<option value="3">Com cheddar +3</option>
+</select>
+
+<input id="obsPizza" placeholder="Observação">
+
+<button onclick="adicionarPizza()">Adicionar</button>
+<button onclick="fecharModal()">Cancelar</button>
+
+</div>
+</div>
 
 <script src="app.js"></script>
+<script src="pizza.js"></script>
 <script src="mapa.js"></script>
-<script src="notificacao.js"></script>
+<script src="pix.js"></script>
 
 </body>
 </html>
