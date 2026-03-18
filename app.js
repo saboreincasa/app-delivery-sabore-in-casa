@@ -88,7 +88,7 @@ function abrirMontagemPizza(nome){
     </select>
 
     <br><br>
-    <button onclick="adicionarPizza('${nome}')" style="background:#ffb300; color:white; border:none; border-radius:5px; padding:10px 20px; cursor:pointer;">
+    <button onclick="adicionarPizza('${nome}')" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:10px 20px; cursor:pointer;">
         Adicionar ao Carrinho
     </button>
 
