@@ -102,7 +102,7 @@ Adicionar ao Carrinho
 document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 ADICIONAR PIZZA (AGORA COM QUANTIDADE)
+// 🍕 ADICIONAR PIZZA
 function adicionarPizza(nome){
 
 let tamanho = document.getElementById("tamanho").value
@@ -128,7 +128,6 @@ nomeFinal += " / Borda recheada"
 }
 
 addCarrinho(nomeFinal, preco)
-
 abrirPizzas()
 }
 
@@ -278,22 +277,25 @@ carrinho.forEach((item, index)=>{
 let subtotal = item.preco * item.qtd
 
 lista.innerHTML += `
-<div>
-<b>${item.nome}</b><br>
+<div class="item-carrinho">
 
-<button onclick="diminuir(${index})">➖</button>
-${item.qtd}
-<button onclick="aumentar(${index})">➕</button>
+<div class="item-topo">
+<b>${item.nome}</b>
+<button class="btn-remover" onclick="removerItem(${index})">✖</button>
+</div>
 
-<br>
+<div class="item-controle">
+<button class="btn-qtd" onclick="diminuir(${index})">−</button>
+<span class="qtd">${item.qtd}</span>
+<button class="btn-qtd" onclick="aumentar(${index})">+</button>
+</div>
+
+<div class="item-subtotal">
 Subtotal: R$ ${subtotal.toFixed(2)}
+</div>
 
-<br>
-<button onclick="removerItem(${index})">❌ Remover</button>
-<hr>
 </div>
 `
-
 total += subtotal
 })
 
