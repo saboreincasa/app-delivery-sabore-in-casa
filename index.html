@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
 
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -9,7 +9,6 @@
 
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="estilo.css">
-
 </head>
 
 <body>
@@ -30,27 +29,27 @@ Bairro Mantiqueira – Belo Horizonte
 
 <div class="container">
 
-<input class="busca" id="busca" placeholder="🔎 Buscar produto">
+<input class="busca" placeholder="🔎 Buscar produto">
 
 <div class="btn-flutuantes">
 
 <div class="linha">
 <button onclick="abrirPizzas()">🍕 Pizzas</button>
-<button onclick="filtrar('bebidas')">🥤 Bebidas</button>
+<button>🥤 Bebidas</button>
 </div>
 
 <div class="linha">
-<button onclick="mostrarTodosCombos()">🎁 Combos</button>
-<button onclick="filtrar('snaks')">🍟 Snaks</button>
+<button>🎁 Combos</button>
+<button>🍟 Snaks</button>
 </div>
 
 </div>
 
-<!-- AREA DINAMICA -->
-<div id="areaConteudo"></div>
+<div id="produtos"></div>
 
 <div id="carrinho">
 <h2>🛒 Carrinho</h2>
+
 <div id="lista"></div>
 
 <div class="total">
@@ -65,54 +64,48 @@ Total: R$ <span id="total">0.00</span>
 <option>Cartão</option>
 </select>
 
-<input id="troco" placeholder="Troco para quanto?">
-
 <button onclick="enviarPedido()">Enviar no WhatsApp</button>
-
 </div>
 
 </div>
 
 <div id="botaoCarrinho" onclick="scrollCarrinho()">
-🛒 <div id="contador">0</div>
+🛒 <span id="contador">0</span>
 </div>
 
-<!-- MODAL PIZZA -->
+<!-- 🔥 MODAL PIZZA -->
 <div id="modalPizza" class="modal">
 <div class="modal-content">
 
-<h3 id="pizzaNome"></h3>
+<img id="imgPizza" class="img-pizza">
+
+<h2 id="nomePizza"></h2>
 
 <select id="tamanho">
-<option value="23">P - R$23</option>
-<option value="38">M - R$38</option>
-<option value="42">G - R$42</option>
-<option value="65">GG - R$65</option>
+<option value="23">Pequena 25cm - R$23</option>
+<option value="38">Grande 30cm - R$38</option>
+<option value="42">Gigante 35cm - R$42</option>
 </select>
 
-<input id="meia" placeholder="Outro sabor (meio a meio)">
+<input id="meiaPizza" placeholder="Outro sabor (meio a meio)">
+
 <select id="borda">
 <option value="0">Sem borda</option>
-<option value="5">Borda recheada +5</option>
-</select>
-
-<select id="cheddar">
-<option value="0">Sem cheddar</option>
-<option value="3">Com cheddar +3</option>
+<option value="10">Catupiry +10</option>
+<option value="10">Cheddar +10</option>
 </select>
 
 <input id="obsPizza" placeholder="Observação">
 
-<button onclick="adicionarPizza()">Adicionar</button>
+<button onclick="confirmarPizza()">Adicionar ao carrinho</button>
 <button onclick="fecharModal()">Cancelar</button>
 
 </div>
 </div>
 
 <script src="app.js"></script>
-<script src="pizza.js"></script>
 <script src="mapa.js"></script>
-<script src="pix.js"></script>
+<script src="notificacao.js"></script>
 
 </body>
 </html>
