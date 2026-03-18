@@ -337,7 +337,7 @@ msg += `%0ATotal: R$ ${total}`
 msg += `%0AEndereço: ${endereco}`
 msg += `%0APagamento: ${pagamento}`
 
-window.open(`https://wa.me/5531999999999?text=${msg}`)
+window.open(`https://wa.me/5531983391576?text=${msg}`)
 }
 
 // 📍 MAPA
