@@ -256,7 +256,7 @@ function atualizarCarrinho(){
                 <button onclick="diminuir(${index})" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">➖</button>
                 <span>${item.qtd}</span>
                 <button onclick="aumentar(${index})" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">➕</button>
-                <button onclick="removerItem(${index})" style="background:transparent; color:red; border:none; font-weight:bold; margin-left:10px; cursor:pointer;">❌ Remover item</button>
+                <button onclick="removerItem(${index})" style="background:white; color:red; border:none; font-weight:bold; margin-left:10px; cursor:pointer;">❌ Remover item</button>
             </div>
         </div>
         `
