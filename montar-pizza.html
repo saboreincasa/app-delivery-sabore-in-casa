@@ -1,92 +1,42 @@
-```html
-<!DOCTYPE html>
-<html>
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Monte sua Pizza</title>
-
-<link rel="stylesheet" href="style.css">
-
-</head>
-
-<body>
-
-<header>
-
-<h1>Monte sua Pizza</h1>
-
-</header>
-
-<div class="container">
-
 <h2 id="nomePizza"></h2>
 
-<h3>Tamanho</h3>
-
+<label>Tamanho:</label>
 <select id="tamanho">
-
-<option value="25">Pequena 25cm</option>
-<option value="30">Grande 30cm</option>
-<option value="35">Gigante 35cm</option>
-
+<option value="25">Pequena 25cm - R$30</option>
+<option value="30">Grande 30cm - R$40</option>
+<option value="35">Gigante 35cm - R$50</option>
 </select>
 
-<h3>Borda</h3>
+<br><br>
 
+<label>Borda:</label>
 <select id="borda">
-
-<option value="0">Sem borda</option>
-<option value="10">Catupiry +10</option>
-<option value="10">Cheddar +10</option>
-
+<option value="0">Normal</option>
+<option value="10">Catupiry (+10)</option>
+<option value="10">Cheddar (+10)</option>
 </select>
 
-<button class="enviar" onclick="addPizza()">
+<br><br>
 
-Adicionar ao carrinho
+<label>Meio a Meio:</label>
+<select id="meio">
+<option value="">Não</option>
+<option value="Calabresa">Calabresa</option>
+<option value="Frango com Catupiry">Frango com Catupiry</option>
+<option value="4 Queijos">4 Queijos</option>
+<option value="Portuguesa">Portuguesa</option>
+<option value="Marguerita">Marguerita</option>
+<option value="Baiana">Baiana</option>
+<option value="Napolitana">Napolitana</option>
+<option value="Atum">Atum</option>
+<option value="Milho com Bacon">Milho com Bacon</option>
+<option value="Moda da Casa">Moda da Casa</option>
+</select>
 
-</button>
+<br><br>
 
-</div>
+<button onclick="adicionarPizza()">Adicionar ao Carrinho</button>
 
-<script>
+<br><br>
 
-let pizza=localStorage.getItem("pizzaEscolhida")
-
-document.getElementById("nomePizza").innerText=pizza
-
-function addPizza(){
-
-let borda=parseFloat(document.getElementById("borda").value)
-
-let carrinho=JSON.parse(localStorage.getItem("carrinho"))||[]
-
-let preco=40+borda
-
-carrinho.push({
-
-nome:pizza,
-
-preco:preco,
-
-qtd:1
-
-})
-
-localStorage.setItem("carrinho",JSON.stringify(carrinho))
-
-alert("Pizza adicionada")
-
-window.location="index.html"
-
-}
-
-</script>
-
-</body>
-</html>
-```
+<button onclick="voltar()">⬅ Voltar</button>
