@@ -1,6 +1,6 @@
 let carrinho = []
 
-// 🚀 INICIALIZA APP
+// 🚀 INICIALIZA
 window.onload = function(){
 carregarCombosSemana()
 }
@@ -66,7 +66,7 @@ atualizarCarrinho()
 function aumentarItem(nome){
 let item = carrinho.find(p => p.nome === nome)
 if(item){
-carrinho.push(item)
+carrinho.push({nome:item.nome, preco:item.preco})
 }
 atualizarCarrinho()
 }
@@ -112,7 +112,7 @@ html += `
 document.getElementById("produtos").innerHTML = html
 }
 
-// 🥤🍟🎁 FILTROS
+// FILTROS
 function filtrar(tipo){
 
 let html = ""
@@ -187,7 +187,7 @@ html += `
 document.getElementById("produtos").innerHTML = html
 }
 
-// 🎁 COMBOS
+// COMBOS
 function getCombos(){
 return [
 {nome:"Combo Família 🍕🍕🥤",preco:79},
@@ -197,7 +197,7 @@ return [
 ]
 }
 
-// ⭐ COMBOS NA TELA INICIAL
+// CARREGAR HOME
 function carregarCombosSemana(){
 
 let combos = getCombos()
@@ -218,7 +218,7 @@ html += `
 document.getElementById("combosSemana").innerHTML = html
 }
 
-// 📲 WHATSAPP
+// WHATSAPP
 function enviarPedido(){
 
 let endereco = document.getElementById("enderecoCliente").value
@@ -238,12 +238,12 @@ msg += `%0APagamento: ${pagamento}`
 window.open(`https://wa.me/5531999999999?text=${msg}`)
 }
 
-// 📍 MAPA
+// MAPA
 function abrirMapa(){
 window.open("https://maps.google.com?q=Rua+Maria+de+Lourdes+da+Cruz+378")
 }
 
-// 🛒 SCROLL
+// SCROLL
 function scrollCarrinho(){
 document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
 }
