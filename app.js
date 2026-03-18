@@ -7,7 +7,7 @@ carregarCombosSemana()
 trocarBanner()
 }
 
-// 🔥 ESCONDER COMBOS (AGORA PERFEITO)
+// 🔥 ESCONDER COMBOS
 function esconderCombos(){
 document.getElementById("combosSemana").innerHTML = ""
 document.getElementById("tituloCombos").style.display = "none"
@@ -163,6 +163,7 @@ bannerIndex = 0
 setInterval(trocarBanner, 3000)
 
 // 🛒 CARRINHO
+
 function atualizarCarrinho(){
 
 let lista = document.getElementById("lista")
@@ -171,19 +172,48 @@ let total = 0
 
 lista.innerHTML = ""
 
-carrinho.forEach(item=>{
+carrinho.forEach((item,index)=>{
 lista.innerHTML += `
-<div>${item.nome} - R$ ${item.preco}</div>
+<div class="item-carrinho">
+<div class="info-item">
+<div class="nome-item">${item.nome}</div>
+<div class="preco-item">R$ ${item.preco}</div>
+<div class="controle">
+<button onclick="alterarQuantidade(${index}, -1)">-</button>
+<span>${item.quantidade}</span>
+<button onclick="alterarQuantidade(${index}, 1)">+</button>
+</div>
+</div>
+<button class="btn-remover" onclick="removerItem(${index})">x</button>
+</div>
 `
-total += item.preco
+total += item.preco * item.quantidade
 })
 
-contador.innerText = carrinho.length
+contador.innerText = carrinho.reduce((sum,i)=>sum+i.quantidade,0)
 document.getElementById("total").innerText = total.toFixed(2)
 }
 
 function addCarrinho(nome, preco){
-carrinho.push({nome, preco})
+let itemExistente = carrinho.find(i=>i.nome===nome)
+if(itemExistente){
+itemExistente.quantidade += 1
+}else{
+carrinho.push({nome, preco, quantidade:1})
+}
+atualizarCarrinho()
+}
+
+function alterarQuantidade(index, delta){
+carrinho[index].quantidade += delta
+if(carrinho[index].quantidade <=0){
+carrinho.splice(index,1)
+}
+atualizarCarrinho()
+}
+
+function removerItem(index){
+carrinho.splice(index,1)
 atualizarCarrinho()
 }
 
@@ -197,7 +227,7 @@ let total = document.getElementById("total").innerText
 let msg = "🍕 *Pedido Sabore In Casa*%0A%0A"
 
 carrinho.forEach(item=>{
-msg += `${item.nome} - R$ ${item.preco}%0A`
+msg += `${item.nome} x${item.quantidade} - R$ ${item.preco * item.quantidade}%0A`
 })
 
 msg += `%0ATotal: R$ ${total}`
