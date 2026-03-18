@@ -25,31 +25,33 @@ Sabore In Casa
 
 </header>
 
+<!-- ENDEREÇO -->
 
 <div class="endereco">
 
-📍 Rua Maria de Lourdes da Cruz Nº 378  
+📍 Rua Maria de Lourdes da Cruz Nº 378<br>
 Bairro Mantiqueira – Belo Horizonte
 
-<button onclick="abrirMapa()">
-📍 Ver no mapa
-</button>
+<br><br>
+
+<button onclick="abrirMapa()">📍 Ver no mapa</button>
 
 </div>
 
+<!-- BANNER -->
 
-<div id="banner" class="banner">
-
-<img src="imagens/banner.jpg">
-
-</div>
-
+<div id="banner" class="banner"></div>
 
 <div class="container">
 
+<!-- BUSCA -->
 
-<input class="busca" id="busca" placeholder="🔎 Buscar produto">
+<input 
+class="busca" 
+id="busca" 
+placeholder="🔎 Buscar produto">
 
+<!-- BOTÕES -->
 
 <div class="btn-flutuantes">
 
@@ -59,12 +61,11 @@ Bairro Mantiqueira – Belo Horizonte
 🍕 Pizzas
 </button>
 
-<button onclick="filtrar('bebidas')">
+<button onclick="filtrar('cerveja')">
 🥤 Bebidas
 </button>
 
 </div>
-
 
 <div class="linha">
 
@@ -80,14 +81,17 @@ Bairro Mantiqueira – Belo Horizonte
 
 </div>
 
+<!-- COMBOS DA SEMANA -->
 
 <h2>⭐ Combos da Semana</h2>
 
 <div id="combosSemana"></div>
 
+<!-- PRODUTOS -->
 
 <div id="produtos"></div>
 
+<!-- CARRINHO -->
 
 <div id="carrinho">
 
@@ -97,13 +101,14 @@ Bairro Mantiqueira – Belo Horizonte
 
 <div class="total">
 
-Total + entrega:  
-R$ <span id="total">0.00</span>
+Total + entrega: R$ 
+<span id="total">0.00</span>
 
 </div>
 
-
-<input id="enderecoCliente" placeholder="Digite seu endereço">
+<input 
+id="enderecoCliente" 
+placeholder="Digite seu endereço">
 
 <select id="pagamento">
 
@@ -113,9 +118,9 @@ R$ <span id="total">0.00</span>
 
 </select>
 
-
-<input id="troco" placeholder="Troco para quanto?">
-
+<input 
+id="troco" 
+placeholder="Troco para quanto?">
 
 <button class="enviar" onclick="enviarPedido()">
 
@@ -123,11 +128,11 @@ Enviar pedido no WhatsApp
 
 </button>
 
-
 </div>
 
 </div>
 
+<!-- BOTÃO CARRINHO -->
 
 <div id="botaoCarrinho" onclick="scrollCarrinho()">
 
@@ -137,17 +142,16 @@ Enviar pedido no WhatsApp
 
 </div>
 
-
 <footer>
 
-© Sabore In Casa  
+© Sabore In Casa <br>
 Desenvolvido por <b>Carlos Henrique</b>
 
 </footer>
 
-
 <script src="app.js"></script>
 <script src="mapa.js"></script>
+<script src="notificacao.js"></script>
 
 </body>
 </html>
