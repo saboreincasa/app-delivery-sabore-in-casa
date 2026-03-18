@@ -1,88 +1,23 @@
+// 🛒 CARRINHO
 let carrinho = []
 
-// 🚀 INICIALIZA
+// 🚀 INICIO
 window.onload = function(){
 carregarCombosSemana()
 trocarBanner()
 }
 
-// 🛒 CARRINHO
-function atualizarCarrinho(){
-
-let lista = document.getElementById("lista")
-let contador = document.getElementById("contador")
-let total = 0
-
-lista.innerHTML = ""
-
-let agrupado = {}
-
-carrinho.forEach(item=>{
-if(!agrupado[item.nome]){
-agrupado[item.nome] = {preco:item.preco, qtd:1}
-}else{
-agrupado[item.nome].qtd++
-}
-})
-
-Object.keys(agrupado).forEach(nome=>{
-
-let item = agrupado[nome]
-
-lista.innerHTML += `
-<div class="item-carrinho">
-<div class="info-item">
-<span class="nome-item">${nome}</span>
-<span class="preco-item">R$ ${(item.preco * item.qtd).toFixed(2)}</span>
-</div>
-
-<div class="controle">
-<button onclick="diminuirItem('${nome}')">−</button>
-<span>${item.qtd}</span>
-<button onclick="aumentarItem('${nome}')">+</button>
-</div>
-
-<button class="btn-remover" onclick="removerItemTotal('${nome}')">✕</button>
-</div>
-`
-
-total += item.preco * item.qtd
-
-})
-
-contador.innerText = carrinho.length
-document.getElementById("total").innerText = total.toFixed(2)
-}
-
-function addCarrinho(nome, preco){
-carrinho.push({nome, preco})
-atualizarCarrinho()
-}
-
-function aumentarItem(nome){
-let item = carrinho.find(p => p.nome === nome)
-if(item){
-carrinho.push({nome:item.nome, preco:item.preco})
-}
-atualizarCarrinho()
-}
-
-function diminuirItem(nome){
-let index = carrinho.findIndex(p => p.nome === nome)
-if(index > -1){
-carrinho.splice(index,1)
-}
-atualizarCarrinho()
-}
-
-function removerItemTotal(nome){
-carrinho = carrinho.filter(item => item.nome !== nome)
-atualizarCarrinho()
-}
-
-// 🔥 ESCONDER COMBOS
+// 🔥 ESCONDER COMBOS (AGORA PERFEITO)
 function esconderCombos(){
-document.getElementById("combosSemana").style.display = "none"
+document.getElementById("combosSemana").innerHTML = ""
+document.getElementById("tituloCombos").style.display = "none"
+}
+
+// 🔥 MOSTRAR COMBOS
+function mostrarCombos(){
+document.getElementById("tituloCombos").style.display = "block"
+carregarCombosSemana()
+document.getElementById("produtos").innerHTML = ""
 }
 
 // 🍕 PIZZAS
@@ -112,17 +47,19 @@ html += `
 document.getElementById("produtos").innerHTML = html
 }
 
-// 🥤🍟🎁 FILTROS
+// 🥤🍟🎁 FILTRO
 function filtrar(tipo){
 
-if(tipo !== "combo"){
-esconderCombos()
+if(tipo === "combo"){
+mostrarCombos()
+return
 }else{
-document.getElementById("combosSemana").style.display = "grid"
+esconderCombos()
 }
 
 let html = ""
 
+// BEBIDAS
 if(tipo==="bebidas"){
 
 html += "<h2>🥤 Bebidas</h2>"
@@ -146,6 +83,7 @@ html += `
 })
 }
 
+// SNAKS
 if(tipo==="snaks"){
 
 html += "<h2>🍟 Snaks</h2>"
@@ -223,6 +161,31 @@ bannerIndex = 0
 }
 
 setInterval(trocarBanner, 3000)
+
+// 🛒 CARRINHO
+function atualizarCarrinho(){
+
+let lista = document.getElementById("lista")
+let contador = document.getElementById("contador")
+let total = 0
+
+lista.innerHTML = ""
+
+carrinho.forEach(item=>{
+lista.innerHTML += `
+<div>${item.nome} - R$ ${item.preco}</div>
+`
+total += item.preco
+})
+
+contador.innerText = carrinho.length
+document.getElementById("total").innerText = total.toFixed(2)
+}
+
+function addCarrinho(nome, preco){
+carrinho.push({nome, preco})
+atualizarCarrinho()
+}
 
 // 📲 WHATSAPP
 function enviarPedido(){
