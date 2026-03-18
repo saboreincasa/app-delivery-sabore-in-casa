@@ -1,219 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
 
+<head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Sabore In Casa</title>
 
-<style>
-
-body{
-font-family:Arial;
-margin:0;
-background:#121212;
-color:white;
-}
-
-/* TOPO */
-
-header{
-background:#d62828;
-padding:18px;
-text-align:center;
-font-size:26px;
-font-weight:bold;
-}
-
-/* BANNER */
-
-.banner{
-width:100%;
-height:200px;
-background:url("https://images.unsplash.com/photo-1513104890138-7c749659a591");
-background-size:cover;
-background-position:center;
-}
-
-/* CONTEUDO */
-
-.container{
-padding:15px;
-max-width:900px;
-margin:auto;
-}
-
-h2{
-margin-top:30px;
-border-left:5px solid #ffb703;
-padding-left:10px;
-}
-
-/* PRODUTOS */
-
-.card{
-background:#1f1f1f;
-border-radius:12px;
-overflow:hidden;
-margin-bottom:20px;
-box-shadow:0 4px 15px rgba(0,0,0,0.5);
-}
-
-.card img{
-width:100%;
-height:180px;
-object-fit:cover;
-}
-
-.card-content{
-padding:15px;
-}
-
-.btn{
-background:#2ecc71;
-border:none;
-padding:10px;
-width:100%;
-border-radius:8px;
-color:white;
-font-size:15px;
-margin-top:6px;
-cursor:pointer;
-}
-
-.btn:hover{
-background:#27ae60;
-}
-
-/* CARRINHO */
-
-#carrinho{
-background:#1f1f1f;
-padding:15px;
-border-radius:10px;
-margin-top:30px;
-}
-
-.item{
-display:flex;
-justify-content:space-between;
-margin-bottom:5px;
-}
-
-.remover{
-background:red;
-border:none;
-color:white;
-padding:3px 6px;
-border-radius:5px;
-cursor:pointer;
-}
-
-/* FINAL */
-
-.total{
-font-size:20px;
-margin-top:10px;
-}
-
-input,select{
-width:100%;
-padding:10px;
-margin-top:10px;
-border-radius:6px;
-border:none;
-font-size:15px;
-}
-
-.enviar{
-background:#25D366;
-border:none;
-padding:12px;
-width:100%;
-border-radius:8px;
-color:white;
-font-size:18px;
-margin-top:15px;
-cursor:pointer;
-}
-
-</style>
-
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header>
-🍕 Sabore In Casa
+<img src="imagens/logo.png" class="logo">
+<div class="titulo">Sabore In Casa</div>
 </header>
 
-<div class="banner"></div>
+<div class="endereco">
+📍 Rua Maria de Lourdes da Cruz Nº 378<br>
+Bairro Mantiqueira – Belo Horizonte
+<br>
+<button onclick="abrirMapa()">📍 Ver no mapa</button>
+</div>
+
+<div id="banner" class="banner"></div>
 
 <div class="container">
 
-<h2>Pizzas</h2>
+<input class="busca" id="busca" placeholder="🔎 Buscar produto">
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1594007654729-407eedc4fe24">
-<div class="card-content">
-<h3>Pizza Calabresa</h3>
+<div class="btn-flutuantes">
 
-<button class="btn" onclick="add('Calabresa 25cm',39.9)">25cm - R$39,90</button>
-<button class="btn" onclick="add('Calabresa 30cm',49.9)">30cm - R$49,90</button>
-<button class="btn" onclick="add('Calabresa 35cm',59.9)">35cm - R$59,90</button>
-
-</div>
+<div class="linha">
+<button onclick="abrirPizzas()">🍕 Pizzas</button>
+<button onclick="filtrar('bebidas')">🥤 Bebidas</button>
 </div>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1601924582975-7e9c7b4f9d19">
-<div class="card-content">
-
-<h3>Pizza Frango Catupiry</h3>
-
-<button class="btn" onclick="add('Frango Catupiry 25cm',42.9)">25cm - R$42,90</button>
-<button class="btn" onclick="add('Frango Catupiry 30cm',52.9)">30cm - R$52,90</button>
-<button class="btn" onclick="add('Frango Catupiry 35cm',62.9)">35cm - R$62,90</button>
-
-</div>
+<div class="linha">
+<button onclick="filtrar('combo')">🎁 Combos</button>
+<button onclick="filtrar('snaks')">🍟 Snaks</button>
 </div>
 
-<h2>Bebidas Geladas</h2>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1608270586620-248524c67de9">
-<div class="card-content">
-
-<h3>Heineken Long Neck</h3>
-
-<button class="btn" onclick="add('Heineken Long Neck',9.9)">Adicionar - R$9,90</button>
-
-</div>
 </div>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1563379091339-03246963d51a">
-<div class="card-content">
+<h2 id="tituloCombos">⭐ Combos da Semana</h2>
+<div id="combosSemana"></div>
 
-<h3>Brahma Lata</h3>
-
-<button class="btn" onclick="add('Brahma Lata',5.9)">Adicionar - R$5,90</button>
-
-</div>
-</div>
-
-<h2>Carrinho</h2>
+<div id="produtos"></div>
 
 <div id="carrinho">
+<h2>🛒 Carrinho</h2>
 
 <div id="lista"></div>
 
 <div class="total">
-Total: R$ <span id="total">0.00</span>
+Total + entrega: R$ <span id="total">0.00</span>
 </div>
 
-<input id="endereco" placeholder="Digite seu endereço">
+<input id="enderecoCliente" placeholder="Digite seu endereço">
 
 <select id="pagamento">
 <option>PIX</option>
@@ -221,83 +67,26 @@ Total: R$ <span id="total">0.00</span>
 <option>Cartão</option>
 </select>
 
-<input id="troco" placeholder="Precisa de troco para quanto?">
+<input id="troco" placeholder="Troco para quanto?">
 
-<button class="enviar" onclick="pedido()">Enviar pedido no WhatsApp</button>
+<button class="enviar" onclick="enviarPedido()">
+Enviar pedido no WhatsApp
+</button>
 
 </div>
 
 </div>
 
-<script>
-
-let carrinho=[]
-let total=0
-let numero="5531983391576"
-
-function add(nome,preco){
-
-carrinho.push({nome,preco})
-
-total+=preco
-
-atualizar()
-
-}
-
-function remover(index){
-
-total-=carrinho[index].preco
-
-carrinho.splice(index,1)
-
-atualizar()
-
-}
-
-function atualizar(){
-
-let lista=document.getElementById("lista")
-
-lista.innerHTML=""
-
-carrinho.forEach((item,index)=>{
-
-lista.innerHTML+=`
-<div class="item">
-${item.nome} - R$${item.preco.toFixed(2)}
-<button class="remover" onclick="remover(${index})">X</button>
+<div id="botaoCarrinho" onclick="scrollCarrinho()">
+🛒 <div id="contador">0</div>
 </div>
-`
 
-})
+<footer>
+© Sabore In Casa<br>
+Desenvolvido por <b>Carlos Henrique</b>
+</footer>
 
-document.getElementById("total").innerText=total.toFixed(2)
-
-}
-
-function pedido(){
-
-let endereco=document.getElementById("endereco").value
-let pagamento=document.getElementById("pagamento").value
-let troco=document.getElementById("troco").value
-
-let msg="🍕 Pedido - Sabore In Casa %0A%0A"
-
-carrinho.forEach(item=>{
-msg+=item.nome+" - R$"+item.preco+"%0A"
-})
-
-msg+="%0ATotal: R$ "+total.toFixed(2)
-msg+="%0AEndereço: "+endereco
-msg+="%0APagamento: "+pagamento
-msg+="%0ATroco: "+troco
-
-window.open("https://wa.me/"+numero+"?text="+msg)
-
-}
-
-</script>
+<script src="app.js"></script>
 
 </body>
 </html>
