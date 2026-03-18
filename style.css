@@ -50,6 +50,11 @@ background:#ff9800;
 color:white;
 font-size:14px;
 cursor:pointer;
+transition:0.2s;
+}
+
+.endereco button:hover{
+background:#e68900;
 }
 
 /* BANNER */
@@ -108,6 +113,7 @@ transition:0.2s;
 
 .linha button:hover{
 background:#e68900;
+transform:scale(1.02);
 }
 
 /* TÍTULOS */
@@ -197,7 +203,7 @@ margin-top:25px;
 margin-top:10px;
 }
 
-/* 🔥 NOVO ITEM CARRINHO PROFISSIONAL */
+/* ITEM CARRINHO */
 .item-carrinho{
 display:flex;
 justify-content:space-between;
@@ -207,6 +213,7 @@ padding:10px;
 border-radius:8px;
 margin-bottom:8px;
 transition:0.2s;
+gap:10px;
 }
 
 .item-carrinho:hover{
@@ -216,6 +223,7 @@ background:#333;
 .info-item{
 display:flex;
 flex-direction:column;
+flex:1;
 }
 
 .nome-item{
@@ -227,7 +235,7 @@ font-size:13px;
 color:#2ecc71;
 }
 
-/* 🔥 CONTROLE + - */
+/* CONTROLE + - */
 .controle{
 display:flex;
 align-items:center;
@@ -252,6 +260,27 @@ background:#e68900;
 
 .controle span{
 font-size:14px;
+}
+
+/* BOTÃO EXCLUIR */
+.btn-remover{
+background:#ff4d4d;
+border:none;
+color:white;
+width:26px;
+height:26px;
+border-radius:50%;
+font-size:14px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+transition:0.2s;
+}
+
+.btn-remover:hover{
+background:#cc0000;
+transform:scale(1.1);
 }
 
 /* TOTAL */
@@ -294,7 +323,7 @@ transition:0.2s;
 background:#1ebe5d;
 }
 
-/* BOTÃO CARRINHO FLUTUANTE */
+/* BOTÃO CARRINHO */
 #botaoCarrinho{
 position:fixed;
 bottom:20px;
@@ -334,13 +363,17 @@ padding-bottom:20px;
 
 /* RESPONSIVO */
 @media (max-width:600px){
+
 #produtos{
 grid-template-columns:1fr;
 }
+
 #combosSemana{
 grid-template-columns:1fr;
 }
+
 .banner{
 height:150px;
 }
+
 }
