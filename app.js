@@ -1,18 +1,51 @@
 let carrinho = []
-let total = 0
 
-// 🔄 ATUALIZA CARRINHO
+// 🛒 ATUALIZA CARRINHO
 function atualizarCarrinho(){
 
 let lista = document.getElementById("lista")
 let contador = document.getElementById("contador")
+let total = 0
 
 lista.innerHTML = ""
-total = 0
+
+// AGRUPAR ITENS
+let agrupado = {}
 
 carrinho.forEach(item=>{
-lista.innerHTML += `<p>${item.nome} - R$ ${item.preco.toFixed(2)}</p>`
-total += item.preco
+if(!agrupado[item.nome]){
+agrupado[item.nome] = {preco:item.preco, qtd:1}
+}else{
+agrupado[item.nome].qtd++
+}
+})
+
+// MONTAR HTML
+Object.keys(agrupado).forEach(nome=>{
+
+let item = agrupado[nome]
+
+lista.innerHTML += `
+<div class="item-carrinho">
+
+<div class="info-item">
+<span class="nome-item">${nome}</span>
+<span class="preco-item">R$ ${(item.preco * item.qtd).toFixed(2)}</span>
+</div>
+
+<div class="controle">
+
+<button onclick="diminuirItem('${nome}')">−</button>
+<span>${item.qtd}</span>
+<button onclick="aumentarItem('${nome}')">+</button>
+
+</div>
+
+</div>
+`
+
+total += item.preco * item.qtd
+
 })
 
 contador.innerText = carrinho.length
@@ -24,6 +57,28 @@ document.getElementById("total").innerText = total.toFixed(2)
 function addCarrinho(nome, preco){
 carrinho.push({nome, preco})
 atualizarCarrinho()
+}
+
+// ➕ AUMENTAR
+function aumentarItem(nome){
+let item = carrinho.find(p => p.nome === nome)
+if(item){
+carrinho.push({nome:item.nome, preco:item.preco})
+}
+atualizarCarrinho()
+}
+
+// ➖ DIMINUIR
+function diminuirItem(nome){
+
+let index = carrinho.findIndex(p => p.nome === nome)
+
+if(index > -1){
+carrinho.splice(index,1)
+}
+
+atualizarCarrinho()
+
 }
 
 // 🍕 PIZZAS
@@ -50,12 +105,12 @@ html += `
 document.getElementById("produtos").innerHTML = html
 }
 
-// 🧠 FILTROS
+// FILTROS
 function filtrar(tipo){
 
 let html = ""
 
-if(tipo === "bebidas"){
+if(tipo==="bebidas"){
 
 html += "<h2>🥤 Bebidas</h2>"
 
@@ -77,7 +132,7 @@ html += `
 
 }
 
-if(tipo === "combo"){
+if(tipo==="combo"){
 
 html += "<h2>🎁 Combos</h2>"
 
@@ -100,7 +155,7 @@ html += `
 
 }
 
-if(tipo === "snaks"){
+if(tipo==="snaks"){
 
 html += "<h2>🍟 Snaks</h2>"
 
@@ -122,20 +177,7 @@ html += `
 }
 
 document.getElementById("produtos").innerHTML = html
-
 }
-
-// 🔎 BUSCA
-document.getElementById("busca").addEventListener("input", function(){
-
-let termo = this.value.toLowerCase()
-let cards = document.querySelectorAll(".card")
-
-cards.forEach(card=>{
-card.style.display = card.innerText.toLowerCase().includes(termo) ? "block" : "none"
-})
-
-})
 
 // 📲 WHATSAPP
 function enviarPedido(){
@@ -143,13 +185,15 @@ function enviarPedido(){
 let endereco = document.getElementById("enderecoCliente").value
 let pagamento = document.getElementById("pagamento").value
 
+let total = document.getElementById("total").innerText
+
 let msg = "🍕 *Pedido Sabore In Casa*%0A%0A"
 
 carrinho.forEach(item=>{
 msg += `${item.nome} - R$ ${item.preco}%0A`
 })
 
-msg += `%0ATotal: R$ ${total.toFixed(2)}`
+msg += `%0ATotal: R$ ${total}`
 msg += `%0AEndereço: ${endereco}`
 msg += `%0APagamento: ${pagamento}`
 
