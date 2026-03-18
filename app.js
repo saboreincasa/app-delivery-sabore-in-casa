@@ -93,7 +93,7 @@ function abrirMontagemPizza(nome){
     </button>
 
     <br><br>
-    <button onclick="abrirPizzas()" style="background:#ffb300; color:white; border:none; border-radius:5px; padding:10px 20px; cursor:pointer;">⬅ Voltar</button>
+    <span onclick="abrirPizzas()" style="cursor:pointer; color:#ffb300; font-weight:bold;">⬅ Voltar</span>
     `
 
     document.getElementById("produtos").innerHTML = html
@@ -148,7 +148,7 @@ function filtrar(tipo){
                 <div class="card-content">
                     <h3>${b.nome}</h3>
                     <p class="preco">R$ ${b.preco}</p>
-                    <button onclick="addCarrinho('${b.nome}', ${b.preco})" style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">Adicionar</button>
+                    <button onclick="addCarrinho('${b.nome}', ${b.preco})" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">Adicionar</button>
                 </div>
             </div>
             `
@@ -168,7 +168,7 @@ function filtrar(tipo){
                 <div class="card-content">
                     <h3>${s.nome}</h3>
                     <p class="preco">R$ ${s.preco}</p>
-                    <button onclick="addCarrinho('${s.nome}', ${s.preco})" style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">Adicionar</button>
+                    <button onclick="addCarrinho('${s.nome}', ${s.preco})" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">Adicionar</button>
                 </div>
             </div>
             `
@@ -199,7 +199,7 @@ function carregarCombosSemana(){
             <div class="card-content">
                 <h3>${c.nome}</h3>
                 <p class="preco">R$ ${c.preco}</p>
-                <button onclick="addCarrinho('${c.nome}', ${c.preco})" style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">Adicionar</button>
+                <button onclick="addCarrinho('${c.nome}', ${c.preco})" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">Adicionar</button>
             </div>
         </div>
         `
