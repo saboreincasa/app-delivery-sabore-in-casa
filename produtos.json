@@ -42,6 +42,20 @@
     "foto": "imagens/snaks/nuggets-frango.png"
   },
   {
+    "nome": "Halls",
+    "categoria": "snaks",
+    "preco": 2.50,
+    "descricao": "Bala refrescante",
+    "foto": "imagens/snaks/halls.png"
+  },
+  {
+    "nome": "Gulão",
+    "categoria": "snaks",
+    "preco": 3.00,
+    "descricao": "Doce gulão",
+    "foto": "imagens/snaks/gulao.png"
+  },
+  {
     "nome": "Coca Cola 2L",
     "categoria": "bebidas",
     "preco": 12.00,
