@@ -68,5 +68,33 @@
     "preco": 11.00,
     "descricao": "Refrigerante",
     "foto": "imagens/bebidas/guarana-2l.png"
+  },
+  {
+    "nome": "Heineken Latão 473ml",
+    "categoria": "bebidas",
+    "preco": 8.00,
+    "descricao": "Cerveja latão 473ml",
+    "foto": "imagens/bebidas/heineken-latao.png"
+  },
+  {
+    "nome": "Brahma Latão 473ml",
+    "categoria": "bebidas",
+    "preco": 6.00,
+    "descricao": "Cerveja latão 473ml",
+    "foto": "imagens/bebidas/brahma-latao.png"
+  },
+  {
+    "nome": "Spaten Latão 473ml",
+    "categoria": "bebidas",
+    "preco": 7.00,
+    "descricao": "Cerveja latão 473ml",
+    "foto": "imagens/bebidas/spaten-latao.png"
+  },
+  {
+    "nome": "Stella Artois Latão 473ml",
+    "categoria": "bebidas",
+    "preco": 8.50,
+    "descricao": "Cerveja latão 473ml",
+    "foto": "imagens/bebidas/stella-latao.png"
   }
 ]
