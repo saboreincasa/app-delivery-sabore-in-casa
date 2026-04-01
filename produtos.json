@@ -1,32 +1,33 @@
 [
   {
     "nome": "Combo Casal",
-    "categoria": "combo",
+    "categoria": "combos",
     "preco": 79.90,
     "descricao": "2 pizzas grandes + refrigerante",
     "foto": "imagens/combos/combo-casal.png"
   },
   {
     "nome": "Combo Solteiro",
-    "categoria": "combo",
+    "categoria": "combos",
     "preco": 39.90,
     "descricao": "1 pizza grande + coca cola",
     "foto": "imagens/combos/combo-solteiro.png"
   },
   {
     "nome": "Combo Família",
-    "categoria": "combo",
+    "categoria": "combos",
     "preco": 99.90,
     "descricao": "2 pizzas grandes + refrigerantes",
     "foto": "imagens/combos/combo-familia.png"
   },
   {
     "nome": "Combo Amigos",
-    "categoria": "combo",
+    "categoria": "combos",
     "preco": 89.90,
     "descricao": "Cerveja + carvão",
     "foto": "imagens/combos/combo-amigos.png"
   },
+
   {
     "nome": "Batata Frita Crocante",
     "categoria": "snaks",
@@ -55,53 +56,54 @@
     "descricao": "Doce gulão",
     "foto": "imagens/snaks/gulao.png"
   },
+
   {
-    "nome": "Coca Cola 2L",
+    "nome": "Coca-Cola 2L",
     "categoria": "bebidas",
     "preco": 12.00,
-    "descricao": "Refrigerante",
+    "descricao": "Refrigerante Coca-Cola 2 Litros",
     "foto": "imagens/bebidas/coca-cola-2l.png"
   },
   {
     "nome": "Guaraná Antarctica 2L",
     "categoria": "bebidas",
     "preco": 11.00,
-    "descricao": "Refrigerante",
+    "descricao": "Refrigerante Guaraná Antarctica 2 Litros",
     "foto": "imagens/bebidas/guarana-2l.png"
   },
   {
     "nome": "Heineken Latão 473ml",
     "categoria": "bebidas",
     "preco": 8.00,
-    "descricao": "Cerveja latão 473ml",
+    "descricao": "Cerveja Heineken lata 473ml",
     "foto": "imagens/bebidas/heineken-latao.png"
   },
   {
     "nome": "Brahma Latão 473ml",
     "categoria": "bebidas",
     "preco": 6.00,
-    "descricao": "Cerveja latão 473ml",
+    "descricao": "Cerveja Brahma lata 473ml",
     "foto": "imagens/bebidas/brahma-latao.png"
   },
   {
     "nome": "Spaten Latão 473ml",
     "categoria": "bebidas",
     "preco": 7.00,
-    "descricao": "Cerveja latão 473ml",
+    "descricao": "Cerveja Spaten lata 473ml",
     "foto": "imagens/bebidas/spaten-latao.png"
   },
   {
     "nome": "Stella Artois Latão 473ml",
     "categoria": "bebidas",
     "preco": 8.50,
-    "descricao": "Cerveja latão 473ml",
+    "descricao": "Cerveja Stella Artois lata 473ml",
     "foto": "imagens/bebidas/stella-latao.png"
   },
   {
     "nome": "Bohemia Latão 473ml",
     "categoria": "bebidas",
     "preco": 7.50,
-    "descricao": "Cerveja latão 473ml",
+    "descricao": "Cerveja Bohemia lata 473ml",
     "foto": "imagens/bebidas/bohemia-latao.png"
   }
 ]
