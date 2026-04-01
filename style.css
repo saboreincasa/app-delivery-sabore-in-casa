@@ -340,3 +340,52 @@ grid-template-columns:1fr;
 height:150px;
 }
 }
+/* 🔥 HEADER PROFISSIONAL */
+.header-topo{
+  position: relative;
+  height: 220px;
+  background: linear-gradient(135deg, #b30000, #ff3c00);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Efeito de textura/brilho */
+.header-topo::before{
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
+  z-index: 1;
+}
+
+/* Overlay escuro suave */
+.overlay{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Container da logo */
+.logo-container{
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+/* 🔥 LOGO GRANDE */
+.logo-grande{
+  width: 80%;
+  max-width: 320px;
+  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+  transition: 0.3s;
+}
+
+/* efeito leve ao carregar */
+.logo-grande:hover{
+  transform: scale(1.05);
+}
