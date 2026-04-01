@@ -20,7 +20,7 @@ function mostrarCombos(){
     document.getElementById("produtos").innerHTML = ""
 }
 
-// 🍕 PIZZAS
+// 🍕 PIZZAS (REMOVIDO ATUM)
 function abrirPizzas(){
     esconderCombos()
 
@@ -34,7 +34,6 @@ function abrirPizzas(){
         {nome:"Marguerita",desc:"Mussarela, tomate, manjericão"},
         {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola"},
         {nome:"Napolitana",desc:"Mussarela, tomate, parmesão"},
-        {nome:"Atum",desc:"Atum, cebola, mussarela"},
         {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela"},
         {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry"}
     ]
@@ -53,7 +52,7 @@ function abrirPizzas(){
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 MONTAGEM
+// 🍕 MONTAGEM (REMOVIDO ATUM)
 function abrirMontagemPizza(nome){
     let html = `
     <h2>🍕 Montar Pizza - ${nome}</h2>
@@ -82,7 +81,6 @@ function abrirMontagemPizza(nome){
         <option value="Marguerita">Marguerita</option>
         <option value="Baiana">Baiana</option>
         <option value="Napolitana">Napolitana</option>
-        <option value="Atum">Atum</option>
         <option value="Milho com Bacon">Milho com Bacon</option>
         <option value="Moda da Casa">Moda da Casa</option>
     </select>
@@ -119,7 +117,7 @@ function adicionarPizza(nome){
     abrirPizzas()
 }
 
-// 🔥 FILTRO (ESSA É A PARTE QUE FALTAVA)
+// 🔥 FILTRO (CORRIGIDO COMBOS)
 function filtrar(tipo){
 
     if(tipo === "combo"){
@@ -157,13 +155,13 @@ function filtrar(tipo){
     })
 }
 
-// 🔥 COMBOS CORRIGIDO
+// 🔥 COMBOS (CORRIGIDO: ERA "combo", AGORA "combos")
 function carregarCombosSemana(){
     fetch("produtos.json")
     .then(res => res.json())
     .then(produtos => {
 
-        let combos = produtos.filter(p => p.categoria === "combo")
+        let combos = produtos.filter(p => p.categoria === "combos")
 
         let html = ""
 
@@ -227,17 +225,29 @@ function atualizarCarrinho(){
         let subtotal = item.preco * item.qtd
 
         lista.innerHTML += `
-        <div style="display:flex; justify-content:space-between;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
             <div>
                 <b>${item.nome}</b><br>
                 R$ ${subtotal.toFixed(2)}
             </div>
 
-            <div>
-                <button onclick="diminuir(${index})">➖</button>
+            <div style="display:flex; align-items:center; gap:5px;">
+                <button onclick="diminuir(${index})"
+                style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px;">
+                ➖
+                </button>
+
                 ${item.qtd}
-                <button onclick="aumentar(${index})">➕</button>
-                <button onclick="removerItem(${index})">❌</button>
+
+                <button onclick="aumentar(${index})"
+                style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px;">
+                ➕
+                </button>
+
+                <button onclick="removerItem(${index})"
+                style="background:none; border:none; font-weight:bold;">
+                ❌
+                </button>
             </div>
         </div>
         `
