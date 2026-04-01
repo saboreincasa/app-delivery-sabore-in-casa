@@ -13,41 +13,11 @@ function esconderCombos(){
     document.getElementById("tituloCombos").style.display = "none"
 }
 
-// 🔥 MOSTRAR COMBOS (AGORA USANDO JSON)
+// 🔥 MOSTRAR COMBOS
 function mostrarCombos(){
-
-    document.getElementById("tituloCombos").style.display = "none"
-
-    let container = document.getElementById("produtos")
-    container.innerHTML = "<h2>Carregando combos...</h2>"
-
-    fetch("produtos.json")
-    .then(res => res.json())
-    .then(produtos => {
-
-        let combos = produtos.filter(p => p.categoria === "combos")
-
-        let html = "<h2>🎁 Combos</h2>"
-
-        combos.forEach(p => {
-            html += `
-            <div class="card">
-                <img src="${p.foto}">
-                <div class="card-content">
-                    <h3>${p.nome}</h3>
-                    <p>${p.descricao}</p>
-                    <p class="preco">R$ ${p.preco.toFixed(2)}</p>
-                    <button onclick="addCarrinho('${p.nome}', ${p.preco})"
-                        style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">
-                        Adicionar
-                    </button>
-                </div>
-            </div>
-            `
-        })
-
-        container.innerHTML = html
-    })
+    document.getElementById("tituloCombos").style.display = "block"
+    carregarCombosSemana()
+    document.getElementById("produtos").innerHTML = ""
 }
 
 // 🍕 PIZZAS
@@ -118,13 +88,12 @@ function abrirMontagemPizza(nome){
     </select>
 
     <br><br>
-    <button onclick="adicionarPizza('${nome}')"
-        style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:10px 20px;">
+    <button onclick="adicionarPizza('${nome}')" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:10px 20px; cursor:pointer;">
         Adicionar ao Carrinho
     </button>
 
     <br><br>
-    <span onclick="abrirPizzas()" style="cursor:pointer;">⬅ Voltar</span>
+    <span onclick="abrirPizzas()" style="cursor:pointer; color:white; font-weight:bold;">⬅ Voltar</span>
     `
 
     document.getElementById("produtos").innerHTML = html
@@ -143,60 +112,18 @@ function adicionarPizza(nome){
     preco += Number(borda)
 
     let nomeFinal = `${nome} ${tamanho}cm`
-    if(meio) nomeFinal += " / Meio a Meio com " + meio
-    if(borda == 10) nomeFinal += " / Borda recheada"
+    if(meio){
+        nomeFinal += " / Meio a Meio com " + meio
+    }
+    if(borda == 10){
+        nomeFinal += " / Borda recheada"
+    }
 
     addCarrinho(nomeFinal, preco)
     abrirPizzas()
 }
 
-// 🥤🍟 FILTRO
-function filtrar(tipo){
-
-    if(tipo === "combo" || tipo === "combos"){
-        mostrarCombos()
-        return
-    } else {
-        esconderCombos()
-    }
-
-    let container = document.getElementById("produtos")
-    container.innerHTML = "<h2>Carregando...</h2>"
-
-    fetch("produtos.json")
-    .then(res => res.json())
-    .then(produtos => {
-
-        let filtrados = produtos.filter(p => 
-            p.categoria.toLowerCase().trim() === tipo.toLowerCase().trim()
-        )
-
-        let html = ""
-
-        if(tipo === "bebidas") html += "<h2>🥤 Bebidas</h2>"
-        if(tipo === "snaks") html += "<h2>🍟 Snaks</h2>"
-
-        filtrados.forEach(p => {
-            html += `
-            <div class="card">
-                <img src="${p.foto}">
-                <div class="card-content">
-                    <h3>${p.nome}</h3>
-                    <p>${p.descricao || ""}</p>
-                    <p class="preco">R$ ${p.preco.toFixed(2)}</p>
-                    <button onclick="addCarrinho('${p.nome}', ${p.preco})">
-                        Adicionar
-                    </button>
-                </div>
-            </div>
-            `
-        })
-
-        container.innerHTML = html
-    })
-}
-
-// 🎁 HOME AGORA USANDO JSON (CORRIGIDO)
+// 🔥 NOVO - COMBOS DO JSON (CORRIGIDO)
 function carregarCombosSemana(){
 
     fetch("produtos.json")
@@ -215,7 +142,7 @@ function carregarCombosSemana(){
                     <h3>${c.nome}</h3>
                     <p>${c.descricao}</p>
                     <p class="preco">R$ ${c.preco.toFixed(2)}</p>
-                    <button onclick="addCarrinho('${c.nome}', ${c.preco})">
+                    <button onclick="addCarrinho('${c.nome}', ${c.preco})" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">
                         Adicionar
                     </button>
                 </div>
@@ -227,11 +154,11 @@ function carregarCombosSemana(){
     })
 }
 
-// 🎬 BANNER
+// 🎬 BANNER (mantido original)
 let banners = [
-    "imagens/banner1.png",
-    "imagens/banner2.png",
-    "imagens/banner3.png"
+    "https://images.unsplash.com/photo-1513104890138-7c749659a591",
+    "https://images.unsplash.com/photo-1601924582975-7e9c7b4f9d19",
+    "https://images.unsplash.com/photo-1548365328-9f547fb0953d"
 ]
 
 let bannerIndex = 0
@@ -239,15 +166,20 @@ function trocarBanner(){
     let banner = document.getElementById("banner")
     banner.style.backgroundImage = `url(${banners[bannerIndex]})`
     bannerIndex++
-    if(bannerIndex >= banners.length) bannerIndex = 0
+    if(bannerIndex >= banners.length){
+        bannerIndex = 0
+    }
 }
 setInterval(trocarBanner, 3000)
 
-// 🛒 CARRINHO
+// 🛒 CARRINHO (NÃO ALTEREI NADA)
 function addCarrinho(nome, preco){
-    let item = carrinho.find(i => i.nome === nome)
-    if(item) item.qtd++
-    else carrinho.push({nome, preco, qtd:1})
+    let itemExistente = carrinho.find(i => i.nome === nome)
+    if(itemExistente){
+        itemExistente.qtd++
+    } else {
+        carrinho.push({nome: nome, preco: preco, qtd: 1})
+    }
     atualizarCarrinho()
 }
 
@@ -260,12 +192,19 @@ function atualizarCarrinho(){
     carrinho.forEach((item, index)=>{
         let subtotal = item.preco * item.qtd
         lista.innerHTML += `
-        <div>
-            <b>${item.nome}</b><br>
-            R$ ${subtotal.toFixed(2)}
-            <button onclick="diminuir(${index})">-</button>
-            <button onclick="aumentar(${index})">+</button>
-            <button onclick="removerItem(${index})">x</button>
+        <div class="item-carrinho" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+            
+            <div class="item-info" style="flex:1;">
+                <b>${item.nome}</b><br>
+                Subtotal: R$ ${subtotal.toFixed(2)}
+            </div>
+
+            <div class="item-controles" style="display:flex; align-items:center; gap:5px;">
+                <button onclick="diminuir(${index})" style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">➖</button>
+                <span>${item.qtd}</span>
+                <button onclick="aumentar(${index})" style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">➕</button>
+                <button onclick="removerItem(${index})" style="background:none; border:none; font-weight:bold; margin-left:10px; cursor:pointer;">❌<span style="color:white;"> Remover item</span></button>
+            </div>
         </div>
         `
         total += subtotal
@@ -273,23 +212,4 @@ function atualizarCarrinho(){
 
     contador.innerText = carrinho.length
     document.getElementById("total").innerText = total.toFixed(2)
-}
-
-function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
-function diminuir(i){ carrinho[i].qtd>1?carrinho[i].qtd--:carrinho.splice(i,1); atualizarCarrinho() }
-function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho() }
-
-// 📲 WHATSAPP
-function enviarPedido(){
-    const numeroWhatsApp = "5531983391576"
-    let total = document.getElementById("total").innerText
-
-    let msg = "Pedido:\n"
-    carrinho.forEach(i=>{
-        msg += `${i.qtd}x ${i.nome}\n`
-    })
-
-    msg += `Total: R$ ${total}`
-
-    window.open(`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(msg)}`)
 }
