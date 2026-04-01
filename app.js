@@ -13,7 +13,7 @@ function esconderCombos(){
     document.getElementById("tituloCombos").style.display = "none"
 }
 
-// 🔥 MOSTRAR COMBOS (AGORA CORRIGIDO USANDO JSON)
+// 🔥 MOSTRAR COMBOS (AGORA USANDO JSON)
 function mostrarCombos(){
 
     document.getElementById("tituloCombos").style.display = "none"
@@ -196,39 +196,42 @@ function filtrar(tipo){
     })
 }
 
-// 🎁 HOME (mantido)
-function getCombos(){
-    return [
-        {nome:"Combo Família 🍕🍕🥤",preco:79,img:"https://images.unsplash.com/photo-1513104890138-7c749659a591"},
-        {nome:"Combo Casal 🍕🥤",preco:49,img:"https://images.unsplash.com/photo-1594007654729-407eedc4fe24"},
-        {nome:"Combo Amigos 🍕🍕🍟🥤",preco:89,img:"https://images.unsplash.com/photo-1600891964599-f61ba0e24092"},
-        {nome:"Combo Solteiro 🍕🥤",preco:35,img:"https://images.unsplash.com/photo-1548365328-9f547fb0953d"}
-    ]
-}
-
+// 🎁 HOME AGORA USANDO JSON (CORRIGIDO)
 function carregarCombosSemana(){
-    let combos = getCombos()
-    let html = ""
-    combos.forEach(c=>{
-        html += `
-        <div class="card destaque">
-            <img src="${c.img}">
-            <div class="card-content">
-                <h3>${c.nome}</h3>
-                <p class="preco">R$ ${c.preco}</p>
-                <button onclick="addCarrinho('${c.nome}', ${c.preco})">Adicionar</button>
+
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
+
+        let combos = produtos.filter(p => p.categoria === "combos")
+
+        let html = ""
+
+        combos.forEach(c=>{
+            html += `
+            <div class="card destaque">
+                <img src="${c.foto}">
+                <div class="card-content">
+                    <h3>${c.nome}</h3>
+                    <p>${c.descricao}</p>
+                    <p class="preco">R$ ${c.preco.toFixed(2)}</p>
+                    <button onclick="addCarrinho('${c.nome}', ${c.preco})">
+                        Adicionar
+                    </button>
+                </div>
             </div>
-        </div>
-        `
+            `
+        })
+
+        document.getElementById("combosSemana").innerHTML = html
     })
-    document.getElementById("combosSemana").innerHTML = html
 }
 
 // 🎬 BANNER
 let banners = [
-    "https://images.unsplash.com/photo-1513104890138-7c749659a591",
-    "https://images.unsplash.com/photo-1601924582975-7e9c7b4f9d19",
-    "https://images.unsplash.com/photo-1548365328-9f547fb0953d"
+    "imagens/banner1.png",
+    "imagens/banner2.png",
+    "imagens/banner3.png"
 ]
 
 let bannerIndex = 0
