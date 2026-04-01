@@ -13,11 +13,41 @@ function esconderCombos(){
     document.getElementById("tituloCombos").style.display = "none"
 }
 
-// 🔥 MOSTRAR COMBOS
+// 🔥 MOSTRAR COMBOS (AGORA CORRIGIDO USANDO JSON)
 function mostrarCombos(){
-    document.getElementById("tituloCombos").style.display = "block"
-    carregarCombosSemana()
-    document.getElementById("produtos").innerHTML = ""
+
+    document.getElementById("tituloCombos").style.display = "none"
+
+    let container = document.getElementById("produtos")
+    container.innerHTML = "<h2>Carregando combos...</h2>"
+
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
+
+        let combos = produtos.filter(p => p.categoria === "combos")
+
+        let html = "<h2>🎁 Combos</h2>"
+
+        combos.forEach(p => {
+            html += `
+            <div class="card">
+                <img src="${p.foto}">
+                <div class="card-content">
+                    <h3>${p.nome}</h3>
+                    <p>${p.descricao}</p>
+                    <p class="preco">R$ ${p.preco.toFixed(2)}</p>
+                    <button onclick="addCarrinho('${p.nome}', ${p.preco})"
+                        style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">
+                        Adicionar
+                    </button>
+                </div>
+            </div>
+            `
+        })
+
+        container.innerHTML = html
+    })
 }
 
 // 🍕 PIZZAS
@@ -88,12 +118,13 @@ function abrirMontagemPizza(nome){
     </select>
 
     <br><br>
-    <button onclick="adicionarPizza('${nome}')" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:10px 20px; cursor:pointer;">
+    <button onclick="adicionarPizza('${nome}')"
+        style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:10px 20px;">
         Adicionar ao Carrinho
     </button>
 
     <br><br>
-    <span onclick="abrirPizzas()" style="cursor:pointer; color:white; font-weight:bold;">⬅ Voltar</span>
+    <span onclick="abrirPizzas()" style="cursor:pointer;">⬅ Voltar</span>
     `
 
     document.getElementById("produtos").innerHTML = html
@@ -112,18 +143,14 @@ function adicionarPizza(nome){
     preco += Number(borda)
 
     let nomeFinal = `${nome} ${tamanho}cm`
-    if(meio){
-        nomeFinal += " / Meio a Meio com " + meio
-    }
-    if(borda == 10){
-        nomeFinal += " / Borda recheada"
-    }
+    if(meio) nomeFinal += " / Meio a Meio com " + meio
+    if(borda == 10) nomeFinal += " / Borda recheada"
 
     addCarrinho(nomeFinal, preco)
     abrirPizzas()
 }
 
-// 🥤🍟🎁 FILTRO (AGORA USANDO JSON)
+// 🥤🍟 FILTRO
 function filtrar(tipo){
 
     if(tipo === "combo" || tipo === "combos"){
@@ -149,10 +176,6 @@ function filtrar(tipo){
         if(tipo === "bebidas") html += "<h2>🥤 Bebidas</h2>"
         if(tipo === "snaks") html += "<h2>🍟 Snaks</h2>"
 
-        if(filtrados.length === 0){
-            html += "<p>Nenhum produto encontrado</p>"
-        }
-
         filtrados.forEach(p => {
             html += `
             <div class="card">
@@ -161,8 +184,7 @@ function filtrar(tipo){
                     <h3>${p.nome}</h3>
                     <p>${p.descricao || ""}</p>
                     <p class="preco">R$ ${p.preco.toFixed(2)}</p>
-                    <button onclick="addCarrinho('${p.nome}', ${p.preco})"
-                        style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">
+                    <button onclick="addCarrinho('${p.nome}', ${p.preco})">
                         Adicionar
                     </button>
                 </div>
@@ -174,7 +196,7 @@ function filtrar(tipo){
     })
 }
 
-// 🎁 COMBOS
+// 🎁 HOME (mantido)
 function getCombos(){
     return [
         {nome:"Combo Família 🍕🍕🥤",preco:79,img:"https://images.unsplash.com/photo-1513104890138-7c749659a591"},
@@ -184,7 +206,6 @@ function getCombos(){
     ]
 }
 
-// ⭐ HOME
 function carregarCombosSemana(){
     let combos = getCombos()
     let html = ""
@@ -195,7 +216,7 @@ function carregarCombosSemana(){
             <div class="card-content">
                 <h3>${c.nome}</h3>
                 <p class="preco">R$ ${c.preco}</p>
-                <button onclick="addCarrinho('${c.nome}', ${c.preco})" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">Adicionar</button>
+                <button onclick="addCarrinho('${c.nome}', ${c.preco})">Adicionar</button>
             </div>
         </div>
         `
@@ -215,20 +236,15 @@ function trocarBanner(){
     let banner = document.getElementById("banner")
     banner.style.backgroundImage = `url(${banners[bannerIndex]})`
     bannerIndex++
-    if(bannerIndex >= banners.length){
-        bannerIndex = 0
-    }
+    if(bannerIndex >= banners.length) bannerIndex = 0
 }
 setInterval(trocarBanner, 3000)
 
 // 🛒 CARRINHO
 function addCarrinho(nome, preco){
-    let itemExistente = carrinho.find(i => i.nome === nome)
-    if(itemExistente){
-        itemExistente.qtd++
-    } else {
-        carrinho.push({nome: nome, preco: preco, qtd: 1})
-    }
+    let item = carrinho.find(i => i.nome === nome)
+    if(item) item.qtd++
+    else carrinho.push({nome, preco, qtd:1})
     atualizarCarrinho()
 }
 
@@ -241,18 +257,12 @@ function atualizarCarrinho(){
     carrinho.forEach((item, index)=>{
         let subtotal = item.preco * item.qtd
         lista.innerHTML += `
-        <div class="item-carrinho" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
-            <div class="item-info" style="flex:1;">
-                <b>${item.nome}</b><br>
-                Subtotal: R$ ${subtotal.toFixed(2)}
-            </div>
-
-            <div class="item-controles" style="display:flex; align-items:center; gap:5px;">
-                <button onclick="diminuir(${index})">➖</button>
-                <span>${item.qtd}</span>
-                <button onclick="aumentar(${index})">➕</button>
-                <button onclick="removerItem(${index})">❌ Remover</button>
-            </div>
+        <div>
+            <b>${item.nome}</b><br>
+            R$ ${subtotal.toFixed(2)}
+            <button onclick="diminuir(${index})">-</button>
+            <button onclick="aumentar(${index})">+</button>
+            <button onclick="removerItem(${index})">x</button>
         </div>
         `
         total += subtotal
@@ -262,58 +272,21 @@ function atualizarCarrinho(){
     document.getElementById("total").innerText = total.toFixed(2)
 }
 
-function aumentar(index){
-    carrinho[index].qtd++
-    atualizarCarrinho()
-}
-
-function diminuir(index){
-    if(carrinho[index].qtd > 1){
-        carrinho[index].qtd--
-    } else {
-        carrinho.splice(index,1)
-    }
-    atualizarCarrinho()
-}
-
-function removerItem(index){
-    carrinho.splice(index,1)
-    atualizarCarrinho()
-}
+function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
+function diminuir(i){ carrinho[i].qtd>1?carrinho[i].qtd--:carrinho.splice(i,1); atualizarCarrinho() }
+function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho() }
 
 // 📲 WHATSAPP
 function enviarPedido(){
     const numeroWhatsApp = "5531983391576"
-    const numeroPedido = Math.floor(Math.random()*9000)+1000
-    let endereco = document.getElementById("enderecoCliente").value || "Não informado"
-    let pagamento = document.getElementById("pagamento").value
-    let total = parseFloat(document.getElementById("total").innerText).toFixed(2)
+    let total = document.getElementById("total").innerText
 
-    let mensagemItens = ''
-    carrinho.forEach(item=>{
-        mensagemItens += `➡ ${item.qtd}x ${item.nome} - R$ ${(item.preco*item.qtd).toFixed(2)}\n`
+    let msg = "Pedido:\n"
+    carrinho.forEach(i=>{
+        msg += `${i.qtd}x ${i.nome}\n`
     })
 
-    let mensagem = `*Pedido nº ${numeroPedido}*
+    msg += `Total: R$ ${total}`
 
-*Itens:*
-${mensagemItens}
-💳 *${pagamento}*
-
-🛵 Delivery (R$ 6,99)
-🏠 ${endereco}
-
-Total: R$ ${total}`
-
-    window.open(`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`, '_blank')
-}
-
-// 📍 MAPA
-function abrirMapa(){
-    window.open("https://maps.google.com?q=Rua+Maria+de+Lourdes+da+Cruz+378")
-}
-
-// 🛒 SCROLL
-function scrollCarrinho(){
-    document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
+    window.open(`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(msg)}`)
 }
