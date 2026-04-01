@@ -88,12 +88,12 @@ function abrirMontagemPizza(nome){
     </select>
 
     <br><br>
-    <button onclick="adicionarPizza('${nome}')" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:10px 20px; cursor:pointer;">
+    <button onclick="adicionarPizza('${nome}')" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:10px 20px;">
         Adicionar ao Carrinho
     </button>
 
     <br><br>
-    <span onclick="abrirPizzas()" style="cursor:pointer; color:white; font-weight:bold;">⬅ Voltar</span>
+    <span onclick="abrirPizzas()" style="cursor:pointer;">⬅ Voltar</span>
     `
 
     document.getElementById("produtos").innerHTML = html
@@ -112,25 +112,58 @@ function adicionarPizza(nome){
     preco += Number(borda)
 
     let nomeFinal = `${nome} ${tamanho}cm`
-    if(meio){
-        nomeFinal += " / Meio a Meio com " + meio
-    }
-    if(borda == 10){
-        nomeFinal += " / Borda recheada"
-    }
+    if(meio) nomeFinal += " / Meio a Meio com " + meio
+    if(borda == 10) nomeFinal += " / Borda recheada"
 
     addCarrinho(nomeFinal, preco)
     abrirPizzas()
 }
 
-// 🔥 NOVO - COMBOS DO JSON (CORRIGIDO)
-function carregarCombosSemana(){
+// 🔥 FILTRO (ESSA É A PARTE QUE FALTAVA)
+function filtrar(tipo){
+
+    if(tipo === "combo"){
+        mostrarCombos()
+        return
+    } else {
+        esconderCombos()
+    }
 
     fetch("produtos.json")
     .then(res => res.json())
     .then(produtos => {
 
-        let combos = produtos.filter(p => p.categoria === "combos")
+        let filtrados = produtos.filter(p => p.categoria === tipo)
+
+        let html = ""
+
+        filtrados.forEach(p=>{
+            html += `
+            <div class="card">
+                <img src="${p.foto}">
+                <div class="card-content">
+                    <h3>${p.nome}</h3>
+                    <p>${p.descricao}</p>
+                    <p class="preco">R$ ${p.preco.toFixed(2)}</p>
+                    <button onclick="addCarrinho('${p.nome}', ${p.preco})">
+                        Adicionar
+                    </button>
+                </div>
+            </div>
+            `
+        })
+
+        document.getElementById("produtos").innerHTML = html
+    })
+}
+
+// 🔥 COMBOS CORRIGIDO
+function carregarCombosSemana(){
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
+
+        let combos = produtos.filter(p => p.categoria === "combo")
 
         let html = ""
 
@@ -142,7 +175,7 @@ function carregarCombosSemana(){
                     <h3>${c.nome}</h3>
                     <p>${c.descricao}</p>
                     <p class="preco">R$ ${c.preco.toFixed(2)}</p>
-                    <button onclick="addCarrinho('${c.nome}', ${c.preco})" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">
+                    <button onclick="addCarrinho('${c.nome}', ${c.preco})">
                         Adicionar
                     </button>
                 </div>
@@ -154,7 +187,7 @@ function carregarCombosSemana(){
     })
 }
 
-// 🎬 BANNER (mantido original)
+// 🎬 BANNER
 let banners = [
     "https://images.unsplash.com/photo-1513104890138-7c749659a591",
     "https://images.unsplash.com/photo-1601924582975-7e9c7b4f9d19",
@@ -172,13 +205,13 @@ function trocarBanner(){
 }
 setInterval(trocarBanner, 3000)
 
-// 🛒 CARRINHO (NÃO ALTEREI NADA)
+// 🛒 CARRINHO
 function addCarrinho(nome, preco){
-    let itemExistente = carrinho.find(i => i.nome === nome)
-    if(itemExistente){
-        itemExistente.qtd++
+    let item = carrinho.find(i => i.nome === nome)
+    if(item){
+        item.qtd++
     } else {
-        carrinho.push({nome: nome, preco: preco, qtd: 1})
+        carrinho.push({nome, preco, qtd:1})
     }
     atualizarCarrinho()
 }
@@ -187,29 +220,49 @@ function atualizarCarrinho(){
     let lista = document.getElementById("lista")
     let contador = document.getElementById("contador")
     let total = 0
+
     lista.innerHTML = ""
 
     carrinho.forEach((item, index)=>{
         let subtotal = item.preco * item.qtd
+
         lista.innerHTML += `
-        <div class="item-carrinho" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
-            
-            <div class="item-info" style="flex:1;">
+        <div style="display:flex; justify-content:space-between;">
+            <div>
                 <b>${item.nome}</b><br>
-                Subtotal: R$ ${subtotal.toFixed(2)}
+                R$ ${subtotal.toFixed(2)}
             </div>
 
-            <div class="item-controles" style="display:flex; align-items:center; gap:5px;">
-                <button onclick="diminuir(${index})" style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">➖</button>
-                <span>${item.qtd}</span>
-                <button onclick="aumentar(${index})" style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">➕</button>
-                <button onclick="removerItem(${index})" style="background:none; border:none; font-weight:bold; margin-left:10px; cursor:pointer;">❌<span style="color:white;"> Remover item</span></button>
+            <div>
+                <button onclick="diminuir(${index})">➖</button>
+                ${item.qtd}
+                <button onclick="aumentar(${index})">➕</button>
+                <button onclick="removerItem(${index})">❌</button>
             </div>
         </div>
         `
+
         total += subtotal
     })
 
     contador.innerText = carrinho.length
     document.getElementById("total").innerText = total.toFixed(2)
+}
+
+function aumentar(i){
+    carrinho[i].qtd++
+    atualizarCarrinho()
+}
+
+function diminuir(i){
+    carrinho[i].qtd--
+    if(carrinho[i].qtd <= 0){
+        carrinho.splice(i,1)
+    }
+    atualizarCarrinho()
+}
+
+function removerItem(i){
+    carrinho.splice(i,1)
+    atualizarCarrinho()
 }
