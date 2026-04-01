@@ -231,12 +231,26 @@ function atualizarCarrinho(){
                 R$ ${subtotal.toFixed(2)}
             </div>
 
-            <div>
-                <button onclick="diminuir(${index})">➖</button>
-                ${item.qtd}
-                <button onclick="aumentar(${index})">➕</button>
-                <button onclick="removerItem(${index})">❌</button>
-            </div>
+         <div style="display:flex; align-items:center; gap:5px;">
+    
+    <button onclick="diminuir(${index})"
+        style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">
+        ➖
+    </button>
+
+    <span>${item.qtd}</span>
+
+    <button onclick="aumentar(${index})"
+        style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">
+        ➕
+    </button>
+
+    <button onclick="removerItem(${index})"
+        style="background:none; border:none; font-weight:bold; margin-left:10px; cursor:pointer;">
+        ❌<span style="color:white;"> Remover item</span>
+    </button>
+
+</div>
         </div>
         `
 
