@@ -340,10 +340,11 @@ grid-template-columns:1fr;
 height:150px;
 }
 }
-/* 🔥 HEADER PROFISSIONAL */
+
+/* 🔥 HEADER PROFISSIONAL (AJUSTADO) */
 .header-topo{
   position: relative;
-  height: 220px;
+  height: 160px; /* AJUSTADO */
   background: linear-gradient(135deg, #b30000, #ff3c00);
   display: flex;
   align-items: center;
@@ -377,10 +378,10 @@ height:150px;
   text-align: center;
 }
 
-/* 🔥 LOGO GRANDE */
+/* 🔥 LOGO GRANDE AJUSTADA */
 .logo-grande{
-  width: 80%;
-  max-width: 320px;
+  width: 65%; /* AJUSTADO */
+  max-width: 240px; /* AJUSTADO */
   filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
   transition: 0.3s;
 }
