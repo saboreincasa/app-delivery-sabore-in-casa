@@ -20,7 +20,7 @@ function mostrarCombos(){
     document.getElementById("produtos").innerHTML = ""
 }
 
-// 🍕 PIZZAS (REMOVIDO ATUM)
+// 🍕 PIZZAS (SEM ATUM)
 function abrirPizzas(){
     esconderCombos()
 
@@ -52,7 +52,7 @@ function abrirPizzas(){
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 MONTAGEM (REMOVIDO ATUM)
+// 🍕 MONTAGEM
 function abrirMontagemPizza(nome){
     let html = `
     <h2>🍕 Montar Pizza - ${nome}</h2>
@@ -117,7 +117,7 @@ function adicionarPizza(nome){
     abrirPizzas()
 }
 
-// 🔥 FILTRO (CORRIGIDO COMBOS)
+// 🔥 FILTRO
 function filtrar(tipo){
 
     if(tipo === "combo"){
@@ -155,7 +155,7 @@ function filtrar(tipo){
     })
 }
 
-// 🔥 COMBOS (CORRIGIDO: ERA "combo", AGORA "combos")
+// 🔥 COMBOS
 function carregarCombosSemana(){
     fetch("produtos.json")
     .then(res => res.json())
@@ -225,29 +225,17 @@ function atualizarCarrinho(){
         let subtotal = item.preco * item.qtd
 
         lista.innerHTML += `
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <div style="display:flex; justify-content:space-between;">
             <div>
                 <b>${item.nome}</b><br>
                 R$ ${subtotal.toFixed(2)}
             </div>
 
-            <div style="display:flex; align-items:center; gap:5px;">
-                <button onclick="diminuir(${index})"
-                style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px;">
-                ➖
-                </button>
-
+            <div>
+                <button onclick="diminuir(${index})">➖</button>
                 ${item.qtd}
-
-                <button onclick="aumentar(${index})"
-                style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px;">
-                ➕
-                </button>
-
-                <button onclick="removerItem(${index})"
-                style="background:none; border:none; font-weight:bold;">
-                ❌
-                </button>
+                <button onclick="aumentar(${index})">➕</button>
+                <button onclick="removerItem(${index})">❌</button>
             </div>
         </div>
         `
@@ -275,4 +263,11 @@ function diminuir(i){
 function removerItem(i){
     carrinho.splice(i,1)
     atualizarCarrinho()
+}
+
+// 🛒 SCROLL PARA O CARRINHO
+function scrollCarrinho(){
+    document.getElementById("carrinho").scrollIntoView({
+        behavior: "smooth"
+    })
 }
