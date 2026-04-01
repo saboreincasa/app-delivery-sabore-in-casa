@@ -69,41 +69,41 @@
     "categoria": "bebidas",
     "preco": 11.00,
     "descricao": "Refrigerante Guaraná Antarctica 2 Litros",
-    "foto": "imagens/bebidas/guarana-2l.png"
+    "foto": "imagens/bebidas/guarana-2l.jpeg"
   },
   {
     "nome": "Heineken Latão 473ml",
     "categoria": "bebidas",
     "preco": 8.00,
     "descricao": "Cerveja Heineken lata 473ml",
-    "foto": "imagens/bebidas/heineken-latao.png"
+    "foto": "imagens/bebidas/heineken-latao.jpeg"
   },
   {
     "nome": "Brahma Latão 473ml",
     "categoria": "bebidas",
     "preco": 6.00,
     "descricao": "Cerveja Brahma lata 473ml",
-    "foto": "imagens/bebidas/brahma-latao.png"
+    "foto": "imagens/bebidas/brahma-latao.jpeg"
   },
   {
     "nome": "Spaten Latão 473ml",
     "categoria": "bebidas",
     "preco": 7.00,
     "descricao": "Cerveja Spaten lata 473ml",
-    "foto": "imagens/bebidas/spaten-latao.png"
+    "foto": "imagens/bebidas/spaten-latao.jpeg"
   },
   {
     "nome": "Stella Artois Latão 473ml",
     "categoria": "bebidas",
     "preco": 8.50,
     "descricao": "Cerveja Stella Artois lata 473ml",
-    "foto": "imagens/bebidas/stella-latao.png"
+    "foto": "imagens/bebidas/stella-latao.jpeg"
   },
   {
     "nome": "Bohemia Latão 473ml",
     "categoria": "bebidas",
     "preco": 7.50,
     "descricao": "Cerveja Bohemia lata 473ml",
-    "foto": "imagens/bebidas/bohemia-latao.png"
+    "foto": "imagens/bebidas/bohemia-latao.jpeg"
   }
 ]
