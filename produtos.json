@@ -1,28 +1,28 @@
 [
   {
     "nome": "Combo Casal",
-    "categoria": "combos",
+    "categoria": "combo",
     "preco": 79.90,
     "descricao": "2 pizzas grandes + refrigerante",
     "foto": "imagens/combos/combo-casal.png"
   },
   {
     "nome": "Combo Solteiro",
-    "categoria": "combos",
+    "categoria": "combo",
     "preco": 39.90,
     "descricao": "1 pizza grande + coca cola",
     "foto": "imagens/combos/combo-solteiro.png"
   },
   {
     "nome": "Combo Família",
-    "categoria": "combos",
+    "categoria": "combo",
     "preco": 99.90,
     "descricao": "2 pizzas grandes + refrigerantes",
     "foto": "imagens/combos/combo-familia.png"
   },
   {
     "nome": "Combo Amigos",
-    "categoria": "combos",
+    "categoria": "combo",
     "preco": 89.90,
     "descricao": "Cerveja + carvão",
     "foto": "imagens/combos/combo-amigos.png"
@@ -96,5 +96,12 @@
     "preco": 8.50,
     "descricao": "Cerveja latão 473ml",
     "foto": "imagens/bebidas/stella-latao.png"
+  },
+  {
+    "nome": "Bohemia Latão 473ml",
+    "categoria": "bebidas",
+    "preco": 7.50,
+    "descricao": "Cerveja latão 473ml",
+    "foto": "imagens/bebidas/bohemia-latao.png"
   }
 ]
