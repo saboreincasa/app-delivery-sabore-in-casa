@@ -123,59 +123,55 @@ function adicionarPizza(nome){
     abrirPizzas()
 }
 
-// 🥤🍟🎁 FILTRO
+// 🥤🍟🎁 FILTRO (AGORA USANDO JSON)
 function filtrar(tipo){
-    if(tipo === "combo"){
+
+    if(tipo === "combo" || tipo === "combos"){
         mostrarCombos()
         return
     } else {
         esconderCombos()
     }
 
-    let html = ""
+    let container = document.getElementById("produtos")
+    container.innerHTML = "<h2>Carregando...</h2>"
 
-    // BEBIDAS
-    if(tipo==="bebidas"){
-        html += "<h2>🥤 Bebidas</h2>"
-        const bebidas = [
-            {nome:"Coca-Cola 2L",preco:12},
-            {nome:"Guaraná 2L",preco:10},
-            {nome:"Suco Natural",preco:8}
-        ]
-        bebidas.forEach(b=>{
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
+
+        let filtrados = produtos.filter(p => 
+            p.categoria.toLowerCase().trim() === tipo.toLowerCase().trim()
+        )
+
+        let html = ""
+
+        if(tipo === "bebidas") html += "<h2>🥤 Bebidas</h2>"
+        if(tipo === "snaks") html += "<h2>🍟 Snaks</h2>"
+
+        if(filtrados.length === 0){
+            html += "<p>Nenhum produto encontrado</p>"
+        }
+
+        filtrados.forEach(p => {
             html += `
             <div class="card">
+                <img src="${p.foto}">
                 <div class="card-content">
-                    <h3>${b.nome}</h3>
-                    <p class="preco">R$ ${b.preco}</p>
-                    <button onclick="addCarrinho('${b.nome}', ${b.preco})" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">Adicionar</button>
+                    <h3>${p.nome}</h3>
+                    <p>${p.descricao || ""}</p>
+                    <p class="preco">R$ ${p.preco.toFixed(2)}</p>
+                    <button onclick="addCarrinho('${p.nome}', ${p.preco})"
+                        style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">
+                        Adicionar
+                    </button>
                 </div>
             </div>
             `
         })
-    }
 
-    // SNAKS
-    if(tipo==="snaks"){
-        html += "<h2>🍟 Snaks</h2>"
-        const snaks = [
-            {nome:"Batata Frita",preco:15},
-            {nome:"Hambúrguer",preco:20}
-        ]
-        snaks.forEach(s=>{
-            html += `
-            <div class="card">
-                <div class="card-content">
-                    <h3>${s.nome}</h3>
-                    <p class="preco">R$ ${s.preco}</p>
-                    <button onclick="addCarrinho('${s.nome}', ${s.preco})" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">Adicionar</button>
-                </div>
-            </div>
-            `
-        })
-    }
-
-    document.getElementById("produtos").innerHTML = html
+        container.innerHTML = html
+    })
 }
 
 // 🎁 COMBOS
@@ -225,7 +221,7 @@ function trocarBanner(){
 }
 setInterval(trocarBanner, 3000)
 
-// 🛒 CARRINHO PROFISSIONAL
+// 🛒 CARRINHO
 function addCarrinho(nome, preco){
     let itemExistente = carrinho.find(i => i.nome === nome)
     if(itemExistente){
@@ -246,17 +242,16 @@ function atualizarCarrinho(){
         let subtotal = item.preco * item.qtd
         lista.innerHTML += `
         <div class="item-carrinho" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
-            
             <div class="item-info" style="flex:1;">
                 <b>${item.nome}</b><br>
                 Subtotal: R$ ${subtotal.toFixed(2)}
             </div>
 
             <div class="item-controles" style="display:flex; align-items:center; gap:5px;">
-                <button onclick="diminuir(${index})" style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">➖</button>
+                <button onclick="diminuir(${index})">➖</button>
                 <span>${item.qtd}</span>
-                <button onclick="aumentar(${index})" style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">➕</button>
-                <button onclick="removerItem(${index})" style="background:none; border:none; font-weight:bold; margin-left:10px; cursor:pointer;">❌<span style="color:white;"> Remover item</span></button>
+                <button onclick="aumentar(${index})">➕</button>
+                <button onclick="removerItem(${index})">❌ Remover</button>
             </div>
         </div>
         `
@@ -286,7 +281,7 @@ function removerItem(index){
     atualizarCarrinho()
 }
 
-// 📲 WHATSAPP PROFISSIONAL
+// 📲 WHATSAPP
 function enviarPedido(){
     const numeroWhatsApp = "5531983391576"
     const numeroPedido = Math.floor(Math.random()*9000)+1000
@@ -305,16 +300,12 @@ function enviarPedido(){
 ${mensagemItens}
 💳 *${pagamento}*
 
-🛵 *Delivery* (taxa de: *R$ 6,99*)
+🛵 Delivery (R$ 6,99)
 🏠 ${endereco}
-(Estimativa: *entre 20~40 minutos*)
 
-Total: *R$ ${total}*
+Total: R$ ${total}`
 
-Obrigado pela preferência, se precisar de algo é só chamar! 😉`
-
-    const mensagemURL = encodeURIComponent(mensagem)
-    window.open(`https://wa.me/${numeroWhatsApp}?text=${mensagemURL}`, '_blank')
+    window.open(`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`, '_blank')
 }
 
 // 📍 MAPA
