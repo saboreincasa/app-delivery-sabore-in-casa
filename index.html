@@ -1,5 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Sabore In Casa</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header-topo">
+  <div class="overlay"></div>
+
+  <div class="logo-container">
+    <img src="imagens/logo.png" class="logo-grande">
+  </div>
+</header>
+
+<div class="endereco">
+📍 Rua Maria de Lourdes da Cruz Nº 378<br>
+Bairro Mantiqueira – Belo Horizonte
+<br>
+<button onclick="abrirMapa()">📍 Ver no mapa</button>
+</div>
+
+<div id="banner" class="banner" style="cursor:pointer;"></div>
+
+<div class="container">
+
+<input class="busca" id="busca" placeholder="🔎 Buscar produto">
+
+<div class="btn-flutuantes">
+
+<div class="linha">
+<button onclick="abrirPizzas()">🍕 Pizzas</button>
+<button onclick="filtrar('bebidas')">🥤 Bebidas</button>
+</div>
+
+<div class="linha">
+<button onclick="filtrar('combo')">🎁 Combos</button>
+<button onclick="filtrar('snaks')">🍟 Snaks</button>
+</div>
+
+</div>
+
+<h2 id="tituloCombos">⭐ Combos da Semana</h2>
+<div id="combosSemana"></div>
+
+<div id="produtos"></div>
+
+<div id="carrinho">
+<h2>🛒 Carrinho</h2>
+
+<div id="lista"></div>
+
+<div class="total">
+Total + entrega: R$ <span id="total">0.00</span>
+</div>
+
+<input id="enderecoCliente" placeholder="Digite seu endereço">
+
+<select id="pagamento">
+<option>PIX</option>
+<option>Dinheiro</option>
+<option>Cartão</option>
+</select>
+
+<input id="troco" placeholder="Troco para quanto?">
+
+<button class="enviar" onclick="enviarPedido()">
+Enviar pedido no WhatsApp
+</button>
+
+</div>
+
+</div>
+
+<div id="botaoCarrinho" onclick="scrollCarrinho()">
+🛒 <div id="contador">0</div>
+</div>
+
+<footer>
+© Sabore In Casa<br>
+Desenvolvido por <b>Carlos Henrique</b>
+</footer>
+
+<script src="app.js"></script>
+
 <script>
-// Número do WhatsApp
+// Número do WhatsApp completo
 const whatsappNumero = "5531983391576";
 
 // Função para atualizar carrinho visualmente
@@ -21,7 +114,7 @@ function atualizarCarrinho() {
     document.getElementById('contador').innerText = carrinhoLocal.length;
 }
 
-// Função que adiciona item ao carrinho
+// Função que adiciona item ao carrinho (não abre WhatsApp)
 function addBannerCarrinho(combo) {
     let carrinhoLocal = window.carrinho || [];
     let item = carrinhoLocal.find(i => i.nome === combo.nome);
@@ -32,15 +125,10 @@ function addBannerCarrinho(combo) {
     }
     window.carrinho = carrinhoLocal;
 
-    atualizarCarrinho();
-
-    // Monta mensagem para WhatsApp
-    let msg = `Olá! Quero pedir o ${combo.nome}: ${combo.descricao} - R$${combo.preco.toFixed(2)}.`;
-    let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank");
+    atualizarCarrinho(); // Atualiza lista e total
 }
 
-// Função de envio do pedido completo
+// Função de envio do pedido completo pelo WhatsApp
 function enviarPedido() {
     let carrinhoLocal = window.carrinho || [];
     if(carrinhoLocal.length === 0){
@@ -63,11 +151,11 @@ function enviarPedido() {
     msg += `Pagamento: ${pagamento}\n`;
     msg += `Troco: ${troco}`;
 
-    let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`;
+    let url = `https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`;
     window.open(url, "_blank");
 }
 
-// Funções do banner
+// Banners do app
 let banners = [
     {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:99.90, foto:"imagens/banners/combo-familia.png"},
     {nome:"Combo Amigos", descricao:"Cerveja + carvão", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
@@ -77,6 +165,7 @@ let banners = [
 let bannerDiv = document.getElementById('banner');
 let bannerIndex = 0;
 
+// Mostra banner e adiciona ao carrinho quando clicado
 function mostrarBanner() {
     let combo = banners[bannerIndex];
     bannerDiv.style.backgroundImage = `url('${combo.foto}')`;
@@ -90,6 +179,10 @@ function mostrarBanner() {
     bannerIndex = (bannerIndex + 1) % banners.length;
 }
 
+// Troca banner a cada 8 segundos
 setInterval(mostrarBanner, 8000);
 mostrarBanner();
 </script>
+
+</body>
+</html>
