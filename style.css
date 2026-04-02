@@ -12,7 +12,7 @@ background:#111;
 color:white;
 }
 
-/* HEADER ANTIGO (mantido, mas não usado) */
+/* HEADER (mantido) */
 header{
 background:#c62828;
 text-align:center;
@@ -342,70 +342,33 @@ height:150px;
 }
 }
 
-/* 🔥 HEADER PROFISSIONAL FINAL (PERFEITO) */
+/* 🔥 HEADER PROFISSIONAL NOVO (CORRIGIDO TOTAL) */
 .header-topo{
   position: relative;
-  height: 140px;
-  background: linear-gradient(135deg, #b30000, #ff3c00);
+  width: 100%;
+  height: 180px;
+
+  background: linear-gradient(135deg, rgba(179,0,0,0.85), rgba(255,60,0,0.85)),
+              url('imagens/logo.png') center center no-repeat;
+
+  background-size: cover, contain;
+  background-blend-mode: overlay;
+
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 10px;
 }
 
-/* overlay leve */
-.header-topo::before{
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
-  z-index: 1;
-}
-
-/* sombra leve */
-.overlay{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-/* container */
-.logo-container{
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* 🔥 LOGO AJUSTADA PERFEITA */
-.logo-grande{
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  max-width: 500px;
-  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
-}
-
-/* 📱 MOBILE PERFEITO */
+/* MOBILE */
 @media (max-width:600px){
   .header-topo{
-    height: 110px;
-    padding: 5px;
-  }
-
-  .logo-grande{
-    max-width: 90%;
+    height: 140px;
+    background-size: cover, contain;
   }
 }
 
-/* BANNER CENTRAL */
+/* BANNER CENTRALIZADO */
 #banner{
   width: 100%;
   max-width: 1000px;
