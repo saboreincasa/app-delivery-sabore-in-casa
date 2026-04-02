@@ -91,8 +91,41 @@ Desenvolvido por <b>Carlos Henrique</b>
 
 <script src="app.js"></script>
 
-<!-- REMOVIDO SCRIPT DUPLICADO DE BANNERS -->
-<!-- Agora o app.js controla os banners dinamicamente, pegando as imagens de combos do produtos.json -->
+<script>
+// --- BANNERS DINÂMICOS COM LINK DIRETO PARA WHATSAPP ---
+
+let banners = [
+    {foto:"imagens/banners/combo-familia.png", nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes"},
+    {foto:"imagens/banners/combo-amigos.png", nome:"Combo Amigos", descricao:"Cerveja + carvão"},
+    {foto:"imagens/banners/combo-casal.png", nome:"Combo Casal", descricao:"2 pizzas grandes + refrigerante"}
+];
+
+let bannerDiv = document.getElementById('banner');
+let bannerIndex = 0;
+
+function mostrarBanner() {
+    let combo = banners[bannerIndex];
+
+    // Atualiza imagem do banner
+    bannerDiv.style.backgroundImage = `url('${combo.foto}')`;
+    bannerDiv.style.backgroundSize = 'cover';
+    bannerDiv.style.backgroundPosition = 'center';
+
+    // Clique abre WhatsApp com mensagem pronta
+    bannerDiv.onclick = function() {
+        let msg = `Olá! Quero pedir o ${combo.nome}: ${combo.descricao}.`;
+        let url = `https://wa.me/5531983391576?text=${encodeURIComponent(msg)}`;
+        window.open(url, "_blank");
+    }
+
+    // Próximo banner
+    bannerIndex = (bannerIndex + 1) % banners.length;
+}
+
+// Troca banner a cada 8 segundos
+setInterval(mostrarBanner, 8000);
+mostrarBanner();
+</script>
 
 </body>
 </html>
