@@ -1,5 +1,5 @@
-// 🛒 CARRINHO
-let carrinho = []
+// 🛒 CARRINHO GLOBAL
+window.carrinho = []
 
 // 🚀 INICIO
 window.onload = function(){
@@ -186,30 +186,30 @@ function carregarCombosSemana(){
 }
 
 // 🎬 BANNER (LOCAL)
-let banners = [
+let bannersLocais = [
     "imagens/banners/combo-familia.png",
     "imagens/banners/combo-amigos.png",
     "imagens/banners/combo-casal.png"
 ]
 
-let bannerIndex = 0
+let bannerIndexLocal = 0
 function trocarBanner(){
     let banner = document.getElementById("banner")
-    banner.style.backgroundImage = `url('${banners[bannerIndex]}')`
-    bannerIndex++
-    if(bannerIndex >= banners.length){
-        bannerIndex = 0
+    banner.style.backgroundImage = `url('${bannersLocais[bannerIndexLocal]}')`
+    bannerIndexLocal++
+    if(bannerIndexLocal >= bannersLocais.length){
+        bannerIndexLocal = 0
     }
 }
 setInterval(trocarBanner, 3000)
 
 // 🛒 CARRINHO
 function addCarrinho(nome, preco){
-    let item = carrinho.find(i => i.nome === nome)
+    let item = window.carrinho.find(i => i.nome === nome)
     if(item){
         item.qtd++
     } else {
-        carrinho.push({nome, preco, qtd:1})
+        window.carrinho.push({nome, preco, qtd:1})
     }
     atualizarCarrinho()
 }
@@ -221,7 +221,7 @@ function atualizarCarrinho(){
 
     lista.innerHTML = ""
 
-    carrinho.forEach((item, index)=>{
+    window.carrinho.forEach((item, index)=>{
         let subtotal = item.preco * item.qtd
 
         lista.innerHTML += `
@@ -257,25 +257,25 @@ function atualizarCarrinho(){
         total += subtotal
     })
 
-    contador.innerText = carrinho.length
+    contador.innerText = window.carrinho.length
     document.getElementById("total").innerText = total.toFixed(2)
 }
 
 function aumentar(i){
-    carrinho[i].qtd++
+    window.carrinho[i].qtd++
     atualizarCarrinho()
 }
 
 function diminuir(i){
-    carrinho[i].qtd--
-    if(carrinho[i].qtd <= 0){
-        carrinho.splice(i,1)
+    window.carrinho[i].qtd--
+    if(window.carrinho[i].qtd <= 0){
+        window.carrinho.splice(i,1)
     }
     atualizarCarrinho()
 }
 
 function removerItem(i){
-    carrinho.splice(i,1)
+    window.carrinho.splice(i,1)
     atualizarCarrinho()
 }
 
@@ -284,4 +284,36 @@ function scrollCarrinho(){
     document.getElementById("carrinho").scrollIntoView({
         behavior: "smooth"
     })
+}
+
+// 📱 ENVIO DO PEDIDO PELO WHATSAPP
+function enviarPedido() {
+    let carrinhoLocal = window.carrinho || [];
+    if(carrinhoLocal.length === 0){
+        alert("Seu carrinho está vazio!");
+        return;
+    }
+
+    let endereco = document.getElementById('enderecoCliente').value || "Endereço não informado";
+    let pagamento = document.getElementById('pagamento').value;
+    let troco = document.getElementById('troco').value || "-";
+
+    let msg = "Olá! Gostaria de fazer o pedido:\n\n";
+
+    carrinhoLocal.forEach(item => {
+        msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)} cada\n`;
+    });
+
+    msg += `\nTotal: R$${document.getElementById('total').innerText}\n`;
+    msg += `Endereço: ${endereco}\n`;
+    msg += `Pagamento: ${pagamento}\n`;
+    msg += `Troco: ${troco}`;
+
+    let url = `https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
+}
+
+// ✅ FUNÇÃO PARA ADICIONAR COMBO PELO BANNER
+function addBannerCarrinho(combo){
+    addCarrinho(combo.nome, combo.preco)
 }
