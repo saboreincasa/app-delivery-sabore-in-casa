@@ -12,7 +12,7 @@ background:#111;
 color:white;
 }
 
-/* HEADER */
+/* HEADER ANTIGO (mantido, mas não usado) */
 header{
 background:#c62828;
 text-align:center;
@@ -57,7 +57,7 @@ border-radius:12px;
 margin:10px;
 background-size:cover;
 background-position:center;
-transition: background-image 0.5s ease-in-out; /* efeito de transição ao trocar banners */
+transition: background-image 0.5s ease-in-out;
 }
 
 /* CONTAINER */
@@ -141,7 +141,7 @@ transition:0.2s;
 transform:scale(1.03);
 }
 
-/* 🔥 IMAGEM DO CARD */
+/* IMAGEM DO CARD */
 .card img{
 width:100%;
 height:140px;
@@ -179,7 +179,7 @@ transition:0.2s;
 background:#e68900;
 }
 
-/* 🔥 DESTAQUE DOS COMBOS */
+/* DESTAQUE DOS COMBOS */
 .destaque{
 border:2px solid #ff9800;
 }
@@ -342,18 +342,19 @@ height:150px;
 }
 }
 
-/* 🔥 HEADER PROFISSIONAL (CORRIGIDO) */
+/* 🔥 HEADER PROFISSIONAL FINAL (PERFEITO) */
 .header-topo{
   position: relative;
-  height: 140px; /* AJUSTADO */
+  height: 140px;
   background: linear-gradient(135deg, #b30000, #ff3c00);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding: 10px;
 }
 
-/* Efeito de textura/brilho */
+/* overlay leve */
 .header-topo::before{
   content: "";
   position: absolute;
@@ -363,7 +364,7 @@ height:150px;
   z-index: 1;
 }
 
-/* Overlay escuro suave */
+/* sombra leve */
 .overlay{
   position: absolute;
   width: 100%;
@@ -372,40 +373,39 @@ height:150px;
   z-index: 1;
 }
 
-/* Container da logo */
+/* container */
 .logo-container{
   position: relative;
   z-index: 2;
-  text-align: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* 🔥 LOGO AJUSTADA PERFEITA */
 .logo-grande{
-  width: auto;
-  height: 90px; /* CONTROLE REAL */
-  max-width: 80%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
+  max-width: 500px;
   filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
-  transition: 0.3s;
 }
 
-.logo-grande:hover{
-  transform: scale(1.05);
-}
-
-/* 📱 AJUSTE MOBILE */
+/* 📱 MOBILE PERFEITO */
 @media (max-width:600px){
   .header-topo{
     height: 110px;
+    padding: 5px;
   }
 
   .logo-grande{
-    height: 70px;
+    max-width: 90%;
   }
 }
 
-/* --- MODIFICAÇÕES ADICIONAIS PARA BANNERS --- */
-/* Adicionado para manter o banner centralizado e responsivo */
+/* BANNER CENTRAL */
 #banner{
   width: 100%;
   max-width: 1000px;
