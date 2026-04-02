@@ -330,11 +330,11 @@ function enviarPedido(){
 // 🔔 TOAST DE AVISO
 function mostrarToast(combo){
     let toast = document.getElementById("toast")
-    toast.innerText = `✅ ${combo.nome} adicionado! Clique para finalizar no WhatsApp`
+    toast.innerText = `✅ ${combo.nome} adicionado! Clique para ver o carrinho`
     toast.className = "show"
 
     toast.onclick = function(){
-        enviarPedido()
+        scrollCarrinho() // Agora vai para o carrinho ao invés de abrir WhatsApp
     }
 
     setTimeout(()=>{
