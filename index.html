@@ -91,28 +91,8 @@ Desenvolvido por <b>Carlos Henrique</b>
 
 <script src="app.js"></script>
 
-<script>
-// --- BANNERS DINÂMICOS ---
-let banners = [
-  "imagens/banners/combo-familia.png",
-  "imagens/banners/combo-amigos.png",
-  "imagens/banners/combo-casal.png"
-];
-
-let bannerDiv = document.getElementById('banner');
-let index = 0;
-
-function mostrarBanner() {
-  bannerDiv.style.backgroundImage = `url('${banners[index]}')`;
-  bannerDiv.style.backgroundSize = 'cover';
-  bannerDiv.style.backgroundPosition = 'center';
-  index = (index + 1) % banners.length;
-}
-
-// Troca o banner a cada 5 segundos
-setInterval(mostrarBanner, 5000);
-mostrarBanner();
-</script>
+<!-- REMOVIDO SCRIPT DUPLICADO DE BANNERS -->
+<!-- Agora o app.js controla os banners dinamicamente, pegando as imagens de combos do produtos.json -->
 
 </body>
 </html>
