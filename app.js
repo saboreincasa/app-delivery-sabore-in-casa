@@ -185,17 +185,17 @@ function carregarCombosSemana(){
     })
 }
 
-// 🎬 BANNER
+// 🎬 BANNER (LOCAL)
 let banners = [
-    "https://images.unsplash.com/photo-1513104890138-7c749659a591",
-    "https://images.unsplash.com/photo-1601924582975-7e9c7b4f9d19",
-    "https://images.unsplash.com/photo-1548365328-9f547fb0953d"
+    "imagens/banners/combo-familia.png",
+    "imagens/banners/combo-amigos.png",
+    "imagens/banners/combo-casal.png"
 ]
 
 let bannerIndex = 0
 function trocarBanner(){
     let banner = document.getElementById("banner")
-    banner.style.backgroundImage = `url(${banners[bannerIndex]})`
+    banner.style.backgroundImage = `url('${banners[bannerIndex]}')`
     bannerIndex++
     if(bannerIndex >= banners.length){
         bannerIndex = 0
