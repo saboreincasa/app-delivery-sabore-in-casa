@@ -95,67 +95,7 @@ Desenvolvido por <b>Carlos Henrique</b>
 // Número do WhatsApp completo
 const whatsappNumero = "5531983391576";
 
-// Função para atualizar carrinho visualmente
-function atualizarCarrinho() {
-    let carrinhoLocal = window.carrinho || [];
-    let lista = document.getElementById('lista');
-    let total = 0;
-
-    lista.innerHTML = "";
-
-    carrinhoLocal.forEach(item => {
-        let div = document.createElement('div');
-        div.textContent = `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)}`;
-        lista.appendChild(div);
-        total += item.preco * item.qtd;
-    });
-
-    document.getElementById('total').innerText = total.toFixed(2);
-    document.getElementById('contador').innerText = carrinhoLocal.length;
-}
-
-// Função que adiciona item ao carrinho (não abre WhatsApp)
-function addBannerCarrinho(combo) {
-    let carrinhoLocal = window.carrinho || [];
-    let item = carrinhoLocal.find(i => i.nome === combo.nome);
-    if(item){
-        item.qtd++;
-    } else {
-        carrinhoLocal.push({nome: combo.nome, preco: combo.preco, qtd:1});
-    }
-    window.carrinho = carrinhoLocal;
-
-    atualizarCarrinho(); // Atualiza lista e total
-}
-
-// Função de envio do pedido completo pelo WhatsApp
-function enviarPedido() {
-    let carrinhoLocal = window.carrinho || [];
-    if(carrinhoLocal.length === 0){
-        alert("Seu carrinho está vazio!");
-        return;
-    }
-
-    let endereco = document.getElementById('enderecoCliente').value || "Endereço não informado";
-    let pagamento = document.getElementById('pagamento').value;
-    let troco = document.getElementById('troco').value || "-";
-
-    let msg = "Olá! Gostaria de fazer o pedido:\n\n";
-
-    carrinhoLocal.forEach(item => {
-        msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)} cada\n`;
-    });
-
-    msg += `\nTotal: R$${document.getElementById('total').innerText}\n`;
-    msg += `Endereço: ${endereco}\n`;
-    msg += `Pagamento: ${pagamento}\n`;
-    msg += `Troco: ${troco}`;
-
-    let url = `https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank");
-}
-
-// Banners do app
+// Banner dinâmico com clique para adicionar combo ao carrinho e abrir WhatsApp
 let banners = [
     {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:99.90, foto:"imagens/banners/combo-familia.png"},
     {nome:"Combo Amigos", descricao:"Cerveja + carvão", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
@@ -165,7 +105,6 @@ let banners = [
 let bannerDiv = document.getElementById('banner');
 let bannerIndex = 0;
 
-// Mostra banner e adiciona ao carrinho quando clicado
 function mostrarBanner() {
     let combo = banners[bannerIndex];
     bannerDiv.style.backgroundImage = `url('${combo.foto}')`;
@@ -173,13 +112,16 @@ function mostrarBanner() {
     bannerDiv.style.backgroundPosition = 'center';
 
     bannerDiv.onclick = function() {
-        addBannerCarrinho(combo);
+        addBannerCarrinho(combo); // adiciona ao carrinho
+        // Abre WhatsApp com o combo
+        let msg = `Olá! Quero pedir o ${combo.nome}: ${combo.descricao} - R$${combo.preco.toFixed(2)}.`;
+        let url = `https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`;
+        window.open(url, "_blank");
     }
 
     bannerIndex = (bannerIndex + 1) % banners.length;
 }
 
-// Troca banner a cada 8 segundos
 setInterval(mostrarBanner, 8000);
 mostrarBanner();
 </script>
