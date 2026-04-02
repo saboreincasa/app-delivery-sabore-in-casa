@@ -147,6 +147,34 @@ function mostrarBanner() {
 setInterval(mostrarBanner, 8000);
 mostrarBanner();
 
+// --- FUNÇÃO PARA ENVIAR O PEDIDO DO CARRINHO PELO WHATSAPP ---
+function enviarPedido() {
+    let carrinhoLocal = window.carrinho || [];
+    if(carrinhoLocal.length === 0){
+        alert("Seu carrinho está vazio!");
+        return;
+    }
+
+    let endereco = document.getElementById('enderecoCliente').value || "Endereço não informado";
+    let pagamento = document.getElementById('pagamento').value;
+    let troco = document.getElementById('troco').value || "-";
+
+    // Monta mensagem
+    let msg = "Olá! Gostaria de fazer o pedido:\n\n";
+
+    carrinhoLocal.forEach(item => {
+        msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)} cada\n`;
+    });
+
+    msg += `\nTotal: R$${document.getElementById('total').innerText}\n`;
+    msg += `Endereço: ${endereco}\n`;
+    msg += `Pagamento: ${pagamento}\n`;
+    msg += `Troco: ${troco}`;
+
+    // Abre WhatsApp
+    let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
+}
 </script>
 
 </body>
