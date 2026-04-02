@@ -9,6 +9,31 @@
 
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="style.css">
+<style>
+/* Toast de aviso */
+#toast {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 12px;
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.5s, bottom 0.5s;
+}
+#toast.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 80px;
+}
+</style>
 </head>
 
 <body>
@@ -89,42 +114,10 @@ Enviar pedido no WhatsApp
 Desenvolvido por <b>Carlos Henrique</b>
 </footer>
 
+<!-- Toast de aviso -->
+<div id="toast"></div>
+
 <script src="app.js"></script>
-
-<script>
-// Número do WhatsApp completo
-const whatsappNumero = "5531983391576";
-
-// Banner dinâmico com clique para adicionar combo ao carrinho e abrir WhatsApp
-let banners = [
-    {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:99.90, foto:"imagens/banners/combo-familia.png"},
-    {nome:"Combo Amigos", descricao:"Cerveja + carvão", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
-    {nome:"Combo Casal", descricao:"2 pizzas grandes + refrigerante", preco:79.90, foto:"imagens/banners/combo-casal.png"}
-];
-
-let bannerDiv = document.getElementById('banner');
-let bannerIndex = 0;
-
-function mostrarBanner() {
-    let combo = banners[bannerIndex];
-    bannerDiv.style.backgroundImage = `url('${combo.foto}')`;
-    bannerDiv.style.backgroundSize = 'cover';
-    bannerDiv.style.backgroundPosition = 'center';
-
-    bannerDiv.onclick = function() {
-        addBannerCarrinho(combo); // adiciona ao carrinho
-        // Abre WhatsApp com o combo
-        let msg = `Olá! Quero pedir o ${combo.nome}: ${combo.descricao} - R$${combo.preco.toFixed(2)}.`;
-        let url = `https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`;
-        window.open(url, "_blank");
-    }
-
-    bannerIndex = (bannerIndex + 1) % banners.length;
-}
-
-setInterval(mostrarBanner, 8000);
-mostrarBanner();
-</script>
 
 </body>
 </html>
