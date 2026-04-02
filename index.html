@@ -28,7 +28,7 @@ Bairro Mantiqueira – Belo Horizonte
 <button onclick="abrirMapa()">📍 Ver no mapa</button>
 </div>
 
-<div id="banner" class="banner"></div>
+<div id="banner" class="banner" style="cursor:pointer;"></div>
 
 <div class="container">
 
@@ -92,17 +92,40 @@ Desenvolvido por <b>Carlos Henrique</b>
 <script src="app.js"></script>
 
 <script>
-// --- BANNERS DINÂMICOS COM LINK DIRETO PARA WHATSAPP ---
+// --- BANNERS DINÂMICOS COM CLIQUE RÁPIDO PARA WHATSAPP E CARRINHO ---
+
+// Número do WhatsApp
+const whatsappNumero = "5531983391576";
 
 let banners = [
-    {foto:"imagens/banners/combo-familia.png", nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes"},
-    {foto:"imagens/banners/combo-amigos.png", nome:"Combo Amigos", descricao:"Cerveja + carvão"},
-    {foto:"imagens/banners/combo-casal.png", nome:"Combo Casal", descricao:"2 pizzas grandes + refrigerante"}
+    {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:99.90, foto:"imagens/banners/combo-familia.png"},
+    {nome:"Combo Amigos", descricao:"Cerveja + carvão", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
+    {nome:"Combo Casal", descricao:"2 pizzas grandes + refrigerante", preco:79.90, foto:"imagens/banners/combo-casal.png"}
 ];
 
 let bannerDiv = document.getElementById('banner');
 let bannerIndex = 0;
 
+// Função que adiciona item ao carrinho
+function addBannerCarrinho(combo) {
+    // Verifica se já existe no carrinho
+    let carrinhoLocal = window.carrinho || [];
+    let item = carrinhoLocal.find(i => i.nome === combo.nome);
+    if(item){
+        item.qtd++;
+    } else {
+        carrinhoLocal.push({nome: combo.nome, preco: combo.preco, qtd:1});
+    }
+    window.carrinho = carrinhoLocal;
+    if(typeof atualizarCarrinho === "function") atualizarCarrinho();
+
+    // Monta mensagem para WhatsApp
+    let msg = `Olá! Quero pedir o ${combo.nome}: ${combo.descricao} - R$${combo.preco.toFixed(2)}.`;
+    let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
+}
+
+// Função que mostra banner
 function mostrarBanner() {
     let combo = banners[bannerIndex];
 
@@ -111,11 +134,9 @@ function mostrarBanner() {
     bannerDiv.style.backgroundSize = 'cover';
     bannerDiv.style.backgroundPosition = 'center';
 
-    // Clique abre WhatsApp com mensagem pronta
+    // Clique abre WhatsApp com combo e adiciona ao carrinho
     bannerDiv.onclick = function() {
-        let msg = `Olá! Quero pedir o ${combo.nome}: ${combo.descricao}.`;
-        let url = `https://wa.me/5531983391576?text=${encodeURIComponent(msg)}`;
-        window.open(url, "_blank");
+        addBannerCarrinho(combo);
     }
 
     // Próximo banner
@@ -125,6 +146,7 @@ function mostrarBanner() {
 // Troca banner a cada 8 segundos
 setInterval(mostrarBanner, 8000);
 mostrarBanner();
+
 </script>
 
 </body>
