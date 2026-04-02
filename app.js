@@ -1,5 +1,8 @@
-// 🛒 CARRINHO GLOBAL
-window.carrinho = []
+// 🛒 CARRINHO
+let carrinho = []
+
+// Número do WhatsApp
+const whatsappNumero = "5531983391576"
 
 // 🚀 INICIO
 window.onload = function(){
@@ -20,7 +23,7 @@ function mostrarCombos(){
     document.getElementById("produtos").innerHTML = ""
 }
 
-// 🍕 PIZZAS (SEM ATUM)
+// 🍕 PIZZAS
 function abrirPizzas(){
     esconderCombos()
 
@@ -185,31 +188,43 @@ function carregarCombosSemana(){
     })
 }
 
-// 🎬 BANNER (LOCAL)
-let bannersLocais = [
-    "imagens/banners/combo-familia.png",
-    "imagens/banners/combo-amigos.png",
-    "imagens/banners/combo-casal.png"
+// 🎬 BANNER
+let banners = [
+    {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:99.90, foto:"imagens/banners/combo-familia.png"},
+    {nome:"Combo Amigos", descricao:"Cerveja + carvão", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
+    {nome:"Combo Casal", descricao:"2 pizzas grandes + refrigerante", preco:79.90, foto:"imagens/banners/combo-casal.png"}
 ]
 
-let bannerIndexLocal = 0
-function trocarBanner(){
-    let banner = document.getElementById("banner")
-    banner.style.backgroundImage = `url('${bannersLocais[bannerIndexLocal]}')`
-    bannerIndexLocal++
-    if(bannerIndexLocal >= bannersLocais.length){
-        bannerIndexLocal = 0
+let bannerIndex = 0
+let bannerDiv = document.getElementById("banner")
+
+function mostrarBanner(){
+    let combo = banners[bannerIndex]
+    bannerDiv.style.backgroundImage = `url('${combo.foto}')`
+    bannerDiv.style.backgroundSize = 'cover'
+    bannerDiv.style.backgroundPosition = 'center'
+
+    bannerDiv.onclick = function(){
+        addCarrinho(combo.nome, combo.preco)
+        mostrarToast(combo)
+    }
+
+    bannerIndex++
+    if(bannerIndex >= banners.length){
+        bannerIndex = 0
     }
 }
-setInterval(trocarBanner, 3000)
 
-// 🛒 CARRINHO
+setInterval(mostrarBanner, 8000)
+mostrarBanner()
+
+// 🛒 CARRINHO E FUNÇÕES
 function addCarrinho(nome, preco){
-    let item = window.carrinho.find(i => i.nome === nome)
+    let item = carrinho.find(i => i.nome === nome)
     if(item){
         item.qtd++
     } else {
-        window.carrinho.push({nome, preco, qtd:1})
+        carrinho.push({nome, preco, qtd:1})
     }
     atualizarCarrinho()
 }
@@ -221,7 +236,7 @@ function atualizarCarrinho(){
 
     lista.innerHTML = ""
 
-    window.carrinho.forEach((item, index)=>{
+    carrinho.forEach((item, index)=>{
         let subtotal = item.preco * item.qtd
 
         lista.innerHTML += `
@@ -257,25 +272,25 @@ function atualizarCarrinho(){
         total += subtotal
     })
 
-    contador.innerText = window.carrinho.length
+    contador.innerText = carrinho.length
     document.getElementById("total").innerText = total.toFixed(2)
 }
 
 function aumentar(i){
-    window.carrinho[i].qtd++
+    carrinho[i].qtd++
     atualizarCarrinho()
 }
 
 function diminuir(i){
-    window.carrinho[i].qtd--
-    if(window.carrinho[i].qtd <= 0){
-        window.carrinho.splice(i,1)
+    carrinho[i].qtd--
+    if(carrinho[i].qtd <= 0){
+        carrinho.splice(i,1)
     }
     atualizarCarrinho()
 }
 
 function removerItem(i){
-    window.carrinho.splice(i,1)
+    carrinho.splice(i,1)
     atualizarCarrinho()
 }
 
@@ -286,34 +301,43 @@ function scrollCarrinho(){
     })
 }
 
-// 📱 ENVIO DO PEDIDO PELO WHATSAPP
-function enviarPedido() {
-    let carrinhoLocal = window.carrinho || [];
-    if(carrinhoLocal.length === 0){
-        alert("Seu carrinho está vazio!");
-        return;
+// 📲 ENVIAR PEDIDO WHATSAPP
+function enviarPedido(){
+    if(carrinho.length === 0){
+        alert("Seu carrinho está vazio!")
+        return
     }
 
-    let endereco = document.getElementById('enderecoCliente').value || "Endereço não informado";
-    let pagamento = document.getElementById('pagamento').value;
-    let troco = document.getElementById('troco').value || "-";
+    let endereco = document.getElementById("enderecoCliente").value || "Endereço não informado"
+    let pagamento = document.getElementById("pagamento").value
+    let troco = document.getElementById("troco").value || "-"
 
-    let msg = "Olá! Gostaria de fazer o pedido:\n\n";
+    let msg = "Olá! Gostaria de fazer o pedido:\n\n"
 
-    carrinhoLocal.forEach(item => {
-        msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)} cada\n`;
-    });
+    carrinho.forEach(item=>{
+        msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)} cada\n`
+    })
 
-    msg += `\nTotal: R$${document.getElementById('total').innerText}\n`;
-    msg += `Endereço: ${endereco}\n`;
-    msg += `Pagamento: ${pagamento}\n`;
-    msg += `Troco: ${troco}`;
+    msg += `\nTotal: R$${document.getElementById("total").innerText}\n`
+    msg += `Endereço: ${endereco}\n`
+    msg += `Pagamento: ${pagamento}\n`
+    msg += `Troco: ${troco}`
 
-    let url = `https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank");
+    let url = `https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`
+    window.open(url,"_blank")
 }
 
-// ✅ FUNÇÃO PARA ADICIONAR COMBO PELO BANNER
-function addBannerCarrinho(combo){
-    addCarrinho(combo.nome, combo.preco)
+// 🔔 TOAST DE AVISO
+function mostrarToast(combo){
+    let toast = document.getElementById("toast")
+    toast.innerText = `✅ ${combo.nome} adicionado! Clique para finalizar no WhatsApp`
+    toast.className = "show"
+
+    toast.onclick = function(){
+        enviarPedido()
+    }
+
+    setTimeout(()=>{
+        toast.className = toast.className.replace("show","")
+    },4000)
 }
