@@ -1,114 +1,28 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Sabore In Casa</title>
-
-<link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-<header class="header-topo">
-  <div class="overlay"></div>
-
-  <div class="logo-container">
-    <img src="imagens/logo.png" class="logo-grande">
-  </div>
-</header>
-
-<div class="endereco">
-📍 Rua Maria de Lourdes da Cruz Nº 378<br>
-Bairro Mantiqueira – Belo Horizonte
-<br>
-<button onclick="abrirMapa()">📍 Ver no mapa</button>
-</div>
-
-<div id="banner" class="banner" style="cursor:pointer;"></div>
-
-<div class="container">
-
-<input class="busca" id="busca" placeholder="🔎 Buscar produto">
-
-<div class="btn-flutuantes">
-
-<div class="linha">
-<button onclick="abrirPizzas()">🍕 Pizzas</button>
-<button onclick="filtrar('bebidas')">🥤 Bebidas</button>
-</div>
-
-<div class="linha">
-<button onclick="filtrar('combo')">🎁 Combos</button>
-<button onclick="filtrar('snaks')">🍟 Snaks</button>
-</div>
-
-</div>
-
-<h2 id="tituloCombos">⭐ Combos da Semana</h2>
-<div id="combosSemana"></div>
-
-<div id="produtos"></div>
-
-<div id="carrinho">
-<h2>🛒 Carrinho</h2>
-
-<div id="lista"></div>
-
-<div class="total">
-Total + entrega: R$ <span id="total">0.00</span>
-</div>
-
-<input id="enderecoCliente" placeholder="Digite seu endereço">
-
-<select id="pagamento">
-<option>PIX</option>
-<option>Dinheiro</option>
-<option>Cartão</option>
-</select>
-
-<input id="troco" placeholder="Troco para quanto?">
-
-<button class="enviar" onclick="enviarPedido()">
-Enviar pedido no WhatsApp
-</button>
-
-</div>
-
-</div>
-
-<div id="botaoCarrinho" onclick="scrollCarrinho()">
-🛒 <div id="contador">0</div>
-</div>
-
-<footer>
-© Sabore In Casa<br>
-Desenvolvido por <b>Carlos Henrique</b>
-</footer>
-
-<script src="app.js"></script>
-
 <script>
-// --- BANNERS DINÂMICOS COM CLIQUE RÁPIDO PARA WHATSAPP E CARRINHO ---
-
 // Número do WhatsApp
 const whatsappNumero = "5531983391576";
 
-let banners = [
-    {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:99.90, foto:"imagens/banners/combo-familia.png"},
-    {nome:"Combo Amigos", descricao:"Cerveja + carvão", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
-    {nome:"Combo Casal", descricao:"2 pizzas grandes + refrigerante", preco:79.90, foto:"imagens/banners/combo-casal.png"}
-];
+// Função para atualizar carrinho visualmente
+function atualizarCarrinho() {
+    let carrinhoLocal = window.carrinho || [];
+    let lista = document.getElementById('lista');
+    let total = 0;
 
-let bannerDiv = document.getElementById('banner');
-let bannerIndex = 0;
+    lista.innerHTML = "";
+
+    carrinhoLocal.forEach(item => {
+        let div = document.createElement('div');
+        div.textContent = `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)}`;
+        lista.appendChild(div);
+        total += item.preco * item.qtd;
+    });
+
+    document.getElementById('total').innerText = total.toFixed(2);
+    document.getElementById('contador').innerText = carrinhoLocal.length;
+}
 
 // Função que adiciona item ao carrinho
 function addBannerCarrinho(combo) {
-    // Verifica se já existe no carrinho
     let carrinhoLocal = window.carrinho || [];
     let item = carrinhoLocal.find(i => i.nome === combo.nome);
     if(item){
@@ -117,7 +31,8 @@ function addBannerCarrinho(combo) {
         carrinhoLocal.push({nome: combo.nome, preco: combo.preco, qtd:1});
     }
     window.carrinho = carrinhoLocal;
-    if(typeof atualizarCarrinho === "function") atualizarCarrinho();
+
+    atualizarCarrinho();
 
     // Monta mensagem para WhatsApp
     let msg = `Olá! Quero pedir o ${combo.nome}: ${combo.descricao} - R$${combo.preco.toFixed(2)}.`;
@@ -125,29 +40,7 @@ function addBannerCarrinho(combo) {
     window.open(url, "_blank");
 }
 
-// Função que mostra banner
-function mostrarBanner() {
-    let combo = banners[bannerIndex];
-
-    // Atualiza imagem do banner
-    bannerDiv.style.backgroundImage = `url('${combo.foto}')`;
-    bannerDiv.style.backgroundSize = 'cover';
-    bannerDiv.style.backgroundPosition = 'center';
-
-    // Clique abre WhatsApp com combo e adiciona ao carrinho
-    bannerDiv.onclick = function() {
-        addBannerCarrinho(combo);
-    }
-
-    // Próximo banner
-    bannerIndex = (bannerIndex + 1) % banners.length;
-}
-
-// Troca banner a cada 8 segundos
-setInterval(mostrarBanner, 8000);
-mostrarBanner();
-
-// --- FUNÇÃO PARA ENVIAR O PEDIDO DO CARRINHO PELO WHATSAPP ---
+// Função de envio do pedido completo
 function enviarPedido() {
     let carrinhoLocal = window.carrinho || [];
     if(carrinhoLocal.length === 0){
@@ -159,7 +52,6 @@ function enviarPedido() {
     let pagamento = document.getElementById('pagamento').value;
     let troco = document.getElementById('troco').value || "-";
 
-    // Monta mensagem
     let msg = "Olá! Gostaria de fazer o pedido:\n\n";
 
     carrinhoLocal.forEach(item => {
@@ -171,11 +63,33 @@ function enviarPedido() {
     msg += `Pagamento: ${pagamento}\n`;
     msg += `Troco: ${troco}`;
 
-    // Abre WhatsApp
     let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`;
     window.open(url, "_blank");
 }
-</script>
 
-</body>
-</html>
+// Funções do banner
+let banners = [
+    {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:99.90, foto:"imagens/banners/combo-familia.png"},
+    {nome:"Combo Amigos", descricao:"Cerveja + carvão", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
+    {nome:"Combo Casal", descricao:"2 pizzas grandes + refrigerante", preco:79.90, foto:"imagens/banners/combo-casal.png"}
+];
+
+let bannerDiv = document.getElementById('banner');
+let bannerIndex = 0;
+
+function mostrarBanner() {
+    let combo = banners[bannerIndex];
+    bannerDiv.style.backgroundImage = `url('${combo.foto}')`;
+    bannerDiv.style.backgroundSize = 'cover';
+    bannerDiv.style.backgroundPosition = 'center';
+
+    bannerDiv.onclick = function() {
+        addBannerCarrinho(combo);
+    }
+
+    bannerIndex = (bannerIndex + 1) % banners.length;
+}
+
+setInterval(mostrarBanner, 8000);
+mostrarBanner();
+</script>
