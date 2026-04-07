@@ -1,7 +1,7 @@
 <h2 id="nomePizza"></h2>
 
 <label>Tamanho:</label>
-<select id="tamanho">
+<select id="tamanho" onchange="atualizarPreco()">
 <option value="25">Pequena 25cm - R$30</option>
 <option value="30">Grande 30cm - R$40</option>
 <option value="35">Gigante 35cm - R$50</option>
@@ -10,7 +10,7 @@
 <br><br>
 
 <label>Borda:</label>
-<select id="borda">
+<select id="borda" onchange="atualizarPreco()">
 <option value="0">Normal</option>
 <option value="10">Catupiry (+10)</option>
 <option value="10">Cheddar (+10)</option>
@@ -35,8 +35,91 @@
 
 <br><br>
 
+<div id="preco" style="font-size:18px; color:#00ff88;">Total: R$0</div>
+
+<br>
+
 <button onclick="adicionarPizza()">Adicionar ao Carrinho</button>
 
 <br><br>
 
 <button onclick="voltar()">⬅ Voltar</button>
+
+<script>
+
+// PEGA NOME DA PIZZA
+let nomePizza = localStorage.getItem("pizzaSelecionada") || "Pizza";
+
+document.getElementById("nomePizza").innerText = "🍕 " + nomePizza;
+
+// ATUALIZA PREÇO
+function atualizarPreco(){
+
+let tamanho = document.getElementById("tamanho").value;
+let borda = document.getElementById("borda").value;
+
+let preco = 0;
+
+if(tamanho == 25) preco = 30;
+if(tamanho == 30) preco = 40;
+if(tamanho == 35) preco = 50;
+
+preco += Number(borda);
+
+document.getElementById("preco").innerText = "Total: R$ " + preco;
+
+}
+
+// INICIA PREÇO
+atualizarPreco();
+
+// ADICIONAR
+function adicionarPizza(){
+
+let tamanho = document.getElementById("tamanho").value;
+let bordaSelect = document.getElementById("borda");
+let meio = document.getElementById("meio").value;
+
+let textoBorda = bordaSelect.options[bordaSelect.selectedIndex].text;
+
+let preco = 0;
+
+if(tamanho == 25) preco = 30;
+if(tamanho == 30) preco = 40;
+if(tamanho == 35) preco = 50;
+
+preco += Number(bordaSelect.value);
+
+let nomeFinal = `${nomePizza} ${tamanho}cm`;
+
+if(meio){
+nomeFinal += " / Meio a Meio com " + meio;
+}
+
+if(bordaSelect.value != 0){
+nomeFinal += " / " + textoBorda;
+}
+
+// CARRINHO
+let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+carrinho.push({
+nome: nomeFinal,
+preco: preco
+});
+
+localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+alert("Pizza adicionada!");
+
+// VOLTA
+window.location.href = "index.html";
+
+}
+
+// VOLTAR
+function voltar(){
+window.location.href = "index.html";
+}
+
+</script>
