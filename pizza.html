@@ -10,56 +10,172 @@
 
 <link rel="stylesheet" href="style.css">
 
+<style>
+
+body{
+background:#0f0f0f;
+color:#fff;
+font-family:Arial;
+margin:0;
+}
+
+header{
+padding:20px;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+}
+
+.container{
+padding:15px;
+}
+
+/* CARD */
+.pizza-card{
+display:flex;
+background:#1c1c1c;
+border-radius:15px;
+margin-bottom:15px;
+overflow:hidden;
+cursor:pointer;
+transition:0.2s;
+}
+
+.pizza-card:hover{
+transform:scale(1.02);
+}
+
+.pizza-img{
+width:110px;
+height:110px;
+object-fit:cover;
+}
+
+.pizza-info{
+padding:10px;
+}
+
+.pizza-nome{
+font-size:18px;
+font-weight:bold;
+}
+
+.pizza-desc{
+font-size:14px;
+color:#aaa;
+}
+
+/* CONFIG */
+#configPizza{
+display:none;
+}
+
+select{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:10px;
+border:none;
+font-size:16px;
+}
+
+/* BOTÃO */
+.btn{
+width:100%;
+padding:15px;
+background:#ff7a00;
+border:none;
+border-radius:12px;
+color:#fff;
+font-size:16px;
+margin-top:10px;
+}
+
+.preco{
+font-size:20px;
+margin-top:10px;
+color:#00ff88;
+}
+
+/* CARRINHO FLUTUANTE */
+.carrinho-btn{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#ff7a00;
+width:60px;
+height:60px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+}
+
+.carrinho-count{
+position:absolute;
+top:-5px;
+right:-5px;
+background:red;
+color:#fff;
+font-size:12px;
+padding:4px 8px;
+border-radius:50%;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<header class="header-topo">
-  <div class="overlay"></div>
-  <div class="logo-container">
-    <h1 class="titulo">🍕 Cardápio de Pizzas</h1>
-  </div>
+<header>
+🍕 Escolha sua Pizza
 </header>
 
 <div class="container">
 
-<!-- LISTA DE PIZZAS -->
 <div id="listaPizzas"></div>
 
-<!-- CONFIGURAÇÃO DA PIZZA (ESCONDIDO) -->
-<div id="configPizza" style="display:none;">
+<div id="configPizza">
 
-<img src="imagens/pizza.jpg" class="pizza-img">
+<img id="imgPizza" class="pizza-img" style="width:100%; height:200px; border-radius:15px;">
 
 <h2 id="nomePizza"></h2>
+<p id="descPizza" style="color:#ccc;"></p>
 
-<!-- TAMANHO -->
-<select id="tamanho">
-<option value="25">Pequena 25cm</option>
-<option value="30">Média 30cm</option>
-<option value="35">Grande 35cm</option>
+<label>Tamanho:</label>
+<select id="tamanho" onchange="atualizarPreco()">
+<option value="25">Pequena 25cm - R$30</option>
+<option value="30">Média 30cm - R$40</option>
+<option value="35">Grande 35cm - R$50</option>
 </select>
 
-<!-- MEIO A MEIO -->
+<label>Borda:</label>
+<select id="borda" onchange="atualizarPreco()">
+<option value="0">Normal</option>
+<option value="10">Cheddar +10</option>
+<option value="10">Catupiry +10</option>
+</select>
+
+<label>Meio a Meio:</label>
 <select id="meio">
-<option value="">Pizza inteira</option>
+<option value="">Não</option>
 </select>
 
-<!-- BORDA -->
-<select id="borda">
-<option value="0">Sem borda</option>
-<option value="10">Borda Cheddar +10</option>
-<option value="10">Borda Catupiry +10</option>
-</select>
+<div class="preco" id="preco">Total: R$0</div>
 
-<button class="btn-carrinho" onclick="adicionarPizza()">
-Adicionar ao Carrinho 🛒
-</button>
-
-<button onclick="fecharPizza()">⬅ Voltar</button>
+<button class="btn" onclick="adicionarPizza()">Adicionar ao Carrinho</button>
+<button class="btn" onclick="fecharPizza()">⬅ Voltar</button>
 
 </div>
 
+</div>
+
+<!-- BOTÃO CARRINHO -->
+<div class="carrinho-btn" onclick="enviarWhatsApp()">
+🛒
+<div class="carrinho-count" id="count">0</div>
 </div>
 
 <script src="pizza.js"></script>
