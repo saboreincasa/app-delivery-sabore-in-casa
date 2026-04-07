@@ -31,7 +31,7 @@ const config = document.getElementById("configPizza");
 
 let pizzaAtual = null;
 
-// ATUALIZA CONTADOR
+// CONTADOR
 function atualizarCarrinho(){
 let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 document.getElementById("count").innerText = carrinho.length;
@@ -39,7 +39,7 @@ document.getElementById("count").innerText = carrinho.length;
 
 atualizarCarrinho();
 
-// LISTAR
+// LISTAR PIZZAS
 pizzas.forEach((pizza, index) => {
 
 lista.innerHTML += `
@@ -47,14 +47,14 @@ lista.innerHTML += `
 <img src="${pizza.img}" class="pizza-img">
 <div class="pizza-info">
 <div class="pizza-nome">${pizza.nome}</div>
-<div class="pizza-desc">${pizza.desc}</div>
+<div class="pizza-desc">🧾 ${pizza.desc}</div>
 </div>
 </div>
 `;
 
 });
 
-// ABRIR
+// ABRIR CONFIG
 function abrirPizza(index){
 
 pizzaAtual = pizzas[index];
@@ -63,10 +63,10 @@ lista.style.display = "none";
 config.style.display = "block";
 
 document.getElementById("nomePizza").innerText = "🍕 " + pizzaAtual.nome;
-document.getElementById("descPizza").innerText = pizzaAtual.desc;
+document.getElementById("descPizza").innerText = "Ingredientes: " + pizzaAtual.desc;
 document.getElementById("imgPizza").src = pizzaAtual.img;
 
-// MEIO A MEIO
+// MEIO A MEIO DINÂMICO
 let selectMeio = document.getElementById("meio");
 selectMeio.innerHTML = `<option value="">Não</option>`;
 
@@ -83,9 +83,14 @@ atualizarPreco();
 function fecharPizza(){
 config.style.display = "none";
 lista.style.display = "block";
+
+// RESET
+document.getElementById("tamanho").value = "25";
+document.getElementById("borda").value = "0";
+document.getElementById("meio").value = "";
 }
 
-// PREÇO DINÂMICO
+// PREÇO
 function atualizarPreco(){
 
 let tamanho = document.getElementById("tamanho").value;
@@ -103,12 +108,14 @@ document.getElementById("preco").innerText = "Total: R$ " + preco;
 
 }
 
-// ADD
+// ADICIONAR
 function adicionarPizza(){
 
 let tamanho = document.getElementById("tamanho").value;
-let borda = document.getElementById("borda").value;
+let borda = document.getElementById("borda");
 let meio = document.getElementById("meio").value;
+
+let textoBorda = borda.options[borda.selectedIndex].text;
 
 let preco = 0;
 
@@ -116,7 +123,7 @@ if(tamanho == 25) preco = 30;
 if(tamanho == 30) preco = 40;
 if(tamanho == 35) preco = 50;
 
-preco += Number(borda);
+preco += Number(borda.value);
 
 let nomeFinal = `${pizzaAtual.nome} ${tamanho}cm`;
 
@@ -124,8 +131,8 @@ if(meio){
 nomeFinal += " / Meio a Meio com " + meio;
 }
 
-if(borda == 10){
-nomeFinal += " / Borda recheada";
+if(borda.value != 0){
+nomeFinal += " / " + textoBorda;
 }
 
 let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
@@ -165,7 +172,7 @@ total += item.preco;
 
 mensagem += `\n💰 Total: R$${total}`;
 
-let numero = "5531999999999"; // COLOQUE SEU NÚMERO AQUI
+let numero = "5531999999999";
 
 let link = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
 
