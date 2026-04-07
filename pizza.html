@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -15,15 +14,51 @@
 
 <body>
 
-<header>
-
-<h1>🍕 Cardápio de Pizzas</h1>
-
+<header class="header-topo">
+  <div class="overlay"></div>
+  <div class="logo-container">
+    <h1 class="titulo">🍕 Cardápio de Pizzas</h1>
+  </div>
 </header>
 
 <div class="container">
 
+<!-- LISTA DE PIZZAS -->
 <div id="listaPizzas"></div>
+
+<!-- CONFIGURAÇÃO DA PIZZA (ESCONDIDO) -->
+<div id="configPizza" style="display:none;">
+
+<img src="imagens/pizza.jpg" class="pizza-img">
+
+<h2 id="nomePizza"></h2>
+
+<!-- TAMANHO -->
+<select id="tamanho">
+<option value="25">Pequena 25cm</option>
+<option value="30">Média 30cm</option>
+<option value="35">Grande 35cm</option>
+</select>
+
+<!-- MEIO A MEIO -->
+<select id="meio">
+<option value="">Pizza inteira</option>
+</select>
+
+<!-- BORDA -->
+<select id="borda">
+<option value="0">Sem borda</option>
+<option value="10">Borda Cheddar +10</option>
+<option value="10">Borda Catupiry +10</option>
+</select>
+
+<button class="btn-carrinho" onclick="adicionarPizza()">
+Adicionar ao Carrinho 🛒
+</button>
+
+<button onclick="fecharPizza()">⬅ Voltar</button>
+
+</div>
 
 </div>
 
@@ -31,4 +66,3 @@
 
 </body>
 </html>
-```
