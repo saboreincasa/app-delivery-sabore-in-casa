@@ -23,30 +23,36 @@ function mostrarCombos(){
     document.getElementById("produtos").innerHTML = ""
 }
 
-// 🍕 PIZZAS
+// 🍕 PIZZAS (ATUALIZADO COM IMAGEM + BOTÃO)
 function abrirPizzas(){
+
     esconderCombos()
 
     let html = "<h2>🍕 Escolha sua Pizza</h2>"
 
     const pizzas = [
-        {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola"},
-        {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry"},
-        {nome:"4 Queijos",desc:"Mussarela, provolone, parmesão, catupiry"},
-        {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha"},
-        {nome:"Marguerita",desc:"Mussarela, tomate, manjericão"},
-        {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola"},
-        {nome:"Napolitana",desc:"Mussarela, tomate, parmesão"},
-        {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela"},
-        {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry"}
+        {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola", img:"imagens/calabresa.jpg"},
+        {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"imagens/frango.jpg"},
+        {nome:"4 Queijos",desc:"Mussarela, provolone, parmesão, catupiry", img:"imagens/4queijos.jpg"},
+        {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha", img:"imagens/portuguesa.jpg"},
+        {nome:"Marguerita",desc:"Mussarela, tomate, manjericão", img:"imagens/marguerita.jpg"},
+        {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola", img:"imagens/baiana.jpg"},
+        {nome:"Napolitana",desc:"Mussarela, tomate, parmesão", img:"imagens/napolitana.jpg"},
+        {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela", img:"imagens/milho.jpg"},
+        {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry", img:"imagens/moda.jpg"}
     ]
 
     pizzas.forEach(p=>{
         html += `
-        <div class="card" onclick="abrirMontagemPizza('${p.nome}')">
+        <div class="card">
+            <img src="${p.img}" alt="${p.nome}">
             <div class="card-content">
                 <h3>${p.nome}</h3>
                 <p>${p.desc}</p>
+
+                <button onclick="abrirMontagemPizza('${p.nome}')">
+                    🍕 Montar Pizza
+                </button>
             </div>
         </div>
         `
@@ -123,7 +129,7 @@ function adicionarPizza(nome){
 // 🔥 FILTRO
 function filtrar(tipo){
 
-    if(tipo === "combo"){
+    if(tipo === "combos"){
         mostrarCombos()
         return
     } else {
@@ -196,9 +202,10 @@ let banners = [
 ]
 
 let bannerIndex = 0
-let bannerDiv = document.getElementById("banner")
 
 function mostrarBanner(){
+    let bannerDiv = document.getElementById("banner")
+
     let combo = banners[bannerIndex]
     bannerDiv.style.backgroundImage = `url('${combo.foto}')`
     bannerDiv.style.backgroundSize = 'cover'
@@ -215,10 +222,12 @@ function mostrarBanner(){
     }
 }
 
-setInterval(mostrarBanner, 8000)
-mostrarBanner()
+function trocarBanner(){
+    mostrarBanner()
+    setInterval(mostrarBanner, 8000)
+}
 
-// 🛒 CARRINHO E FUNÇÕES
+// 🛒 CARRINHO
 function addCarrinho(nome, preco){
     let item = carrinho.find(i => i.nome === nome)
     if(item){
@@ -246,26 +255,12 @@ function atualizarCarrinho(){
                 R$ ${subtotal.toFixed(2)}
             </div>
 
-         <div style="display:flex; align-items:center; gap:5px;">
-    
-    <button onclick="diminuir(${index})"
-        style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">
-        ➖
-    </button>
-
-    <span>${item.qtd}</span>
-
-    <button onclick="aumentar(${index})"
-        style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">
-        ➕
-    </button>
-
-    <button onclick="removerItem(${index})"
-        style="background:none; border:none; font-weight:bold; margin-left:10px; cursor:pointer;">
-        ❌<span style="color:white;"> Remover item</span>
-    </button>
-
-</div>
+            <div style="display:flex; align-items:center; gap:5px;">
+                <button onclick="diminuir(${index})">➖</button>
+                <span>${item.qtd}</span>
+                <button onclick="aumentar(${index})">➕</button>
+                <button onclick="removerItem(${index})">❌</button>
+            </div>
         </div>
         `
 
@@ -294,14 +289,14 @@ function removerItem(i){
     atualizarCarrinho()
 }
 
-// 🛒 SCROLL PARA O CARRINHO
+// 🛒 SCROLL
 function scrollCarrinho(){
     document.getElementById("carrinho").scrollIntoView({
         behavior: "smooth"
     })
 }
 
-// 📲 ENVIAR PEDIDO WHATSAPP
+// 📲 WHATSAPP
 function enviarPedido(){
     if(carrinho.length === 0){
         alert("Seu carrinho está vazio!")
@@ -327,14 +322,14 @@ function enviarPedido(){
     window.open(url,"_blank")
 }
 
-// 🔔 TOAST DE AVISO
+// 🔔 TOAST
 function mostrarToast(combo){
     let toast = document.getElementById("toast")
     toast.innerText = `✅ ${combo.nome} adicionado! Clique para ver o carrinho`
     toast.className = "show"
 
     toast.onclick = function(){
-        scrollCarrinho() // Agora vai para o carrinho ao invés de abrir WhatsApp
+        scrollCarrinho()
     }
 
     setTimeout(()=>{
