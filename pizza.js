@@ -1,5 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {
-
 const pizzas = [
 {
 nome: "Calabresa",
@@ -36,15 +34,19 @@ let pizzaAtual = null;
 // CONTADOR
 function atualizarCarrinho(){
 let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+if(document.getElementById("count")){
 document.getElementById("count").innerText = carrinho.length;
 }
+}
+
+atualizarCarrinho();
 
 // LISTAR PIZZAS
 pizzas.forEach((pizza, index) => {
 
 lista.innerHTML += `
 <div class="pizza-card" onclick="abrirPizza(${index})">
-<img src="${pizza.img}" class="pizza-img" onerror="this.src='imagens/erro.jpg'">
+<img src="${pizza.img}" class="pizza-img">
 <div class="pizza-info">
 <div class="pizza-nome">${pizza.nome}</div>
 <div class="pizza-desc">🧾 ${pizza.desc}</div>
@@ -55,7 +57,7 @@ lista.innerHTML += `
 });
 
 // ABRIR CONFIG
-window.abrirPizza = function(index){
+function abrirPizza(index){
 
 pizzaAtual = pizzas[index];
 
@@ -64,9 +66,12 @@ config.style.display = "block";
 
 document.getElementById("nomePizza").innerText = "🍕 " + pizzaAtual.nome;
 document.getElementById("descPizza").innerText = "Ingredientes: " + pizzaAtual.desc;
-document.getElementById("imgPizza").src = pizzaAtual.img;
 
-// MEIO A MEIO
+// 🔥 GARANTE QUE A IMAGEM APAREÇA
+let img = document.getElementById("imgPizza");
+img.src = pizzaAtual.img;
+
+// MEIO A MEIO DINÂMICO
 let selectMeio = document.getElementById("meio");
 selectMeio.innerHTML = `<option value="">Não</option>`;
 
@@ -80,7 +85,7 @@ atualizarPreco();
 }
 
 // VOLTAR
-window.fecharPizza = function(){
+function fecharPizza(){
 config.style.display = "none";
 lista.style.display = "block";
 
@@ -90,7 +95,7 @@ document.getElementById("meio").value = "";
 }
 
 // PREÇO
-window.atualizarPreco = function(){
+function atualizarPreco(){
 
 let tamanho = document.getElementById("tamanho").value;
 let borda = document.getElementById("borda").value;
@@ -104,10 +109,11 @@ if(tamanho == 35) preco = 50;
 preco += Number(borda);
 
 document.getElementById("preco").innerText = "Total: R$ " + preco;
+
 }
 
 // ADICIONAR
-window.adicionarPizza = function(){
+function adicionarPizza(){
 
 let tamanho = document.getElementById("tamanho").value;
 let borda = document.getElementById("borda");
@@ -147,10 +153,11 @@ atualizarCarrinho();
 alert("Pizza adicionada!");
 
 fecharPizza();
+
 }
 
 // WHATSAPP
-window.enviarWhatsApp = function(){
+function enviarWhatsApp(){
 
 let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
@@ -169,13 +176,10 @@ total += item.preco;
 
 mensagem += `\n💰 Total: R$${total}`;
 
-let numero = "5531999999999";
+let numero = "5531983391576";
 
 let link = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
 
 window.open(link, "_blank");
+
 }
-
-atualizarCarrinho();
-
-});
