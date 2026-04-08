@@ -1,41 +1,42 @@
 function abrirPizzas(){
 
-esconderCombos()
+    esconderCombos()
 
-let html = "<h2>🍕 Escolha sua Pizza</h2>"
+    let html = "<h2>🍕 Escolha sua Pizza</h2>"
 
-const pizzas = [
-{nome:"Calabresa", img:"imagens/calabresa.jpg"},
-{nome:"Frango com Catupiry", img:"imagens/frango.jpg"},
-{nome:"4 Queijos", img:"imagens/4queijos.jpg"},
-{nome:"Portuguesa", img:"imagens/portuguesa.jpg"},
-{nome:"Marguerita", img:"imagens/marguerita.jpg"},
-{nome:"Baiana", img:"imagens/baiana.jpg"},
-{nome:"Napolitana", img:"imagens/napolitana.jpg"},
-{nome:"Atum", img:"imagens/atum.jpg"},
-{nome:"Milho com Bacon", img:"imagens/milho.jpg"},
-{nome:"Moda da Casa", img:"imagens/moda.jpg"}
-]
+    const pizzas = [
+        {nome:"Calabresa", img:"imagens/calabresa.jpg", desc:"Molho, mussarela, calabresa, cebola"},
+        {nome:"Frango com Catupiry", img:"imagens/frango.jpg", desc:"Molho, frango desfiado, catupiry"},
+        {nome:"4 Queijos", img:"imagens/4queijos.jpg", desc:"Mussarela, provolone, parmesão, catupiry"},
+        {nome:"Portuguesa", img:"imagens/portuguesa.jpg", desc:"Presunto, ovo, cebola, ervilha"},
+        {nome:"Marguerita", img:"imagens/marguerita.jpg", desc:"Mussarela, tomate, manjericão"},
+        {nome:"Baiana", img:"imagens/baiana.jpg", desc:"Calabresa, ovo, pimenta"},
+        {nome:"Napolitana", img:"imagens/napolitana.jpg", desc:"Mussarela, tomate, parmesão"},
+        {nome:"Milho com Bacon", img:"imagens/milho.jpg", desc:"Milho, bacon, mussarela"},
+        {nome:"Moda da Casa", img:"imagens/moda.jpg", desc:"Especial da casa"}
+    ]
 
-pizzas.forEach(pizza=>{
-html += `
-<div class="card">
+    pizzas.forEach(pizza=>{
+        html += `
+        <div class="card pizza-card">
 
-<!-- 🔥 IMAGEM DA PIZZA -->
-<img src="${pizza.img}" 
-style="width:100%; height:180px; object-fit:cover; border-radius:12px; margin-bottom:10px;">
+            <div class="img-wrapper">
+                <img src="${pizza.img}">
+                <div class="overlay-card">
+                    <button onclick="abrirMontagemPizza('${pizza.nome}')">
+                        🍕 Montar
+                    </button>
+                </div>
+            </div>
 
-<div class="card-content">
-<h3>${pizza.nome}</h3>
+            <div class="card-content">
+                <h3>${pizza.nome}</h3>
+                <p>${pizza.desc}</p>
+            </div>
 
-<button onclick="irParaMontagem('${pizza.nome}')">
-🍕 Montar Pizza
-</button>
+        </div>
+        `
+    })
 
-</div>
-</div>
-`
-})
-
-document.getElementById("produtos").innerHTML = html
+    document.getElementById("produtos").innerHTML = html
 }
