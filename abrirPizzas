@@ -5,25 +5,30 @@ esconderCombos()
 let html = "<h2>🍕 Escolha sua Pizza</h2>"
 
 const pizzas = [
-"Calabresa",
-"Frango com Catupiry",
-"4 Queijos",
-"Portuguesa",
-"Marguerita",
-"Baiana",
-"Napolitana",
-"Atum",
-"Milho com Bacon",
-"Moda da Casa"
+{nome:"Calabresa", img:"imagens/calabresa.jpg"},
+{nome:"Frango com Catupiry", img:"imagens/frango.jpg"},
+{nome:"4 Queijos", img:"imagens/4queijos.jpg"},
+{nome:"Portuguesa", img:"imagens/portuguesa.jpg"},
+{nome:"Marguerita", img:"imagens/marguerita.jpg"},
+{nome:"Baiana", img:"imagens/baiana.jpg"},
+{nome:"Napolitana", img:"imagens/napolitana.jpg"},
+{nome:"Atum", img:"imagens/atum.jpg"},
+{nome:"Milho com Bacon", img:"imagens/milho.jpg"},
+{nome:"Moda da Casa", img:"imagens/moda.jpg"}
 ]
 
-pizzas.forEach(nome=>{
+pizzas.forEach(pizza=>{
 html += `
 <div class="card">
-<div class="card-content">
-<h3>${nome}</h3>
 
-<button onclick="irParaMontagem('${nome}')">
+<!-- 🔥 IMAGEM DA PIZZA -->
+<img src="${pizza.img}" 
+style="width:100%; height:180px; object-fit:cover; border-radius:12px; margin-bottom:10px;">
+
+<div class="card-content">
+<h3>${pizza.nome}</h3>
+
+<button onclick="irParaMontagem('${pizza.nome}')">
 🍕 Montar Pizza
 </button>
 
