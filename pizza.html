@@ -68,6 +68,12 @@ color:#aaa;
 /* CONFIG */
 #configPizza{
 display:none;
+animation: fade 0.3s ease;
+}
+
+@keyframes fade{
+from{opacity:0;}
+to{opacity:1;}
 }
 
 select{
@@ -89,6 +95,11 @@ border-radius:12px;
 color:#fff;
 font-size:16px;
 margin-top:10px;
+cursor:pointer;
+}
+
+.btn:hover{
+opacity:0.9;
 }
 
 .preco{
@@ -97,7 +108,7 @@ margin-top:10px;
 color:#00ff88;
 }
 
-/* CARRINHO FLUTUANTE */
+/* CARRINHO */
 .carrinho-btn{
 position:fixed;
 bottom:20px;
@@ -110,6 +121,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-size:24px;
+cursor:pointer;
 }
 
 .carrinho-count{
@@ -139,7 +151,7 @@ border-radius:50%;
 
 <div id="configPizza">
 
-<img id="imgPizza" class="pizza-img" style="width:100%; height:200px; border-radius:15px;">
+<img id="imgPizza" class="pizza-img" style="width:100%; height:200px; border-radius:15px; object-fit:cover;">
 
 <h2 id="nomePizza"></h2>
 <p id="descPizza" style="color:#ccc;"></p>
