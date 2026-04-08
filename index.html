@@ -9,38 +9,13 @@
 
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="style.css">
-<style>
-/* Toast de aviso */
-#toast {
-    visibility: hidden;
-    min-width: 250px;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    border-radius: 8px;
-    padding: 12px;
-    position: fixed;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.5s, bottom 0.5s;
-}
-#toast.show {
-    visibility: visible;
-    opacity: 1;
-    bottom: 80px;
-}
-</style>
+
 </head>
 
 <body>
 
 <header class="header-topo">
   <div class="overlay"></div>
-
   <div class="logo-container">
     <img src="imagens/logo.png" class="logo-grande">
   </div>
@@ -53,14 +28,13 @@ Bairro Mantiqueira – Belo Horizonte
 <button onclick="abrirMapa()">📍 Ver no mapa</button>
 </div>
 
-<div id="banner" class="banner" style="cursor:pointer;"></div>
+<div id="banner" class="banner"></div>
 
 <div class="container">
 
 <input class="busca" id="busca" placeholder="🔎 Buscar produto">
 
 <div class="btn-flutuantes">
-
 <div class="linha">
 <button onclick="abrirPizzas()">🍕 Pizzas</button>
 <button onclick="filtrar('bebidas')">🥤 Bebidas</button>
@@ -70,7 +44,6 @@ Bairro Mantiqueira – Belo Horizonte
 <button onclick="filtrar('combo')">🎁 Combos</button>
 <button onclick="filtrar('snaks')">🍟 Snaks</button>
 </div>
-
 </div>
 
 <h2 id="tituloCombos">⭐ Combos da Semana</h2>
@@ -84,7 +57,7 @@ Bairro Mantiqueira – Belo Horizonte
 <div id="lista"></div>
 
 <div class="total">
-Total + entrega: R$ <span id="total">0.00</span>
+Total: R$ <span id="total">0.00</span>
 </div>
 
 <input id="enderecoCliente" placeholder="Digite seu endereço">
@@ -113,9 +86,6 @@ Enviar pedido no WhatsApp
 © Sabore In Casa<br>
 Desenvolvido por <b>Carlos Henrique</b>
 </footer>
-
-<!-- Toast de aviso -->
-<div id="toast"></div>
 
 <script src="app.js"></script>
 
