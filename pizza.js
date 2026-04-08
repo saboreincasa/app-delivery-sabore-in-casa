@@ -1,3 +1,5 @@
+document.addEventListener("DOMContentLoaded", () => {
+
 const pizzas = [
 {
 nome: "Calabresa",
@@ -37,14 +39,12 @@ let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 document.getElementById("count").innerText = carrinho.length;
 }
 
-atualizarCarrinho();
-
 // LISTAR PIZZAS
 pizzas.forEach((pizza, index) => {
 
 lista.innerHTML += `
 <div class="pizza-card" onclick="abrirPizza(${index})">
-<img src="${pizza.img}" class="pizza-img">
+<img src="${pizza.img}" class="pizza-img" onerror="this.src='imagens/erro.jpg'">
 <div class="pizza-info">
 <div class="pizza-nome">${pizza.nome}</div>
 <div class="pizza-desc">🧾 ${pizza.desc}</div>
@@ -55,7 +55,7 @@ lista.innerHTML += `
 });
 
 // ABRIR CONFIG
-function abrirPizza(index){
+window.abrirPizza = function(index){
 
 pizzaAtual = pizzas[index];
 
@@ -66,7 +66,7 @@ document.getElementById("nomePizza").innerText = "🍕 " + pizzaAtual.nome;
 document.getElementById("descPizza").innerText = "Ingredientes: " + pizzaAtual.desc;
 document.getElementById("imgPizza").src = pizzaAtual.img;
 
-// MEIO A MEIO DINÂMICO
+// MEIO A MEIO
 let selectMeio = document.getElementById("meio");
 selectMeio.innerHTML = `<option value="">Não</option>`;
 
@@ -80,18 +80,17 @@ atualizarPreco();
 }
 
 // VOLTAR
-function fecharPizza(){
+window.fecharPizza = function(){
 config.style.display = "none";
 lista.style.display = "block";
 
-// RESET
 document.getElementById("tamanho").value = "25";
 document.getElementById("borda").value = "0";
 document.getElementById("meio").value = "";
 }
 
 // PREÇO
-function atualizarPreco(){
+window.atualizarPreco = function(){
 
 let tamanho = document.getElementById("tamanho").value;
 let borda = document.getElementById("borda").value;
@@ -105,11 +104,10 @@ if(tamanho == 35) preco = 50;
 preco += Number(borda);
 
 document.getElementById("preco").innerText = "Total: R$ " + preco;
-
 }
 
 // ADICIONAR
-function adicionarPizza(){
+window.adicionarPizza = function(){
 
 let tamanho = document.getElementById("tamanho").value;
 let borda = document.getElementById("borda");
@@ -149,11 +147,10 @@ atualizarCarrinho();
 alert("Pizza adicionada!");
 
 fecharPizza();
-
 }
 
 // WHATSAPP
-function enviarWhatsApp(){
+window.enviarWhatsApp = function(){
 
 let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
@@ -177,5 +174,8 @@ let numero = "5531999999999";
 let link = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
 
 window.open(link, "_blank");
-
 }
+
+atualizarCarrinho();
+
+});
