@@ -1,416 +1,91 @@
-/* RESET */
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-/* BODY */
 body{
-font-family:Arial, Helvetica, sans-serif;
+font-family:Arial;
 background:#111;
 color:white;
 }
 
-/* HEADER */
-header{
-background:#c62828;
-text-align:center;
-padding:15px;
+/* HEADER BANNER */
+.header-topo{
+height:220px;
+background:url('imagens/banner-topo.jpg') center/cover no-repeat;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
-.logo{
-width:120px;
-margin-bottom:5px;
+.logo-grande{
+height:120px;
 }
 
-.titulo{
-font-size:24px;
-font-weight:bold;
-}
-
-/* ENDEREÇO */
-.endereco{
+/* CARDS */
+.card{
 background:#1f1f1f;
-padding:12px;
-text-align:center;
-font-size:14px;
-margin:10px;
-border-radius:8px;
-line-height:20px;
-}
-
-.endereco button{
-margin-top:10px;
-padding:8px 14px;
-border:none;
-border-radius:8px;
-background:#ff9800;
-color:white;
-cursor:pointer;
-}
-
-/* BANNER */
-.banner{
-height:180px;
 border-radius:12px;
-margin:10px;
-background-size:cover;
-background-position:center;
-transition: background-image 0.5s ease-in-out; /* efeito de transição ao trocar banners */
+overflow:hidden;
+transition:0.3s;
 }
 
-/* CONTAINER */
-.container{
-padding:15px;
-max-width:1000px;
-margin:auto;
+.card:hover{
+transform:scale(1.05);
 }
 
-/* BUSCA */
-.busca{
+.card img{
 width:100%;
-padding:12px;
-border-radius:10px;
-border:none;
-margin-bottom:15px;
-background:white;
-color:black;
-font-size:15px;
+height:160px;
+object-fit:cover;
 }
 
-/* BOTÕES */
-.btn-flutuantes{
+/* PIZZA PREMIUM */
+.img-wrapper{
+position:relative;
+}
+
+.overlay-card{
+position:absolute;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
 display:flex;
-flex-direction:column;
-gap:8px;
-margin-bottom:15px;
+align-items:center;
+justify-content:center;
+opacity:0;
+transition:0.3s;
 }
 
-.linha{
-display:flex;
-gap:10px;
+.pizza-card:hover .overlay-card{
+opacity:1;
 }
 
-.linha button{
-flex:1;
-background:#ff9800;
+.overlay-card button{
+background:#ff3c00;
 border:none;
-padding:12px;
-border-radius:10px;
+padding:10px 20px;
+border-radius:30px;
 color:white;
-font-size:16px;
-cursor:pointer;
-transition:0.2s;
 }
 
-.linha button:hover{
-background:#e68900;
-}
-
-/* TÍTULOS */
-h2{
-margin:15px 0 10px 0;
-}
-
-/* PRODUTOS */
+/* GRID */
 #produtos{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
 gap:15px;
 }
 
-/* COMBOS */
-#combosSemana{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:15px;
-margin-bottom:20px;
-}
-
-/* CARD */
-.card{
-background:#1f1f1f;
-border-radius:12px;
-overflow:hidden;
-box-shadow:0 0 10px rgba(0,0,0,0.5);
-transition:0.2s;
-}
-
-.card:hover{
-transform:scale(1.03);
-}
-
-/* 🔥 IMAGEM DO CARD */
-.card img{
-width:100%;
-height:140px;
-object-fit:cover;
-}
-
-.card-content{
-padding:12px;
-}
-
-.card h3{
-font-size:18px;
-margin-bottom:5px;
-}
-
-.preco{
-color:#2ecc71;
-font-size:17px;
-margin-top:6px;
-}
-
-.card button{
+/* BOTÕES */
+button{
 background:#ff9800;
 border:none;
 padding:10px;
-width:100%;
-border-radius:8px;
+border-radius:10px;
 color:white;
-margin-top:8px;
 cursor:pointer;
-transition:0.2s;
-}
-
-.card button:hover{
-background:#e68900;
-}
-
-/* 🔥 DESTAQUE DOS COMBOS */
-.destaque{
-border:2px solid #ff9800;
 }
 
 /* CARRINHO */
 #carrinho{
 background:#1f1f1f;
 padding:15px;
+margin-top:20px;
 border-radius:10px;
-margin-top:25px;
-}
-
-#lista{
-margin-top:10px;
-}
-
-/* ITEM CARRINHO */
-.item-carrinho{
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:#2a2a2a;
-padding:10px;
-border-radius:8px;
-margin-bottom:8px;
-}
-
-.info-item{
-display:flex;
-flex-direction:column;
-}
-
-.nome-item{
-font-size:14px;
-}
-
-.preco-item{
-font-size:13px;
-color:#2ecc71;
-}
-
-/* CONTROLE */
-.controle{
-display:flex;
-align-items:center;
-gap:8px;
-}
-
-.controle button{
-background:#ff9800;
-border:none;
-color:white;
-width:28px;
-height:28px;
-border-radius:50%;
-font-size:16px;
-cursor:pointer;
-}
-
-.controle span{
-font-size:14px;
-}
-
-/* BOTÃO REMOVER */
-.btn-remover{
-background:#ff4d4d;
-border:none;
-color:white;
-width:28px;
-height:28px;
-border-radius:50%;
-cursor:pointer;
-}
-
-/* TOTAL */
-.total{
-font-size:20px;
-margin-top:10px;
-font-weight:bold;
-}
-
-/* INPUTS */
-input,select{
-width:100%;
-padding:10px;
-margin-top:10px;
-border-radius:6px;
-border:none;
-font-size:14px;
-background:white;
-color:black;
-}
-
-/* BOTÃO WHATSAPP */
-.enviar{
-background:#25D366;
-color:white;
-font-size:18px;
-padding:14px;
-margin-top:15px;
-border-radius:20px;
-border:none;
-font-weight:bold;
-cursor:pointer;
-}
-
-.enviar:hover{
-background:#1ebe5d;
-}
-
-/* BOTÃO FLUTUANTE */
-#botaoCarrinho{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#ff9800;
-width:65px;
-height:65px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:28px;
-cursor:pointer;
-}
-
-/* CONTADOR */
-#contador{
-position:absolute;
-top:-5px;
-right:-5px;
-background:red;
-color:white;
-font-size:12px;
-padding:4px 6px;
-border-radius:50%;
-}
-
-/* FOOTER */
-footer{
-text-align:center;
-margin-top:40px;
-font-size:13px;
-color:#aaa;
-padding-bottom:20px;
-}
-
-/* RESPONSIVO */
-@media (max-width:600px){
-#produtos{
-grid-template-columns:1fr;
-}
-
-#combosSemana{
-grid-template-columns:1fr;
-}
-
-.banner{
-height:150px;
-}
-}
-
-/* 🔥 HEADER PROFISSIONAL (CORRIGIDO) */
-.header-topo{
-  position: relative;
-  height: 140px; /* AJUSTADO */
-  background: linear-gradient(135deg, #b30000, #ff3c00);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-/* Efeito de textura/brilho */
-.header-topo::before{
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
-  z-index: 1;
-}
-
-/* Overlay escuro suave */
-.overlay{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-/* Container da logo */
-.logo-container{
-  position: relative;
-  z-index: 2;
-  text-align: center;
-}
-
-/* 🔥 LOGO AJUSTADA PERFEITA */
-.logo-grande{
-  width: auto;
-  height: 90px; /* CONTROLE REAL */
-  max-width: 80%;
-  object-fit: contain;
-  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
-  transition: 0.3s;
-}
-
-.logo-grande:hover{
-  transform: scale(1.05);
-}
-
-/* 📱 AJUSTE MOBILE */
-@media (max-width:600px){
-  .header-topo{
-    height: 110px;
-  }
-
-  .logo-grande{
-    height: 70px;
-  }
-}
-
-/* --- MODIFICAÇÕES ADICIONAIS PARA BANNERS --- */
-/* Adicionado para manter o banner centralizado e responsivo */
-#banner{
-  width: 100%;
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 12px;
-  overflow: hidden;
 }
