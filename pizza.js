@@ -1,51 +1,22 @@
 const pizzas = [
-{
-nome: "Calabresa",
-desc: "Molho, mussarela, calabresa, cebola",
-img: "imagens/calabresa.jpg"
-},
-{
-nome: "Frango com Catupiry",
-desc: "Molho, frango desfiado, catupiry",
-img: "imagens/frango.jpg"
-},
-{
-nome: "4 Queijos",
-desc: "Mussarela, provolone, parmesão, catupiry",
-img: "imagens/4queijos.jpg"
-},
-{
-nome: "Portuguesa",
-desc: "Presunto, ovo, cebola, ervilha",
-img: "imagens/portuguesa.jpg"
-},
-{
-nome: "Marguerita",
-desc: "Mussarela, tomate, manjericão",
-img: "imagens/marguerita.jpg"
-}
+{ nome:"Calabresa", desc:"Molho, mussarela, calabresa, cebola", img:"imagens/calabresa.jpg"},
+{ nome:"Frango com Catupiry", desc:"Molho, frango desfiado, catupiry", img:"imagens/frango.jpg"},
+{ nome:"4 Queijos", desc:"Mussarela, provolone, parmesão, catupiry", img:"imagens/4queijos.jpg"},
+{ nome:"Portuguesa", desc:"Presunto, ovo, cebola, ervilha", img:"imagens/portuguesa.jpg"},
+{ nome:"Marguerita", desc:"Mussarela, tomate, manjericão", img:"imagens/marguerita.jpg"}
 ];
 
 const lista = document.getElementById("listaPizzas");
+const detalhe = document.getElementById("detalhePizza");
 const config = document.getElementById("configPizza");
 
 let pizzaAtual = null;
 
-// CONTADOR
-function atualizarCarrinho(){
-let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-if(document.getElementById("count")){
-document.getElementById("count").innerText = carrinho.length;
-}
-}
-
-atualizarCarrinho();
-
-// LISTAR PIZZAS
+// LISTAR
 pizzas.forEach((pizza, index) => {
 
 lista.innerHTML += `
-<div class="pizza-card" onclick="abrirPizza(${index})">
+<div class="pizza-card" onclick="abrirDetalhe(${index})">
 <img src="${pizza.img}" class="pizza-img">
 <div class="pizza-info">
 <div class="pizza-nome">${pizza.nome}</div>
@@ -56,28 +27,35 @@ lista.innerHTML += `
 
 });
 
-// ABRIR CONFIG
-function abrirPizza(index){
+// 🔥 ABRIR DETALHE
+function abrirDetalhe(index){
 
 pizzaAtual = pizzas[index];
 
 lista.style.display = "none";
+detalhe.style.display = "block";
+
+document.getElementById("imgDetalhe").src = pizzaAtual.img;
+document.getElementById("nomeDetalhe").innerText = pizzaAtual.nome;
+document.getElementById("descDetalhe").innerText = pizzaAtual.desc;
+
+}
+
+// IR PARA MONTAGEM
+function irMontagem(){
+
+detalhe.style.display = "none";
 config.style.display = "block";
 
 document.getElementById("nomePizza").innerText = "🍕 " + pizzaAtual.nome;
-document.getElementById("descPizza").innerText = "Ingredientes: " + pizzaAtual.desc;
 
-// 🔥 GARANTE QUE A IMAGEM APAREÇA
-let img = document.getElementById("imgPizza");
-img.src = pizzaAtual.img;
-
-// MEIO A MEIO DINÂMICO
-let selectMeio = document.getElementById("meio");
-selectMeio.innerHTML = `<option value="">Não</option>`;
+// MEIO A MEIO
+let select = document.getElementById("meio");
+select.innerHTML = `<option value="">Não</option>`;
 
 pizzas.forEach(p => {
 if(p.nome !== pizzaAtual.nome){
-selectMeio.innerHTML += `<option value="${p.nome}">${p.nome}</option>`;
+select.innerHTML += `<option value="${p.nome}">${p.nome}</option>`;
 }
 });
 
@@ -85,13 +63,14 @@ atualizarPreco();
 }
 
 // VOLTAR
-function fecharPizza(){
-config.style.display = "none";
+function voltarLista(){
+detalhe.style.display = "none";
 lista.style.display = "block";
+}
 
-document.getElementById("tamanho").value = "25";
-document.getElementById("borda").value = "0";
-document.getElementById("meio").value = "";
+function voltarDetalhe(){
+config.style.display = "none";
+detalhe.style.display = "block";
 }
 
 // PREÇO
@@ -116,10 +95,10 @@ document.getElementById("preco").innerText = "Total: R$ " + preco;
 function adicionarPizza(){
 
 let tamanho = document.getElementById("tamanho").value;
-let borda = document.getElementById("borda");
+let bordaSelect = document.getElementById("borda");
 let meio = document.getElementById("meio").value;
 
-let textoBorda = borda.options[borda.selectedIndex].text;
+let textoBorda = bordaSelect.options[bordaSelect.selectedIndex].text;
 
 let preco = 0;
 
@@ -127,7 +106,7 @@ if(tamanho == 25) preco = 30;
 if(tamanho == 30) preco = 40;
 if(tamanho == 35) preco = 50;
 
-preco += Number(borda.value);
+preco += Number(bordaSelect.value);
 
 let nomeFinal = `${pizzaAtual.nome} ${tamanho}cm`;
 
@@ -135,7 +114,7 @@ if(meio){
 nomeFinal += " / Meio a Meio com " + meio;
 }
 
-if(borda.value != 0){
+if(bordaSelect.value != 0){
 nomeFinal += " / " + textoBorda;
 }
 
@@ -148,38 +127,8 @@ preco: preco
 
 localStorage.setItem("carrinho", JSON.stringify(carrinho));
 
-atualizarCarrinho();
-
 alert("Pizza adicionada!");
 
-fecharPizza();
-
-}
-
-// WHATSAPP
-function enviarWhatsApp(){
-
-let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-
-if(carrinho.length === 0){
-alert("Carrinho vazio!");
-return;
-}
-
-let mensagem = "🍕 *Pedido:*\n\n";
-let total = 0;
-
-carrinho.forEach(item => {
-mensagem += `• ${item.nome} - R$${item.preco}\n`;
-total += item.preco;
-});
-
-mensagem += `\n💰 Total: R$${total}`;
-
-let numero = "5531983391576";
-
-let link = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
-
-window.open(link, "_blank");
+voltarLista();
 
 }
