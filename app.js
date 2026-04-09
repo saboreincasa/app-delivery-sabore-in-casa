@@ -1,29 +1,22 @@
-// 🛒 CARRINHO
 let carrinho = []
-
-// Número do WhatsApp
 const whatsappNumero = "5531983391576"
 
-// 🚀 INICIO
 window.onload = function(){
     carregarCombosSemana()
     trocarBanner()
 }
 
-// 🔥 ESCONDER COMBOS (HOME)
 function esconderCombos(){
     document.getElementById("combosSemana").innerHTML = ""
     document.getElementById("tituloCombos").style.display = "none"
 }
 
-// 🔥 MOSTRAR COMBOS NA HOME
 function mostrarCombos(){
     document.getElementById("tituloCombos").style.display = "block"
     carregarCombosSemana()
     document.getElementById("produtos").innerHTML = ""
 }
 
-// 🔥 NOVO: ABRIR COMBOS (BOTÃO)
 function abrirCombos(){
 
     esconderCombos()
@@ -56,7 +49,6 @@ function abrirCombos(){
     })
 }
 
-// 🍕 PIZZAS
 function abrirPizzas(){
 
     esconderCombos()
@@ -82,7 +74,6 @@ function abrirPizzas(){
             <div class="card-content">
                 <h3>${p.nome}</h3>
                 <p>${p.desc}</p>
-
                 <button onclick="abrirMontagemPizza('${p.nome}')">
                     🍕 Montar Pizza
                 </button>
@@ -94,7 +85,6 @@ function abrirPizzas(){
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 MONTAGEM
 function abrirMontagemPizza(nome){
     let html = `
     <h2>🍕 Montar Pizza - ${nome}</h2>
@@ -128,18 +118,17 @@ function abrirMontagemPizza(nome){
     </select>
 
     <br><br>
-    <button onclick="adicionarPizza('${nome}')" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:10px 20px;">
+    <button onclick="adicionarPizza('${nome}')">
         Adicionar ao Carrinho
     </button>
 
     <br><br>
-    <span onclick="abrirPizzas()" style="cursor:pointer;">⬅ Voltar</span>
+    <span onclick="abrirPizzas()">⬅ Voltar</span>
     `
 
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 ADICIONAR PIZZA
 function adicionarPizza(nome){
     let tamanho = document.getElementById("tamanho").value
     let borda = document.getElementById("borda").value
@@ -159,7 +148,6 @@ function adicionarPizza(nome){
     abrirPizzas()
 }
 
-// 🔥 FILTRO (CORRIGIDO)
 function filtrar(tipo){
 
     if(tipo === "combos"){
@@ -197,7 +185,6 @@ function filtrar(tipo){
     })
 }
 
-// 🔥 COMBOS HOME
 function carregarCombosSemana(){
     fetch("produtos.json")
     .then(res => res.json())
@@ -227,7 +214,6 @@ function carregarCombosSemana(){
     })
 }
 
-// 🎬 BANNER
 let banners = [
     {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:99.90, foto:"imagens/banners/combo-familia.png"},
     {nome:"Combo Amigos", descricao:"Cerveja + carvão", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
@@ -238,8 +224,8 @@ let bannerIndex = 0
 
 function mostrarBanner(){
     let bannerDiv = document.getElementById("banner")
-
     let combo = banners[bannerIndex]
+
     bannerDiv.style.backgroundImage = `url('${combo.foto}')`
     bannerDiv.style.backgroundSize = 'cover'
     bannerDiv.style.backgroundPosition = 'center'
@@ -260,7 +246,6 @@ function trocarBanner(){
     setInterval(mostrarBanner, 8000)
 }
 
-// 🛒 CARRINHO
 function addCarrinho(nome, preco){
     let item = carrinho.find(i => i.nome === nome)
     if(item){
@@ -282,18 +267,11 @@ function atualizarCarrinho(){
         let subtotal = item.preco * item.qtd
 
         lista.innerHTML += `
-        <div style="display:flex; justify-content:space-between;">
-            <div>
-                <b>${item.nome}</b><br>
-                R$ ${subtotal.toFixed(2)}
-            </div>
-
-            <div style="display:flex; align-items:center; gap:5px;">
-                <button onclick="diminuir(${index})">➖</button>
-                <span>${item.qtd}</span>
-                <button onclick="aumentar(${index})">➕</button>
-                <button onclick="removerItem(${index})">❌</button>
-            </div>
+        <div>
+            <b>${item.nome}</b> - R$ ${subtotal.toFixed(2)}
+            <button onclick="diminuir(${index})">-</button>
+            <button onclick="aumentar(${index})">+</button>
+            <button onclick="removerItem(${index})">X</button>
         </div>
         `
 
@@ -304,66 +282,26 @@ function atualizarCarrinho(){
     document.getElementById("total").innerText = total.toFixed(2)
 }
 
-function aumentar(i){
-    carrinho[i].qtd++
-    atualizarCarrinho()
-}
+function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
+function diminuir(i){ carrinho[i].qtd--; if(carrinho[i].qtd<=0) carrinho.splice(i,1); atualizarCarrinho() }
+function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho() }
 
-function diminuir(i){
-    carrinho[i].qtd--
-    if(carrinho[i].qtd <= 0){
-        carrinho.splice(i,1)
-    }
-    atualizarCarrinho()
-}
-
-function removerItem(i){
-    carrinho.splice(i,1)
-    atualizarCarrinho()
-}
-
-// 🛒 SCROLL
 function scrollCarrinho(){
-    document.getElementById("carrinho").scrollIntoView({
-        behavior: "smooth"
-    })
+    document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
 }
 
-// 📲 WHATSAPP
 function enviarPedido(){
-    if(carrinho.length === 0){
-        alert("Seu carrinho está vazio!")
-        return
-    }
-
-    let endereco = document.getElementById("enderecoCliente").value || "Endereço não informado"
-    let pagamento = document.getElementById("pagamento").value
-    let troco = document.getElementById("troco").value || "-"
-
-    let msg = "Olá! Gostaria de fazer o pedido:\n\n"
-
+    let msg = "Pedido:\n"
     carrinho.forEach(item=>{
-        msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)} cada\n`
+        msg += `${item.qtd}x ${item.nome}\n`
     })
-
-    msg += `\nTotal: R$${document.getElementById("total").innerText}\n`
-    msg += `Endereço: ${endereco}\n`
-    msg += `Pagamento: ${pagamento}\n`
-    msg += `Troco: ${troco}`
-
-    let url = `https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`
-    window.open(url,"_blank")
+    window.open(`https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`)
 }
 
-// 🔔 TOAST
 function mostrarToast(combo){
     let toast = document.getElementById("toast")
-    toast.innerText = `✅ ${combo.nome} adicionado! Clique para ver o carrinho`
+    toast.innerText = `✅ ${combo.nome} adicionado!`
     toast.className = "show"
-
-    toast.onclick = function(){
-        scrollCarrinho()
-    }
 
     setTimeout(()=>{
         toast.className = toast.className.replace("show","")
