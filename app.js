@@ -6,27 +6,45 @@ const whatsappNumero = "5531983391576"
 
 // 🚀 INICIO
 window.onload = function(){
-    carregarCombosSemana()
     trocarBanner()
 }
 
-// 🔥 ESCONDER COMBOS
-function esconderCombos(){
-    document.getElementById("combosSemana").innerHTML = ""
-    document.getElementById("tituloCombos").style.display = "none"
-}
+// 🔥 ESCONDER (AGORA NÃO PRECISA MAIS DE COMBOS SEPARADO)
+function esconderCombos(){}
 
-// 🔥 MOSTRAR COMBOS
+// 🔥 MOSTRAR COMBOS (CORRIGIDO)
 function mostrarCombos(){
-    document.getElementById("tituloCombos").style.display = "block"
-    carregarCombosSemana()
-    document.getElementById("produtos").innerHTML = ""
+
+    let html = "<h2>🔥 Combos da Semana</h2>"
+
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
+
+        let combos = produtos.filter(p => p.categoria === "combos")
+
+        combos.forEach(c=>{
+            html += `
+            <div class="card destaque">
+                <img src="${c.foto}">
+                <div class="card-content">
+                    <h3>${c.nome}</h3>
+                    <p>${c.descricao}</p>
+                    <p class="preco">R$ ${c.preco.toFixed(2)}</p>
+                    <button onclick="addCarrinho('${c.nome}', ${c.preco})">
+                        Adicionar
+                    </button>
+                </div>
+            </div>
+            `
+        })
+
+        document.getElementById("produtos").innerHTML = html
+    })
 }
 
-// 🍕 PIZZAS (ATUALIZADO COM IMAGEM + BOTÃO)
+// 🍕 PIZZAS
 function abrirPizzas(){
-
-    esconderCombos()
 
     let html = "<h2>🍕 Escolha sua Pizza</h2>"
 
@@ -132,8 +150,6 @@ function filtrar(tipo){
     if(tipo === "combos"){
         mostrarCombos()
         return
-    } else {
-        esconderCombos()
     }
 
     fetch("produtos.json")
@@ -161,36 +177,6 @@ function filtrar(tipo){
         })
 
         document.getElementById("produtos").innerHTML = html
-    })
-}
-
-// 🔥 COMBOS
-function carregarCombosSemana(){
-    fetch("produtos.json")
-    .then(res => res.json())
-    .then(produtos => {
-
-        let combos = produtos.filter(p => p.categoria === "combos")
-
-        let html = ""
-
-        combos.forEach(c=>{
-            html += `
-            <div class="card destaque">
-                <img src="${c.foto}">
-                <div class="card-content">
-                    <h3>${c.nome}</h3>
-                    <p>${c.descricao}</p>
-                    <p class="preco">R$ ${c.preco.toFixed(2)}</p>
-                    <button onclick="addCarrinho('${c.nome}', ${c.preco})">
-                        Adicionar
-                    </button>
-                </div>
-            </div>
-            `
-        })
-
-        document.getElementById("combosSemana").innerHTML = html
     })
 }
 
