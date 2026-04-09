@@ -213,3 +213,57 @@ function carregarCombosSemana(){
         document.getElementById("combosSemana").innerHTML = html
     })
 }
+
+/* ========================= */
+/* 🛒 CARRINHO FUNCIONANDO */
+/* ========================= */
+
+function addCarrinho(nome, preco){
+    carrinho.push({nome, preco})
+    atualizarCarrinho()
+    mostrarToast("Adicionado ao carrinho 🛒")
+}
+
+function atualizarCarrinho(){
+
+    let lista = document.getElementById("lista")
+    let total = document.getElementById("total")
+    let contador = document.getElementById("contador")
+
+    lista.innerHTML = ""
+
+    let soma = 0
+
+    carrinho.forEach((item, index)=>{
+        soma += item.preco
+
+        lista.innerHTML += `
+        <div class="item-carrinho">
+            ${item.nome} - R$ ${item.preco.toFixed(2)}
+            <button onclick="removerItem(${index})">❌</button>
+        </div>
+        `
+    })
+
+    total.innerText = soma.toFixed(2)
+    contador.innerText = carrinho.length
+}
+
+function removerItem(index){
+    carrinho.splice(index, 1)
+    atualizarCarrinho()
+}
+
+/* ========================= */
+/* 🔔 TOAST */
+/* ========================= */
+
+function mostrarToast(msg){
+    let toast = document.getElementById("toast")
+    toast.innerText = msg
+    toast.classList.add("show")
+
+    setTimeout(()=>{
+        toast.classList.remove("show")
+    }, 2000)
+}
