@@ -32,7 +32,7 @@ function abrirCombos(){
         combos.forEach(c=>{
             html += `
             <div class="card destaque">
-                <img src="${c.foto}">
+                <img src="${c.foto}" onerror="this.src='imagens/erro.png'">
                 <div class="card-content">
                     <h3>${c.nome}</h3>
                     <p>${c.descricao}</p>
@@ -70,7 +70,7 @@ function abrirPizzas(){
     pizzas.forEach(p=>{
         html += `
         <div class="card">
-            <img src="${p.img}" alt="${p.nome}">
+            <img src="${p.img}" alt="${p.nome}" onerror="this.src='imagens/erro.png'">
             <div class="card-content">
                 <h3>${p.nome}</h3>
                 <p>${p.desc}</p>
@@ -168,7 +168,7 @@ function filtrar(tipo){
         filtrados.forEach(p=>{
             html += `
             <div class="card">
-                <img src="${p.foto}">
+                <img src="${p.foto}" onerror="this.src='imagens/erro.png'">
                 <div class="card-content">
                     <h3>${p.nome}</h3>
                     <p>${p.descricao}</p>
@@ -197,7 +197,7 @@ function carregarCombosSemana(){
         combos.forEach(c=>{
             html += `
             <div class="card destaque">
-                <img src="${c.foto}">
+                <img src="${c.foto}" onerror="this.src='imagens/erro.png'">
                 <div class="card-content">
                     <h3>${c.nome}</h3>
                     <p>${c.descricao}</p>
@@ -212,98 +212,4 @@ function carregarCombosSemana(){
 
         document.getElementById("combosSemana").innerHTML = html
     })
-}
-
-let banners = [
-    {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:99.90, foto:"imagens/banners/combo-familia.png"},
-    {nome:"Combo Amigos", descricao:"Cerveja + carvão", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
-    {nome:"Combo Casal", descricao:"2 pizzas grandes + refrigerante", preco:79.90, foto:"imagens/banners/combo-casal.png"}
-]
-
-let bannerIndex = 0
-
-function mostrarBanner(){
-    let bannerDiv = document.getElementById("banner")
-    let combo = banners[bannerIndex]
-
-    bannerDiv.style.backgroundImage = `url('${combo.foto}')`
-    bannerDiv.style.backgroundSize = 'cover'
-    bannerDiv.style.backgroundPosition = 'center'
-
-    bannerDiv.onclick = function(){
-        addCarrinho(combo.nome, combo.preco)
-        mostrarToast(combo)
-    }
-
-    bannerIndex++
-    if(bannerIndex >= banners.length){
-        bannerIndex = 0
-    }
-}
-
-function trocarBanner(){
-    mostrarBanner()
-    setInterval(mostrarBanner, 8000)
-}
-
-function addCarrinho(nome, preco){
-    let item = carrinho.find(i => i.nome === nome)
-    if(item){
-        item.qtd++
-    } else {
-        carrinho.push({nome, preco, qtd:1})
-    }
-    atualizarCarrinho()
-}
-
-function atualizarCarrinho(){
-    let lista = document.getElementById("lista")
-    let contador = document.getElementById("contador")
-    let total = 0
-
-    lista.innerHTML = ""
-
-    carrinho.forEach((item, index)=>{
-        let subtotal = item.preco * item.qtd
-
-        lista.innerHTML += `
-        <div>
-            <b>${item.nome}</b> - R$ ${subtotal.toFixed(2)}
-            <button onclick="diminuir(${index})">-</button>
-            <button onclick="aumentar(${index})">+</button>
-            <button onclick="removerItem(${index})">X</button>
-        </div>
-        `
-
-        total += subtotal
-    })
-
-    contador.innerText = carrinho.length
-    document.getElementById("total").innerText = total.toFixed(2)
-}
-
-function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
-function diminuir(i){ carrinho[i].qtd--; if(carrinho[i].qtd<=0) carrinho.splice(i,1); atualizarCarrinho() }
-function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho() }
-
-function scrollCarrinho(){
-    document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
-}
-
-function enviarPedido(){
-    let msg = "Pedido:\n"
-    carrinho.forEach(item=>{
-        msg += `${item.qtd}x ${item.nome}\n`
-    })
-    window.open(`https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`)
-}
-
-function mostrarToast(combo){
-    let toast = document.getElementById("toast")
-    toast.innerText = `✅ ${combo.nome} adicionado!`
-    toast.className = "show"
-
-    setTimeout(()=>{
-        toast.className = toast.className.replace("show","")
-    },4000)
 }
