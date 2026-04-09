@@ -2,63 +2,75 @@
 <html lang="pt-br">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Pizzas</title>
-
 <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
 <header>
-
 <h1>🍕 Cardápio de Pizzas</h1>
-
 </header>
 
 <div class="container">
 
+<!-- LISTA -->
 <div id="listaPizzas"></div>
 
-<!-- 🔥 AREA DE MONTAR PIZZA (ADICIONADO) -->
+<!-- 🔥 DETALHE DA PIZZA -->
+<div id="detalhePizza" style="display:none; padding:15px;">
+
+<img id="imgDetalhe" style="width:100%; height:220px; object-fit:cover; border-radius:15px;">
+
+<h2 id="nomeDetalhe"></h2>
+<p id="descDetalhe"></p>
+
+<button onclick="irMontagem()">🍕 Montar Pizza</button>
+<button onclick="voltarLista()">⬅ Voltar</button>
+
+</div>
+
+<!-- 🔥 MONTAGEM -->
 <div id="configPizza" style="display:none; padding:15px;">
 
-<!-- IMAGEM GRANDE DA PIZZA -->
-<img id="imgPizza" style="width:100%; height:220px; object-fit:cover; border-radius:15px; margin-bottom:10px;">
-
 <h2 id="nomePizza"></h2>
-<p id="descPizza"></p>
 
 <label>Tamanho:</label>
 <select id="tamanho" onchange="atualizarPreco()">
 <option value="25">Pequena 25cm - R$30</option>
-<option value="30">Média 30cm - R$40</option>
-<option value="35">Grande 35cm - R$50</option>
+<option value="30">Grande 30cm - R$40</option>
+<option value="35">Gigante 35cm - R$50</option>
 </select>
+
+<br><br>
 
 <label>Borda:</label>
 <select id="borda" onchange="atualizarPreco()">
 <option value="0">Normal</option>
-<option value="10">Cheddar +10</option>
-<option value="10">Catupiry +10</option>
+<option value="10">Catupiry (+10)</option>
+<option value="10">Cheddar (+10)</option>
 </select>
+
+<br><br>
 
 <label>Meio a Meio:</label>
-<select id="meio">
-<option value="">Não</option>
-</select>
+<select id="meio"></select>
 
-<div id="preco">Total: R$0</div>
+<br><br>
+
+<div id="preco" style="font-size:18px; color:#00ff88;">Total: R$0</div>
+
+<br>
 
 <button onclick="adicionarPizza()">Adicionar ao Carrinho</button>
-<button onclick="fecharPizza()">Voltar</button>
+
+<br><br>
+
+<button onclick="voltarDetalhe()">⬅ Voltar</button>
 
 </div>
-<!-- 🔥 FIM -->
 
 </div>
 
