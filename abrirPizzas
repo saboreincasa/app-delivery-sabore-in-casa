@@ -21,7 +21,8 @@ function abrirPizzas(){
         <div class="card pizza-card">
 
             <div class="img-wrapper">
-                <img src="${pizza.img}">
+                <img src="${pizza.img}" onerror="this.src='imagens/erro.png'">
+                
                 <div class="overlay-card">
                     <button onclick="abrirMontagemPizza('${pizza.nome}')">
                         🍕 Montar
@@ -32,6 +33,12 @@ function abrirPizzas(){
             <div class="card-content">
                 <h3>${pizza.nome}</h3>
                 <p>${pizza.desc}</p>
+
+                <!-- 🔥 BOTÃO PADRÃO IGUAL MENU -->
+                <button onclick="abrirMontagemPizza('${pizza.nome}')">
+                    🍕 Montar Pizza
+                </button>
+
             </div>
 
         </div>
