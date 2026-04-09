@@ -6,16 +6,29 @@ const whatsappNumero = "5531983391576"
 
 // 🚀 INICIO
 window.onload = function(){
+    carregarCombosSemana()
     trocarBanner()
 }
 
-// 🔥 ESCONDER (AGORA NÃO PRECISA MAIS DE COMBOS SEPARADO)
-function esconderCombos(){}
+// 🔥 ESCONDER COMBOS (HOME)
+function esconderCombos(){
+    document.getElementById("combosSemana").innerHTML = ""
+    document.getElementById("tituloCombos").style.display = "none"
+}
 
-// 🔥 MOSTRAR COMBOS (CORRIGIDO)
+// 🔥 MOSTRAR COMBOS NA HOME
 function mostrarCombos(){
+    document.getElementById("tituloCombos").style.display = "block"
+    carregarCombosSemana()
+    document.getElementById("produtos").innerHTML = ""
+}
 
-    let html = "<h2>🔥 Combos da Semana</h2>"
+// 🔥 NOVO: ABRIR COMBOS (BOTÃO)
+function abrirCombos(){
+
+    esconderCombos()
+
+    let html = "<h2>🔥 Combos</h2>"
 
     fetch("produtos.json")
     .then(res => res.json())
@@ -45,6 +58,8 @@ function mostrarCombos(){
 
 // 🍕 PIZZAS
 function abrirPizzas(){
+
+    esconderCombos()
 
     let html = "<h2>🍕 Escolha sua Pizza</h2>"
 
@@ -144,12 +159,14 @@ function adicionarPizza(nome){
     abrirPizzas()
 }
 
-// 🔥 FILTRO
+// 🔥 FILTRO (CORRIGIDO)
 function filtrar(tipo){
 
     if(tipo === "combos"){
-        mostrarCombos()
+        abrirCombos()
         return
+    } else {
+        esconderCombos()
     }
 
     fetch("produtos.json")
@@ -177,6 +194,36 @@ function filtrar(tipo){
         })
 
         document.getElementById("produtos").innerHTML = html
+    })
+}
+
+// 🔥 COMBOS HOME
+function carregarCombosSemana(){
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
+
+        let combos = produtos.filter(p => p.categoria === "combos")
+
+        let html = ""
+
+        combos.forEach(c=>{
+            html += `
+            <div class="card destaque">
+                <img src="${c.foto}">
+                <div class="card-content">
+                    <h3>${c.nome}</h3>
+                    <p>${c.descricao}</p>
+                    <p class="preco">R$ ${c.preco.toFixed(2)}</p>
+                    <button onclick="addCarrinho('${c.nome}', ${c.preco})">
+                        Adicionar
+                    </button>
+                </div>
+            </div>
+            `
+        })
+
+        document.getElementById("combosSemana").innerHTML = html
     })
 }
 
