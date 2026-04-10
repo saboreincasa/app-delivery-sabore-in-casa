@@ -17,20 +17,19 @@ function abrirPizzas(){
 
     pizzas.forEach(p=>{
         html += `
-        <div class="card">
+        <div class="card pizza-card">
 
             <img src="${p.img}" 
-                 style="width:100%; height:180px; object-fit:cover; border-radius:10px;"
+                 class="pizza-img"
                  onerror="this.src='imagens/erro.png'">
 
             <div class="card-content">
 
                 <h3>${p.nome}</h3>
 
-                <p>${p.desc}</p>
+                <p class="ingredientes">🧾 ${p.desc}</p>
 
-                <button onclick="abrirMontagemPizza('${p.nome}')"
-                    style="margin-top:10px; width:100%; padding:10px; border:none; border-radius:8px; background:#ff6f00; color:white; font-weight:bold; cursor:pointer;">
+                <button onclick="abrirMontagemPizza('${p.nome}')">
                     🍕 Montar Pizza
                 </button>
 
