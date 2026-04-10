@@ -468,3 +468,35 @@ height:150px;
 .card-content button:hover{
     transform: scale(1.05);
 }
+.pizza-info{
+    padding: 15px;
+}
+
+.pizza-info h3,
+.pizza-nome{
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.pizza-desc{
+    color: #bbb;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.pizza-info button{
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #ff3c00, #ff8c00);
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.pizza-info button:hover{
+    transform: scale(1.05);
+}
