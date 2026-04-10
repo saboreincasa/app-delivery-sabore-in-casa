@@ -1,5 +1,4 @@
 function abrirPizzas(){
-
     esconderCombos()
 
     let html = "<h2>🍕 Escolha sua Pizza</h2>"
@@ -10,29 +9,28 @@ function abrirPizzas(){
         {nome:"4 Queijos", img:"imagens/4queijos.jpg", desc:"Mussarela, provolone, parmesão, catupiry"},
         {nome:"Portuguesa", img:"imagens/portuguesa.jpg", desc:"Presunto, ovo, cebola, ervilha"},
         {nome:"Marguerita", img:"imagens/marguerita.jpg", desc:"Mussarela, tomate, manjericão"},
-        {nome:"Baiana", img:"imagens/baiana.jpg", desc:"Calabresa, ovo, pimenta"},
+        {nome:"Baiana", img:"imagens/baiana.jpg", desc:"Calabresa, ovo, pimenta, cebola"},
         {nome:"Napolitana", img:"imagens/napolitana.jpg", desc:"Mussarela, tomate, parmesão"},
         {nome:"Milho com Bacon", img:"imagens/milho.jpg", desc:"Milho, bacon, mussarela"},
-        {nome:"Moda da Casa", img:"imagens/moda.jpg", desc:"Especial da casa"}
+        {nome:"Moda da Casa", img:"imagens/moda.jpg", desc:"Frango, bacon, milho, catupiry"}
     ]
 
-    pizzas.forEach(pizza=>{
-
+    pizzas.forEach(p=>{
         html += `
         <div class="card">
 
-            <img src="${pizza.img}" 
+            <img src="${p.img}" 
                  style="width:100%; height:180px; object-fit:cover; border-radius:10px;"
                  onerror="this.src='imagens/erro.png'">
 
             <div class="card-content">
 
-                <h3>${pizza.nome}</h3>
+                <h3>${p.nome}</h3>
 
-                <p>${pizza.desc}</p>
+                <p>${p.desc}</p>
 
-                <button onclick="abrirMontagemPizza('${pizza.nome}')" 
-                        style="margin-top:10px; width:100%; padding:10px; border:none; border-radius:8px; background:#ff6600; color:#fff; font-weight:bold; cursor:pointer;">
+                <button onclick="abrirMontagemPizza('${p.nome}')"
+                    style="margin-top:10px; width:100%; padding:10px; border:none; border-radius:8px; background:#ff6f00; color:white; font-weight:bold; cursor:pointer;">
                     🍕 Montar Pizza
                 </button>
 
