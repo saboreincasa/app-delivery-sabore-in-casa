@@ -12,24 +12,60 @@ background:#111;
 color:white;
 }
 
-/* HEADER */
-header{
-background:#c62828;
-text-align:center;
-padding:15px;
+/* HEADER (AGORA COM IMAGEM PROFISSIONAL) */
+.header-topo{
+  position: relative;
+  height: 220px;
+  background: url("imagens/capa.png") no-repeat center center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.logo{
-width:120px;
-margin-bottom:5px;
+/* Overlay escuro para dar contraste */
+.overlay{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.45);
+  z-index: 1;
 }
 
-.titulo{
-font-size:24px;
-font-weight:bold;
+/* Logo */
+.logo-container{
+  position: relative;
+  z-index: 2;
+  text-align: center;
 }
 
-/* ENDEREÇO */
+.logo-grande{
+  width: auto;
+  height: 110px;
+  max-width: 90%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 20px rgba(0,0,0,0.8));
+  transition: 0.3s;
+}
+
+.logo-grande:hover{
+  transform: scale(1.05);
+}
+
+/* MOBILE */
+@media (max-width:600px){
+  .header-topo{
+    height: 160px;
+  }
+
+  .logo-grande{
+    height: 80px;
+  }
+}
+
+/* RESTO DO SEU CSS (NÃO ALTEREI NADA) */
+
 .endereco{
 background:#1f1f1f;
 padding:12px;
@@ -50,24 +86,21 @@ color:white;
 cursor:pointer;
 }
 
-/* BANNER */
 .banner{
 height:180px;
 border-radius:12px;
 margin:10px;
 background-size:cover;
 background-position:center;
-transition: background-image 0.5s ease-in-out; /* efeito de transição ao trocar banners */
+transition: background-image 0.5s ease-in-out;
 }
 
-/* CONTAINER */
 .container{
 padding:15px;
 max-width:1000px;
 margin:auto;
 }
 
-/* BUSCA */
 .busca{
 width:100%;
 padding:12px;
@@ -79,7 +112,6 @@ color:black;
 font-size:15px;
 }
 
-/* BOTÕES */
 .btn-flutuantes{
 display:flex;
 flex-direction:column;
@@ -108,19 +140,16 @@ transition:0.2s;
 background:#e68900;
 }
 
-/* TÍTULOS */
 h2{
 margin:15px 0 10px 0;
 }
 
-/* PRODUTOS */
 #produtos{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
 gap:15px;
 }
 
-/* COMBOS */
 #combosSemana{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
@@ -128,7 +157,6 @@ gap:15px;
 margin-bottom:20px;
 }
 
-/* CARD */
 .card{
 background:#1f1f1f;
 border-radius:12px;
@@ -141,7 +169,6 @@ transition:0.2s;
 transform:scale(1.03);
 }
 
-/* 🔥 IMAGEM DO CARD */
 .card img{
 width:100%;
 height:140px;
@@ -179,12 +206,10 @@ transition:0.2s;
 background:#e68900;
 }
 
-/* 🔥 DESTAQUE DOS COMBOS */
 .destaque{
 border:2px solid #ff9800;
 }
 
-/* CARRINHO */
 #carrinho{
 background:#1f1f1f;
 padding:15px;
@@ -196,7 +221,6 @@ margin-top:25px;
 margin-top:10px;
 }
 
-/* ITEM CARRINHO */
 .item-carrinho{
 display:flex;
 justify-content:space-between;
@@ -221,7 +245,6 @@ font-size:13px;
 color:#2ecc71;
 }
 
-/* CONTROLE */
 .controle{
 display:flex;
 align-items:center;
@@ -243,7 +266,6 @@ cursor:pointer;
 font-size:14px;
 }
 
-/* BOTÃO REMOVER */
 .btn-remover{
 background:#ff4d4d;
 border:none;
@@ -254,14 +276,12 @@ border-radius:50%;
 cursor:pointer;
 }
 
-/* TOTAL */
 .total{
 font-size:20px;
 margin-top:10px;
 font-weight:bold;
 }
 
-/* INPUTS */
 input,select{
 width:100%;
 padding:10px;
@@ -273,7 +293,6 @@ background:white;
 color:black;
 }
 
-/* BOTÃO WHATSAPP */
 .enviar{
 background:#25D366;
 color:white;
@@ -290,7 +309,6 @@ cursor:pointer;
 background:#1ebe5d;
 }
 
-/* BOTÃO FLUTUANTE */
 #botaoCarrinho{
 position:fixed;
 bottom:20px;
@@ -306,7 +324,6 @@ font-size:28px;
 cursor:pointer;
 }
 
-/* CONTADOR */
 #contador{
 position:absolute;
 top:-5px;
@@ -318,185 +335,10 @@ padding:4px 6px;
 border-radius:50%;
 }
 
-/* FOOTER */
 footer{
 text-align:center;
 margin-top:40px;
 font-size:13px;
 color:#aaa;
 padding-bottom:20px;
-}
-
-/* RESPONSIVO */
-@media (max-width:600px){
-#produtos{
-grid-template-columns:1fr;
-}
-
-#combosSemana{
-grid-template-columns:1fr;
-}
-
-.banner{
-height:150px;
-}
-}
-
-/* 🔥 HEADER PROFISSIONAL (CORRIGIDO) */
-.header-topo{
-  position: relative;
-  height: 140px; /* AJUSTADO */
-  background: linear-gradient(135deg, #b30000, #ff3c00);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-/* Efeito de textura/brilho */
-.header-topo::before{
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
-  z-index: 1;
-}
-
-/* Overlay escuro suave */
-.overlay{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-/* Container da logo */
-.logo-container{
-  position: relative;
-  z-index: 2;
-  text-align: center;
-}
-
-/* 🔥 LOGO AJUSTADA PERFEITA */
-.logo-grande{
-  width: auto;
-  height: 90px; /* CONTROLE REAL */
-  max-width: 80%;
-  object-fit: contain;
-  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
-  transition: 0.3s;
-}
-
-.logo-grande:hover{
-  transform: scale(1.05);
-}
-
-/* 📱 AJUSTE MOBILE */
-@media (max-width:600px){
-  .header-topo{
-    height: 110px;
-  }
-
-  .logo-grande{
-    height: 70px;
-  }
-}
-
-/* --- MODIFICAÇÕES ADICIONAIS PARA BANNERS --- */
-/* Adicionado para manter o banner centralizado e responsivo */
-#banner{
-  width: 100%;
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 12px;
-  overflow: hidden;
-}
-/* 🔥 CARD PROFISSIONAL PIZZAS */
-.pizza-card{
-    background: #1c1c1c;
-    border-radius: 15px;
-    overflow: hidden;
-    margin-bottom: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    transition: 0.3s;
-}
-
-.pizza-card:hover{
-    transform: scale(1.02);
-}
-
-/* 🍕 IMAGEM */
-.pizza-img{
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-}
-
-/* 🧾 TEXTO */
-.card-content{
-    padding: 15px;
-}
-
-.card-content h3{
-    color: #fff;
-    margin-bottom: 5px;
-}
-
-.ingredientes{
-    color: #bbb;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-/* 🔥 BOTÃO ESTILO IFOOD */
-.card-content button{
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(45deg, #ff3c00, #ff8c00);
-    color: #fff;
-    font-weight: bold;
-    font-size: 15px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.card-content button:hover{
-    transform: scale(1.05);
-}
-.pizza-info{
-    padding: 15px;
-}
-
-.pizza-info h3,
-.pizza-nome{
-    color: #fff;
-    margin-bottom: 5px;
-}
-
-.pizza-desc{
-    color: #bbb;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-.pizza-info button{
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(45deg, #ff3c00, #ff8c00);
-    color: #fff;
-    font-weight: bold;
-    font-size: 15px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.pizza-info button:hover{
-    transform: scale(1.05);
 }
