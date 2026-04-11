@@ -1,7 +1,7 @@
 function abrirPizzas(){
     esconderCombos()
 
-    let html = "<h2>🍕 Escolha sua Pizza</h2>"
+    let html = "<h2 style='margin-bottom:15px;'>🍕 Escolha sua Pizza</h2>"
 
     const pizzas = [
         {nome:"Calabresa", img:"imagens/calabresa.jpg", desc:"Molho, mussarela, calabresa, cebola"},
@@ -25,11 +25,17 @@ function abrirPizzas(){
 
             <div class="card-content">
 
-                <h3>${p.nome}</h3>
+                <h3 style="margin-bottom:5px;">${p.nome}</h3>
 
-                <p class="ingredientes">🧾 ${p.desc}</p>
+                <p class="ingredientes" style="font-size:14px; color:#ccc;">
+                    🧾 ${p.desc}
+                </p>
 
-                <button onclick="abrirMontagemPizza('${p.nome}')">
+                <button style="
+                    margin-top:10px;
+                    font-weight:bold;
+                    font-size:15px;
+                " onclick="abrirMontagemPizza('${p.nome}')">
                     🍕 Montar Pizza
                 </button>
 
