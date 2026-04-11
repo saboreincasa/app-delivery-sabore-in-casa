@@ -7,7 +7,7 @@ const whatsappNumero = "5531983391576"
 // 🚀 INICIO
 window.onload = function(){
     carregarCombosSemana()
-    iniciarBanner() // 🔥 CORRIGIDO
+    iniciarBanner()
 }
 
 // 🔥 ESCONDER COMBOS
@@ -23,31 +23,39 @@ function mostrarCombos(){
     document.getElementById("produtos").innerHTML = ""
 }
 
-// 🍕 PIZZAS
+// 🍕 PIZZAS (🔥 COM IMAGEM + BOTÃO MONTAR)
 function abrirPizzas(){
     esconderCombos()
 
     let html = "<h2>🍕 Escolha sua Pizza</h2>"
 
     const pizzas = [
-        {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola"},
-        {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry"},
-        {nome:"4 Queijos",desc:"Mussarela, provolone, parmesão, catupiry"},
-        {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha"},
-        {nome:"Marguerita",desc:"Mussarela, tomate, manjericão"},
-        {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola"},
-        {nome:"Napolitana",desc:"Mussarela, tomate, parmesão"},
-        {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela"},
-        {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry"}
+        {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola", img:"imagens/pizzas/calabresa.png"},
+        {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"imagens/pizzas/frango.png"},
+        {nome:"4 Queijos",desc:"Mussarela, provolone, parmesão, catupiry", img:"imagens/pizzas/4queijos.png"},
+        {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha", img:"imagens/pizzas/portuguesa.png"},
+        {nome:"Marguerita",desc:"Mussarela, tomate, manjericão", img:"imagens/pizzas/marguerita.png"},
+        {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola", img:"imagens/pizzas/baiana.png"},
+        {nome:"Napolitana",desc:"Mussarela, tomate, parmesão", img:"imagens/pizzas/napolitana.png"},
+        {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela", img:"imagens/pizzas/milho.png"},
+        {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry", img:"imagens/pizzas/moda.png"}
     ]
 
     pizzas.forEach(p=>{
         html += `
-        <div class="card" onclick="abrirMontagemPizza('${p.nome}')">
+        <div class="card pizza-card">
+
+            <img src="${p.img}" onerror="this.src='imagens/pizza-padrao.png'">
+
             <div class="card-content">
                 <h3>${p.nome}</h3>
                 <p>${p.desc}</p>
+
+                <button onclick="abrirMontagemPizza('${p.nome}')">
+                    🍕 Montar Pizza
+                </button>
             </div>
+
         </div>
         `
     })
@@ -188,7 +196,7 @@ function carregarCombosSemana(){
     })
 }
 
-// 🎬 BANNER (CORRIGIDO PARA 5 SEGUNDOS)
+// 🎬 BANNER 5 SEGUNDOS
 let banners = [
     {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:99.90, foto:"imagens/banners/combo-familia.png"},
     {nome:"Combo Amigos", descricao:"Cerveja + carvão", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
@@ -200,10 +208,7 @@ let bannerDiv
 
 function iniciarBanner(){
     bannerDiv = document.getElementById("banner")
-
     mostrarBanner()
-
-    // 🔥 AGORA 5 SEGUNDOS
     setInterval(mostrarBanner, 5000)
 }
 
@@ -211,8 +216,6 @@ function mostrarBanner(){
     let combo = banners[bannerIndex]
 
     bannerDiv.style.backgroundImage = `url('${combo.foto}')`
-    bannerDiv.style.backgroundSize = 'cover'
-    bannerDiv.style.backgroundPosition = 'center'
 
     bannerDiv.onclick = function(){
         addCarrinho(combo.nome, combo.preco)
@@ -225,7 +228,7 @@ function mostrarBanner(){
     }
 }
 
-// 🛒 RESTANTE DO SEU CÓDIGO (NÃO ALTERADO)
+// 🛒 RESTO DO SISTEMA (INALTERADO)
 function addCarrinho(nome, preco){
     let item = carrinho.find(i => i.nome === nome)
     if(item){
@@ -253,26 +256,12 @@ function atualizarCarrinho(){
                 R$ ${subtotal.toFixed(2)}
             </div>
 
-         <div style="display:flex; align-items:center; gap:5px;">
-    
-    <button onclick="diminuir(${index})"
-        style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">
-        ➖
-    </button>
-
-    <span>${item.qtd}</span>
-
-    <button onclick="aumentar(${index})"
-        style="background:#ffb300; color:white; border:none; border-radius:5px; padding:5px 10px; cursor:pointer;">
-        ➕
-    </button>
-
-    <button onclick="removerItem(${index})"
-        style="background:none; border:none; font-weight:bold; margin-left:10px; cursor:pointer;">
-        ❌<span style="color:white;"> Remover item</span>
-    </button>
-
-</div>
+            <div style="display:flex; align-items:center; gap:5px;">
+                <button onclick="diminuir(${index})">➖</button>
+                <span>${item.qtd}</span>
+                <button onclick="aumentar(${index})">➕</button>
+                <button onclick="removerItem(${index})">❌</button>
+            </div>
         </div>
         `
 
@@ -283,28 +272,12 @@ function atualizarCarrinho(){
     document.getElementById("total").innerText = total.toFixed(2)
 }
 
-function aumentar(i){
-    carrinho[i].qtd++
-    atualizarCarrinho()
-}
-
-function diminuir(i){
-    carrinho[i].qtd--
-    if(carrinho[i].qtd <= 0){
-        carrinho.splice(i,1)
-    }
-    atualizarCarrinho()
-}
-
-function removerItem(i){
-    carrinho.splice(i,1)
-    atualizarCarrinho()
-}
+function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
+function diminuir(i){ carrinho[i].qtd--; if(carrinho[i].qtd<=0) carrinho.splice(i,1); atualizarCarrinho() }
+function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho() }
 
 function scrollCarrinho(){
-    document.getElementById("carrinho").scrollIntoView({
-        behavior: "smooth"
-    })
+    document.getElementById("carrinho").scrollIntoView({ behavior: "smooth" })
 }
 
 function enviarPedido(){
