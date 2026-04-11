@@ -135,10 +135,14 @@ function abrirMontagemPizza(nome){
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 ADICIONAR PIZZA (🔥 ALTERAÇÃO AQUI)
+// 🍕 ADICIONAR PIZZA
 function adicionarPizza(nome){
     let tamanho = document.getElementById("tamanho").value
-    let borda = document.getElementById("borda").value
+
+    let bordaSelect = document.getElementById("borda")
+    let borda = bordaSelect.value
+    let bordaTexto = bordaSelect.options[bordaSelect.selectedIndex].text
+
     let meio = document.getElementById("meio").value
 
     let preco = 0
@@ -148,10 +152,13 @@ function adicionarPizza(nome){
     preco += Number(borda)
 
     let nomeFinal = `${nome} ${tamanho}cm`
+
     if(meio) nomeFinal += " / Meio a Meio com " + meio
 
-    let textoBorda = document.getElementById("borda").options[document.getElementById("borda").selectedIndex].text
-    if(borda != 0) nomeFinal += " / Borda " + textoBorda
+    // 🔥 ALTERAÇÃO AQUI
+    if(borda != 0){
+        nomeFinal += " / Borda " + bordaTexto
+    }
 
     addCarrinho(nomeFinal, preco)
     abrirPizzas()
