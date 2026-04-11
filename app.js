@@ -7,7 +7,7 @@ const whatsappNumero = "5531983391576"
 // 🚀 INICIO
 window.onload = function(){
     carregarCombosSemana()
-    trocarBanner()
+    iniciarBanner() // 🔥 CORRIGIDO
 }
 
 // 🔥 ESCONDER COMBOS
@@ -188,7 +188,7 @@ function carregarCombosSemana(){
     })
 }
 
-// 🎬 BANNER
+// 🎬 BANNER (CORRIGIDO PARA 5 SEGUNDOS)
 let banners = [
     {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:99.90, foto:"imagens/banners/combo-familia.png"},
     {nome:"Combo Amigos", descricao:"Cerveja + carvão", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
@@ -196,10 +196,20 @@ let banners = [
 ]
 
 let bannerIndex = 0
-let bannerDiv = document.getElementById("banner")
+let bannerDiv
+
+function iniciarBanner(){
+    bannerDiv = document.getElementById("banner")
+
+    mostrarBanner()
+
+    // 🔥 AGORA 5 SEGUNDOS
+    setInterval(mostrarBanner, 5000)
+}
 
 function mostrarBanner(){
     let combo = banners[bannerIndex]
+
     bannerDiv.style.backgroundImage = `url('${combo.foto}')`
     bannerDiv.style.backgroundSize = 'cover'
     bannerDiv.style.backgroundPosition = 'center'
@@ -215,10 +225,7 @@ function mostrarBanner(){
     }
 }
 
-setInterval(mostrarBanner, 8000)
-mostrarBanner()
-
-// 🛒 CARRINHO E FUNÇÕES
+// 🛒 RESTANTE DO SEU CÓDIGO (NÃO ALTERADO)
 function addCarrinho(nome, preco){
     let item = carrinho.find(i => i.nome === nome)
     if(item){
@@ -294,14 +301,12 @@ function removerItem(i){
     atualizarCarrinho()
 }
 
-// 🛒 SCROLL PARA O CARRINHO
 function scrollCarrinho(){
     document.getElementById("carrinho").scrollIntoView({
         behavior: "smooth"
     })
 }
 
-// 📲 ENVIAR PEDIDO WHATSAPP
 function enviarPedido(){
     if(carrinho.length === 0){
         alert("Seu carrinho está vazio!")
@@ -327,14 +332,13 @@ function enviarPedido(){
     window.open(url,"_blank")
 }
 
-// 🔔 TOAST DE AVISO
 function mostrarToast(combo){
     let toast = document.getElementById("toast")
     toast.innerText = `✅ ${combo.nome} adicionado! Clique para ver o carrinho`
     toast.className = "show"
 
     toast.onclick = function(){
-        scrollCarrinho() // Agora vai para o carrinho ao invés de abrir WhatsApp
+        scrollCarrinho()
     }
 
     setTimeout(()=>{
