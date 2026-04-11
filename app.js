@@ -63,52 +63,79 @@ function abrirPizzas(){
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 MONTAGEM
+// 🍕 MONTAGEM (🔥 AQUI FOI MELHORADO VISUAL)
 function abrirMontagemPizza(nome){
+
+    let imagens = {
+        "Calabresa":"imagens/pizzas/calabresa.png",
+        "Frango com Catupiry":"imagens/pizzas/frango.png",
+        "4 Queijos":"imagens/pizzas/4queijos.png",
+        "Portuguesa":"imagens/pizzas/portuguesa.png",
+        "Marguerita":"imagens/pizzas/marguerita.png",
+        "Baiana":"imagens/pizzas/baiana.png",
+        "Napolitana":"imagens/pizzas/napolitana.png",
+        "Milho com Bacon":"imagens/pizzas/milho.png",
+        "Moda da Casa":"imagens/pizzas/moda.png"
+    }
+
     let html = `
-    <h2>🍕 Montar Pizza - ${nome}</h2>
+    <div class="montagem-box">
 
-    <label>Tamanho:</label>
-    <select id="tamanho">
-        <option value="25">Pequena 25cm - R$30</option>
-        <option value="30">Grande 30cm - R$40</option>
-        <option value="35">Gigante 35cm - R$50</option>
-    </select>
+        <h2>🍕 ${nome}</h2>
 
-    <label>Borda:</label>
-    <select id="borda">
-        <option value="0">Normal</option>
-        <option value="10">Catupiry (+10)</option>
-        <option value="10">Cheddar (+10)</option>
-    </select>
+        <img class="pizza-preview" src="${imagens[nome]}" onerror="this.src='imagens/pizza-padrao.png'">
 
-    <label>Meio a Meio:</label>
-    <select id="meio">
-        <option value="">Não</option>
-        <option value="Calabresa">Calabresa</option>
-        <option value="Frango com Catupiry">Frango com Catupiry</option>
-        <option value="4 Queijos">4 Queijos</option>
-        <option value="Portuguesa">Portuguesa</option>
-        <option value="Marguerita">Marguerita</option>
-        <option value="Baiana">Baiana</option>
-        <option value="Napolitana">Napolitana</option>
-        <option value="Milho com Bacon">Milho com Bacon</option>
-        <option value="Moda da Casa">Moda da Casa</option>
-    </select>
+        <div class="opcoes-pizza">
 
-    <br><br>
-    <button onclick="adicionarPizza('${nome}')" style="background:#ff6f00; color:white; border:none; border-radius:5px; padding:10px 20px;">
-        Adicionar ao Carrinho
-    </button>
+            <div class="campo">
+                <label>Tamanho:</label>
+                <select id="tamanho">
+                    <option value="25">Pequena 25cm - R$30</option>
+                    <option value="30">Grande 30cm - R$40</option>
+                    <option value="35">Gigante 35cm - R$50</option>
+                </select>
+            </div>
 
-    <br><br>
-    <span onclick="abrirPizzas()" style="cursor:pointer;">⬅ Voltar</span>
+            <div class="campo">
+                <label>Borda:</label>
+                <select id="borda">
+                    <option value="0">Normal</option>
+                    <option value="10">Catupiry (+10)</option>
+                    <option value="10">Cheddar (+10)</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label>Meio a Meio:</label>
+                <select id="meio">
+                    <option value="">Não</option>
+                    <option value="Calabresa">Calabresa</option>
+                    <option value="Frango com Catupiry">Frango com Catupiry</option>
+                    <option value="4 Queijos">4 Queijos</option>
+                    <option value="Portuguesa">Portuguesa</option>
+                    <option value="Marguerita">Marguerita</option>
+                    <option value="Baiana">Baiana</option>
+                    <option value="Napolitana">Napolitana</option>
+                    <option value="Milho com Bacon">Milho com Bacon</option>
+                    <option value="Moda da Casa">Moda da Casa</option>
+                </select>
+            </div>
+
+        </div>
+
+        <button class="btn-montar" onclick="adicionarPizza('${nome}')">
+            🛒 Adicionar ao Carrinho
+        </button>
+
+        <span class="voltar" onclick="abrirPizzas()">⬅ Voltar</span>
+
+    </div>
     `
 
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 ADICIONAR PIZZA (🔥 CORREÇÃO AQUI)
+// 🍕 ADICIONAR PIZZA
 function adicionarPizza(nome){
     let tamanho = document.getElementById("tamanho").value
     let borda = document.getElementById("borda").value
@@ -122,17 +149,7 @@ function adicionarPizza(nome){
 
     let nomeFinal = `${nome} ${tamanho}cm`
     if(meio) nomeFinal += " / Meio a Meio com " + meio
-
-    // 🔥 AQUI FOI CORRIGIDO (SEM MEXER NO RESTO)
-    let tipoBorda = document.getElementById("borda").options[document.getElementById("borda").selectedIndex].text
-
-    if(borda == 10){
-        if(tipoBorda.includes("Catupiry")){
-            nomeFinal += " / Borda Catupiry"
-        } else if(tipoBorda.includes("Cheddar")){
-            nomeFinal += " / Borda Cheddar"
-        }
-    }
+    if(borda == 10) nomeFinal += " / Borda recheada"
 
     addCarrinho(nomeFinal, preco)
     abrirPizzas()
