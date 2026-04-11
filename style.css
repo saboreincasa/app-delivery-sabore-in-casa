@@ -432,3 +432,31 @@ margin-right:auto;
 .voltar:hover{
   color:white;
 }
+/* 🔥 PIZZAS MAIS PROFISSIONAIS (IMAGEM + CARD BONITO) */
+
+.pizza-card{
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+/* 🔥 IMAGEM MAIS BONITA */
+.pizza-img{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+}
+
+/* 🔥 TEXTO INGREDIENTES */
+.ingredientes{
+  margin-top:5px;
+  line-height:18px;
+  font-size:14px;
+  color:#ccc;
+}
+
+/* 🔥 HOVER MAIS PROFISSIONAL */
+.pizza-card:hover{
+  transform: scale(1.03);
+  box-shadow:0 0 15px rgba(255,152,0,0.3);
+}
