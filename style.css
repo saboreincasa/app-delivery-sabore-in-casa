@@ -342,3 +342,89 @@ font-size:13px;
 color:#aaa;
 padding-bottom:20px;
 }
+/* 🔥 AJUSTE GLOBAL PARA DESKTOP */
+body{
+  display: flex;
+  justify-content: center;
+}
+
+/* 🔥 LIMITA LARGURA DO APP (IGUAL IFOOD) */
+body > *{
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* 🔥 HEADER AJUSTADO */
+.header-topo{
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  border-radius: 0 0 15px 15px;
+}
+
+/* 🔥 ENDEREÇO CENTRALIZADO */
+.endereco{
+  max-width: 1000px;
+  margin: 10px auto;
+}
+
+/* 🔥 BANNER CENTRALIZADO E BONITO */
+#banner{
+  width: 100%;
+  max-width: 1000px;
+  height: 220px;
+  margin: 10px auto;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* 🔥 CONTAINER CENTRAL */
+.container{
+  max-width: 1000px;
+  margin: auto;
+}
+
+/* 🔥 GRID MAIS BONITO NO DESKTOP */
+#produtos, #combosSemana{
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+/* 🔥 BOTÕES MAIS ORGANIZADOS */
+.linha{
+  justify-content: center;
+}
+
+/* 🔥 CARRINHO CENTRAL */
+#carrinho{
+  max-width: 1000px;
+  margin: 25px auto;
+}
+
+/* 🔥 FOOTER CENTRAL */
+footer{
+  max-width: 1000px;
+  margin: auto;
+}
+
+/* 🔥 AJUSTE PARA TELAS GRANDES */
+@media (min-width:1200px){
+  body{
+    background: #0b0b0b;
+  }
+}
+
+/* 🔥 MOBILE CONTINUA PERFEITO */
+@media (max-width:600px){
+  body{
+    display: block;
+  }
+
+  body > *{
+    max-width: 100%;
+  }
+
+  #banner{
+    height: 150px;
+  }
+}
