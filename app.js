@@ -29,18 +29,17 @@ function abrirPizzas(){
 
     let html = "<h2>🍕 Escolha sua Pizza</h2>"
 
-    const pizzas = [
-    {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola", img:"/imagens/pizzas/calabresa.png"},
-    {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"/imagens/pizzas/franco_com_catupiry.png"},
-    {nome:"4 Queijos",desc:"Mussarela, provolone, parmesão, catupiry", img:"/imagens/pizzas/quatro_queijos.png"},
-    {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha", img:"/imagens/pizzas/portuguesa.png"},
-    {nome:"Marguerita",desc:"Mussarela, tomate, manjericão", img:"/imagens/pizzas/marguerita.fw.png"},
-    {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola", img:"/imagens/pizzas/baiana.png"},
-    {nome:"Napolitana",desc:"Mussarela, tomate, parmesão", img:"/imagens/pizzas/napolitana.png"},
-    {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela", img:"/imagens/pizzas/milho_com_bacon.png"},
-    {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry", img:"/imagens/pizzas/moda_da_casa.png"}
+   const pizzas = [
+    {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola", img:"imagens/pizzas/calabresa.png"},
+    {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"imagens/pizzas/franco_com_catupiry.png"},
+    {nome:"4 Queijos",desc:"Mussarela, provolone, parmesão, catupiry", img:"imagens/pizzas/quatro_queijos.png"},
+    {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha", img:"imagens/pizzas/portuguesa.png"},
+    {nome:"Marguerita",desc:"Mussarela, tomate, manjericão", img:"imagens/pizzas/marguerita.fw.png"},
+    {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola", img:"imagens/pizzas/baiana.png"},
+    {nome:"Napolitana",desc:"Mussarela, tomate, parmesão", img:"imagens/pizzas/napolitana.png"},
+    {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela", img:"imagens/pizzas/milho_com_bacon.png"},
+    {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry", img:"imagens/pizzas/moda_da_casa.png"}
 ]
-
     pizzas.forEach(p=>{
         html += `
         <div class="card pizza-card">
