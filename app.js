@@ -29,17 +29,17 @@ function abrirPizzas(){
 
     let html = "<h2>🍕 Escolha sua Pizza</h2>"
 
-    const pizzas = const pizzas = [
-    {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola", img:"pizza/calabresa.png"},
-    {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"pizza/frango_com_catupiry.png"},
-    {nome:"4 Queijos",desc:"Mussarela, provolone, parmesão, catupiry", img:"pizza/4_queijos.png"},
-    {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha", img:"pizza/portuguesa.png"},
-    {nome:"Marguerita",desc:"Mussarela, tomate, manjericão", img:"pizza/marguerita.png"},
-    {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola", img:"pizza/baiana.png"},
-    {nome:"Napolitana",desc:"Mussarela, tomate, parmesão", img:"pizza/napolitana.png"},
-    {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela", img:"pizza/milho_com_bacon.png"},
-    {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry", img:"pizza/moda_da_casa.png"}
-]
+    const pizzas = [
+        {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola", img:"imagens/pizzas/calabresa.png"},
+        {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"imagens/pizzas/frango.png"},
+        {nome:"4 Queijos",desc:"Mussarela, provolone, parmesão, catupiry", img:"imagens/pizzas/4queijos.png"},
+        {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha", img:"imagens/pizzas/portuguesa.png"},
+        {nome:"Marguerita",desc:"Mussarela, tomate, manjericão", img:"imagens/pizzas/marguerita.png"},
+        {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola", img:"imagens/pizzas/baiana.png"},
+        {nome:"Napolitana",desc:"Mussarela, tomate, parmesão", img:"imagens/pizzas/napolitana.png"},
+        {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela", img:"imagens/pizzas/milho.png"},
+        {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry", img:"imagens/pizzas/moda.png"}
+    ]
 
     pizzas.forEach(p=>{
         html += `
