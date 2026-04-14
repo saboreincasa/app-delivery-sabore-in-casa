@@ -163,7 +163,7 @@ function adicionarPizza(nome){
     abrirPizzas()
 }
 
-// 🔥 FILTRO
+// 🔥 FILTRO (🔥 AJUSTADO PARA BEBIDAS IGUAL PRINT)
 function filtrar(tipo){
 
     if(tipo === "combo"){
@@ -182,19 +182,44 @@ function filtrar(tipo){
         let html = ""
 
         filtrados.forEach(p=>{
-            html += `
-            <div class="card">
-                <img src="${p.foto}">
-                <div class="card-content">
-                    <h3>${p.nome}</h3>
-                    <p>${p.descricao}</p>
-                    <p class="preco">R$ ${p.preco.toFixed(2)}</p>
-                    <button onclick="addCarrinho('${p.nome}', ${p.preco})">
+
+            // 🔥 SE FOR BEBIDA → LAYOUT NOVO
+            if(tipo === "bebidas"){
+                html += `
+                <div class="bebida-card">
+
+                    <img src="${p.foto}" class="bebida-img" onerror="this.src='imagens/bebida-padrao.png'">
+
+                    <div class="bebida-info">
+                        <h3>${p.nome}</h3>
+                        <p>${p.descricao}</p>
+                        <span class="bebida-preco">R$ ${p.preco.toFixed(2)}</span>
+                    </div>
+
+                    <button class="bebida-btn" onclick="addCarrinho('${p.nome}', ${p.preco})">
                         Adicionar
                     </button>
+
                 </div>
-            </div>
-            `
+                `
+            } 
+            // 🔥 RESTO CONTINUA IGUAL
+            else {
+                html += `
+                <div class="card">
+                    <img src="${p.foto}">
+                    <div class="card-content">
+                        <h3>${p.nome}</h3>
+                        <p>${p.descricao}</p>
+                        <p class="preco">R$ ${p.preco.toFixed(2)}</p>
+                        <button onclick="addCarrinho('${p.nome}', ${p.preco})">
+                            Adicionar
+                        </button>
+                    </div>
+                </div>
+                `
+            }
+
         })
 
         document.getElementById("produtos").innerHTML = html
