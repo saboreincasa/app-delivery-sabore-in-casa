@@ -637,3 +637,60 @@ margin-right:auto;
   font-weight:bold;
   font-size:16px;
 }
+/* ============================= */
+/* 🔥 BEBIDAS ESTILO APP */
+/* ============================= */
+
+.bebida-card{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#1f1f1f;
+  padding:10px;
+  border-radius:12px;
+  margin-bottom:10px;
+  box-shadow:0 0 10px rgba(0,0,0,0.4);
+  gap:10px;
+}
+
+.bebida-img{
+  width:60px;
+  height:60px;
+  object-fit:contain;
+}
+
+.bebida-info{
+  flex:1;
+}
+
+.bebida-info h3{
+  font-size:16px;
+  margin-bottom:3px;
+}
+
+.bebida-info p{
+  font-size:13px;
+  color:#ccc;
+  margin-bottom:3px;
+}
+
+.bebida-preco{
+  font-size:15px;
+  color:#2ecc71;
+  font-weight:bold;
+}
+
+.bebida-btn{
+  background:#ff9800;
+  border:none;
+  padding:8px 12px;
+  border-radius:8px;
+  color:white;
+  cursor:pointer;
+  font-size:14px;
+  transition:0.2s;
+}
+
+.bebida-btn:hover{
+  background:#e68900;
+}
