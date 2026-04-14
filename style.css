@@ -659,3 +659,21 @@ margin-right:auto;
 #produtos .card:not(.pizza-card):not(.destaque) .card-content{
   padding-right:110px;
 }
+/* 🔥 BOTÕES + E - DO CARRINHO (LARANJA PADRÃO) */
+
+#lista .controle button{
+  background:#ff9800 !important; /* mesmo laranja do site */
+  color:white;
+  width:32px;
+  height:32px;
+  border-radius:8px; /* arredondado */
+  font-size:16px;
+  border:none;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+/* hover */
+#lista .controle button:hover{
+  background:#e68900 !important;
+}
