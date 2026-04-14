@@ -1,4 +1,4 @@
-// 🛒 CARRINHO
+// 🛒 CARRINHO 
 let carrinho = []
 
 // Número do WhatsApp
@@ -40,6 +40,7 @@ function abrirPizzas(){
     {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela", img:"imagens/pizzas/milho_com_bacon.png"},
     {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry", img:"imagens/pizzas/moda_da_casa.png"}
 ]
+
     pizzas.forEach(p=>{
         html += `
         <div class="card pizza-card">
@@ -67,14 +68,14 @@ function abrirMontagemPizza(nome){
 
     let imagens = {
         "Calabresa":"imagens/pizzas/calabresa.png",
-        "Frango com Catupiry":"imagens/pizzas/frango.png",
-        "4 Queijos":"imagens/pizzas/4queijos.png",
+        "Frango com Catupiry":"imagens/pizzas/franco_com_catupiry.png",
+        "4 Queijos":"imagens/pizzas/quatro_queijos.png",
         "Portuguesa":"imagens/pizzas/portuguesa.png",
         "Marguerita":"imagens/pizzas/marguerita.png",
         "Baiana":"imagens/pizzas/baiana.png",
         "Napolitana":"imagens/pizzas/napolitana.png",
-        "Milho com Bacon":"imagens/pizzas/milho.png",
-        "Moda da Casa":"imagens/pizzas/moda.png"
+        "Milho com Bacon":"imagens/pizzas/milho_com_bacon.png",
+        "Moda da Casa":"imagens/pizzas/moda_da_casa.png"
     }
 
     let html = `
@@ -154,7 +155,6 @@ function adicionarPizza(nome){
 
     if(meio) nomeFinal += " / Meio a Meio com " + meio
 
-    // 🔥 ALTERAÇÃO AQUI
     if(borda != 0){
         nomeFinal += " / Borda " + bordaTexto
     }
