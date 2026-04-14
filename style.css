@@ -535,34 +535,41 @@ margin-right:auto;
 #produtos .card:not(.pizza-card):not(.destaque) .card-content{
   padding-right:110px;
 }
-/* ❌ BOTÃO REMOVER (X + texto limpo) */
-.item-carrinho button.remover,
-.item-carrinho button:last-child{
+/* ❌ BOTÃO REMOVER CORRIGIDO (X vermelho + texto REMOVER) */
 
+.item-carrinho button:last-child{
   background:transparent !important;
   border:none !important;
-  color:white !important;
-
-  font-size:14px;
+  color:transparent !important; /* esconde texto original */
+  position:relative;
   cursor:pointer;
-
-  display:flex;
-  align-items:center;
-  gap:6px;
-
   padding:0 !important;
+  font-size:14px;
 }
 
-/* ❌ deixa o X vermelho */
-.item-carrinho button.remover::before,
+/* cria o botão visual */
 .item-carrinho button:last-child::before{
-  content:"✖";
+  content:"✖ REMOVER";
+  color:#fff;
+  font-weight:500;
+}
+
+/* deixa só o X vermelho */
+.item-carrinho button:last-child::after{
+  content:"";
+}
+
+/* pinta apenas o X (primeiro caractere) */
+.item-carrinho button:last-child::before{
+  color:white;
+}
+
+.item-carrinho button:last-child::first-letter{
   color:red;
   font-weight:bold;
 }
 
-/* hover simples */
-.item-carrinho button.remover:hover,
-.item-carrinho button:last-child:hover{
-  color:#ff9800 !important;
+/* hover */
+.item-carrinho button:last-child:hover::before{
+  color:#ff9800;
 }
