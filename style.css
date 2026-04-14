@@ -570,9 +570,9 @@ margin-right:auto;
 .voltar:hover{
   color:white;
 }
-/* 🔥 NOVO LAYOUT TIPO APP (IMAGEM 2) */
+/* 🔥 LAYOUT TIPO APP SOMENTE PARA BEBIDAS (SEM QUEBRAR PIZZAS E COMBOS) */
 
-.card{
+#produtos .card:not(.pizza-card):not(.destaque){
   display:flex;
   flex-direction:row;
   align-items:center;
@@ -581,7 +581,7 @@ margin-right:auto;
 }
 
 /* IMAGEM LATERAL */
-.card img{
+#produtos .card:not(.pizza-card):not(.destaque) img{
   width:90px;
   height:90px;
   object-fit:cover;
@@ -589,76 +589,53 @@ margin-right:auto;
 }
 
 /* CONTEÚDO */
-.card-content{
+#produtos .card:not(.pizza-card):not(.destaque) .card-content{
   flex:1;
   padding:0;
 }
 
-/* NOME */
-.card h3{
+/* TEXTO */
+#produtos .card:not(.pizza-card):not(.destaque) h3{
   font-size:16px;
   margin-bottom:4px;
 }
 
-/* DESCRIÇÃO */
-.card p{
+#produtos .card:not(.pizza-card):not(.destaque) p{
   font-size:13px;
   color:#ccc;
 }
 
 /* PREÇO */
-.preco{
+#produtos .card:not(.pizza-card):not(.destaque) .preco{
   font-size:15px;
   font-weight:bold;
 }
 
-/* BOTÃO LATERAL */
-.card button{
+/* BOTÃO */
+#produtos .card:not(.pizza-card):not(.destaque) button{
   width:auto;
   padding:8px 12px;
   font-size:14px;
   border-radius:8px;
 }
 
-/* 🔥 AJUSTE MOBILE (IGUAL APP) */
+/* 📱 MOBILE */
 @media (max-width:600px){
-
-  .card{
-    flex-direction:row;
-    align-items:center;
-  }
-
-  .card img{
+  #produtos .card:not(.pizza-card):not(.destaque) img{
     width:80px;
     height:80px;
   }
-
-  .card h3{
-    font-size:15px;
-  }
-
-  .card p{
-    font-size:12px;
-  }
-
-  .preco{
-    font-size:14px;
-  }
-
-  .card button{
-    font-size:13px;
-    padding:6px 10px;
-  }
 }
 
-/* 🔥 AJUSTE DESKTOP (MAIS LIMPO) */
+/* 💻 DESKTOP */
 @media (min-width:900px){
 
-  #produtos, #combosSemana{
+  /* só lista de produtos, não combos */
+  #produtos{
     grid-template-columns: 1fr;
   }
 
-  .card{
+  #produtos .card{
     max-width:700px;
     margin:auto;
   }
