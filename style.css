@@ -595,7 +595,29 @@ margin-right:auto;
 }
 
 /* ============================= */
-/* 🔥 BOTÃO REMOVER (SEM FUNDO) */
+/* 🔥 BOTÕES + e - IGUAIS AOS DEMAIS BOTÕES */
+/* ============================= */
+
+.controle button{
+  background:#ff9800;
+  border:none;
+  color:white;
+  width:32px;
+  height:32px;
+  border-radius:8px;
+  font-size:16px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:0.2s;
+}
+
+.controle button:hover{
+  background:#e68900;
+}
+/* ============================= */
+/* 🔥 BOTÃO REMOVER (X VERMELHO + TEXTO BRANCO) */
 /* ============================= */
 
 .btn-remove{
