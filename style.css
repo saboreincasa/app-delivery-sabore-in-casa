@@ -640,3 +640,22 @@ margin-right:auto;
     margin:auto;
   }
 }
+/* 🔥 BOTÃO NA DIREITA (SOMENTE BEBIDAS) */
+
+#produtos .card:not(.pizza-card):not(.destaque){
+  position:relative;
+}
+
+/* joga o botão pra direita */
+#produtos .card:not(.pizza-card):not(.destaque) button{
+  position:absolute;
+  right:10px;
+  bottom:10px;
+  width:auto;
+  padding:8px 14px;
+}
+
+/* dá espaço pro texto não bater no botão */
+#produtos .card:not(.pizza-card):not(.destaque) .card-content{
+  padding-right:110px;
+}
