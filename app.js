@@ -23,39 +23,35 @@ function mostrarCombos(){
     document.getElementById("produtos").innerHTML = ""
 }
 
-// 🍕 PIZZAS (🔥 COM IMAGEM + BOTÃO MONTAR)
+// 🍕 PIZZAS
 function abrirPizzas(){
     esconderCombos()
 
     let html = "<h2>🍕 Escolha sua Pizza</h2>"
 
-   const pizzas = [
-    {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola", img:"imagens/pizzas/calabresa.png"},
-    {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"imagens/pizzas/franco_com_catupiry.png"},
-    {nome:"4 Queijos",desc:"Mussarela, provolone, parmesão, catupiry", img:"imagens/pizzas/quatro_queijos.png"},
-    {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha", img:"imagens/pizzas/portuguesa.png"},
-    {nome:"Marguerita",desc:"Mussarela, tomate, manjericão", img:"imagens/pizzas/marguerita.png"},
-    {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola", img:"imagens/pizzas/baiana.png"},
-    {nome:"Napolitana",desc:"Mussarela, tomate, parmesão", img:"imagens/pizzas/napolitana.png"},
-    {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela", img:"imagens/pizzas/milho_com_bacon.png"},
-    {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry", img:"imagens/pizzas/moda_da_casa.png"}
-]
+    const pizzas = [
+        {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola", img:"imagens/pizzas/calabresa.png"},
+        {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"imagens/pizzas/franco_com_catupiry.png"},
+        {nome:"4 Queijos",desc:"Mussarela, provolone, parmesão, catupiry", img:"imagens/pizzas/quatro_queijos.png"},
+        {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha", img:"imagens/pizzas/portuguesa.png"},
+        {nome:"Marguerita",desc:"Mussarela, tomate, manjericão", img:"imagens/pizzas/marguerita.png"},
+        {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola", img:"imagens/pizzas/baiana.png"},
+        {nome:"Napolitana",desc:"Mussarela, tomate, parmesão", img:"imagens/pizzas/napolitana.png"},
+        {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela", img:"imagens/pizzas/milho_com_bacon.png"},
+        {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry", img:"imagens/pizzas/moda_da_casa.png"}
+    ]
 
     pizzas.forEach(p=>{
         html += `
         <div class="card pizza-card">
-
             <img src="${p.img}" onerror="this.src='imagens/pizza-padrao.png'">
-
             <div class="card-content">
                 <h3>${p.nome}</h3>
                 <p>${p.desc}</p>
-
                 <button onclick="abrirMontagemPizza('${p.nome}')">
                     🍕 Montar Pizza
                 </button>
             </div>
-
         </div>
         `
     })
@@ -63,7 +59,7 @@ function abrirPizzas(){
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 MONTAGEM (🔥 AQUI FOI MELHORADO VISUAL)
+// 🍕 MONTAGEM
 function abrirMontagemPizza(nome){
 
     let imagens = {
@@ -80,13 +76,11 @@ function abrirMontagemPizza(nome){
 
     let html = `
     <div class="montagem-box">
-
         <h2>🍕 ${nome}</h2>
 
         <img class="pizza-preview" src="${imagens[nome]}" onerror="this.src='imagens/pizza-padrao.png'">
 
         <div class="opcoes-pizza">
-
             <div class="campo">
                 <label>Tamanho:</label>
                 <select id="tamanho">
@@ -120,7 +114,6 @@ function abrirMontagemPizza(nome){
                     <option value="Moda da Casa">Moda da Casa</option>
                 </select>
             </div>
-
         </div>
 
         <button class="btn-montar" onclick="adicionarPizza('${nome}')">
@@ -128,7 +121,6 @@ function abrirMontagemPizza(nome){
         </button>
 
         <span class="voltar" onclick="abrirPizzas()">⬅ Voltar</span>
-
     </div>
     `
 
@@ -138,11 +130,9 @@ function abrirMontagemPizza(nome){
 // 🍕 ADICIONAR PIZZA
 function adicionarPizza(nome){
     let tamanho = document.getElementById("tamanho").value
-
     let bordaSelect = document.getElementById("borda")
     let borda = bordaSelect.value
     let bordaTexto = bordaSelect.options[bordaSelect.selectedIndex].text
-
     let meio = document.getElementById("meio").value
 
     let preco = 0
@@ -154,14 +144,13 @@ function adicionarPizza(nome){
     let nomeFinal = `${nome} ${tamanho}cm`
 
     if(meio) nomeFinal += " / Meio a Meio com " + meio
-
-    if(borda != 0){
-        nomeFinal += " / Borda " + bordaTexto
-    }
+    if(borda != 0) nomeFinal += " / Borda " + bordaTexto
 
     addCarrinho(nomeFinal, preco)
     abrirPizzas()
-// 🔥 FILTRO (COM LAYOUT ESPECIAL PARA BEBIDAS)
+}
+
+// 🔥 FILTRO (COM MELHORIA NAS BEBIDAS)
 function filtrar(tipo){
 
     if(tipo === "combo"){
@@ -176,17 +165,15 @@ function filtrar(tipo){
     .then(produtos => {
 
         let filtrados = produtos.filter(p => p.categoria === tipo)
-
         let html = ""
 
         filtrados.forEach(p=>{
 
-            // 🔥 SE FOR BEBIDA → LAYOUT DIFERENTE
-            if(p.categoria === "bebidas"){
+            if(tipo === "bebidas"){
                 html += `
                 <div class="card bebida-card">
 
-                    <img class="bebida-img" src="${p.foto}" onerror="this.src='imagens/sem-imagem.png'">
+                    <img class="bebida-img" src="${p.foto}">
 
                     <div class="bebida-info">
                         <h3>${p.nome}</h3>
@@ -200,10 +187,7 @@ function filtrar(tipo){
 
                 </div>
                 `
-            }
-
-            // 🔥 RESTO CONTINUA NORMAL (NÃO QUEBRA NADA)
-            else{
+            } else {
                 html += `
                 <div class="card">
                     <img src="${p.foto}">
@@ -224,14 +208,14 @@ function filtrar(tipo){
         document.getElementById("produtos").innerHTML = html
     })
 }
-// 🔥 COMBOS
+
+// 🔥 COMBOS (SEM ALTERAÇÃO)
 function carregarCombosSemana(){
     fetch("produtos.json")
     .then(res => res.json())
     .then(produtos => {
 
         let combos = produtos.filter(p => p.categoria === "combos")
-
         let html = ""
 
         combos.forEach(c=>{
@@ -254,7 +238,7 @@ function carregarCombosSemana(){
     })
 }
 
-// 🎬 BANNER 5 SEGUNDOS
+// 🎬 BANNER
 let banners = [
     {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:99.90, foto:"imagens/banners/combo-familia.png"},
     {nome:"Combo Amigos", descricao:"Cerveja + carvão", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
@@ -286,14 +270,11 @@ function mostrarBanner(){
     }
 }
 
-// 🛒 RESTO DO SISTEMA (INALTERADO)
+// 🛒 RESTO
 function addCarrinho(nome, preco){
     let item = carrinho.find(i => i.nome === nome)
-    if(item){
-        item.qtd++
-    } else {
-        carrinho.push({nome, preco, qtd:1})
-    }
+    if(item){ item.qtd++ } 
+    else { carrinho.push({nome, preco, qtd:1}) }
     atualizarCarrinho()
 }
 
