@@ -365,11 +365,43 @@ margin-right:auto;
   body{
     background:#0b0b0b;
   }
-}
-
-/* MOBILE */
+/* 🔥 AJUSTE FINO MOBILE (CORREÇÃO DEFINITIVA) */
 @media (max-width:600px){
-  #banner{
-    height:150px;
+
+  #produtos{
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas no celular */
+    gap:10px;
   }
+
+  #combosSemana{
+    grid-template-columns: repeat(2, 1fr);
+    gap:10px;
+  }
+
+  .card{
+    border-radius:10px;
+  }
+
+  .card img{
+    height:100px; /* 🔥 menor no mobile */
+    padding:5px;
+  }
+
+  .card-content{
+    padding:8px;
+  }
+
+  .card h3{
+    font-size:14px;
+  }
+
+  .preco{
+    font-size:14px;
+  }
+
+  .card button{
+    padding:8px;
+    font-size:13px;
+  }
+
 }
