@@ -23,7 +23,7 @@ function mostrarCombos(){
     document.getElementById("produtos").innerHTML = ""
 }
 
-// 🍕 PIZZAS
+// 🍕 PIZZAS (🔥 COM IMAGEM + BOTÃO MONTAR)
 function abrirPizzas(){
     esconderCombos()
 
@@ -31,7 +31,7 @@ function abrirPizzas(){
 
    const pizzas = [
     {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola", img:"imagens/pizzas/calabresa.png"},
-    {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"imagens/pizzas/frango_com_catupiry.png"},
+    {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"imagens/pizzas/franco_com_catupiry.png"},
     {nome:"4 Queijos",desc:"Mussarela, provolone, parmesão, catupiry", img:"imagens/pizzas/quatro_queijos.png"},
     {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha", img:"imagens/pizzas/portuguesa.png"},
     {nome:"Marguerita",desc:"Mussarela, tomate, manjericão", img:"imagens/pizzas/marguerita.png"},
@@ -63,12 +63,12 @@ function abrirPizzas(){
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 MONTAGEM
+// 🍕 MONTAGEM (🔥 AQUI FOI MELHORADO VISUAL)
 function abrirMontagemPizza(nome){
 
     let imagens = {
         "Calabresa":"imagens/pizzas/calabresa.png",
-        "Frango com Catupiry":"imagens/pizzas/frango_com_catupiry.png",
+        "Frango com Catupiry":"imagens/pizzas/franco_com_catupiry.png",
         "4 Queijos":"imagens/pizzas/quatro_queijos.png",
         "Portuguesa":"imagens/pizzas/portuguesa.png",
         "Marguerita":"imagens/pizzas/marguerita.png",
@@ -163,7 +163,7 @@ function adicionarPizza(nome){
     abrirPizzas()
 }
 
-// 🔥 FILTRO CORRIGIDO (SEM QUEBRAR CARRINHO)
+// 🔥 FILTRO
 function filtrar(tipo){
 
     if(tipo === "combo"){
@@ -182,50 +182,26 @@ function filtrar(tipo){
         let html = ""
 
         filtrados.forEach(p=>{
-
-            let nomeSeguro = p.nome.replace(/'/g, "\\'")
-
-            if(tipo === "bebidas"){
-                html += `
-                <div class="bebida-card">
-
-                    <img src="${p.foto}" class="bebida-img" onerror="this.src='imagens/bebida-padrao.png'">
-
-                    <div class="bebida-info">
-                        <h3>${p.nome}</h3>
-                        <p>${p.descricao}</p>
-                        <span class="bebida-preco">R$ ${p.preco.toFixed(2)}</span>
-                    </div>
-
-                    <button class="bebida-btn" onclick="addCarrinho('${nomeSeguro}', ${p.preco})">
+            html += `
+            <div class="card">
+                <img src="${p.foto}">
+                <div class="card-content">
+                    <h3>${p.nome}</h3>
+                    <p>${p.descricao}</p>
+                    <p class="preco">R$ ${p.preco.toFixed(2)}</p>
+                    <button onclick="addCarrinho('${p.nome}', ${p.preco})">
                         Adicionar
                     </button>
-
                 </div>
-                `
-            } else {
-                html += `
-                <div class="card">
-                    <img src="${p.foto}">
-                    <div class="card-content">
-                        <h3>${p.nome}</h3>
-                        <p>${p.descricao}</p>
-                        <p class="preco">R$ ${p.preco.toFixed(2)}</p>
-                        <button onclick="addCarrinho('${nomeSeguro}', ${p.preco})">
-                            Adicionar
-                        </button>
-                    </div>
-                </div>
-                `
-            }
-
+            </div>
+            `
         })
 
         document.getElementById("produtos").innerHTML = html
     })
 }
 
-// 🔥 COMBOS (INALTERADO)
+// 🔥 COMBOS
 function carregarCombosSemana(){
     fetch("produtos.json")
     .then(res => res.json())
@@ -236,7 +212,6 @@ function carregarCombosSemana(){
         let html = ""
 
         combos.forEach(c=>{
-            let nomeSeguro = c.nome.replace(/'/g, "\\'")
             html += `
             <div class="card destaque">
                 <img src="${c.foto}">
@@ -244,7 +219,7 @@ function carregarCombosSemana(){
                     <h3>${c.nome}</h3>
                     <p>${c.descricao}</p>
                     <p class="preco">R$ ${c.preco.toFixed(2)}</p>
-                    <button onclick="addCarrinho('${nomeSeguro}', ${c.preco})">
+                    <button onclick="addCarrinho('${c.nome}', ${c.preco})">
                         Adicionar
                     </button>
                 </div>
@@ -256,7 +231,7 @@ function carregarCombosSemana(){
     })
 }
 
-// 🎬 BANNER (INALTERADO)
+// 🎬 BANNER 5 SEGUNDOS
 let banners = [
     {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:99.90, foto:"imagens/banners/combo-familia.png"},
     {nome:"Combo Amigos", descricao:"Cerveja + carvão", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
@@ -288,7 +263,7 @@ function mostrarBanner(){
     }
 }
 
-// 🛒 RESTO (INALTERADO)
+// 🛒 RESTO DO SISTEMA (INALTERADO)
 function addCarrinho(nome, preco){
     let item = carrinho.find(i => i.nome === nome)
     if(item){
