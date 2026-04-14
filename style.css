@@ -29,11 +29,11 @@ color:white;
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.25); /* 🔥 mais claro */
+  background: rgba(0,0,0,0.25);
   z-index: 1;
 }
 
-/* LOGO (caso volte usar depois) */
+/* LOGO */
 .logo-container{
   position: relative;
   z-index: 2;
@@ -170,16 +170,26 @@ border-radius:12px;
 overflow:hidden;
 box-shadow:0 0 10px rgba(0,0,0,0.5);
 transition:0.2s;
+
+/* 🔥 MELHORIA */
+display:flex;
+flex-direction:column;
+justify-content:space-between;
 }
 
 .card:hover{
 transform:scale(1.03);
 }
 
+/* 🔥 IMAGEM PADRONIZADA (CORRIGIDO) */
 .card img{
-width:100%;
-height:140px;
-object-fit:cover;
+  width:100%;
+  height:140px;
+  object-fit: contain;
+  background:#000;
+  padding:8px;
+  border-bottom:1px solid #333;
+  transition:0.3s;
 }
 
 .card-content{
@@ -211,6 +221,19 @@ transition:0.2s;
 
 .card button:hover{
 background:#e68900;
+}
+
+/* RESPONSIVO IMAGEM */
+@media (max-width:600px){
+  .card img{
+    height:120px;
+  }
+}
+
+@media (min-width:900px){
+  .card img{
+    height:160px;
+  }
 }
 
 /* COMBO DESTAQUE */
@@ -337,7 +360,7 @@ margin-left:auto;
 margin-right:auto;
 }
 
-/* 🔥 FUNDO DESKTOP */
+/* DESKTOP */
 @media (min-width:1200px){
   body{
     background:#0b0b0b;
@@ -349,224 +372,4 @@ margin-right:auto;
   #banner{
     height:150px;
   }
-}
-/* 🔥 MONTAGEM DE PIZZA PROFISSIONAL */
-
-.montagem-box{
-  background:#1f1f1f;
-  padding:20px;
-  border-radius:15px;
-  text-align:center;
-  max-width:500px;
-  margin:20px auto;
-  box-shadow:0 0 15px rgba(0,0,0,0.6);
-}
-
-.montagem-box h2{
-  margin-bottom:15px;
-}
-
-.pizza-preview{
-  width:200px;
-  height:200px;
-  object-fit:cover;
-  border-radius:50%;
-  margin-bottom:15px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.8);
-  transition:0.3s;
-}
-
-.pizza-preview:hover{
-  transform:scale(1.05);
-}
-
-.opcoes-pizza{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  margin-top:10px;
-}
-
-.campo{
-  text-align:left;
-}
-
-.campo label{
-  font-size:14px;
-  display:block;
-  margin-bottom:3px;
-}
-
-.campo select{
-  width:100%;
-  padding:10px;
-  border-radius:8px;
-  border:none;
-}
-
-.btn-montar{
-  margin-top:20px;
-  width:100%;
-  background:#ff9800;
-  color:white;
-  border:none;
-  padding:15px;
-  border-radius:10px;
-  font-size:18px;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.btn-montar:hover{
-  background:#e68900;
-  transform:scale(1.03);
-}
-
-.voltar{
-  display:block;
-  margin-top:15px;
-  cursor:pointer;
-  color:#ccc;
-}
-
-.voltar:hover{
-  color:white;
-}
-/* 🔥 PIZZAS MAIS PROFISSIONAIS (IMAGEM + CARD BONITO) */
-
-.pizza-card{
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-}
-
-/* 🔥 IMAGEM MAIS BONITA */
-.pizza-img{
-  width:100%;
-  height:160px;
-  object-fit:cover;
-}
-
-/* 🔥 TEXTO INGREDIENTES */
-.ingredientes{
-  margin-top:5px;
-  line-height:18px;
-  font-size:14px;
-  color:#ccc;
-}
-
-/* 🔥 HOVER MAIS PROFISSIONAL */
-.pizza-card:hover{
-  transform: scale(1.03);
-  box-shadow:0 0 15px rgba(255,152,0,0.3);
-}
-/* 🔥 PIZZAS MAIS PROFISSIONAIS (IMAGEM + CARD BONITO) */
-
-.pizza-card{
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-}
-
-/* 🔥 IMAGEM MAIS BONITA */
-.pizza-img{
-  width:100%;
-  height:160px;
-  object-fit:cover;
-}
-
-/* 🔥 TEXTO INGREDIENTES */
-.ingredientes{
-  margin-top:5px;
-  line-height:18px;
-  font-size:14px;
-  color:#ccc;
-}
-
-/* 🔥 HOVER MAIS PROFISSIONAL */
-.pizza-card:hover{
-  transform: scale(1.03);
-  box-shadow:0 0 15px rgba(255,152,0,0.3);
-}
-/* 🔥 MONTAGEM DE PIZZA PROFISSIONAL */
-
-.montagem-box{
-  background:#1f1f1f;
-  padding:20px;
-  border-radius:15px;
-  text-align:center;
-  max-width:500px;
-  margin:20px auto;
-  box-shadow:0 0 15px rgba(0,0,0,0.6);
-}
-
-.montagem-box h2{
-  margin-bottom:15px;
-}
-
-.pizza-preview{
-  width:200px;
-  height:200px;
-  object-fit:cover;
-  border-radius:50%;
-  margin-bottom:15px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.8);
-  transition:0.3s;
-}
-
-.pizza-preview:hover{
-  transform:scale(1.05);
-}
-
-.opcoes-pizza{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  margin-top:10px;
-}
-
-.campo{
-  text-align:left;
-}
-
-.campo label{
-  font-size:14px;
-  display:block;
-  margin-bottom:3px;
-}
-
-.campo select{
-  width:100%;
-  padding:10px;
-  border-radius:8px;
-  border:none;
-}
-
-.btn-montar{
-  margin-top:20px;
-  width:100%;
-  background:#ff9800;
-  color:white;
-  border:none;
-  padding:15px;
-  border-radius:10px;
-  font-size:18px;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.btn-montar:hover{
-  background:#e68900;
-  transform:scale(1.03);
-}
-
-.voltar{
-  display:block;
-  margin-top:15px;
-  cursor:pointer;
-  color:#ccc;
-}
-
-.voltar:hover{
-  color:white;
 }
