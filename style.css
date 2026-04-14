@@ -535,3 +535,34 @@ margin-right:auto;
 #produtos .card:not(.pizza-card):not(.destaque) .card-content{
   padding-right:110px;
 }
+/* ❌ BOTÃO REMOVER (X + texto limpo) */
+.item-carrinho button.remover,
+.item-carrinho button:last-child{
+
+  background:transparent !important;
+  border:none !important;
+  color:white !important;
+
+  font-size:14px;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  gap:6px;
+
+  padding:0 !important;
+}
+
+/* ❌ deixa o X vermelho */
+.item-carrinho button.remover::before,
+.item-carrinho button:last-child::before{
+  content:"✖";
+  color:red;
+  font-weight:bold;
+}
+
+/* hover simples */
+.item-carrinho button.remover:hover,
+.item-carrinho button:last-child:hover{
+  color:#ff9800 !important;
+}
