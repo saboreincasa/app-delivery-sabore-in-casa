@@ -571,17 +571,16 @@ margin-right:auto;
   color:white;
 }
 /* ============================= */
-/* 🔥 BOTÕES DO CARRINHO AJUSTADOS */
+/* 🔥 BOTÕES + e - IGUAIS AOS DEMAIS BOTÕES */
 /* ============================= */
 
-/* ➕ e ➖ (MESMA COR DOS OUTROS BOTÕES) */
 .controle button{
-  background:#ff9800;   /* mesma cor dos botões do site */
+  background:#ff9800;   /* MESMA COR DOS OUTROS BOTÕES */
   border:none;
   color:white;
   width:32px;
   height:32px;
-  border-radius:8px;    /* quadrado com borda arredondada */
+  border-radius:8px;    /* quadrado arredondado */
   font-size:16px;
   cursor:pointer;
   display:flex;
@@ -590,13 +589,15 @@ margin-right:auto;
   transition:0.2s;
 }
 
-/* efeito hover igual aos outros botões */
+/* hover igual aos outros botões do site */
 .controle button:hover{
   background:#e68900;
-  transform:scale(1.05);
 }
 
-/* ❌ BOTÃO REMOVER (SEM FUNDO) */
+/* ============================= */
+/* 🔥 BOTÃO REMOVER (SEM FUNDO) */
+/* ============================= */
+
 .btn-remove{
   background:transparent;
   border:none;
@@ -606,7 +607,6 @@ margin-right:auto;
   display:flex;
   align-items:center;
   gap:6px;
-  transition:0.2s;
 }
 
 /* X vermelho */
@@ -614,9 +614,4 @@ margin-right:auto;
   color:red;
   font-weight:bold;
   font-size:16px;
-}
-
-/* hover leve no remover */
-.btn-remove:hover{
-  opacity:0.8;
 }
