@@ -677,3 +677,24 @@ margin-right:auto;
 #lista .controle button:hover{
   background:#e68900 !important;
 }
+/* 🔥 CORREÇÃO DEFINITIVA BOTÕES + E - DO CARRINHO */
+
+#lista .controle button{
+  background:#ff9800 !important;
+  color:white !important;
+  width:32px !important;
+  height:32px !important;
+  border-radius:8px !important;
+  border:none !important;
+  font-size:16px !important;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:0.2s;
+}
+
+/* hover */
+#lista .controle button:hover{
+  background:#e68900 !important;
+}
