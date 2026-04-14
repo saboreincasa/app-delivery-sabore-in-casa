@@ -24,7 +24,7 @@ color:white;
   overflow: hidden;
 }
 
-/* Overlay MAIS CLARO (melhoria visual) */
+/* Overlay MAIS CLARO */
 .overlay{
   position: absolute;
   width: 100%;
@@ -170,8 +170,6 @@ border-radius:12px;
 overflow:hidden;
 box-shadow:0 0 10px rgba(0,0,0,0.5);
 transition:0.2s;
-
-/* 🔥 MELHORIA */
 display:flex;
 flex-direction:column;
 justify-content:space-between;
@@ -181,7 +179,7 @@ justify-content:space-between;
 transform:scale(1.03);
 }
 
-/* 🔥 IMAGEM PADRONIZADA (CORRIGIDO) */
+/* IMAGEM PADRÃO */
 .card img{
   width:100%;
   height:140px;
@@ -190,6 +188,11 @@ transform:scale(1.03);
   padding:8px;
   border-bottom:1px solid #333;
   transition:0.3s;
+}
+
+/* 🔥 BEBIDAS (PADRÃO NORMAL DESKTOP) */
+.bebida-img{
+  height:150px;
 }
 
 .card-content{
@@ -223,10 +226,10 @@ transition:0.2s;
 background:#e68900;
 }
 
-/* RESPONSIVO IMAGEM */
+/* RESPONSIVO PADRÃO */
 @media (max-width:600px){
   .card img{
-    height:120px;
+    height:100px;
   }
 }
 
@@ -234,6 +237,48 @@ background:#e68900;
   .card img{
     height:160px;
   }
+}
+
+/* 🔥 AJUSTE MOBILE COMPLETO */
+@media (max-width:600px){
+
+  #produtos{
+    grid-template-columns: repeat(2, 1fr);
+    gap:10px;
+  }
+
+  #combosSemana{
+    grid-template-columns: repeat(2, 1fr);
+    gap:10px;
+  }
+
+  .card{
+    border-radius:10px;
+  }
+
+  .card-content{
+    padding:8px;
+  }
+
+  .card h3{
+    font-size:14px;
+  }
+
+  .preco{
+    font-size:14px;
+  }
+
+  .card button{
+    padding:8px;
+    font-size:13px;
+  }
+
+  /* 🔥 AQUI ESTÁ A MÁGICA (BEBIDAS MAIORES) */
+  .bebida-img{
+    height:140px !important;
+    padding:6px;
+  }
+
 }
 
 /* COMBO DESTAQUE */
@@ -365,43 +410,4 @@ margin-right:auto;
   body{
     background:#0b0b0b;
   }
-/* 🔥 AJUSTE FINO MOBILE (CORREÇÃO DEFINITIVA) */
-@media (max-width:600px){
-
-  #produtos{
-    grid-template-columns: repeat(2, 1fr); /* 2 colunas no celular */
-    gap:10px;
-  }
-
-  #combosSemana{
-    grid-template-columns: repeat(2, 1fr);
-    gap:10px;
-  }
-
-  .card{
-    border-radius:10px;
-  }
-
-  .card img{
-    height:100px; /* 🔥 menor no mobile */
-    padding:5px;
-  }
-
-  .card-content{
-    padding:8px;
-  }
-
-  .card h3{
-    font-size:14px;
-  }
-
-  .preco{
-    font-size:14px;
-  }
-
-  .card button{
-    padding:8px;
-    font-size:13px;
-  }
-
 }
