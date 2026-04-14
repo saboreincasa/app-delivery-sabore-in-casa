@@ -10,12 +10,6 @@ window.onload = function(){
     iniciarBanner()
 }
 
-// 🔥 VOLTAR INICIO (CORRIGE BANNER)
-function voltarInicio(){
-    document.getElementById("produtos").innerHTML = ""
-    mostrarCombos()
-}
-
 // 🔥 ESCONDER COMBOS
 function esconderCombos(){
     document.getElementById("combosSemana").innerHTML = ""
@@ -29,7 +23,7 @@ function mostrarCombos(){
     document.getElementById("produtos").innerHTML = ""
 }
 
-// 🍕 PIZZAS
+// 🍕 PIZZAS (🔥 COM IMAGEM + BOTÃO MONTAR)
 function abrirPizzas(){
     esconderCombos()
 
@@ -50,14 +44,18 @@ function abrirPizzas(){
     pizzas.forEach(p=>{
         html += `
         <div class="card pizza-card">
+
             <img src="${p.img}" onerror="this.src='imagens/pizza-padrao.png'">
+
             <div class="card-content">
                 <h3>${p.nome}</h3>
                 <p>${p.desc}</p>
+
                 <button onclick="abrirMontagemPizza('${p.nome}')">
                     🍕 Montar Pizza
                 </button>
             </div>
+
         </div>
         `
     })
@@ -65,7 +63,7 @@ function abrirPizzas(){
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 MONTAGEM
+// 🍕 MONTAGEM (🔥 AQUI FOI MELHORADO VISUAL)
 function abrirMontagemPizza(nome){
 
     let imagens = {
@@ -82,6 +80,7 @@ function abrirMontagemPizza(nome){
 
     let html = `
     <div class="montagem-box">
+
         <h2>🍕 ${nome}</h2>
 
         <img class="pizza-preview" src="${imagens[nome]}" onerror="this.src='imagens/pizza-padrao.png'">
@@ -129,29 +128,42 @@ function abrirMontagemPizza(nome){
         </button>
 
         <span class="voltar" onclick="abrirPizzas()">⬅ Voltar</span>
+
     </div>
     `
 
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 ADICIONAR
+// 🍕 ADICIONAR PIZZA
 function adicionarPizza(nome){
     let tamanho = document.getElementById("tamanho").value
-    let borda = document.getElementById("borda").value
+
+    let bordaSelect = document.getElementById("borda")
+    let borda = bordaSelect.value
+    let bordaTexto = bordaSelect.options[bordaSelect.selectedIndex].text
+
     let meio = document.getElementById("meio").value
 
-    let preco = tamanho == 25 ? 30 : tamanho == 30 ? 40 : 50
+    let preco = 0
+    if(tamanho == 25) preco = 30
+    if(tamanho == 30) preco = 40
+    if(tamanho == 35) preco = 50
     preco += Number(borda)
 
     let nomeFinal = `${nome} ${tamanho}cm`
+
     if(meio) nomeFinal += " / Meio a Meio com " + meio
+
+    if(borda != 0){
+        nomeFinal += " / Borda " + bordaTexto
+    }
 
     addCarrinho(nomeFinal, preco)
     abrirPizzas()
 }
 
-// 🔥 FILTRO (BEBIDAS INTELIGENTE)
+// 🔥 FILTRO
 function filtrar(tipo){
 
     if(tipo === "combo"){
@@ -171,7 +183,7 @@ function filtrar(tipo){
 
         filtrados.forEach(p=>{
             html += `
-            <div class="card ${p.categoria === 'bebidas' ? 'bebida' : ''}">
+            <div class="card">
                 <img src="${p.foto}">
                 <div class="card-content">
                     <h3>${p.nome}</h3>
@@ -219,11 +231,11 @@ function carregarCombosSemana(){
     })
 }
 
-// 🎬 BANNER
+// 🎬 BANNER 5 SEGUNDOS
 let banners = [
-    {nome:"Combo Família", preco:99.90, foto:"imagens/banners/combo-familia.png"},
-    {nome:"Combo Amigos", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
-    {nome:"Combo Casal", preco:79.90, foto:"imagens/banners/combo-casal.png"}
+    {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:99.90, foto:"imagens/banners/combo-familia.png"},
+    {nome:"Combo Amigos", descricao:"Cerveja + carvão", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
+    {nome:"Combo Casal", descricao:"2 pizzas grandes + refrigerante", preco:79.90, foto:"imagens/banners/combo-casal.png"}
 ]
 
 let bannerIndex = 0
@@ -242,7 +254,102 @@ function mostrarBanner(){
 
     bannerDiv.onclick = function(){
         addCarrinho(combo.nome, combo.preco)
+        mostrarToast(combo)
     }
 
-    bannerIndex = (bannerIndex + 1) % banners.length
+    bannerIndex++
+    if(bannerIndex >= banners.length){
+        bannerIndex = 0
+    }
+}
+
+// 🛒 RESTO DO SISTEMA (INALTERADO)
+function addCarrinho(nome, preco){
+    let item = carrinho.find(i => i.nome === nome)
+    if(item){
+        item.qtd++
+    } else {
+        carrinho.push({nome, preco, qtd:1})
+    }
+    atualizarCarrinho()
+}
+
+function atualizarCarrinho(){
+    let lista = document.getElementById("lista")
+    let contador = document.getElementById("contador")
+    let total = 0
+
+    lista.innerHTML = ""
+
+    carrinho.forEach((item, index)=>{
+        let subtotal = item.preco * item.qtd
+
+        lista.innerHTML += `
+        <div style="display:flex; justify-content:space-between;">
+            <div>
+                <b>${item.nome}</b><br>
+                R$ ${subtotal.toFixed(2)}
+            </div>
+
+            <div style="display:flex; align-items:center; gap:5px;">
+                <button onclick="diminuir(${index})">➖</button>
+                <span>${item.qtd}</span>
+                <button onclick="aumentar(${index})">➕</button>
+                <button onclick="removerItem(${index})">❌</button>
+            </div>
+        </div>
+        `
+
+        total += subtotal
+    })
+
+    contador.innerText = carrinho.length
+    document.getElementById("total").innerText = total.toFixed(2)
+}
+
+function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
+function diminuir(i){ carrinho[i].qtd--; if(carrinho[i].qtd<=0) carrinho.splice(i,1); atualizarCarrinho() }
+function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho() }
+
+function scrollCarrinho(){
+    document.getElementById("carrinho").scrollIntoView({ behavior: "smooth" })
+}
+
+function enviarPedido(){
+    if(carrinho.length === 0){
+        alert("Seu carrinho está vazio!")
+        return
+    }
+
+    let endereco = document.getElementById("enderecoCliente").value || "Endereço não informado"
+    let pagamento = document.getElementById("pagamento").value
+    let troco = document.getElementById("troco").value || "-"
+
+    let msg = "Olá! Gostaria de fazer o pedido:\n\n"
+
+    carrinho.forEach(item=>{
+        msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)} cada\n`
+    })
+
+    msg += `\nTotal: R$${document.getElementById("total").innerText}\n`
+    msg += `Endereço: ${endereco}\n`
+    msg += `Pagamento: ${pagamento}\n`
+    msg += `Troco: ${troco}`
+
+    let url = `https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`
+    window.open(url,"_blank")
+}
+
+function mostrarToast(combo){
+    let toast = document.getElementById("toast")
+    toast.innerText = `✅ ${combo.nome} adicionado! Clique para ver o carrinho`
+    toast.className = "show"
+
+    toast.onclick = function(){
+        scrollCarrinho()
+    }
+
+    setTimeout(()=>{
+        toast.className = toast.className.replace("show","")
+    },4000)
 }
