@@ -65,17 +65,10 @@
     "foto": "imagens/bebidas/coca_cola.png"
   },
   {
-    "nome": "Coca-Cola 473ml",
+    "nome": "Coca-Cola Zero 2L",
     "categoria": "bebidas",
-    "preco": 6.00,
-    "descricao": "Coca-Cola lata 473ml",
-    "foto": "imagens/bebidas/coca_cola.png"
-  },
-  {
-    "nome": "Coca-Cola Zero 473ml",
-    "categoria": "bebidas",
-    "preco": 6.00,
-    "descricao": "Coca-Cola Zero lata 473ml",
+    "preco": 12.00,
+    "descricao": "Refrigerante Coca-Cola Zero 2 Litros",
     "foto": "imagens/bebidas/coca_zero.png"
   },
   {
@@ -83,34 +76,43 @@
     "categoria": "bebidas",
     "preco": 11.00,
     "descricao": "Refrigerante Guaraná Antarctica 2 Litros",
-    "foto": "imagens/bebidas/coca_zero.png"
+    "foto": "imagens/bebidas/guarana.png"
   },
+
   {
-    "nome": "Heineken BG 473ml",
+    "nome": "Heineken 473ml Latão",
     "categoria": "bebidas",
     "preco": 8.00,
-    "descricao": "Cerveja Heineken lata 473ml (BG)",
+    "descricao": "Cerveja Heineken lata 473ml",
     "foto": "imagens/bebidas/heineken.png"
   },
   {
-    "nome": "Brahma BG 473ml",
+    "nome": "Brahma 473ml Latão",
     "categoria": "bebidas",
     "preco": 6.00,
-    "descricao": "Cerveja Brahma lata 473ml (BG)",
+    "descricao": "Cerveja Brahma lata 473ml",
     "foto": "imagens/bebidas/brahma.png"
   },
   {
-    "nome": "Spaten BG 473ml",
+    "nome": "Spaten 473ml Latão",
     "categoria": "bebidas",
     "preco": 7.00,
-    "descricao": "Cerveja Spaten lata 473ml (BG)",
+    "descricao": "Cerveja Spaten lata 473ml",
     "foto": "imagens/bebidas/spaten.png"
   },
   {
-    "nome": "Bohemia BG 473ml",
+    "nome": "Bohemia 473ml Latão",
     "categoria": "bebidas",
     "preco": 7.50,
-    "descricao": "Cerveja Bohemia lata 473ml (BG)",
+    "descricao": "Cerveja Bohemia lata 473ml",
     "foto": "imagens/bebidas/boemia.png"
+  },
+
+  {
+    "nome": "Cerveja BG (Baixa Gastronomia) 473ml",
+    "categoria": "bebidas",
+    "preco": 7.00,
+    "descricao": "Cerveja estilo BG lata 473ml",
+    "foto": "imagens/bebidas/heineken.png"
   }
 ]
