@@ -569,29 +569,51 @@ margin-right:auto;
 
 .voltar:hover{
   color:white;
-}
-/* 🔥 BEBIDAS ESTILO IFOOD */
+/* 🔥 BEBIDAS AJUSTADAS (SEM QUEBRAR LAYOUT) */
 .bebida-card{
   display:flex;
-  gap:15px;
+  gap:12px;
   align-items:center;
   padding:10px;
 }
 
+/* 🔥 IMAGEM RESPONSIVA */
 .bebida-img{
-  width:110px;
-  height:110px;
+  width:90px;
+  height:90px;
+  min-width:90px;
   object-fit:contain;
   border-radius:10px;
   background:#fff;
+  padding:5px;
 }
 
+/* 🔥 TEXTO */
 .bebida-info{
   flex:1;
   display:flex;
   flex-direction:column;
+  justify-content:center;
 }
 
+/* 🔥 BOTÃO ALINHADO */
 .bebida-info button{
-  margin-top:10px;
+  margin-top:8px;
+  width:120px;
+}
+
+/* 🔥 MOBILE */
+@media (max-width:600px){
+  .bebida-card{
+    align-items:flex-start;
+  }
+
+  .bebida-img{
+    width:80px;
+    height:80px;
+  }
+
+  .bebida-info button{
+    width:100%;
+  }
 }
