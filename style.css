@@ -12,7 +12,7 @@ background:#111;
 color:white;
 }
 
-/* HEADER (IMAGEM PROFISSIONAL) */
+/* HEADER */
 .header-topo{
   position: relative;
   height: 220px;
@@ -24,7 +24,6 @@ color:white;
   overflow: hidden;
 }
 
-/* Overlay MAIS CLARO (melhoria visual) */
 .overlay{
   position: absolute;
   width: 100%;
@@ -33,7 +32,6 @@ color:white;
   z-index: 1;
 }
 
-/* LOGO */
 .logo-container{
   position: relative;
   z-index: 2;
@@ -41,23 +39,15 @@ color:white;
 }
 
 .logo-grande{
-  width: auto;
   height: 110px;
   max-width: 90%;
   object-fit: contain;
-  filter: drop-shadow(0 5px 20px rgba(0,0,0,0.8));
-  transition: 0.3s;
 }
 
 /* MOBILE */
 @media (max-width:600px){
-  .header-topo{
-    height: 160px;
-  }
-
-  .logo-grande{
-    height: 80px;
-  }
+  .header-topo{ height:160px; }
+  .logo-grande{ height:80px; }
 }
 
 /* ENDEREÇO */
@@ -65,21 +55,9 @@ color:white;
 background:#1f1f1f;
 padding:12px;
 text-align:center;
-font-size:14px;
-margin:10px auto;
 border-radius:8px;
-line-height:20px;
 max-width:1000px;
-}
-
-.endereco button{
-margin-top:10px;
-padding:8px 14px;
-border:none;
-border-radius:8px;
-background:#ff9800;
-color:white;
-cursor:pointer;
+margin:10px auto;
 }
 
 /* BANNER */
@@ -91,7 +69,6 @@ margin:10px auto;
 border-radius:12px;
 background-size:cover;
 background-position:center;
-transition: background-image 0.5s ease-in-out;
 }
 
 /* CONTAINER */
@@ -101,66 +78,11 @@ max-width:1000px;
 margin:auto;
 }
 
-/* BUSCA */
-.busca{
-width:100%;
-padding:12px;
-border-radius:10px;
-border:none;
-margin-bottom:15px;
-background:white;
-color:black;
-font-size:15px;
-}
-
-/* BOTÕES */
-.btn-flutuantes{
-display:flex;
-flex-direction:column;
-gap:8px;
-margin-bottom:15px;
-}
-
-.linha{
-display:flex;
-gap:10px;
-justify-content:center;
-}
-
-.linha button{
-flex:1;
-background:#ff9800;
-border:none;
-padding:12px;
-border-radius:10px;
-color:white;
-font-size:16px;
-cursor:pointer;
-transition:0.2s;
-}
-
-.linha button:hover{
-background:#e68900;
-}
-
-/* TÍTULOS */
-h2{
-margin:15px 0 10px 0;
-}
-
-/* PRODUTOS */
-#produtos{
+/* GRID */
+#produtos, #combosSemana{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:15px;
-}
-
-/* COMBOS */
-#combosSemana{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:15px;
-margin-bottom:20px;
 }
 
 /* CARD */
@@ -168,7 +90,6 @@ margin-bottom:20px;
 background:#1f1f1f;
 border-radius:12px;
 overflow:hidden;
-box-shadow:0 0 10px rgba(0,0,0,0.5);
 transition:0.2s;
 }
 
@@ -186,213 +107,85 @@ object-fit:cover;
 padding:12px;
 }
 
-.card h3{
-font-size:18px;
-margin-bottom:5px;
-}
-
 .preco{
 color:#2ecc71;
-font-size:17px;
-margin-top:6px;
+margin-top:5px;
 }
 
-.card button{
-background:#ff9800;
-border:none;
-padding:10px;
-width:100%;
-border-radius:8px;
-color:white;
-margin-top:8px;
-cursor:pointer;
-transition:0.2s;
-}
-
-.card button:hover{
-background:#e68900;
-}
-
-/* COMBO DESTAQUE */
-.destaque{
-border:2px solid #ff9800;
-}
-
-/* CARRINHO */
-#carrinho{
-background:#1f1f1f;
-padding:15px;
-border-radius:10px;
-margin:25px auto;
-max-width:1000px;
-}
-
-/* LISTA */
-#lista{
-margin-top:10px;
-}
-
-/* ITEM */
-.item-carrinho{
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:#2a2a2a;
-padding:10px;
-border-radius:8px;
-margin-bottom:8px;
-}
-
-/* CONTROLE */
-.controle{
-display:flex;
-align-items:center;
-gap:8px;
-}
-
-.controle button{
-background:#ff9800;
-border:none;
-color:white;
-width:28px;
-height:28px;
-border-radius:50%;
-font-size:16px;
-cursor:pointer;
-}
-
-/* TOTAL */
-.total{
-font-size:20px;
-margin-top:10px;
-font-weight:bold;
-}
-
-/* INPUTS */
-input,select{
-width:100%;
-padding:10px;
-margin-top:10px;
-border-radius:6px;
-border:none;
-font-size:14px;
-background:white;
-color:black;
-}
-
-/* BOTÃO WHATS */
-.enviar{
-background:#25D366;
-color:white;
-font-size:18px;
-padding:14px;
-margin-top:15px;
-border-radius:20px;
-border:none;
-font-weight:bold;
-cursor:pointer;
-}
-
-.enviar:hover{
-background:#1ebe5d;
-}
-
-/* BOTÃO FLUTUANTE */
-#botaoCarrinho{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#ff9800;
-width:65px;
-height:65px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:28px;
-cursor:pointer;
-}
-
-/* CONTADOR */
-#contador{
-position:absolute;
-top:-5px;
-right:-5px;
-background:red;
-color:white;
-font-size:12px;
-padding:4px 6px;
-border-radius:50%;
-}
-
-/* FOOTER */
-footer{
-text-align:center;
-margin-top:40px;
-font-size:13px;
-color:#aaa;
-padding-bottom:20px;
-max-width:1000px;
-margin-left:auto;
-margin-right:auto;
-}
-
-/* 🔥 FUNDO DESKTOP */
-@media (min-width:1200px){
-  body{
-    background:#0b0b0b;
-  }
-}
-
-/* MOBILE */
-@media (max-width:600px){
-  #banner{
-    height:150px;
-  }
-}
-
-/* 🔥🔥🔥 ALTERAÇÃO APENAS NAS BEBIDAS 🔥🔥🔥 */
+/* 🔥🔥🔥 BEBIDAS NIVEL IFOOD 🔥🔥🔥 */
 
 .card.bebida{
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  height:100px;
-  padding:8px;
+display:flex;
+align-items:center;
+height:100px;
+padding:10px;
+background:#1a1a1a;
+position:relative;
 }
 
 .card.bebida img{
-  width:90px;
-  height:90px;
-  object-fit:contain;
-  border-radius:8px;
-  margin-right:10px;
+width:80px;
+height:80px;
+object-fit:contain;
+margin-right:10px;
 }
 
 .card.bebida .card-content{
-  flex:1;
-  padding:0;
+padding:0;
+flex:1;
 }
 
 .card.bebida h3{
-  font-size:15px;
-  margin-bottom:3px;
+font-size:14px;
+margin-bottom:3px;
 }
 
 .card.bebida p{
-  font-size:12px;
-  color:#ccc;
-  margin-bottom:5px;
+font-size:12px;
+color:#ccc;
 }
 
+/* PREÇO TOP RIGHT */
 .card.bebida .preco{
-  font-size:14px;
-  margin:0;
+position:absolute;
+top:8px;
+right:10px;
+font-size:14px;
 }
 
+/* BOTÃO FIXO */
 .card.bebida button{
-  width:auto;
-  padding:6px 10px;
-  font-size:13px;
-  margin-top:5px;
+position:absolute;
+bottom:8px;
+right:10px;
+padding:6px 12px;
+border-radius:20px;
+font-size:12px;
+width:auto;
+}
+
+/* HOVER PROFISSIONAL */
+.card.bebida:hover{
+transform:scale(1.02);
+box-shadow:0 0 10px rgba(255,152,0,0.3);
+}
+
+/* 🔥 PIZZA PREVIEW CORRIGIDO */
+.pizza-preview{
+width:100%;
+max-width:200px;
+height:auto;
+border-radius:50%;
+}
+
+/* BOTÕES */
+button{
+background:#ff9800;
+border:none;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+background:#e68900;
 }
