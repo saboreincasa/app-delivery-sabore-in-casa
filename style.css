@@ -570,3 +570,28 @@ margin-right:auto;
 .voltar:hover{
   color:white;
 }
+/* 🔥 BEBIDAS ESTILO IFOOD */
+.bebida-card{
+  display:flex;
+  gap:15px;
+  align-items:center;
+  padding:10px;
+}
+
+.bebida-img{
+  width:110px;
+  height:110px;
+  object-fit:contain;
+  border-radius:10px;
+  background:#fff;
+}
+
+.bebida-info{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+
+.bebida-info button{
+  margin-top:10px;
+}
