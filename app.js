@@ -161,9 +161,7 @@ function adicionarPizza(nome){
 
     addCarrinho(nomeFinal, preco)
     abrirPizzas()
-}
-
-// 🔥 FILTRO
+// 🔥 FILTRO (COM LAYOUT ESPECIAL PARA BEBIDAS)
 function filtrar(tipo){
 
     if(tipo === "combo"){
@@ -182,25 +180,50 @@ function filtrar(tipo){
         let html = ""
 
         filtrados.forEach(p=>{
-            html += `
-            <div class="card">
-                <img src="${p.foto}">
-                <div class="card-content">
-                    <h3>${p.nome}</h3>
-                    <p>${p.descricao}</p>
-                    <p class="preco">R$ ${p.preco.toFixed(2)}</p>
-                    <button onclick="addCarrinho('${p.nome}', ${p.preco})">
-                        Adicionar
-                    </button>
+
+            // 🔥 SE FOR BEBIDA → LAYOUT DIFERENTE
+            if(p.categoria === "bebidas"){
+                html += `
+                <div class="card bebida-card">
+
+                    <img class="bebida-img" src="${p.foto}" onerror="this.src='imagens/sem-imagem.png'">
+
+                    <div class="bebida-info">
+                        <h3>${p.nome}</h3>
+                        <p>${p.descricao}</p>
+                        <p class="preco">R$ ${p.preco.toFixed(2)}</p>
+
+                        <button onclick="addCarrinho('${p.nome}', ${p.preco})">
+                            Adicionar
+                        </button>
+                    </div>
+
                 </div>
-            </div>
-            `
+                `
+            }
+
+            // 🔥 RESTO CONTINUA NORMAL (NÃO QUEBRA NADA)
+            else{
+                html += `
+                <div class="card">
+                    <img src="${p.foto}">
+                    <div class="card-content">
+                        <h3>${p.nome}</h3>
+                        <p>${p.descricao}</p>
+                        <p class="preco">R$ ${p.preco.toFixed(2)}</p>
+                        <button onclick="addCarrinho('${p.nome}', ${p.preco})">
+                            Adicionar
+                        </button>
+                    </div>
+                </div>
+                `
+            }
+
         })
 
         document.getElementById("produtos").innerHTML = html
     })
 }
-
 // 🔥 COMBOS
 function carregarCombosSemana(){
     fetch("produtos.json")
