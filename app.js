@@ -10,6 +10,12 @@ window.onload = function(){
     iniciarBanner()
 }
 
+// 🔥 VOLTAR INICIO (CORRIGE BANNER)
+function voltarInicio(){
+    document.getElementById("produtos").innerHTML = ""
+    mostrarCombos()
+}
+
 // 🔥 ESCONDER COMBOS
 function esconderCombos(){
     document.getElementById("combosSemana").innerHTML = ""
@@ -23,7 +29,7 @@ function mostrarCombos(){
     document.getElementById("produtos").innerHTML = ""
 }
 
-// 🍕 PIZZAS (🔥 COM IMAGEM + BOTÃO MONTAR)
+// 🍕 PIZZAS
 function abrirPizzas(){
     esconderCombos()
 
@@ -44,18 +50,14 @@ function abrirPizzas(){
     pizzas.forEach(p=>{
         html += `
         <div class="card pizza-card">
-
             <img src="${p.img}" onerror="this.src='imagens/pizza-padrao.png'">
-
             <div class="card-content">
                 <h3>${p.nome}</h3>
                 <p>${p.desc}</p>
-
                 <button onclick="abrirMontagemPizza('${p.nome}')">
                     🍕 Montar Pizza
                 </button>
             </div>
-
         </div>
         `
     })
@@ -80,7 +82,6 @@ function abrirMontagemPizza(nome){
 
     let html = `
     <div class="montagem-box">
-
         <h2>🍕 ${nome}</h2>
 
         <img class="pizza-preview" src="${imagens[nome]}" onerror="this.src='imagens/pizza-padrao.png'">
@@ -128,42 +129,29 @@ function abrirMontagemPizza(nome){
         </button>
 
         <span class="voltar" onclick="abrirPizzas()">⬅ Voltar</span>
-
     </div>
     `
 
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 ADICIONAR PIZZA
+// 🍕 ADICIONAR
 function adicionarPizza(nome){
     let tamanho = document.getElementById("tamanho").value
-
-    let bordaSelect = document.getElementById("borda")
-    let borda = bordaSelect.value
-    let bordaTexto = bordaSelect.options[bordaSelect.selectedIndex].text
-
+    let borda = document.getElementById("borda").value
     let meio = document.getElementById("meio").value
 
-    let preco = 0
-    if(tamanho == 25) preco = 30
-    if(tamanho == 30) preco = 40
-    if(tamanho == 35) preco = 50
+    let preco = tamanho == 25 ? 30 : tamanho == 30 ? 40 : 50
     preco += Number(borda)
 
     let nomeFinal = `${nome} ${tamanho}cm`
-
     if(meio) nomeFinal += " / Meio a Meio com " + meio
-
-    if(borda != 0){
-        nomeFinal += " / Borda " + bordaTexto
-    }
 
     addCarrinho(nomeFinal, preco)
     abrirPizzas()
 }
 
-// 🔥 FILTRO (🔥 AQUI ESTÁ A MÁGICA DAS BEBIDAS)
+// 🔥 FILTRO (BEBIDAS INTELIGENTE)
 function filtrar(tipo){
 
     if(tipo === "combo"){
@@ -199,4 +187,62 @@ function filtrar(tipo){
 
         document.getElementById("produtos").innerHTML = html
     })
+}
+
+// 🔥 COMBOS
+function carregarCombosSemana(){
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
+
+        let combos = produtos.filter(p => p.categoria === "combos")
+
+        let html = ""
+
+        combos.forEach(c=>{
+            html += `
+            <div class="card destaque">
+                <img src="${c.foto}">
+                <div class="card-content">
+                    <h3>${c.nome}</h3>
+                    <p>${c.descricao}</p>
+                    <p class="preco">R$ ${c.preco.toFixed(2)}</p>
+                    <button onclick="addCarrinho('${c.nome}', ${c.preco})">
+                        Adicionar
+                    </button>
+                </div>
+            </div>
+            `
+        })
+
+        document.getElementById("combosSemana").innerHTML = html
+    })
+}
+
+// 🎬 BANNER
+let banners = [
+    {nome:"Combo Família", preco:99.90, foto:"imagens/banners/combo-familia.png"},
+    {nome:"Combo Amigos", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
+    {nome:"Combo Casal", preco:79.90, foto:"imagens/banners/combo-casal.png"}
+]
+
+let bannerIndex = 0
+let bannerDiv
+
+function iniciarBanner(){
+    bannerDiv = document.getElementById("banner")
+    mostrarBanner()
+    setInterval(mostrarBanner, 5000)
+}
+
+function mostrarBanner(){
+    let combo = banners[bannerIndex]
+
+    bannerDiv.style.backgroundImage = `url('${combo.foto}')`
+
+    bannerDiv.onclick = function(){
+        addCarrinho(combo.nome, combo.preco)
+    }
+
+    bannerIndex = (bannerIndex + 1) % banners.length
 }
