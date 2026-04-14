@@ -109,10 +109,10 @@
   },
 
   {
-    "nome": "Cerveja BG (Baixa Gastronomia) 473ml",
+    "nome": "BG Baixa Gastronomia 473ml",
     "categoria": "bebidas",
     "preco": 7.00,
     "descricao": "Cerveja estilo BG lata 473ml",
-    "foto": "imagens/bebidas/heineken.png"
+    "foto": "imagens/bebidas/bg_baixa_gastronomia.png"
   }
 ]
