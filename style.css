@@ -659,3 +659,48 @@ margin-right:auto;
 #produtos .card:not(.pizza-card):not(.destaque) .card-content{
   padding-right:110px;
 }
+/* 🔥 BOTÕES DO CARRINHO ESTILIZADOS */
+
+/* container dos botões */
+#lista button{
+  border:none;
+  cursor:pointer;
+  font-weight:bold;
+  transition:0.2s;
+}
+
+/* ➕ ➖ BOTÕES */
+#lista button:nth-child(1),
+#lista button:nth-child(3){
+  background:#ff9800;
+  color:white;
+  width:32px;
+  height:32px;
+  border-radius:8px; /* quadrado arredondado */
+  font-size:16px;
+}
+
+/* hover */
+#lista button:nth-child(1):hover,
+#lista button:nth-child(3):hover{
+  background:#e68900;
+}
+
+/* ❌ BOTÃO REMOVER */
+#lista button:nth-child(4){
+  background:#e74c3c;
+  color:white;
+  padding:6px 10px;
+  border-radius:8px;
+  font-size:13px;
+}
+
+/* muda o texto */
+#lista button:nth-child(4)::after{
+  content:" Remover";
+}
+
+/* hover remover */
+#lista button:nth-child(4):hover{
+  background:#c0392b;
+}
