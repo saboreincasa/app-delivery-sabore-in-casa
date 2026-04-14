@@ -18,36 +18,21 @@ color:white;
   height: 220px;
   background: url("imagens/capa.png") no-repeat center center;
   background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .overlay{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.25);
-  z-index: 1;
-}
-
-.logo-container{
-  position: relative;
-  z-index: 2;
-  text-align: center;
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.3);
 }
 
 .logo-grande{
-  height: 110px;
-  max-width: 90%;
-  object-fit: contain;
-}
-
-/* MOBILE */
-@media (max-width:600px){
-  .header-topo{ height:160px; }
-  .logo-grande{ height:80px; }
+  height:100px;
+  z-index:2;
 }
 
 /* ENDEREÇO */
@@ -55,9 +40,10 @@ color:white;
 background:#1f1f1f;
 padding:12px;
 text-align:center;
+font-size:14px;
+margin:10px auto;
 border-radius:8px;
 max-width:1000px;
-margin:10px auto;
 }
 
 /* BANNER */
@@ -69,6 +55,7 @@ margin:10px auto;
 border-radius:12px;
 background-size:cover;
 background-position:center;
+cursor:pointer;
 }
 
 /* CONTAINER */
@@ -76,6 +63,24 @@ background-position:center;
 padding:15px;
 max-width:1000px;
 margin:auto;
+}
+
+/* BOTÕES FILTRO */
+.linha{
+display:flex;
+gap:10px;
+margin-bottom:15px;
+}
+
+.linha button{
+flex:1;
+background:#ff9800;
+border:none;
+padding:12px;
+border-radius:10px;
+color:white;
+font-size:15px;
+cursor:pointer;
 }
 
 /* GRID */
@@ -90,102 +95,255 @@ gap:15px;
 background:#1f1f1f;
 border-radius:12px;
 overflow:hidden;
+display:flex;
+flex-direction:column;
+min-height:320px;
 transition:0.2s;
 }
 
 .card:hover{
-transform:scale(1.03);
+transform:translateY(-5px);
 }
 
+/* IMAGEM */
 .card img{
 width:100%;
-height:140px;
+height:160px;
 object-fit:cover;
+background:#000;
 }
 
+/* BEBIDAS */
+.card.bebida img{
+object-fit:contain;
+padding:10px;
+}
+
+/* CONTEÚDO */
 .card-content{
 padding:12px;
-}
-
-.preco{
-color:#2ecc71;
-margin-top:5px;
-}
-
-/* 🔥🔥🔥 BEBIDAS NIVEL IFOOD 🔥🔥🔥 */
-
-.card.bebida{
 display:flex;
-align-items:center;
-height:100px;
-padding:10px;
-background:#1a1a1a;
-position:relative;
-}
-
-.card.bebida img{
-width:80px;
-height:80px;
-object-fit:contain;
-margin-right:10px;
-}
-
-.card.bebida .card-content{
-padding:0;
+flex-direction:column;
 flex:1;
 }
 
-.card.bebida h3{
-font-size:14px;
-margin-bottom:3px;
+/* TITULO */
+.card h3{
+font-size:15px;
+height:38px;
+overflow:hidden;
 }
 
-.card.bebida p{
-font-size:12px;
+/* DESCRIÇÃO */
+.card p{
+font-size:13px;
 color:#ccc;
+height:38px;
+overflow:hidden;
 }
 
-/* PREÇO TOP RIGHT */
-.card.bebida .preco{
-position:absolute;
-top:8px;
-right:10px;
-font-size:14px;
+/* PREÇO */
+.preco{
+margin-top:auto;
+font-size:16px;
+color:#2ecc71;
+font-weight:bold;
 }
 
-/* BOTÃO FIXO */
-.card.bebida button{
-position:absolute;
-bottom:8px;
-right:10px;
-padding:6px 12px;
-border-radius:20px;
-font-size:12px;
-width:auto;
-}
-
-/* HOVER PROFISSIONAL */
-.card.bebida:hover{
-transform:scale(1.02);
-box-shadow:0 0 10px rgba(255,152,0,0.3);
-}
-
-/* 🔥 PIZZA PREVIEW CORRIGIDO */
-.pizza-preview{
+/* BOTÃO */
+.card button{
 width:100%;
-max-width:200px;
-height:auto;
-border-radius:50%;
-}
-
-/* BOTÕES */
-button{
+height:42px;
+margin-top:10px;
 background:#ff9800;
 border:none;
+border-radius:8px;
 color:white;
+font-weight:bold;
 cursor:pointer;
 }
 
-button:hover{
-background:#e68900;
+/* COMBO */
+.destaque{
+border:2px solid #ff9800;
+}
+
+/* CARRINHO */
+#carrinho{
+background:#1f1f1f;
+padding:15px;
+border-radius:10px;
+margin-top:20px;
+}
+
+/* ITEM */
+.item-carrinho{
+display:flex;
+justify-content:space-between;
+margin-bottom:10px;
+}
+
+/* BOTÕES CARRINHO */
+.item-carrinho button{
+background:#ff9800;
+border:none;
+color:white;
+width:25px;
+height:25px;
+border-radius:50%;
+}
+
+/* TOTAL */
+.total{
+font-size:20px;
+margin-top:10px;
+}
+
+/* INPUT */
+input,select{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:6px;
+border:none;
+}
+
+/* WHATS */
+.enviar{
+background:#25D366;
+padding:14px;
+margin-top:15px;
+border:none;
+border-radius:20px;
+color:white;
+font-weight:bold;
+width:100%;
+}
+
+/* BOTÃO FLUTUANTE */
+#botaoCarrinho{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#ff9800;
+width:60px;
+height:60px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:25px;
+}
+
+/* =========================
+🔥 MONTAGEM DE PIZZA
+========================= */
+
+.montagem-box{
+background:#1f1f1f;
+padding:20px;
+border-radius:12px;
+max-width:380px;
+margin:20px auto;
+text-align:center;
+}
+
+.pizza-preview{
+width:170px;
+height:170px;
+object-fit:cover;
+border-radius:50%;
+margin-bottom:15px;
+}
+
+.opcoes-pizza{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.campo{
+text-align:left;
+}
+
+.btn-montar{
+margin-top:15px;
+width:100%;
+background:#ff9800;
+border:none;
+padding:14px;
+border-radius:10px;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+/* 🔥 BOTÃO VOLTAR (CORRIGIDO) */
+.voltar{
+display:block;
+margin-top:12px;
+text-align:center;
+background:#2a2a2a;
+padding:10px;
+border-radius:8px;
+cursor:pointer;
+font-size:14px;
+transition:0.2s;
+}
+
+.voltar:hover{
+background:#3a3a3a;
+}
+
+/* =========================
+🔥 MOBILE
+========================= */
+
+@media(max-width:600px){
+
+.header-topo{
+height:160px;
+}
+
+#banner{
+height:150px;
+}
+
+#produtos, #combosSemana{
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+}
+
+.card{
+min-height:300px;
+}
+
+.card img{
+height:120px;
+}
+
+.card h3{
+font-size:14px;
+height:34px;
+}
+
+.card p{
+font-size:12px;
+height:34px;
+}
+
+.card button{
+height:38px;
+font-size:14px;
+}
+
+.montagem-box{
+max-width:100%;
+}
+
+.pizza-preview{
+width:150px;
+height:150px;
+}
+
 }
