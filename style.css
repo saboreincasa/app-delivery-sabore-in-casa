@@ -535,36 +535,25 @@ margin-right:auto;
 #produtos .card:not(.pizza-card):not(.destaque) .card-content{
   padding-right:110px;
 }
-/* ❌ BOTÃO REMOVER CORRIGIDO (X vermelho + texto REMOVER) */
+/* 🔥 REMOVER COMO TEXTO (SEM BOTÃO) */
 
 .item-carrinho button:last-child{
-  background:transparent !important;
+  background:none !important;
   border:none !important;
-  color:transparent !important; /* esconde texto original */
-  position:relative;
+  color:transparent !important;
   cursor:pointer;
   padding:0 !important;
   font-size:14px;
 }
 
-/* cria o botão visual */
+/* texto customizado */
 .item-carrinho button:last-child::before{
-  content:"✖ REMOVER";
-  color:#fff;
-  font-weight:500;
-}
-
-/* deixa só o X vermelho */
-.item-carrinho button:last-child::after{
-  content:"";
-}
-
-/* pinta apenas o X (primeiro caractere) */
-.item-carrinho button:last-child::before{
+  content:"✖ Remover";
   color:white;
 }
 
-.item-carrinho button:last-child::first-letter{
+/* X vermelho */
+.item-carrinho button:last-child::before::first-letter{
   color:red;
   font-weight:bold;
 }
