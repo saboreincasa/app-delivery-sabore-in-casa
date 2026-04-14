@@ -534,3 +534,41 @@ margin-right:auto;
 #produtos .card:not(.pizza-card):not(.destaque) .card-content{
   padding-right:110px;
 }
+/* 🔥 AJUSTE FINAL DOS BOTÕES DO CARRINHO (SEM ALTERAR O RESTO) */
+
+/* ➕ ➖ mais e menos: quadrados com bordas arredondadas */
+#lista .controle button{
+  background:#ff9800 !important;
+  color:white !important;
+  width:32px !important;
+  height:32px !important;
+  border-radius:8px !important; /* quadrado arredondado */
+  border:none !important;
+  font-size:16px !important;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+#lista .controle button:hover{
+  background:#e68900 !important;
+}
+
+/* ❌ X remover: SEM botão, sem fundo, só texto */
+#lista .item-carrinho button:last-child{
+  background:transparent !important;
+  color:#ffffff !important;
+  border:none !important;
+  padding:0 !important;
+  margin-left:10px;
+  font-size:14px;
+  cursor:pointer;
+  text-decoration:none;
+}
+
+/* hover do remover */
+#lista .item-carrinho button:last-child:hover{
+  color:#ff9800 !important;
+}
