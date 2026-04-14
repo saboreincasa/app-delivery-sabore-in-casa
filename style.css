@@ -638,59 +638,66 @@ margin-right:auto;
   font-size:16px;
 }
 /* ============================= */
-/* 🔥 BEBIDAS ESTILO APP */
+/* 🔥 BEBIDAS PADRÃO APP (IGUAL PRINT) */
 /* ============================= */
 
 .bebida-card{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  background:#1f1f1f;
-  padding:10px;
-  border-radius:12px;
-  margin-bottom:10px;
-  box-shadow:0 0 10px rgba(0,0,0,0.4);
+  background:#1a1a1a;
+  padding:8px 10px;
+  border-radius:10px;
+  margin-bottom:8px;
   gap:10px;
 }
 
+/* 🔥 IMAGEM PEQUENA IGUAL LATINHA */
 .bebida-img{
-  width:60px;
-  height:60px;
+  width:50px;
+  height:50px;
   object-fit:contain;
 }
 
+/* 🔥 BLOCO TEXTO */
 .bebida-info{
   flex:1;
 }
 
+/* 🔥 NOME */
 .bebida-info h3{
-  font-size:16px;
-  margin-bottom:3px;
-}
-
-.bebida-info p{
-  font-size:13px;
-  color:#ccc;
-  margin-bottom:3px;
-}
-
-.bebida-preco{
   font-size:15px;
+  margin-bottom:2px;
+  font-weight:bold;
+}
+
+/* 🔥 DESCRIÇÃO */
+.bebida-info p{
+  font-size:12px;
+  color:#aaa;
+  margin-bottom:2px;
+}
+
+/* 🔥 PREÇO GRANDE */
+.bebida-preco{
+  font-size:16px;
   color:#2ecc71;
   font-weight:bold;
 }
 
+/* 🔥 BOTÃO IGUAL DO APP */
 .bebida-btn{
   background:#ff9800;
   border:none;
-  padding:8px 12px;
-  border-radius:8px;
+  padding:6px 10px;
+  border-radius:6px;
   color:white;
+  font-size:13px;
   cursor:pointer;
-  font-size:14px;
   transition:0.2s;
 }
 
+/* 🔥 HOVER IGUAL RESTO DO SITE */
 .bebida-btn:hover{
   background:#e68900;
 }
