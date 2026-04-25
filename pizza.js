@@ -84,13 +84,13 @@ function atualizarPreco(){
 
     let preco = 0;
 
-    if(tamanho == 25) preco = 30;
-    if(tamanho == 30) preco = 40;
-    if(tamanho == 35) preco = 50;
+    if(tamanho == 25) preco = 39.90;
+    if(tamanho == 30) preco = 54.90;
+    if(tamanho == 35) preco = 69.90;
 
     preco += Number(borda);
 
-    document.getElementById("preco").innerText = "Total: R$ " + preco;
+    document.getElementById("preco").innerText = "Total: R$ " + preco.toFixed(2);
 }
 
 // ADICIONAR
@@ -103,9 +103,9 @@ function adicionarPizza(){
 
     let preco = 0;
 
-    if(tamanho == 25) preco = 30;
-    if(tamanho == 30) preco = 40;
-    if(tamanho == 35) preco = 50;
+    if(tamanho == 25) preco = 39.90;
+    if(tamanho == 30) preco = 54.90;
+    if(tamanho == 35) preco = 69.90;
 
     preco += Number(bordaSelect.value);
 
