@@ -63,7 +63,7 @@ function abrirPizzas(){
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 MONTAGEM (🔥 AQUI FOI MELHORADO VISUAL)
+// 🍕 MONTAGEM
 function abrirMontagemPizza(nome){
 
     let imagens = {
@@ -138,11 +138,9 @@ function abrirMontagemPizza(nome){
 // 🍕 ADICIONAR PIZZA
 function adicionarPizza(nome){
     let tamanho = document.getElementById("tamanho").value
-
     let bordaSelect = document.getElementById("borda")
     let borda = bordaSelect.value
     let bordaTexto = bordaSelect.options[bordaSelect.selectedIndex].text
-
     let meio = document.getElementById("meio").value
 
     let preco = 0
@@ -154,10 +152,7 @@ function adicionarPizza(nome){
     let nomeFinal = `${nome} ${tamanho}cm`
 
     if(meio) nomeFinal += " / Meio a Meio com " + meio
-
-    if(borda != 0){
-        nomeFinal += " / Borda " + bordaTexto
-    }
+    if(borda != 0) nomeFinal += " / Borda " + bordaTexto
 
     addCarrinho(nomeFinal, preco)
     abrirPizzas()
@@ -201,7 +196,7 @@ function filtrar(tipo){
     })
 }
 
-// 🔥 COMBOS
+// 🔥 COMBOS (ALTERADO AQUI)
 function carregarCombosSemana(){
     fetch("produtos.json")
     .then(res => res.json())
@@ -219,7 +214,7 @@ function carregarCombosSemana(){
                     <h3>${c.nome}</h3>
                     <p>${c.descricao}</p>
                     <p class="preco">R$ ${c.preco.toFixed(2)}</p>
-                    <button onclick="addCarrinho('${c.nome}', ${c.preco})">
+                    <button onclick="addCarrinho('${c.nome} - ${c.descricao}', ${c.preco})">
                         Adicionar
                     </button>
                 </div>
@@ -231,7 +226,7 @@ function carregarCombosSemana(){
     })
 }
 
-// 🎬 BANNER 5 SEGUNDOS
+// 🎬 BANNER (ALTERADO AQUI)
 let banners = [
     {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:99.90, foto:"imagens/banners/combo-familia.png"},
     {nome:"Combo Amigos", descricao:"Cerveja + carvão", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
@@ -253,7 +248,7 @@ function mostrarBanner(){
     bannerDiv.style.backgroundImage = `url('${combo.foto}')`
 
     bannerDiv.onclick = function(){
-        addCarrinho(combo.nome, combo.preco)
+        addCarrinho(combo.nome + " - " + combo.descricao, combo.preco)
         mostrarToast(combo)
     }
 
@@ -263,14 +258,11 @@ function mostrarBanner(){
     }
 }
 
-// 🛒 RESTO DO SISTEMA (INALTERADO)
+// 🛒 RESTO IGUAL
 function addCarrinho(nome, preco){
     let item = carrinho.find(i => i.nome === nome)
-    if(item){
-        item.qtd++
-    } else {
-        carrinho.push({nome, preco, qtd:1})
-    }
+    if(item){ item.qtd++ } 
+    else { carrinho.push({nome, preco, qtd:1}) }
     atualizarCarrinho()
 }
 
@@ -353,6 +345,7 @@ function mostrarToast(combo){
         toast.className = toast.className.replace("show","")
     },4000)
 }
+
 function abrirMapa(){
     window.open(
         "https://www.google.com/maps?q=Rua+Maria+de+Lourdes+da+Cruz+378+Mantiqueira+Belo+Horizonte",
