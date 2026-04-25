@@ -228,9 +228,9 @@ function carregarCombosSemana(){
 
 // 🎬 BANNER (ALTERADO AQUI)
 let banners = [
-    {nome:"Combo Família", descricao:"2 pizzas grande 35cm + 2 Refrigerantes 2L", preco:99.90, foto:"imagens/banners/combo-familia.png"},
-    {nome:"Combo Amigos", descricao:"12 Heinekens 473ml + Carvão 3kg", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
-    {nome:"Combo Casal", descricao:"1 pizza Media 30cm + Refrigerante 2L", preco:79.90, foto:"imagens/banners/combo-casal.png"}
+    {nome:"Combo Família", descricao:"2 pizzas grandes 35cm + 2 Refrigerantes 2L", preco:109.90, foto:"imagens/banners/combo-familia.png"},
+    {nome:"Combo Amigos", descricao:"12 Heinekens 473ml + Carvão 3kg", preco:130.00, foto:"imagens/banners/combo-amigos.png"},
+    {nome:"Combo Casal", descricao:"1 pizza Media 30cm + Refrigerante 2L", preco:89.90, foto:"imagens/banners/combo-casal.png"}
 ]
 
 let bannerIndex = 0
