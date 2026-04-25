@@ -3,28 +3,28 @@
     "nome": "Combo Casal",
     "categoria": "combos",
     "preco": 89.90,
-    "descricao": "1 pizza Media 30cm + refrigerante 2L",
+    "descricao": "1 Pizza Media 30cm + Refrigerante 2L",
     "foto": "imagens/combos/combo-casal.png"
   },
   {
     "nome": "Combo Solteiro",
     "categoria": "combos",
     "preco": 44.90,
-    "descricao": "1 pizza pequena 25cm + coca cola 350ml",
+    "descricao": "1 Pizza pequena 25cm + Coca Cola 350ml",
     "foto": "imagens/combos/combo-solteiro.png"
   },
   {
     "nome": "Combo Família",
     "categoria": "combos",
     "preco": 109.90,
-    "descricao": "2 pizzas grandes 35cm + Dois refrigerantes 2L",
+    "descricao": "2 Pizzas grandes 35cm + 2 refrigerantes 2L",
     "foto": "imagens/combos/combo-familia.png"
   },
   {
     "nome": "Combo Amigos",
     "categoria": "combos",
     "preco": 130.00,
-    "descricao": "🔥 12 Heineken 473ml geladas + carvão 3kg",
+    "descricao": "🔥 12 Heinekens 473ml + Carvão 3kg",
     "foto": "imagens/combos/combo-amigos.png"
   },
 
