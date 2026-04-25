@@ -1,118 +1,223 @@
-[
-  {
-    "nome": "Combo Casal",
-    "categoria": "combos",
-    "preco": 89.90,
-    "descricao": "1 pizza Media 30cm + refrigerante 2L",
-    "foto": "imagens/combos/combo-casal.png"
-  },
-  {
-    "nome": "Combo Solteiro",
-    "categoria": "combos",
-    "preco": 44.90,
-    "descricao": "1 pizza pequena 25cm + coca cola 350ml",
-    "foto": "imagens/combos/combo-solteiro.png"
-  },
-  {
-    "nome": "Combo Família",
-    "categoria": "combos",
-    "preco": 109.90,
-    "descricao": "2 pizzas grandes 35cm + Dois refrigerantes 2L",
-    "foto": "imagens/combos/combo-familia.png"
-  },
-  {
-    "nome": "Combo Amigos",
-    "categoria": "combos",
-    "preco": 130.00,
-    "descricao": "🔥 12 Heineken 473ml geladas + carvão 3kg",
-    "foto": "imagens/combos/combo-amigos.png"
-  },
+// 🛒 CARRINHO 
+let carrinho = []
 
-  {
-    "nome": "Batata Frita Crocante",
-    "categoria": "snaks",
-    "preco": 22.90,
-    "descricao": "Porção de batata frita crocante",
-    "foto": "imagens/snaks/batata-frita.png"
-  },
-  {
-    "nome": "Nuggets de Frango",
-    "categoria": "snaks",
-    "preco": 26.90,
-    "descricao": "10 nuggets crocantes",
-    "foto": "imagens/snaks/nuggets-frango.png"
-  },
-  {
-    "nome": "Halls",
-    "categoria": "snaks",
-    "preco": 3.50,
-    "descricao": "Bala refrescante",
-    "foto": "imagens/snaks/halls.png"
-  },
-  {
-    "nome": "Gulão",
-    "categoria": "snaks",
-    "preco": 4.00,
-    "descricao": "Doce gulão",
-    "foto": "imagens/snaks/gulao.png"
-  },
+// Número do WhatsApp
+const whatsappNumero = "5531983391576"
 
-  {
-    "nome": "Coca-Cola 2L",
-    "categoria": "bebidas",
-    "preco": 14.90,
-    "descricao": "Refrigerante Coca-Cola 2 Litros",
-    "foto": "imagens/bebidas/coca_cola.png"
-  },
-  {
-    "nome": "Coca-Cola Zero 2L",
-    "categoria": "bebidas",
-    "preco": 14.90,
-    "descricao": "Refrigerante Coca-Cola Zero 2 Litros",
-    "foto": "imagens/bebidas/coca_zero.png"
-  },
-  {
-    "nome": "Guaraná Antarctica 2L",
-    "categoria": "bebidas",
-    "preco": 13.90,
-    "descricao": "Refrigerante Guaraná Antarctica 2 Litros",
-    "foto": "imagens/bebidas/guarana.png"
-  },
+// 🚀 INICIO
+window.onload = function(){
+    carregarCombosSemana()
+    iniciarBanner()
+}
 
-  {
-    "nome": "Heineken 473ml Latão",
-    "categoria": "bebidas",
-    "preco": 10.90,
-    "descricao": "Cerveja Heineken lata 473ml",
-    "foto": "imagens/bebidas/heineken.png"
-  },
-  {
-    "nome": "Brahma 473ml Latão",
-    "categoria": "bebidas",
-    "preco": 7.90,
-    "descricao": "Cerveja Brahma lata 473ml",
-    "foto": "imagens/bebidas/brahma.png"
-  },
-  {
-    "nome": "Spaten 473ml Latão",
-    "categoria": "bebidas",
-    "preco": 8.90,
-    "descricao": "Cerveja Spaten lata 473ml",
-    "foto": "imagens/bebidas/spaten.png"
-  },
-  {
-    "nome": "Bohemia 473ml Latão",
-    "categoria": "bebidas",
-    "preco": 8.90,
-    "descricao": "Cerveja Bohemia lata 473ml",
-    "foto": "imagens/bebidas/bohemia.png"
-  },
+// 🔥 ESCONDER COMBOS
+function esconderCombos(){
+    document.getElementById("combosSemana").innerHTML = ""
+    document.getElementById("tituloCombos").style.display = "none"
+}
 
-  {
-    "nome": "BG Baixa Gastronomia 473ml",
-    "categoria": "bebidas",
-    "preco": 8.50,
-    "descricao": "Cerveja estilo BG lata 473ml",
-    "foto": "imagens/bebidas/bg_baixa_gastronomia.png"
-  }
-]
+// 🔥 MOSTRAR COMBOS
+function mostrarCombos(){
+    document.getElementById("tituloCombos").style.display = "block"
+    carregarCombosSemana()
+    document.getElementById("produtos").innerHTML = ""
+}
+
+// 🔥 FILTRO
+function filtrar(tipo){
+
+    if(tipo === "combo"){
+        mostrarCombos()
+        return
+    } else {
+        esconderCombos()
+    }
+
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
+
+        let filtrados = produtos.filter(p => p.categoria === tipo)
+
+        let html = ""
+
+        filtrados.forEach(p=>{
+            html += `
+            <div class="card">
+                <img src="${p.foto}">
+                <div class="card-content">
+                    <h3>${p.nome}</h3>
+                    <p>${p.descricao}</p>
+                    <p class="preco">R$ ${p.preco.toFixed(2)}</p>
+                    <button onclick="addCarrinho('${p.nome} - ${p.descricao}', ${p.preco})">
+                        Adicionar
+                    </button>
+                </div>
+            </div>
+            `
+        })
+
+        document.getElementById("produtos").innerHTML = html
+    })
+}
+
+// 🔥 COMBOS
+function carregarCombosSemana(){
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
+
+        let combos = produtos.filter(p => p.categoria === "combos")
+
+        let html = ""
+
+        combos.forEach(c=>{
+            html += `
+            <div class="card destaque">
+                <img src="${c.foto}">
+                <div class="card-content">
+                    <h3>${c.nome}</h3>
+                    <p>${c.descricao}</p>
+                    <p class="preco">R$ ${c.preco.toFixed(2)}</p>
+                    <button onclick="addCarrinho('${c.nome} - ${c.descricao}', ${c.preco})">
+                        Adicionar
+                    </button>
+                </div>
+            </div>
+            `
+        })
+
+        document.getElementById("combosSemana").innerHTML = html
+    })
+}
+
+// 🎬 BANNER DINÂMICO (🔥 CORRIGIDO)
+let bannerIndex = 0
+let bannerDiv
+
+function iniciarBanner(){
+    bannerDiv = document.getElementById("banner")
+    mostrarBanner()
+    setInterval(mostrarBanner, 5000)
+}
+
+function mostrarBanner(){
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
+
+        let combos = produtos.filter(p => p.categoria === "combos")
+
+        let combo = combos[bannerIndex]
+
+        bannerDiv.style.backgroundImage = `url('${combo.foto}')`
+
+        bannerDiv.onclick = function(){
+            addCarrinho(combo.nome + " - " + combo.descricao, combo.preco)
+            mostrarToast(combo)
+        }
+
+        bannerIndex++
+        if(bannerIndex >= combos.length){
+            bannerIndex = 0
+        }
+    })
+}
+
+// 🛒 RESTO DO SISTEMA (INALTERADO)
+function addCarrinho(nome, preco){
+    let item = carrinho.find(i => i.nome === nome)
+    if(item){
+        item.qtd++
+    } else {
+        carrinho.push({nome, preco, qtd:1})
+    }
+    atualizarCarrinho()
+}
+
+function atualizarCarrinho(){
+    let lista = document.getElementById("lista")
+    let contador = document.getElementById("contador")
+    let total = 0
+
+    lista.innerHTML = ""
+
+    carrinho.forEach((item, index)=>{
+        let subtotal = item.preco * item.qtd
+
+        lista.innerHTML += `
+        <div style="display:flex; justify-content:space-between;">
+            <div>
+                <b>${item.nome}</b><br>
+                R$ ${subtotal.toFixed(2)}
+            </div>
+
+            <div style="display:flex; align-items:center; gap:5px;">
+                <button onclick="diminuir(${index})">➖</button>
+                <span>${item.qtd}</span>
+                <button onclick="aumentar(${index})">➕</button>
+                <button onclick="removerItem(${index})">❌</button>
+            </div>
+        </div>
+        `
+
+        total += subtotal
+    })
+
+    contador.innerText = carrinho.length
+    document.getElementById("total").innerText = total.toFixed(2)
+}
+
+function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
+function diminuir(i){ carrinho[i].qtd--; if(carrinho[i].qtd<=0) carrinho.splice(i,1); atualizarCarrinho() }
+function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho() }
+
+function scrollCarrinho(){
+    document.getElementById("carrinho").scrollIntoView({ behavior: "smooth" })
+}
+
+function enviarPedido(){
+    if(carrinho.length === 0){
+        alert("Seu carrinho está vazio!")
+        return
+    }
+
+    let endereco = document.getElementById("enderecoCliente").value || "Endereço não informado"
+    let pagamento = document.getElementById("pagamento").value
+    let troco = document.getElementById("troco").value || "-"
+
+    let msg = "Olá! Gostaria de fazer o pedido:\n\n"
+
+    carrinho.forEach(item=>{
+        msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)} cada\n`
+    })
+
+    msg += `\nTotal: R$${document.getElementById("total").innerText}\n`
+    msg += `Endereço: ${endereco}\n`
+    msg += `Pagamento: ${pagamento}\n`
+    msg += `Troco: ${troco}`
+
+    let url = `https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`
+    window.open(url,"_blank")
+}
+
+function mostrarToast(combo){
+    let toast = document.getElementById("toast")
+    toast.innerText = `✅ ${combo.nome} adicionado! Clique para ver o carrinho`
+    toast.className = "show"
+
+    toast.onclick = function(){
+        scrollCarrinho()
+    }
+
+    setTimeout(()=>{
+        toast.className = toast.className.replace("show","")
+    },4000)
+}
+
+function abrirMapa(){
+    window.open(
+        "https://www.google.com/maps?q=Rua+Maria+de+Lourdes+da+Cruz+378+Mantiqueira+Belo+Horizonte",
+        "_blank"
+    )
+}
