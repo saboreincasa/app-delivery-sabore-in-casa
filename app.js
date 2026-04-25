@@ -3,10 +3,21 @@ let carrinho = []
 
 const whatsappNumero = "5531983391576"
 
-// 🚀 INICIO
+// 🚀 INICIO (ROBUSTO)
 window.onload = function(){
-    carregarCombosSemana()
-    iniciarBanner()
+
+    // proteção contra DOM inexistente
+    try{
+        if(document.getElementById("combosSemana")){
+            carregarCombosSemana()
+        }
+
+        if(document.getElementById("banner")){
+            iniciarBanner()
+        }
+    } catch(e){
+        console.log("Erro no init:", e)
+    }
 }
 
 // =========================
@@ -14,22 +25,29 @@ window.onload = function(){
 // =========================
 
 function limparProdutos(){
-    document.getElementById("produtos").innerHTML = ""
+    let el = document.getElementById("produtos")
+    if(el) el.innerHTML = ""
 }
 
 function esconderCombos(){
-    document.getElementById("combosSemana").innerHTML = ""
-    document.getElementById("tituloCombos").style.display = "none"
+    let c = document.getElementById("combosSemana")
+    let t = document.getElementById("tituloCombos")
+
+    if(c) c.innerHTML = ""
+    if(t) t.style.display = "none"
 }
 
 function mostrarCombos(){
-    document.getElementById("tituloCombos").style.display = "block"
+    let t = document.getElementById("tituloCombos")
+
+    if(t) t.style.display = "block"
+
     carregarCombosSemana()
     limparProdutos()
 }
 
 // =========================
-// 🍕 PIZZAS
+// 🍕 PIZZAS (SEM ALTERAÇÃO LÓGICA)
 // =========================
 
 function abrirPizzas(){
@@ -65,11 +83,12 @@ function abrirPizzas(){
         `
     })
 
-    document.getElementById("produtos").innerHTML = html
+    let el = document.getElementById("produtos")
+    if(el) el.innerHTML = html
 }
 
 // =========================
-// 🍕 MONTAGEM
+// 🍕 MONTAGEM (SEM ALTERAÇÃO)
 // =========================
 
 function abrirMontagemPizza(nome){
@@ -125,11 +144,12 @@ function abrirMontagemPizza(nome){
     </div>
     `
 
-    document.getElementById("produtos").innerHTML = html
+    let el = document.getElementById("produtos")
+    if(el) el.innerHTML = html
 }
 
 // =========================
-// 🍕 ADICIONAR
+// 🍕 ADICIONAR (SEM ALTERAÇÃO)
 // =========================
 
 function adicionarPizza(nome){
@@ -154,7 +174,7 @@ function adicionarPizza(nome){
 }
 
 // =========================
-// 🔥 FILTRO
+// 🔥 FILTRO (PROTEGIDO)
 // =========================
 
 function filtrar(tipo){
@@ -193,12 +213,13 @@ function filtrar(tipo){
             `
         })
 
-        document.getElementById("produtos").innerHTML = html
+        let el = document.getElementById("produtos")
+        if(el) el.innerHTML = html
     })
 }
 
 // =========================
-// 🛒 CARRINHO MELHORADO UI
+// 🛒 CARRINHO (SEGURO)
 // =========================
 
 function addCarrinho(nome, preco){
@@ -218,8 +239,10 @@ function atualizarCarrinho(){
 
     let lista = document.getElementById("lista")
     let contador = document.getElementById("contador")
-    let total = 0
 
+    if(!lista || !contador) return
+
+    let total = 0
     lista.innerHTML = ""
 
     carrinho.forEach((item, index)=>{
@@ -228,24 +251,20 @@ function atualizarCarrinho(){
 
         lista.innerHTML += `
         <div class="cart-item">
-
             <div class="cart-info">
                 <b>${item.nome}</b>
                 <span>R$ ${subtotal.toFixed(2)}</span>
             </div>
 
             <div class="cart-actions">
-
                 <button class="btn-qty" onclick="diminuir(${index})">➖</button>
-                <span class="qty">${item.qtd}</span>
+                <span>${item.qtd}</span>
                 <button class="btn-qty" onclick="aumentar(${index})">➕</button>
 
                 <button class="btn-remove" onclick="removerItem(${index})">
                     ❌ Remover
                 </button>
-
             </div>
-
         </div>
         `
 
@@ -260,7 +279,8 @@ function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
 function diminuir(i){ carrinho[i].qtd--; if(carrinho[i].qtd<=0) carrinho.splice(i,1); atualizarCarrinho() }
 function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho() }
 
-// 📌 SCROLL
+// 📌 SCROLL SEGURO
 function scrollCarrinho(){
-    document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
+    let el = document.getElementById("carrinho")
+    if(el) el.scrollIntoView({behavior:"smooth"})
 }
