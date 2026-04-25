@@ -29,24 +29,22 @@ function abrirPizzas(){
 
     let html = "<h2>🍕 Escolha sua Pizza</h2>"
 
-   const pizzas = [
-    {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola", img:"imagens/pizzas/calabresa.png"},
-    {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"imagens/pizzas/franco_com_catupiry.png"},
-    {nome:"4 Queijos",desc:"Mussarela, provolone, parmesão, catupiry", img:"imagens/pizzas/quatro_queijos.png"},
-    {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha", img:"imagens/pizzas/portuguesa.png"},
-    {nome:"Marguerita",desc:"Mussarela, tomate, manjericão", img:"imagens/pizzas/marguerita.png"},
-    {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola", img:"imagens/pizzas/baiana.png"},
-    {nome:"Napolitana",desc:"Mussarela, tomate, parmesão", img:"imagens/pizzas/napolitana.png"},
-    {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela", img:"imagens/pizzas/milho_com_bacon.png"},
-    {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry", img:"imagens/pizzas/moda_da_casa.png"}
-]
+    const pizzas = [
+        {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola", img:"imagens/pizzas/calabresa.png"},
+        {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"imagens/pizzas/franco_com_catupiry.png"},
+        {nome:"4 Queijos",desc:"Mussarela, provolone, parmesão, catupiry", img:"imagens/pizzas/quatro_queijos.png"},
+        {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha", img:"imagens/pizzas/portuguesa.png"},
+        {nome:"Marguerita",desc:"Mussarela, tomate, manjericão", img:"imagens/pizzas/marguerita.png"},
+        {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola", img:"imagens/pizzas/baiana.png"},
+        {nome:"Napolitana",desc:"Mussarela, tomate, parmesão", img:"imagens/pizzas/napolitana.png"},
+        {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela", img:"imagens/pizzas/milho_com_bacon.png"},
+        {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry", img:"imagens/pizzas/moda_da_casa.png"}
+    ]
 
     pizzas.forEach(p=>{
         html += `
         <div class="card pizza-card">
-
             <img src="${p.img}" onerror="this.src='imagens/pizza-padrao.png'">
-
             <div class="card-content">
                 <h3>${p.nome}</h3>
                 <p>${p.desc}</p>
@@ -55,7 +53,6 @@ function abrirPizzas(){
                     🍕 Montar Pizza
                 </button>
             </div>
-
         </div>
         `
     })
@@ -123,11 +120,11 @@ function abrirMontagemPizza(nome){
 
         </div>
 
-        <button class="btn-montar" onclick="adicionarPizza('${nome}')">
+        <button onclick="adicionarPizza('${nome}')">
             🛒 Adicionar ao Carrinho
         </button>
 
-        <span class="voltar" onclick="abrirPizzas()">⬅ Voltar</span>
+        <span onclick="abrirPizzas()">⬅ Voltar</span>
 
     </div>
     `
@@ -137,9 +134,10 @@ function abrirMontagemPizza(nome){
 
 // 🍕 ADICIONAR PIZZA
 function adicionarPizza(nome){
+
     let tamanho = document.getElementById("tamanho").value
     let bordaSelect = document.getElementById("borda")
-    let borda = bordaSelect.value
+    let borda = Number(bordaSelect.value)
     let bordaTexto = bordaSelect.options[bordaSelect.selectedIndex].text
     let meio = document.getElementById("meio").value
 
@@ -148,168 +146,34 @@ function adicionarPizza(nome){
     if(tamanho == 30) preco = 40
     if(tamanho == 35) preco = 50
 
-    preco += Number(borda)
+    preco += borda
 
     let nomeFinal = `${nome} ${tamanho}cm`
 
     if(meio) nomeFinal += " / Meio a Meio com " + meio
-    if(borda != 0) nomeFinal += " / Borda " + bordaTexto
+    if(borda != 0) nomeFinal += " / " + bordaTexto
 
     addCarrinho(nomeFinal, preco)
     abrirPizzas()
 }
 
-// 🔥 FILTRO
-function filtrar(tipo){
-
-    if(tipo === "combo"){
-        mostrarCombos()
-        return
-    } else {
-        esconderCombos()
-    }
-
-    fetch("produtos.json")
-    .then(res => res.json())
-    .then(produtos => {
-
-        let filtrados = produtos.filter(p => p.categoria === tipo)
-
-        let html = ""
-
-        filtrados.forEach(p=>{
-            html += `
-            <div class="card">
-                <img src="${p.foto}">
-                <div class="card-content">
-                    <h3>${p.nome}</h3>
-                    <p>${p.descricao}</p>
-                    <p class="preco">R$ ${p.preco.toFixed(2)}</p>
-
-                    <button onclick="verDetalhesCombo('${p.nome}', '${p.descricao}', ${p.preco}, '${p.foto}')">
-                        👁 Ver detalhes
-                    </button>
-
-                    <button onclick="addCarrinho('${p.nome} - ${p.descricao}', ${p.preco})">
-                        🛒 Adicionar
-                    </button>
-                </div>
-            </div>
-            `
-        })
-
-        document.getElementById("produtos").innerHTML = html
-    })
-}
-
-// 🔥 COMBOS
-function carregarCombosSemana(){
-    fetch("produtos.json")
-    .then(res => res.json())
-    .then(produtos => {
-
-        let combos = produtos.filter(p => p.categoria === "combos")
-
-        let html = ""
-
-        combos.forEach(c=>{
-            html += `
-            <div class="card destaque">
-                <img src="${c.foto}">
-                <div class="card-content">
-                    <h3>${c.nome}</h3>
-                    <p>${c.descricao}</p>
-                    <p class="preco">R$ ${c.preco.toFixed(2)}</p>
-
-                    <button onclick="verDetalhesCombo('${c.nome}', '${c.descricao}', ${c.preco}, '${c.foto}')">
-                        👁 Ver detalhes
-                    </button>
-
-                    <button onclick="addCarrinho('${c.nome} - ${c.descricao}', ${c.preco})">
-                        🛒 Adicionar
-                    </button>
-                </div>
-            </div>
-            `
-        })
-
-        document.getElementById("combosSemana").innerHTML = html
-    })
-}
-
-// 🎬 BANNER
-let banners = [
-    {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:109.90, foto:"imagens/banners/combo-familia.png"},
-    {nome:"Combo Amigos", descricao:"12 Heineken + carvão 3kg", preco:130.00, foto:"imagens/banners/combo-amigos.png"},
-    {nome:"Combo Casal", descricao:"1 pizza + refrigerante", preco:89.90, foto:"imagens/banners/combo-casal.png"}
-]
-
-let bannerIndex = 0
-let bannerDiv
-
-function iniciarBanner(){
-    bannerDiv = document.getElementById("banner")
-    mostrarBanner()
-    setInterval(mostrarBanner, 5000)
-}
-
-function mostrarBanner(){
-    let combo = banners[bannerIndex]
-
-    bannerDiv.style.backgroundImage = `url('${combo.foto}')`
-
-    bannerDiv.onclick = function(){
-        verDetalhesCombo(combo.nome, combo.descricao, combo.preco, combo.foto)
-    }
-
-    bannerIndex++
-    if(bannerIndex >= banners.length){
-        bannerIndex = 0
-    }
-}
-
-// 👁 MODAL DETALHES
-function verDetalhesCombo(nome, descricao, preco, foto){
-
-    let html = `
-    <div id="modalCombo" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;" onclick="fecharModalCombo()">
-
-        <div style="background:#fff;padding:20px;border-radius:10px;width:90%;max-width:400px;text-align:center;" onclick="event.stopPropagation()">
-
-            <img src="${foto}" style="width:100%;border-radius:10px;">
-
-            <h2>${nome}</h2>
-            <p>${descricao}</p>
-            <h3>R$ ${preco.toFixed(2)}</h3>
-
-            <button onclick="addCarrinho('${nome} - ${descricao}', ${preco}); fecharModalCombo()">
-                🛒 Adicionar ao Carrinho
-            </button>
-
-            <button onclick="fecharModalCombo()">Fechar</button>
-
-        </div>
-
-    </div>
-    `
-
-    document.body.insertAdjacentHTML("beforeend", html)
-}
-
-function fecharModalCombo(){
-    let m = document.getElementById("modalCombo")
-    if(m) m.remove()
-}
-
 // 🛒 CARRINHO
 function addCarrinho(nome, preco){
+
     let item = carrinho.find(i => i.nome === nome)
-    if(item){ item.qtd++ }
-    else { carrinho.push({nome, preco, qtd:1}) }
+
+    if(item){
+        item.qtd++
+    } else {
+        carrinho.push({nome, preco, qtd:1})
+    }
+
     atualizarCarrinho()
 }
 
+// 🔥 ATUALIZAR CARRINHO (COM BOTÃO REMOVER NOVO)
 function atualizarCarrinho(){
+
     let lista = document.getElementById("lista")
     let contador = document.getElementById("contador")
     let total = 0
@@ -321,9 +185,37 @@ function atualizarCarrinho(){
         let subtotal = item.preco * item.qtd
 
         lista.innerHTML += `
-        <div>
-            <b>${item.nome}</b><br>
-            R$ ${subtotal.toFixed(2)}
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+
+            <div style="flex:1">
+                <b>${item.nome}</b><br>
+                R$ ${subtotal.toFixed(2)}
+            </div>
+
+            <div style="display:flex;align-items:center;gap:6px;">
+
+                <button onclick="diminuir(${index})">➖</button>
+
+                <span>${item.qtd}</span>
+
+                <button onclick="aumentar(${index})">➕</button>
+
+                <!-- 🔥 BOTÃO REMOVER NOVO -->
+                <div onclick="remover(${index})" style="
+                    display:flex;
+                    align-items:center;
+                    gap:4px;
+                    cursor:pointer;
+                    user-select:none;
+                    font-weight:bold;
+                    color:white;
+                ">
+                    <span style="color:red;font-size:16px;">❌</span>
+                    <span>Remover</span>
+                </div>
+
+            </div>
+
         </div>
         `
 
@@ -332,6 +224,23 @@ function atualizarCarrinho(){
 
     contador.innerText = carrinho.length
     document.getElementById("total").innerText = total.toFixed(2)
+}
+
+// ➕ ➖ ❌
+function aumentar(i){
+    carrinho[i].qtd++
+    atualizarCarrinho()
+}
+
+function diminuir(i){
+    carrinho[i].qtd--
+    if(carrinho[i].qtd <= 0) carrinho.splice(i,1)
+    atualizarCarrinho()
+}
+
+function remover(i){
+    carrinho.splice(i,1)
+    atualizarCarrinho()
 }
 
 // 📌 SCROLL
