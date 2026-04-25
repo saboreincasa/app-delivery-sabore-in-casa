@@ -353,3 +353,9 @@ function mostrarToast(combo){
         toast.className = toast.className.replace("show","")
     },4000)
 }
+function abrirMapa(){
+    window.open(
+        "https://www.google.com/maps?q=Rua+Maria+de+Lourdes+da+Cruz+378+Mantiqueira+Belo+Horizonte",
+        "_blank"
+    )
+}
