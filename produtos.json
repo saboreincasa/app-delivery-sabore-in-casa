@@ -10,14 +10,14 @@
     "nome": "Combo Solteiro",
     "categoria": "combos",
     "preco": 44.90,
-    "descricao": "1 Pizza pequena 25cm + Coca Cola 350ml",
+    "descricao": "1 Pizza Pequena 25cm + Coca Cola 350ml",
     "foto": "imagens/combos/combo-solteiro.png"
   },
   {
     "nome": "Combo Família",
     "categoria": "combos",
     "preco": 109.90,
-    "descricao": "2 Pizzas grandes 35cm + 2 refrigerantes 2L",
+    "descricao": "2 Pizzas Grandes 35cm + 2 refrigerantes 2L",
     "foto": "imagens/combos/combo-familia.png"
   },
   {
