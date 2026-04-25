@@ -147,6 +147,7 @@ function adicionarPizza(nome){
     if(tamanho == 25) preco = 30
     if(tamanho == 30) preco = 40
     if(tamanho == 35) preco = 50
+
     preco += Number(borda)
 
     let nomeFinal = `${nome} ${tamanho}cm`
@@ -184,8 +185,13 @@ function filtrar(tipo){
                     <h3>${p.nome}</h3>
                     <p>${p.descricao}</p>
                     <p class="preco">R$ ${p.preco.toFixed(2)}</p>
-                    <button onclick="addCarrinho('${p.nome}', ${p.preco})">
-                        Adicionar
+
+                    <button onclick="verDetalhesCombo('${p.nome}', '${p.descricao}', ${p.preco}, '${p.foto}')">
+                        👁 Ver detalhes
+                    </button>
+
+                    <button onclick="addCarrinho('${p.nome} - ${p.descricao}', ${p.preco})">
+                        🛒 Adicionar
                     </button>
                 </div>
             </div>
@@ -231,7 +237,7 @@ function carregarCombosSemana(){
     })
 }
 
-// 🎬 BANNER (AGORA ABRE DETALHES)
+// 🎬 BANNER
 let banners = [
     {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:109.90, foto:"imagens/banners/combo-familia.png"},
     {nome:"Combo Amigos", descricao:"12 Heineken + carvão 3kg", preco:130.00, foto:"imagens/banners/combo-amigos.png"},
@@ -262,33 +268,15 @@ function mostrarBanner(){
     }
 }
 
-// 👁 MODAL DETALHES COMBO
+// 👁 MODAL DETALHES
 function verDetalhesCombo(nome, descricao, preco, foto){
 
     let html = `
-    <div id="modalCombo" style="
-        position:fixed;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-        background:rgba(0,0,0,0.8);
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        z-index:9999;
-    " onclick="fecharModalCombo()">
+    <div id="modalCombo" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;" onclick="fecharModalCombo()">
 
-        <div style="
-            background:#fff;
-            padding:20px;
-            border-radius:10px;
-            width:90%;
-            max-width:400px;
-            text-align:center;
-        " onclick="event.stopPropagation()">
+        <div style="background:#fff;padding:20px;border-radius:10px;width:90%;max-width:400px;text-align:center;" onclick="event.stopPropagation()">
 
-            <img src="${foto}" style="width:100%; border-radius:10px;">
+            <img src="${foto}" style="width:100%;border-radius:10px;">
 
             <h2>${nome}</h2>
             <p>${descricao}</p>
@@ -329,6 +317,7 @@ function atualizarCarrinho(){
     lista.innerHTML = ""
 
     carrinho.forEach((item, index)=>{
+
         let subtotal = item.preco * item.qtd
 
         lista.innerHTML += `
@@ -345,6 +334,7 @@ function atualizarCarrinho(){
     document.getElementById("total").innerText = total.toFixed(2)
 }
 
+// 📌 SCROLL
 function scrollCarrinho(){
     document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
 }
