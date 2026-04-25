@@ -1,7 +1,6 @@
 // 🛒 CARRINHO 
 let carrinho = []
 
-// Número do WhatsApp
 const whatsappNumero = "5531983391576"
 
 // 🚀 INICIO
@@ -10,20 +9,29 @@ window.onload = function(){
     iniciarBanner()
 }
 
-// 🔥 ESCONDER COMBOS
+// =========================
+// 🔥 CONTROLE DE TELA
+// =========================
+
+function limparProdutos(){
+    document.getElementById("produtos").innerHTML = ""
+}
+
 function esconderCombos(){
     document.getElementById("combosSemana").innerHTML = ""
     document.getElementById("tituloCombos").style.display = "none"
 }
 
-// 🔥 MOSTRAR COMBOS
 function mostrarCombos(){
     document.getElementById("tituloCombos").style.display = "block"
     carregarCombosSemana()
-    document.getElementById("produtos").innerHTML = ""
+    limparProdutos()
 }
 
+// =========================
 // 🍕 PIZZAS
+// =========================
+
 function abrirPizzas(){
     esconderCombos()
 
@@ -48,7 +56,6 @@ function abrirPizzas(){
             <div class="card-content">
                 <h3>${p.nome}</h3>
                 <p>${p.desc}</p>
-
                 <button onclick="abrirMontagemPizza('${p.nome}')">
                     🍕 Montar Pizza
                 </button>
@@ -60,7 +67,10 @@ function abrirPizzas(){
     document.getElementById("produtos").innerHTML = html
 }
 
+// =========================
 // 🍕 MONTAGEM
+// =========================
+
 function abrirMontagemPizza(nome){
 
     let imagens = {
@@ -84,46 +94,31 @@ function abrirMontagemPizza(nome){
 
         <div class="opcoes-pizza">
 
-            <div class="campo">
-                <label>Tamanho:</label>
-                <select id="tamanho">
-                    <option value="25">Pequena 25cm - R$30</option>
-                    <option value="30">Grande 30cm - R$40</option>
-                    <option value="35">Gigante 35cm - R$50</option>
-                </select>
-            </div>
+            <label>Tamanho:</label>
+            <select id="tamanho">
+                <option value="25">25cm - R$30</option>
+                <option value="30">30cm - R$40</option>
+                <option value="35">35cm - R$50</option>
+            </select>
 
-            <div class="campo">
-                <label>Borda:</label>
-                <select id="borda">
-                    <option value="0">Normal</option>
-                    <option value="10">Catupiry (+10)</option>
-                    <option value="10">Cheddar (+10)</option>
-                </select>
-            </div>
+            <label>Borda:</label>
+            <select id="borda">
+                <option value="0">Normal</option>
+                <option value="10">Catupiry (+10)</option>
+                <option value="10">Cheddar (+10)</option>
+            </select>
 
-            <div class="campo">
-                <label>Meio a Meio:</label>
-                <select id="meio">
-                    <option value="">Não</option>
-                    <option value="Calabresa">Calabresa</option>
-                    <option value="Frango com Catupiry">Frango com Catupiry</option>
-                    <option value="4 Queijos">4 Queijos</option>
-                    <option value="Portuguesa">Portuguesa</option>
-                    <option value="Marguerita">Marguerita</option>
-                    <option value="Baiana">Baiana</option>
-                    <option value="Napolitana">Napolitana</option>
-                    <option value="Milho com Bacon">Milho com Bacon</option>
-                    <option value="Moda da Casa">Moda da Casa</option>
-                </select>
-            </div>
+            <label>Meio a Meio:</label>
+            <select id="meio">
+                <option value="">Não</option>
+                <option value="Calabresa">Calabresa</option>
+                <option value="Frango com Catupiry">Frango</option>
+                <option value="4 Queijos">4 Queijos</option>
+            </select>
 
         </div>
 
-        <button onclick="adicionarPizza('${nome}')">
-            🛒 Adicionar ao Carrinho
-        </button>
-
+        <button onclick="adicionarPizza('${nome}')">🛒 Adicionar</button>
         <span onclick="abrirPizzas()">⬅ Voltar</span>
 
     </div>
@@ -132,13 +127,14 @@ function abrirMontagemPizza(nome){
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 ADICIONAR PIZZA
+// =========================
+// 🍕 ADICIONAR
+// =========================
+
 function adicionarPizza(nome){
 
     let tamanho = document.getElementById("tamanho").value
-    let bordaSelect = document.getElementById("borda")
-    let borda = Number(bordaSelect.value)
-    let bordaTexto = bordaSelect.options[bordaSelect.selectedIndex].text
+    let borda = Number(document.getElementById("borda").value)
     let meio = document.getElementById("meio").value
 
     let preco = 0
@@ -150,14 +146,60 @@ function adicionarPizza(nome){
 
     let nomeFinal = `${nome} ${tamanho}cm`
 
-    if(meio) nomeFinal += " / Meio a Meio com " + meio
-    if(borda != 0) nomeFinal += " / " + bordaTexto
+    if(meio) nomeFinal += " / Meio a Meio " + meio
 
     addCarrinho(nomeFinal, preco)
     abrirPizzas()
 }
 
-// 🛒 CARRINHO
+// =========================
+// 🔥 FILTRO (CORRIGIDO)
+// =========================
+
+function filtrar(tipo){
+
+    limparProdutos()
+
+    if(tipo === "combo"){
+        mostrarCombos()
+        return
+    }
+
+    esconderCombos()
+
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
+
+        let filtrados = produtos.filter(p => p.categoria === tipo)
+
+        let html = ""
+
+        filtrados.forEach(p=>{
+            html += `
+            <div class="card">
+                <img src="${p.foto}">
+                <div class="card-content">
+                    <h3>${p.nome}</h3>
+                    <p>${p.descricao}</p>
+                    <p><b>R$ ${p.preco.toFixed(2)}</b></p>
+
+                    <button onclick="addCarrinho('${p.nome}', ${p.preco})">
+                        ➕ Adicionar
+                    </button>
+                </div>
+            </div>
+            `
+        })
+
+        document.getElementById("produtos").innerHTML = html
+    })
+}
+
+// =========================
+// 🛒 CARRINHO (COMPLETO OK)
+// =========================
+
 function addCarrinho(nome, preco){
 
     let item = carrinho.find(i => i.nome === nome)
@@ -171,7 +213,6 @@ function addCarrinho(nome, preco){
     atualizarCarrinho()
 }
 
-// 🔥 ATUALIZAR CARRINHO (COM BOTÃO REMOVER NOVO)
 function atualizarCarrinho(){
 
     let lista = document.getElementById("lista")
@@ -192,25 +233,14 @@ function atualizarCarrinho(){
                 R$ ${subtotal.toFixed(2)}
             </div>
 
-            <div style="display:flex;align-items:center;gap:6px;">
+            <div style="display:flex;gap:6px;align-items:center;">
 
                 <button onclick="diminuir(${index})">➖</button>
-
                 <span>${item.qtd}</span>
-
                 <button onclick="aumentar(${index})">➕</button>
 
-                <!-- 🔥 BOTÃO REMOVER NOVO -->
-                <div onclick="remover(${index})" style="
-                    display:flex;
-                    align-items:center;
-                    gap:4px;
-                    cursor:pointer;
-                    user-select:none;
-                    font-weight:bold;
-                    color:white;
-                ">
-                    <span style="color:red;font-size:16px;">❌</span>
+                <div onclick="remover(${index})" style="cursor:pointer;color:white;display:flex;gap:4px;align-items:center;">
+                    <span style="color:red;">❌</span>
                     <span>Remover</span>
                 </div>
 
@@ -226,22 +256,9 @@ function atualizarCarrinho(){
     document.getElementById("total").innerText = total.toFixed(2)
 }
 
-// ➕ ➖ ❌
-function aumentar(i){
-    carrinho[i].qtd++
-    atualizarCarrinho()
-}
-
-function diminuir(i){
-    carrinho[i].qtd--
-    if(carrinho[i].qtd <= 0) carrinho.splice(i,1)
-    atualizarCarrinho()
-}
-
-function remover(i){
-    carrinho.splice(i,1)
-    atualizarCarrinho()
-}
+function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
+function diminuir(i){ carrinho[i].qtd--; if(carrinho[i].qtd<=0) carrinho.splice(i,1); atualizarCarrinho() }
+function remover(i){ carrinho.splice(i,1); atualizarCarrinho() }
 
 // 📌 SCROLL
 function scrollCarrinho(){
