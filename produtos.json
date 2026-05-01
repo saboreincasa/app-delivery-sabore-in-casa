@@ -3,66 +3,40 @@
     "nome": "Combo Casal",
     "categoria": "combos",
     "preco": 89.90,
-    "tag": "🔥 Promoção",
     "descricao": "1 Pizza Media 30cm + Refrigerante 2L",
+    "tag": "🔥 Mais vendido",
     "foto": "imagens/combos/combo-casal.png"
-  },
-  {
-    "nome": "Combo Solteiro",
-    "categoria": "combos",
-    "preco": 44.90,
-    "tag": "🔥 Promoção",
-    "descricao": "1 Pizza Pequena 25cm + Coca Cola 350ml",
-    "foto": "imagens/combos/combo-solteiro.png"
   },
   {
     "nome": "Combo Família",
     "categoria": "combos",
     "preco": 109.90,
-    "tag": "🔥 Mais vendido",
     "descricao": "2 Pizzas Grandes 35cm + 2 refrigerantes 2L",
+    "tag": "⭐ Melhor custo",
     "foto": "imagens/combos/combo-familia.png"
   },
   {
     "nome": "Combo Amigos",
     "categoria": "combos",
-    "preco": 130.00,
-    "tag": "🍺 Churrasco",
+    "preco": 120.00,
     "descricao": "🔥 12 Heinekens 473ml + Carvão 3kg",
+    "tag": "🍺 Churrasco",
     "foto": "imagens/combos/combo-amigos.png"
   },
-
   {
     "nome": "Batata Frita Crocante",
     "categoria": "snaks",
     "preco": 22.90,
-    "tag": "⚡ Rápido",
     "descricao": "Porção de batata frita crocante",
+    "tag": "🔥 Pedido rápido",
     "foto": "imagens/snaks/batata-frita.png"
   },
-  {
-    "nome": "Nuggets de Frango",
-    "categoria": "snaks",
-    "preco": 26.90,
-    "tag": "⚡ Rápido",
-    "descricao": "10 nuggets crocantes",
-    "foto": "imagens/snaks/nuggets-frango.png"
-  },
-
   {
     "nome": "Coca-Cola 2L",
     "categoria": "bebidas",
     "preco": 14.90,
-    "tag": "🥤 Gelada",
     "descricao": "Refrigerante Coca-Cola 2 Litros",
+    "tag": "🥤 Clássico",
     "foto": "imagens/bebidas/coca_cola.png"
-  },
-  {
-    "nome": "Heineken 473ml Latão",
-    "categoria": "bebidas",
-    "preco": 10.00,
-    "tag": "🍺 Top",
-    "descricao": "Cerveja Heineken lata 473ml",
-    "foto": "imagens/bebidas/heineken.png"
   }
 ]
