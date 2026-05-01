@@ -2,41 +2,108 @@
   {
     "nome": "Combo Casal",
     "categoria": "combos",
-    "preco": 89.90,
-    "descricao": "1 Pizza Media 30cm + Refrigerante 2L",
-    "tag": "🔥 Mais vendido",
+    "preco": 99.90,
+    "descricao": "1 Pizza 30cm (Massa Integral Artesanal) + Refrigerante 2L",
     "foto": "imagens/combos/combo-casal.png"
+  },
+  {
+    "nome": "Combo Solteiro",
+    "categoria": "combos",
+    "preco": 54.90,
+    "descricao": "1 Pizza 25cm (Massa Integral Artesanal) + Coca-Cola 350ml",
+    "foto": "imagens/combos/combo-solteiro.png"
   },
   {
     "nome": "Combo Família",
     "categoria": "combos",
-    "preco": 109.90,
-    "descricao": "2 Pizzas Grandes 35cm + 2 refrigerantes 2L",
-    "tag": "⭐ Melhor custo",
+    "preco": 149.90,
+    "descricao": "2 Pizzas 35cm (Massa Integral Artesanal) + 2 Refrigerantes 2L",
     "foto": "imagens/combos/combo-familia.png"
   },
   {
     "nome": "Combo Amigos",
     "categoria": "combos",
-    "preco": 120.00,
+    "preco": 139.90,
     "descricao": "🔥 12 Heinekens 473ml + Carvão 3kg",
-    "tag": "🍺 Churrasco",
     "foto": "imagens/combos/combo-amigos.png"
   },
+
   {
     "nome": "Batata Frita Crocante",
     "categoria": "snaks",
     "preco": 22.90,
     "descricao": "Porção de batata frita crocante",
-    "tag": "🔥 Pedido rápido",
     "foto": "imagens/snaks/batata-frita.png"
   },
+  {
+    "nome": "Nuggets de Frango",
+    "categoria": "snaks",
+    "preco": 26.90,
+    "descricao": "10 nuggets crocantes",
+    "foto": "imagens/snaks/nuggets-frango.png"
+  },
+  {
+    "nome": "Halls",
+    "categoria": "snaks",
+    "preco": 3.50,
+    "descricao": "Bala refrescante",
+    "foto": "imagens/snaks/halls.png"
+  },
+  {
+    "nome": "Gulão",
+    "categoria": "snaks",
+    "preco": 4.00,
+    "descricao": "Doce gulão",
+    "foto": "imagens/snaks/gulao.png"
+  },
+
   {
     "nome": "Coca-Cola 2L",
     "categoria": "bebidas",
     "preco": 14.90,
     "descricao": "Refrigerante Coca-Cola 2 Litros",
-    "tag": "🥤 Clássico",
-    "foto": "imagens/bebidas/coca_cola.png"
+    "foto": "imagens/bebidas/coca-cola-2l.png"
+  },
+  {
+    "nome": "Guaraná Antarctica 2L",
+    "categoria": "bebidas",
+    "preco": 13.90,
+    "descricao": "Refrigerante Guaraná Antarctica 2 Litros",
+    "foto": "imagens/bebidas/guarana-2l.jpeg"
+  },
+  {
+    "nome": "Heineken Latão 473ml",
+    "categoria": "bebidas",
+    "preco": 10.00,
+    "descricao": "Cerveja Heineken lata 473ml",
+    "foto": "imagens/bebidas/heineken-latao.jpeg"
+  },
+  {
+    "nome": "Brahma Latão 473ml",
+    "categoria": "bebidas",
+    "preco": 7.00,
+    "descricao": "Cerveja Brahma lata 473ml",
+    "foto": "imagens/bebidas/brahma-latao.jpeg"
+  },
+  {
+    "nome": "Spaten Latão 473ml",
+    "categoria": "bebidas",
+    "preco": 8.90,
+    "descricao": "Cerveja Spaten lata 473ml",
+    "foto": "imagens/bebidas/spaten-latao.jpeg"
+  },
+  {
+    "nome": "Stella Artois Latão 473ml",
+    "categoria": "bebidas",
+    "preco": 9.90,
+    "descricao": "Cerveja Stella Artois lata 473ml",
+    "foto": "imagens/bebidas/stella-latao.jpeg"
+  },
+  {
+    "nome": "Bohemia Latão 473ml",
+    "categoria": "bebidas",
+    "preco": 8.90,
+    "descricao": "Cerveja Bohemia lata 473ml",
+    "foto": "imagens/bebidas/bohemia-latao.jpeg"
   }
 ]
