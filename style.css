@@ -654,7 +654,33 @@ margin-right:auto;
   width:auto;
   padding:8px 14px;
 }
+.item-carrinho{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+}
 
+.controle button{
+    background:#ff6600;
+    border:none;
+    color:#fff;
+    padding:5px 8px;
+    border-radius:6px;
+}
+
+.remover{
+    color:#ff3b3b;
+    cursor:pointer;
+    margin-left:8px;
+    font-size:12px;
+}
+
+.sugestoes{
+    margin-top:15px;
+    padding:10px;
+    background:#fff3e0;
+    border-radius:8px;
+}
 /* dá espaço pro texto não bater no botão */
 #produtos .card:not(.pizza-card):not(.destaque) .card-content{
   padding-right:110px;
