@@ -1,52 +1,71 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Sabore In Casa</title>
+
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="style.css">
 
 <style>
 #toast {
- visibility: hidden;
- min-width: 250px;
- background-color: #333;
- color: #fff;
- text-align: center;
- border-radius: 8px;
- padding: 12px;
- position: fixed;
- bottom: 50px;
- left: 50%;
- transform: translateX(-50%);
- z-index: 1000;
- cursor: pointer;
- opacity: 0;
- transition: opacity 0.5s, bottom 0.5s;
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 12px;
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.5s, bottom 0.5s;
 }
+
 #toast.show {
- visibility: visible;
- opacity: 1;
- bottom: 80px;
+    visibility: visible;
+    opacity: 1;
+    bottom: 80px;
 }
-.remover{
- color:red;
- cursor:pointer;
- font-size:12px;
+
+/* 🔥 UPSELL VISUAL */
+#upsellBox {
+    display:none;
+    background:#111;
+    color:#fff;
+    padding:12px;
+    margin:10px;
+    border-radius:10px;
+}
+
+#upsellBox button{
+    margin-top:8px;
+    padding:10px;
+    border-radius:8px;
+    border:none;
+    cursor:pointer;
 }
 </style>
+
 </head>
 
 <body>
 
 <header class="header-topo">
-<div class="overlay"></div>
+  <div class="overlay"></div>
 </header>
 
 <div class="endereco">
 📍 Rua Maria de Lourdes da Cruz Nº 378<br>
-Bairro Mantiqueira – Belo Horizonte <br>
+Bairro Mantiqueira – Belo Horizonte
+<br>
 <button onclick="abrirMapa()">📍 Ver no mapa</button>
 </div>
 
@@ -57,19 +76,24 @@ Bairro Mantiqueira – Belo Horizonte <br>
 <input class="busca" id="busca" placeholder="🔎 Buscar produto">
 
 <div class="btn-flutuantes">
+
 <div class="linha">
 <button onclick="abrirPizzas()">🍕 Pizzas</button>
 <button onclick="filtrar('bebidas')">🥤 Bebidas</button>
 </div>
 
 <div class="linha">
-<button onclick="filtrar('combos')">🎁 Combos</button>
+<button onclick="filtrar('combo')">🎁 Combos</button>
 <button onclick="filtrar('snaks')">🍟 Snaks</button>
 </div>
+
 </div>
 
 <h2 id="tituloCombos">⭐ Combos da Semana</h2>
 <div id="combosSemana"></div>
+
+<!-- 🔥 UPSSELL AQUI (FORA DA PIZZA) -->
+<div id="upsellBox"></div>
 
 <div id="produtos"></div>
 
@@ -78,22 +102,12 @@ Bairro Mantiqueira – Belo Horizonte <br>
 
 <div id="lista"></div>
 
-<div id="sugestoes"></div>
-
-<p>Subtotal: R$ <span id="subtotal">0.00</span></p>
-<p>Frete: R$ <span id="frete">0.00</span></p>
+<!-- 🔥 CROSS-SELL -->
+<div id="crossSell"></div>
 
 <div class="total">
-TOTAL: R$ <span id="total">0.00</span>
+Total + entrega: R$ <span id="total">0.00</span>
 </div>
-
-<select id="bairro" onchange="calcularFrete()">
-<option value="">Selecione seu bairro</option>
-<option>Mantiqueira</option>
-<option>Venda Nova</option>
-<option>Justinópolis</option>
-<option>Centro</option>
-</select>
 
 <input id="enderecoCliente" placeholder="Digite seu endereço">
 
@@ -110,6 +124,7 @@ Enviar pedido no WhatsApp
 </button>
 
 </div>
+
 </div>
 
 <div id="botaoCarrinho" onclick="scrollCarrinho()">
