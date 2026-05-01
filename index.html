@@ -1,119 +1,83 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Sabore In Casa</title>
 
-<link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="style.css">
 
 <style>
-#toast {
-    visibility: hidden;
-    min-width: 250px;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    border-radius: 8px;
-    padding: 12px;
-    position: fixed;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.5s, bottom 0.5s;
+#toast{
+visibility:hidden;
+background:#333;
+color:#fff;
+padding:12px;
+position:fixed;
+bottom:50px;
+left:50%;
+transform:translateX(-50%);
+border-radius:8px;
+opacity:0;
+transition:0.5s;
 }
-#toast.show {
-    visibility: visible;
-    opacity: 1;
-    bottom: 80px;
+#toast.show{visibility:visible;opacity:1;bottom:80px;}
+
+.btn-qtd{
+background:#ff6600;
+color:#fff;
+border:none;
+padding:6px 10px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.btn-remover{
+color:red;
+cursor:pointer;
+font-weight:bold;
 }
 </style>
-
 </head>
 
 <body>
 
-<header class="header-topo">
-  <div class="overlay"></div>
-</header>
+<header></header>
 
 <div class="endereco">
-📍 Rua Maria de Lourdes da Cruz Nº 378<br>
-Bairro Mantiqueira – Belo Horizonte
-<br>
-<button onclick="abrirMapa()">📍 Ver no mapa</button>
+📍 Mantiqueira - BH
+<button onclick="abrirMapa()">Ver mapa</button>
 </div>
 
-<div id="banner" class="banner" style="cursor:pointer;"></div>
+<div id="banner"></div>
 
 <div class="container">
 
-<input class="busca" id="busca" placeholder="🔎 Buscar produto">
+<input id="busca" placeholder="Buscar">
 
-<div class="btn-flutuantes">
+<button onclick="abrirPizzas()">Pizzas</button>
+<button onclick="filtrar('combos')">Combos</button>
+<button onclick="filtrar('bebidas')">Bebidas</button>
 
-<div class="linha">
-<button onclick="abrirPizzas()">🍕 Pizzas</button>
-<button onclick="filtrar('bebidas')">🥤 Bebidas</button>
-</div>
-
-<div class="linha">
-<button onclick="filtrar('combo')">🎁 Combos</button>
-<button onclick="filtrar('snaks')">🍟 Snaks</button>
-</div>
-
-</div>
-
-<h2 id="tituloCombos">⭐ Combos da Semana</h2>
+<h2>Combos</h2>
 <div id="combosSemana"></div>
 
 <div id="produtos"></div>
 
 <div id="carrinho">
-<h2>🛒 Carrinho</h2>
-
+<h2>Carrinho</h2>
 <div id="lista"></div>
+Total: R$ <span id="total">0</span>
 
-<div class="total">
-Total + entrega: R$ <span id="total">0.00</span>
-</div>
+<input id="enderecoCliente" placeholder="Endereço">
 
-<input id="enderecoCliente" placeholder="Digite seu endereço">
-
-<select id="pagamento">
-<option>PIX</option>
-<option>Dinheiro</option>
-<option>Cartão</option>
-</select>
-
-<input id="troco" placeholder="Troco para quanto?">
-
-<button class="enviar" onclick="enviarPedido()">
-Enviar pedido no WhatsApp
-</button>
-
+<button onclick="enviarPedido()">Enviar</button>
 </div>
 
 </div>
-
-<div id="botaoCarrinho" onclick="scrollCarrinho()">
-🛒 <div id="contador">0</div>
-</div>
-
-<footer>
-© Sabore In Casa<br>
-Desenvolvido por <b>Carlos Henrique</b>
-</footer>
 
 <div id="toast"></div>
 
 <script src="app.js"></script>
-
 </body>
 </html>
