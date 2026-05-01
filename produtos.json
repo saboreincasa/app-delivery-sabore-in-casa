@@ -2,21 +2,21 @@
   {
     "nome": "Combo Casal",
     "categoria": "combos",
-    "preco": 99.90,
+    "preco": 79.90,
     "descricao": "2 pizzas grandes + refrigerante",
     "foto": "imagens/combos/combo-casal.png"
   },
   {
     "nome": "Combo Solteiro",
     "categoria": "combos",
-    "preco": 54.90,
+    "preco": 39.90,
     "descricao": "1 pizza grande + coca cola",
     "foto": "imagens/combos/combo-solteiro.png"
   },
   {
     "nome": "Combo Família",
     "categoria": "combos",
-    "preco": 149.90,
+    "preco": 99.90,
     "descricao": "2 pizzas grandes + refrigerantes",
     "foto": "imagens/combos/combo-familia.png"
   },
