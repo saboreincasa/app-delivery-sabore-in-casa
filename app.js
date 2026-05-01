@@ -1,161 +1,134 @@
 let carrinho = []
 const whatsappNumero = "5531983391576"
 
-// 🚚 FRETE POR BAIRRO
-const taxas = {
-    mantiqueira:5,
-    floramar:6,
-    planalto:7,
-    itapoa:7,
-    centro:10
+// 🚚 TAXA POR BAIRRO (INTELIGENTE)
+function calcularEntrega(bairro){
+    bairro = bairro.toLowerCase()
+
+    if(bairro.includes("mantiqueira")) return 7
+    if(bairro.includes("centro")) return 20
+    if(bairro.includes("venda nova")) return 10
+
+    return 12 // padrão
 }
 
-// 🎟 CUPONS
-const cupons = {
-    "PRIMEIRA10":0.10,
-    "VIP15":0.15
-}
-
-// 🚀 INIT
-window.onload = ()=>{
+// 🚀 INICIO
+window.onload = function(){
     carregarCombosSemana()
+    iniciarBanner()
 }
 
-// 🧠 UPSSELL VISUAL
-function mostrarUpsell(){
-    let box = document.getElementById("upsellBox")
+// 🔎 BUSCA
+function buscarProduto(){
+    let termo = document.getElementById("busca").value.toLowerCase()
 
-    box.innerHTML = `
-    <b>🔥 Complete seu pedido</b>
-
-    <div class="upsell-item">
-        Coca-Cola 2L - R$14,90
-        <button onclick="addCarrinho('Coca-Cola 2L',14.90)">Adicionar</button>
-    </div>
-
-    <div class="upsell-item">
-        Batata Frita - R$22,90
-        <button onclick="addCarrinho('Batata Frita',22.90)">Adicionar</button>
-    </div>
-    `
-
-    box.style.display = "block"
-
-    setTimeout(()=> box.style.display="none",5000)
-}
-
-// 🛒 ADD
-function addCarrinho(nome,preco){
-
-    let item = carrinho.find(i=>i.nome===nome)
-
-    if(item) item.qtd++
-    else carrinho.push({nome,preco,qtd:1})
-
-    if(nome.toLowerCase().includes("pizza")){
-        mostrarUpsell()
-    }
-
-    atualizarCarrinho()
-}
-
-// 🛒 ATUALIZAR
-function atualizarCarrinho(){
-
-    let lista = document.getElementById("lista")
-    let total = 0
-
-    lista.innerHTML=""
-
-    carrinho.forEach((item,i)=>{
-        let sub = item.preco * item.qtd
-
-        lista.innerHTML+=`
-        <div>
-        ${item.qtd}x ${item.nome} - R$${sub.toFixed(2)}
-        </div>
-        `
-
-        total+=sub
-    })
-
-    // 🚚 FRETE
-    let bairro = document.getElementById("enderecoCliente").value.toLowerCase()
-    let frete = taxas[bairro] || 10
-
-    let qtdPizza = carrinho.filter(i=>i.nome.includes("cm")).length
-    let qtdCombo = carrinho.filter(i=>i.nome.includes("Combo")).length
-
-    if(qtdPizza>=5 || qtdCombo>=5){
-        frete = 0
-    }
-
-    document.getElementById("freteInfo").innerText = "Frete: R$"+frete
-
-    total+=frete
-
-    // 🎟 CUPOM
-    let cupom = document.getElementById("cupom").value.toUpperCase()
-
-    if(cupons[cupom]){
-        total = total - (total * cupons[cupom])
-    }
-
-    document.getElementById("total").innerText = total.toFixed(2)
-
-    // 📊 BARRA FRETE
-    let meta = 100
-    let porcentagem = (total/meta)*100
-    if(porcentagem>100) porcentagem=100
-
-    document.getElementById("barraFrete").style.width = porcentagem+"%"
-}
-
-// 📦 FILTRO
-function filtrar(tipo){
     fetch("produtos.json")
-    .then(r=>r.json())
+    .then(res=>res.json())
     .then(produtos=>{
-        let html=""
+        let filtrados = produtos.filter(p => p.nome.toLowerCase().includes(termo))
 
-        produtos.filter(p=>p.categoria===tipo).forEach(p=>{
-            html+=`
-            <div>
-            <b>${p.nome}</b><br>
-            R$${p.preco}
-            <button onclick="addCarrinho('${p.nome}',${p.preco})">+</button>
+        let html = ""
+        filtrados.forEach(p=>{
+            html += `
+            <div class="card">
+                <img src="${p.foto}">
+                <div class="card-content">
+                    <h3>${p.nome} <small>${p.tag || ""}</small></h3>
+                    <p>${p.descricao}</p>
+                    <p class="preco">R$ ${p.preco.toFixed(2)}</p>
+                    <button onclick="addCarrinho('${p.nome}', ${p.preco})">Adicionar</button>
+                </div>
             </div>
             `
         })
 
-        document.getElementById("produtos").innerHTML=html
+        document.getElementById("produtos").innerHTML = html
     })
 }
 
-// 🍕 PIZZAS
-function abrirPizzas(){
-    document.getElementById("produtos").innerHTML=`
-    <button onclick="addCarrinho('Pizza Calabresa 30cm',40)">Calabresa</button>
-    <button onclick="addCarrinho('Pizza Frango 30cm',40)">Frango</button>
-    `
+// 🛒 CARRINHO
+function addCarrinho(nome, preco){
+    let item = carrinho.find(i => i.nome === nome)
+    if(item){ item.qtd++ }
+    else { carrinho.push({nome, preco, qtd:1}) }
+
+    atualizarCarrinho()
+    mostrarUpsell(nome)
 }
 
-// 🟢 WHATS
-function enviarPedido(){
+// 💰 FRETE + TOTAL
+function atualizarCarrinho(){
+    let lista = document.getElementById("lista")
+    let total = 0
+
+    lista.innerHTML = ""
+
+    carrinho.forEach((item,index)=>{
+        let subtotal = item.preco * item.qtd
+
+        lista.innerHTML += `
+        <div>
+            ${item.qtd}x ${item.nome} - R$ ${subtotal.toFixed(2)}
+        </div>
+        `
+
+        total += subtotal
+    })
 
     let bairro = document.getElementById("enderecoCliente").value
-    let total = document.getElementById("total").innerText
-    let pagamento = document.getElementById("pagamento").value
+    let entrega = calcularEntrega(bairro)
 
-    let msg="🛒 *PEDIDO*\n\n"
+    // regra frete grátis
+    let totalItens = carrinho.reduce((s,i)=>s+i.qtd,0)
+    if(totalItens >= 5) entrega = 0
+
+    total += entrega
+
+    document.getElementById("total").innerText = total.toFixed(2)
+}
+
+// 🎯 UPSELL
+function mostrarUpsell(nome){
+    if(nome.toLowerCase().includes("pizza")){
+        toast("🔥 Leve uma Coca-Cola por apenas R$14.90!")
+    }
+    if(nome.toLowerCase().includes("combo")){
+        toast("⚡ Adicione batata frita e aumente seu pedido!")
+    }
+}
+
+function toast(msg){
+    let t = document.getElementById("toast")
+    t.innerText = msg
+    t.className = "show"
+
+    setTimeout(()=> t.className = "", 3000)
+}
+
+// 📲 WHATSAPP
+function enviarPedido(){
+    if(carrinho.length === 0){
+        alert("Carrinho vazio")
+        return
+    }
+
+    let bairro = document.getElementById("enderecoCliente").value
+    let entrega = calcularEntrega(bairro)
+
+    let msg = "Pedido:\n\n"
 
     carrinho.forEach(i=>{
-        msg+=`${i.qtd}x ${i.nome}\n`
+        msg += `${i.qtd}x ${i.nome}\n`
     })
 
-    msg+=`\n💰 Total: R$${total}`
-    msg+=`\n📍 Bairro: ${bairro}`
-    msg+=`\n💳 Pagamento: ${pagamento}`
+    msg += `\nBairro: ${bairro}`
+    msg += `\nEntrega: R$${entrega}`
 
-    window.open(`https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`)
+    let url = `https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`
+    window.open(url)
+}
+
+// 🗺️ MAPA
+function abrirMapa(){
+    window.open("https://www.google.com/maps?q=Rua+Maria+de+Lourdes+da+Cruz+378+BH")
 }
