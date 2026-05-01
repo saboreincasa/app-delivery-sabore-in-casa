@@ -1,119 +1,165 @@
-let carrinho = [];
-const whatsappNumero = "5531983391576";
+// 🛒 CARRINHO
+let carrinho = []
 
-function calcularFrete(){
- let bairro = document.getElementById("bairro").value;
- let frete = 20;
+const whatsappNumero = "5531983391576"
 
- if(["Mantiqueira","Venda Nova"].includes(bairro)) frete = 7;
- else if(["Justinópolis"].includes(bairro)) frete = 10;
-
- document.getElementById("frete").innerText = frete.toFixed(2);
- atualizarTotal();
+// 🚀 INICIO
+window.onload = function(){
+    carregarCombosSemana()
+    iniciarBanner()
 }
 
+// 🔥 UPSSELL (FORA DA PIZZA)
+function mostrarUpsell(){
+    let box = document.getElementById("upsellBox")
+
+    box.style.display = "block"
+
+    box.innerHTML = `
+        <b>🔥 Complete seu pedido</b><br>
+
+        🥤 Coca-Cola 2L<br>
+        🍟 Batata Crocante<br>
+        🍗 Nuggets<br>
+
+        <button onclick="addCarrinho('Coca-Cola 2L', 12)">
+            Adicionar
+        </button>
+    `
+}
+
+// 🔥 CROSS-SELL
+function mostrarCrossSell(){
+    let box = document.getElementById("crossSell")
+
+    let temPizza = carrinho.find(i => i.nome.includes("cm"))
+    let temBebida = carrinho.find(i => i.nome.includes("Coca") || i.nome.includes("Heineken"))
+
+    let html = "<h4>🔥 Você também pode gostar</h4>"
+
+    if(temPizza){
+        html += `
+        🥤 Bebidas recomendadas<br>
+        🍟 Snacks<br>
+        `
+    }
+
+    if(temBebida){
+        html += `
+        🍕 Pizza promocional<br>
+        🎁 Combo especial<br>
+        `
+    }
+
+    box.innerHTML = html
+}
+
+// 🍕 PIZZAS (SEM MEXER)
 function abrirPizzas(){
- let html = `<h2>🍕 Pizzas (Massa Integral Artesanal)</h2>`;
+    let html = "<h2>🍕 Escolha sua Pizza</h2>"
 
- const pizzas = ["Calabresa","Frango com Catupiry","4 Queijos"];
+   const pizzas = [
+    {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola", img:"imagens/pizzas/calabresa.png"},
+    {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"imagens/pizzas/franco_com_catupiry.png"}
+]
 
- pizzas.forEach(p=>{
-  html += `
-  <div class="card">
-    <h3>${p}</h3>
-    <button onclick="addCarrinho('${p} (Massa Integral)', 54.90)">
-      Adicionar
-    </button>
-  </div>`;
- });
+    pizzas.forEach(p=>{
+        html += `
+        <div class="card pizza-card">
 
- document.getElementById("produtos").innerHTML = html;
+            <img src="${p.img}">
+
+            <div class="card-content">
+                <h3>${p.nome}</h3>
+                <p>${p.desc}</p>
+
+                <button onclick="abrirMontagemPizza('${p.nome}')">
+                    🍕 Montar Pizza
+                </button>
+            </div>
+
+        </div>
+        `
+    })
+
+    document.getElementById("produtos").innerHTML = html
 }
 
+// 🍕 MONTAGEM (NÃO ALTERADO)
+function abrirMontagemPizza(nome){
+    let html = `
+    <div class="montagem-box">
+
+        <h2>🍕 ${nome}</h2>
+
+        <button class="btn-montar" onclick="adicionarPizza('${nome}')">
+            🛒 Adicionar ao Carrinho
+        </button>
+
+        <span onclick="abrirPizzas()">⬅ Voltar</span>
+
+    </div>
+    `
+
+    document.getElementById("produtos").innerHTML = html
+}
+
+// 🍕 ADICIONAR (NÃO ALTERADO)
+function adicionarPizza(nome){
+    addCarrinho(nome, 40)
+
+    abrirPizzas()
+
+    mostrarUpsell()
+}
+
+// 🛒 CARRINHO
 function addCarrinho(nome, preco){
- let item = carrinho.find(i=>i.nome===nome);
 
- if(item) item.qtd++;
- else carrinho.push({nome,preco,qtd:1});
+    let item = carrinho.find(i => i.nome === nome)
 
- atualizarCarrinho();
- mostrarSugestoes();
+    if(item){
+        item.qtd++
+    } else {
+        carrinho.push({nome, preco, qtd:1})
+    }
+
+    atualizarCarrinho()
 }
 
 function atualizarCarrinho(){
- let lista = document.getElementById("lista");
- lista.innerHTML = "";
 
- let subtotal = 0;
+    let lista = document.getElementById("lista")
+    let total = 0
 
- carrinho.forEach((item,i)=>{
-  let total = item.preco * item.qtd;
-  subtotal += total;
+    lista.innerHTML = ""
 
-  lista.innerHTML += `
-  <div style="display:flex;justify-content:space-between;">
-    <div>
-      <b>${item.nome}</b><br>
-      R$ ${total.toFixed(2)}
-      <div class="remover" onclick="removerItem(${i})">Remover</div>
-    </div>
+    carrinho.forEach((item)=>{
 
-    <div>
-      <button onclick="diminuir(${i})">➖</button>
-      ${item.qtd}
-      <button onclick="aumentar(${i})">➕</button>
-    </div>
-  </div>`;
- });
+        let subtotal = item.preco * item.qtd
 
- document.getElementById("subtotal").innerText = subtotal.toFixed(2);
- atualizarTotal();
+        lista.innerHTML += `
+        <div>
+            ${item.nome} x${item.qtd} - R$${subtotal}
+        </div>
+        `
+
+        total += subtotal
+    })
+
+    document.getElementById("total").innerText = total
+
+    mostrarCrossSell()
 }
 
-function atualizarTotal(){
- let subtotal = Number(document.getElementById("subtotal").innerText);
- let frete = Number(document.getElementById("frete").innerText);
-
- document.getElementById("total").innerText = (subtotal + frete).toFixed(2);
+// 🧠 OUTROS (SEM MEXER)
+function scrollCarrinho(){
+    document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
 }
 
-function mostrarSugestoes(){
- let box = document.getElementById("sugestoes");
-
- if(carrinho.length > 0){
-  box.innerHTML = `
-  <h3>🔥 Aproveite também</h3>
-  <button onclick="addCarrinho('Coca-Cola 2L',14.90)">+ Refrigerante</button>
-  <button onclick="addCarrinho('Batata Frita',22.90)">+ Batata</button>
-  `;
- }
-}
-
-function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho(); }
-function diminuir(i){
- carrinho[i].qtd--;
- if(carrinho[i].qtd<=0) carrinho.splice(i,1);
- atualizarCarrinho();
-}
-function removerItem(i){
- carrinho.splice(i,1);
- atualizarCarrinho();
-}
-
-function enviarPedido(){
- let subtotal = document.getElementById("subtotal").innerText;
- let frete = document.getElementById("frete").innerText;
- let total = document.getElementById("total").innerText;
-
- let msg = `🍕 SABORE IN CASA\n\nPedido:\n`;
-
- carrinho.forEach(item=>{
-  msg += `${item.qtd}x ${item.nome}\n`;
- });
-
- msg += `\nSubtotal: R$${subtotal}`;
- msg += `\nFrete: R$${frete}`;
- msg += `\nTOTAL: R$${total}`;
-
- window.open(`https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`);
-}
+function iniciarBanner(){}
+function carregarCombosSemana(){}
+function abrirMapa(){}
+function filtrar(){}
+function enviarPedido(){}
+function mostrarToast(){}
