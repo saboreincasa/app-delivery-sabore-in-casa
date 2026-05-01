@@ -1,33 +1,25 @@
 [
   {
-    "nome": "Combo Casal",
-    "categoria": "combos",
-    "preco": 79.90,
-    "descricao": "2 pizzas grandes + refrigerante",
-    "foto": "imagens/combos/combo-casal.png"
-  },
-  {
-    "nome": "Combo Solteiro",
-    "categoria": "combos",
-    "preco": 39.90,
-    "descricao": "1 pizza grande + coca cola",
-    "foto": "imagens/combos/combo-solteiro.png"
-  },
-  {
-    "nome": "Combo Família",
-    "categoria": "combos",
-    "preco": 99.90,
-    "descricao": "2 pizzas grandes + refrigerantes",
-    "foto": "imagens/combos/combo-familia.png"
-  },
-  {
-    "nome": "Combo Amigos",
-    "categoria": "combos",
-    "preco": 89.90,
-    "descricao": "Cerveja + carvão",
-    "foto": "imagens/combos/combo-amigos.png"
-  },
-
+  "nome": "Combo Casal",
+  "categoria": "combos",
+  "preco": 99.90,
+  "descricao": "2 pizzas grandes + refrigerante",
+  "foto": "imagens/combos/combo-casal.png"
+},
+{
+  "nome": "Combo Solteiro",
+  "categoria": "combos",
+  "preco": 54.90,
+  "descricao": "1 pizza grande + coca cola",
+  "foto": "imagens/combos/combo-solteiro.png"
+},
+{
+  "nome": "Combo Família",
+  "categoria": "combos",
+  "preco": 149.90,
+  "descricao": "2 pizzas grandes + refrigerantes",
+  "foto": "imagens/combos/combo-familia.png"
+}
   {
     "nome": "Batata Frita Crocante",
     "categoria": "snaks",
