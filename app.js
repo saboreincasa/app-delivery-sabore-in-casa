@@ -9,59 +9,61 @@ window.onload = function(){
     iniciarBanner()
 }
 
-// 🔥 UPSSELL (FORA DA PIZZA)
+// 🔥 UPSSELL
 function mostrarUpsell(){
     let box = document.getElementById("upsellBox")
 
     box.style.display = "block"
 
     box.innerHTML = `
-        <b>🔥 Complete seu pedido</b><br>
+        <b>🔥 Complete seu pedido</b><br><br>
 
-        🥤 Coca-Cola 2L<br>
-        🍟 Batata Crocante<br>
-        🍗 Nuggets<br>
+        🥤 Coca-Cola 2L - R$12,00<br>
+        🍟 Batata Crocante - R$18,90<br>
+        🍗 Nuggets - R$22,90<br>
 
         <button onclick="addCarrinho('Coca-Cola 2L', 12)">
-            Adicionar
+            Adicionar Coca
         </button>
     `
 }
 
-// 🔥 CROSS-SELL
+// 🔥 CROSS-SELL (CORRIGIDO)
 function mostrarCrossSell(){
+
     let box = document.getElementById("crossSell")
 
-    let temPizza = carrinho.find(i => i.nome.includes("cm"))
-    let temBebida = carrinho.find(i => i.nome.includes("Coca") || i.nome.includes("Heineken"))
+    let temPizza = carrinho.some(i => i.nome.toLowerCase().includes("pizza"))
+    let temBebida = carrinho.some(i => i.nome.toLowerCase().includes("coca") || i.nome.toLowerCase().includes("heineken"))
 
     let html = "<h4>🔥 Você também pode gostar</h4>"
 
     if(temPizza){
         html += `
-        🥤 Bebidas recomendadas<br>
-        🍟 Snacks<br>
+        🥤 Adicione uma bebida<br>
+        🍟 Adicione um snack<br>
         `
     }
 
     if(temBebida){
         html += `
-        🍕 Pizza promocional<br>
-        🎁 Combo especial<br>
+        🍕 Aproveite uma pizza<br>
+        🎁 Veja nossos combos<br>
         `
     }
 
     box.innerHTML = html
 }
 
-// 🍕 PIZZAS (SEM MEXER)
+// 🍕 PIZZAS
 function abrirPizzas(){
+
     let html = "<h2>🍕 Escolha sua Pizza</h2>"
 
-   const pizzas = [
-    {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola", img:"imagens/pizzas/calabresa.png"},
-    {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"imagens/pizzas/franco_com_catupiry.png"}
-]
+    const pizzas = [
+        {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola", img:"imagens/pizzas/calabresa.png"},
+        {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"imagens/pizzas/franco_com_catupiry.png"}
+    ]
 
     pizzas.forEach(p=>{
         html += `
@@ -85,8 +87,9 @@ function abrirPizzas(){
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 MONTAGEM (NÃO ALTERADO)
+// 🍕 MONTAGEM (INTACTO)
 function abrirMontagemPizza(nome){
+
     let html = `
     <div class="montagem-box">
 
@@ -104,12 +107,10 @@ function abrirMontagemPizza(nome){
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 ADICIONAR (NÃO ALTERADO)
+// 🍕 ADICIONAR
 function adicionarPizza(nome){
-    addCarrinho(nome, 40)
-
+    addCarrinho(nome + " Pizza", 40)
     abrirPizzas()
-
     mostrarUpsell()
 }
 
@@ -140,19 +141,19 @@ function atualizarCarrinho(){
 
         lista.innerHTML += `
         <div>
-            ${item.nome} x${item.qtd} - R$${subtotal}
+            ${item.nome} x${item.qtd} - R$${subtotal.toFixed(2)}
         </div>
         `
 
         total += subtotal
     })
 
-    document.getElementById("total").innerText = total
+    document.getElementById("total").innerText = total.toFixed(2)
 
     mostrarCrossSell()
 }
 
-// 🧠 OUTROS (SEM MEXER)
+// 🔧 OUTROS
 function scrollCarrinho(){
     document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
 }
