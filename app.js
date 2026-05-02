@@ -352,3 +352,186 @@ function abrirMapa(){
         "_blank"
     )
 }
+// =========================
+// 🚚 SISTEMA DE FRETE
+// =========================
+
+const freteConfig = {
+    proximo: {
+        preco: 7,
+        bairros: [
+            "mantiqueira","jardim europa","serra verde","minas caixa",
+            "céu azul","rio branco","venda nova","parque são pedro",
+            "lagoinha leblon","jardim dos comerciários","santa branca"
+        ]
+    },
+    medio: {
+        preco: 10,
+        bairros: [
+            "justinópolis","são benedito","floramar","heliópolis",
+            "planalto","itapoã","santa mônica","copacabana",
+            "são joão batista","são bernardo","jardim atlântico","santa amélia"
+        ]
+    },
+    longe: {
+        preco: 20,
+        bairros: [
+            "centro","pampulha","castelo","ouro preto","caiçara",
+            "padre eustáquio","dom bosco","alípio de melo","nova pampulha",
+            "ribeirão das neves","santa luzia","vespasiano","contagem"
+        ]
+    }
+}
+
+function calcularFrete(bairro){
+    if(!bairro) return 20
+
+    bairro = bairro.toLowerCase().trim()
+
+    if(freteConfig.proximo.bairros.includes(bairro)) return 7
+    if(freteConfig.medio.bairros.includes(bairro)) return 10
+    if(freteConfig.longe.bairros.includes(bairro)) return 20
+
+    return 20
+}
+
+// =========================
+// 🎁 SISTEMA DE FIDELIDADE
+// =========================
+
+let pedidosValidos = 0
+
+function verificarFreteGratis(){
+    return pedidosValidos >= 5
+}
+
+function atualizarMensagemFrete(){
+    let info = document.getElementById("infoFrete")
+    if(!info) return
+
+    let faltam = 5 - pedidosValidos
+
+    if(faltam <= 0){
+        info.innerText = "🎉 Você ganhou frete grátis!"
+    } else {
+        info.innerText = `Faltam ${faltam} pedidos para frete grátis`
+    }
+}
+
+// =========================
+// 🔄 ATUALIZAR TOTAL COM FRETE
+// =========================
+
+const atualizarCarrinhoOriginal = atualizarCarrinho
+
+atualizarCarrinho = function(){
+    atualizarCarrinhoOriginal()
+
+    let subtotal = 0
+
+    carrinho.forEach(item=>{
+        subtotal += item.preco * item.qtd
+    })
+
+    let bairroInput = document.getElementById("bairroCliente")
+    let bairro = bairroInput ? bairroInput.value : ""
+
+    let frete = calcularFrete(bairro)
+
+    if(verificarFreteGratis()){
+        frete = 0
+    }
+
+    let total = subtotal + frete
+
+    document.getElementById("total").innerText = total.toFixed(2)
+
+    let info = document.getElementById("infoFrete")
+    if(info){
+        info.innerText = `Frete: R$ ${frete}`
+    }
+
+    atualizarMensagemFrete()
+}
+
+// =========================
+// 📲 ATUALIZAR AO DIGITAR BAIRRO
+// =========================
+
+setTimeout(()=>{
+    let bairroInput = document.getElementById("bairroCliente")
+    if(bairroInput){
+        bairroInput.addEventListener("input", atualizarCarrinho)
+    }
+},1000)
+
+// =========================
+// 📦 CONTAR PEDIDOS VÁLIDOS
+// =========================
+
+function contarPedidoValido(){
+    let valido = carrinho.some(item =>
+        item.nome.toLowerCase().includes("pizza") ||
+        item.nome.toLowerCase().includes("combo")
+    )
+
+    if(valido){
+        pedidosValidos++
+
+        if(pedidosValidos >= 6){
+            pedidosValidos = 0
+        }
+    }
+}
+
+// =========================
+// 📲 ALTERAR ENVIO WHATSAPP
+// =========================
+
+const enviarPedidoOriginal = enviarPedido
+
+enviarPedido = function(){
+
+    if(carrinho.length === 0){
+        alert("Seu carrinho está vazio!")
+        return
+    }
+
+    let endereco = document.getElementById("enderecoCliente").value || "Endereço não informado"
+    let bairro = document.getElementById("bairroCliente")?.value || "-"
+    let pagamento = document.getElementById("pagamento").value
+    let troco = document.getElementById("troco").value || "-"
+
+    let subtotal = 0
+    carrinho.forEach(item=>{
+        subtotal += item.preco * item.qtd
+    })
+
+    let frete = calcularFrete(bairro)
+
+    if(verificarFreteGratis()){
+        frete = 0
+    }
+
+    let total = subtotal + frete
+
+    let msg = "Olá! Gostaria de fazer o pedido:\n\n"
+
+    carrinho.forEach(item=>{
+        msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)} cada\n`
+    })
+
+    msg += `\nSubtotal: R$${subtotal.toFixed(2)}`
+    msg += `\nFrete: R$${frete.toFixed(2)}`
+    msg += `\nTotal: R$${total.toFixed(2)}\n`
+
+    msg += `\nBairro: ${bairro}`
+    msg += `\nEndereço: ${endereco}`
+    msg += `\nPagamento: ${pagamento}`
+    msg += `\nTroco: ${troco}`
+
+    let url = `https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`
+    window.open(url,"_blank")
+
+    contarPedidoValido()
+}
