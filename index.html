@@ -28,6 +28,7 @@
     opacity: 0;
     transition: opacity 0.5s, bottom 0.5s;
 }
+
 #toast.show {
     visibility: visible;
     opacity: 1;
@@ -75,6 +76,7 @@ Bairro Mantiqueira – Belo Horizonte
 
 <div id="produtos"></div>
 
+<!-- 🛒 CARRINHO -->
 <div id="carrinho">
 <h2>🛒 Carrinho</h2>
 
@@ -83,6 +85,17 @@ Bairro Mantiqueira – Belo Horizonte
 <div class="total">
 Total + entrega: R$ <span id="total">0.00</span>
 </div>
+
+<!-- 🚚 NOVO: STATUS FRETE GRÁTIS -->
+<div id="infoFrete" style="
+    margin-top:10px;
+    padding:10px;
+    background:#111;
+    color:#fff;
+    border-radius:8px;
+    text-align:center;
+    font-weight:bold;
+"></div>
 
 <input id="enderecoCliente" placeholder="Digite seu endereço">
 
