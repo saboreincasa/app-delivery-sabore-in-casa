@@ -77,7 +77,6 @@ body{
   border-radius:12px;
   background-size:cover;
   background-position:center;
-  transition:background-image 0.5s ease-in-out;
 }
 
 /* CONTAINER */
@@ -96,7 +95,6 @@ body{
   margin-bottom:15px;
   background:white;
   color:black;
-  font-size:15px;
 }
 
 /* BOTÕES */
@@ -110,7 +108,6 @@ body{
 .linha{
   display:flex;
   gap:10px;
-  justify-content:center;
 }
 
 .linha button{
@@ -120,13 +117,7 @@ body{
   padding:12px;
   border-radius:10px;
   color:white;
-  font-size:16px;
   cursor:pointer;
-  transition:0.2s;
-}
-
-.linha button:hover{
-  background:#e68900;
 }
 
 /* TITULOS */
@@ -134,40 +125,21 @@ h2{
   margin:15px 0 10px 0;
 }
 
-/* PRODUTOS APP STYLE */
+/* ========================= */
+/* 🔥 PRODUTOS (APP STYLE) */
+/* ========================= */
+
 #produtos{
   display:flex;
   flex-direction:column;
   gap:12px;
 }
 
-/* COMBOS */
-#combosSemana{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;
-  margin-bottom:20px;
-}
-
-/* CARD BASE */
-.card{
-  background:#1f1f1f;
-  border-radius:12px;
-  overflow:hidden;
-  box-shadow:0 0 10px rgba(0,0,0,0.5);
-  transition:0.2s;
-}
-
-.card:hover{
-  transform:scale(1.02);
-}
-
-/* LISTA APP */
 #produtos .card{
   display:flex;
   align-items:center;
   gap:12px;
-  padding:10px;
+  padding:12px;
   position:relative;
 }
 
@@ -176,31 +148,11 @@ h2{
   height:95px;
   object-fit:cover;
   border-radius:12px;
-  flex-shrink:0;
 }
 
 #produtos .card-content{
   flex:1;
-  padding:0;
-  padding-right:110px;
-}
-
-#produtos .card h3{
-  font-size:18px;
-  margin-bottom:4px;
-}
-
-#produtos .card p{
-  font-size:14px;
-  color:#ccc;
-  line-height:18px;
-}
-
-.preco{
-  color:#2ecc71;
-  font-size:16px;
-  margin-top:5px;
-  font-weight:bold;
+  padding-right:120px;
 }
 
 #produtos .card button{
@@ -212,26 +164,23 @@ h2{
   padding:8px 14px;
   border-radius:8px;
   color:white;
-  cursor:pointer;
 }
 
-/* COMBO DESTAQUE */
-.destaque{
-  border:2px solid #ff9800;
-}
+/* ========================= */
+/* 🔥 PIZZAS (PADRÃO APP) */
+/* ========================= */
 
-/* PIZZAS */
 .pizza-card{
-  display:flex !important;
-  align-items:center !important;
+  display:flex;
+  align-items:center;
   gap:12px;
-  padding:10px;
+  padding:12px;
   position:relative;
 }
 
 .pizza-card img{
-  width:95px !important;
-  height:95px !important;
+  width:95px;
+  height:95px;
   object-fit:cover;
   border-radius:12px;
 }
@@ -247,7 +196,52 @@ h2{
   bottom:10px;
 }
 
+/* ========================= */
+/* 🔥 COMBOS (QUADRADO BONITO) */
+/* ========================= */
+
+#combosSemana{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+  margin-bottom:20px;
+}
+
+#combosSemana .card{
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+#combosSemana .card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+}
+
+#combosSemana .card-content{
+  padding:12px;
+}
+
+/* ========================= */
+/* CARD BASE */
+/* ========================= */
+
+.card{
+  background:#1f1f1f;
+  border-radius:12px;
+  box-shadow:0 0 10px rgba(0,0,0,0.5);
+}
+
+.preco{
+  color:#2ecc71;
+  font-weight:bold;
+}
+
+/* ========================= */
 /* MONTAGEM */
+/* ========================= */
+
 .montagem-box{
   background:#1f1f1f;
   padding:20px;
@@ -255,65 +249,18 @@ h2{
   text-align:center;
   max-width:500px;
   margin:20px auto;
-  box-shadow:0 0 15px rgba(0,0,0,0.6);
 }
 
 .pizza-preview{
   width:200px;
   height:200px;
-  object-fit:cover;
   border-radius:50%;
-  margin-bottom:15px;
 }
 
-.opcoes-pizza{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  margin-top:10px;
-}
-
-.campo{
-  text-align:left;
-}
-
-.campo label{
-  font-size:14px;
-  display:block;
-  margin-bottom:3px;
-}
-
-input,select{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  border-radius:6px;
-  border:none;
-  font-size:14px;
-  background:white;
-  color:black;
-}
-
-.btn-montar{
-  margin-top:20px;
-  width:100%;
-  background:#ff9800;
-  color:white;
-  border:none;
-  padding:15px;
-  border-radius:10px;
-  font-size:18px;
-  cursor:pointer;
-}
-
-.voltar{
-  display:block;
-  margin-top:15px;
-  cursor:pointer;
-  color:#ccc;
-}
-
+/* ========================= */
 /* CARRINHO */
+/* ========================= */
+
 #carrinho{
   background:#1f1f1f;
   padding:15px;
@@ -322,26 +269,12 @@ input,select{
   max-width:1000px;
 }
 
-#lista{
-  margin-top:10px;
-}
-
-.total{
-  font-size:20px;
-  margin-top:10px;
-  font-weight:bold;
-}
-
 .enviar{
   background:#25D366;
   color:white;
-  font-size:18px;
   padding:14px;
-  margin-top:15px;
   border-radius:20px;
   border:none;
-  font-weight:bold;
-  cursor:pointer;
 }
 
 /* BOTAO FLUTUANTE */
@@ -356,31 +289,28 @@ input,select{
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:28px;
-  cursor:pointer;
 }
 
-#contador{
-  position:absolute;
-  top:-5px;
-  right:-5px;
-  background:red;
-  color:white;
-  font-size:12px;
-  padding:4px 6px;
-  border-radius:50%;
+/* ========================= */
+/* 🔥 DESKTOP AJUSTADO */
+/* ========================= */
+
+@media (min-width:900px){
+
+  #produtos{
+    max-width:700px;
+    margin:auto;
+  }
+
+  #combosSemana{
+    grid-template-columns:repeat(4,1fr);
+  }
 }
 
-/* FOOTER */
-footer{
-  text-align:center;
-  margin-top:40px;
-  font-size:13px;
-  color:#aaa;
-  padding-bottom:20px;
-}
+/* ========================= */
+/* 📱 MOBILE */
+/* ========================= */
 
-/* MOBILE */
 @media (max-width:600px){
 
   .header-topo{
@@ -397,8 +327,8 @@ footer{
 
   #produtos .card img,
   .pizza-card img{
-    width:80px !important;
-    height:80px !important;
+    width:80px;
+    height:80px;
   }
 
   #produtos .card-content,
@@ -408,7 +338,6 @@ footer{
 
   #produtos .card button,
   .pizza-card button{
-    padding:7px 10px;
     font-size:12px;
   }
 }
