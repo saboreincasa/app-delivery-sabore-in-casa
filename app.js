@@ -434,14 +434,13 @@ function calcularFretePorBairro(bairro){
 
     let b = bairro.toLowerCase()
 
-    if(bairrosProximos.includes(b)) return 7
-    if(bairrosMedios.includes(b)) return 10
-    if(bairrosLongos.includes(b)) return 20
+    if(bairrosProximos.some(x => x.toLowerCase() === b)) return 7
+    if(bairrosMedios.some(x => x.toLowerCase() === b)) return 10
+    if(bairrosLongos.some(x => x.toLowerCase() === b)) return 20
 
     // ⚠️ REGRA SEGURA (bairro não encontrado)
     return 20
 }
-
 // ===============================
 // 📍 ABRIR ABA DE BAIRROS (UI)
 // ===============================
