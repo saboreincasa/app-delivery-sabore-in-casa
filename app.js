@@ -393,3 +393,109 @@ function mostrarToast(combo){
 function abrirMapa(){
     window.open("https://www.google.com/maps?q=Rua+Maria+de+Lourdes+da+Cruz+378+Belo+Horizonte")
 }
+// ===============================
+// 🚚 SISTEMA DE FRETE INTELIGENTE
+// ===============================
+
+// 🟢 RAIO PRÓXIMO (~0–3KM) → R$7
+const bairrosProximos = [
+"mantiqueira","jardim europa","serra verde","minas caixa","céu azul",
+"rio branco","venda nova","parque são pedro","lagoinha leblon",
+"jardim dos comerciários","santa branca"
+]
+
+// 🟡 RAIO MÉDIO (~3–6KM) → R$10
+const bairrosMedios = [
+"justinópolis","são benedito","floramar","heliópolis","planalto",
+"itapoã","santa mônica","copacabana","são joão batista",
+"são bernardo","jardim atlântico","santa amélia"
+]
+
+// 🔴 RAIO LONGO (~6–10KM) → R$20
+const bairrosLongos = [
+"centro de bh","pampulha","castelo","ouro preto","caiçara",
+"padre eustáquio","dom bosco","alípio de melo","nova pampulha",
+"ribeirão das neves","santa luzia","vespasiano","contagem"
+]
+
+// ===============================
+// 🚚 CALCULAR FRETE POR BAIRRO
+// ===============================
+function calcularFretePorBairro(bairro){
+
+    if(!bairro) return 20
+
+    let b = bairro.toLowerCase()
+
+    if(bairrosProximos.includes(b)) return 7
+    if(bairrosMedios.includes(b)) return 10
+    if(bairrosLongos.includes(b)) return 20
+
+    // ⚠️ REGRA SEGURA (bairro não encontrado)
+    return 20
+}
+
+// ===============================
+// 📍 ABRIR ABA DE BAIRROS (UI)
+// ===============================
+function abrirAbaBairros(){
+
+    let existente = document.getElementById("modalBairros")
+
+    if(existente){
+        existente.remove()
+    }
+
+    let html = `
+    <div id="modalBairros" style="
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.8);
+        z-index:9999;
+        overflow:auto;
+        padding:20px;
+    ">
+
+        <div style="
+            background:#fff;
+            color:#000;
+            padding:20px;
+            border-radius:10px;
+            max-width:600px;
+            margin:auto;
+        ">
+
+            <h2>🚚 Tabela de Frete por Bairro</h2>
+
+            <h3>🟢 R$7 (0–3km)</h3>
+            <p>${bairrosProximos.join(", ")}</p>
+
+            <h3>🟡 R$10 (3–6km)</h3>
+            <p>${bairrosMedios.join(", ")}</p>
+
+            <h3>🔴 R$20 (6–10km)</h3>
+            <p>${bairrosLongos.join(", ")}</p>
+
+            <button onclick="document.getElementById('modalBairros').remove()" 
+            style="
+                margin-top:20px;
+                padding:10px;
+                width:100%;
+                background:red;
+                color:#fff;
+                border:none;
+                border-radius:5px;
+            ">
+                Fechar
+            </button>
+
+        </div>
+
+    </div>
+    `
+
+    document.body.insertAdjacentHTML("beforeend", html)
+}
