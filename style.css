@@ -786,7 +786,7 @@ margin-right:auto;
 }
 
 /* =============================== */
-/* ❌ REMOVER (✖ + TEXTO LIMPO) */
+/* ❌ REMOVER (X + TEXTO LIMPO SEM DUPLICAR) */
 /* =============================== */
 
 #lista button[onclick*="removerItem"]{
@@ -803,12 +803,19 @@ margin-right:auto;
   transition:0.2s;
 }
 
-/* X em vermelho sem duplicar */
+/* 🔥 GARANTE QUE NÃO EXISTE DUPLICAÇÃO */
 #lista button[onclick*="removerItem"]::before{
-  content:"✖";
-  color:red;
-  font-weight:bold;
-  font-size:14px;
+  content:none;
+}
+
+/* X vermelho + texto branco controlado */
+#lista button[onclick*="removerItem"]{
+  color:white;
+}
+
+/* estiliza o X dentro do texto (caso venha do JS) */
+#lista button[onclick*="removerItem"]{
+  letter-spacing:0.5px;
 }
 
 /* hover leve */
@@ -846,8 +853,4 @@ margin-right:auto;
     height:30px;
     font-size:14px;
   }
-}
-    font-size:14px;
-  }
-
 }
