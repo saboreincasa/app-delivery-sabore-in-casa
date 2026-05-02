@@ -397,7 +397,6 @@ function abrirMapa(){
 // 🚚 SISTEMA DE FRETE INTELIGENTE
 // ===============================
 
-// 🟢 RAIO PRÓXIMO (~0–3KM) → R$7
 const bairrosProximos = [
 "Mantiqueira","Juliana","São Benedito","São Tomás","Serra Verde",
 "Jardim Vitória","Vila Clóris","Jardim Da Glória","Nova Pampulha",
@@ -425,9 +424,6 @@ const bairrosLongos = [
 "Justinópolis","Jardim Europa"
 ]
 
-// ===============================
-// 🚚 CALCULAR FRETE POR BAIRRO
-// ===============================
 function calcularFretePorBairro(bairro){
 
     if(!bairro) return 20
@@ -438,12 +434,9 @@ function calcularFretePorBairro(bairro){
     if(bairrosMedios.some(x => x.toLowerCase() === b)) return 10
     if(bairrosLongos.some(x => x.toLowerCase() === b)) return 20
 
-    // ⚠️ REGRA SEGURA (bairro não encontrado)
     return 20
 }
-// ===============================
-// 📍 ABRIR ABA DE BAIRROS (UI)
-// ===============================
+
 function abrirAbaBairros(){
 
     let existente = document.getElementById("modalBairros")
@@ -505,6 +498,7 @@ function abrirAbaBairros(){
 
     document.body.insertAdjacentHTML("beforeend", html)
 }
+
 function abrirModalBairros(){
 
     let modal = document.getElementById("modalBairro")
