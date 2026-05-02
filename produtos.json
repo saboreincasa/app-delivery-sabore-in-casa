@@ -3,7 +3,7 @@
     "nome": "Combo Casal",
     "categoria": "combos",
     "preco": 99.90,
-    "descricao": "1 Pizza Grande 30cm + Refrigerante 2L",
+    "descricao": "1 Pizza Grande 30cm + Refrigerante 2l",
     "foto": "imagens/combos/combo-casal.png"
   },
   {
@@ -17,14 +17,14 @@
     "nome": "Combo Família",
     "categoria": "combos",
     "preco": 149.90,
-    "descricao": "2 Pizzas Grandes + 2 Refrigerantes 2L",
+    "descricao": "2 Pizzas Grandes + 2 Refrigerantes 2l",
     "foto": "imagens/combos/combo-familia.png"
   },
   {
     "nome": "Combo Amigos",
     "categoria": "combos",
     "preco": 139.90,
-    "descricao": "12 Heinekens + Carvão 3kg",
+    "descricao": "12 Heinekens lata 473ml + Carvão 3kg",
     "foto": "imagens/combos/combo-amigos.png"
   },
 
