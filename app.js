@@ -155,9 +155,101 @@ function adicionarPizza(nome){
     abrirPizzas()
 }
 
-// 🎬 BANNER (mantido conforme solicitado)
+// 🔥 COMBOS
+function carregarCombosSemana(){
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
+
+        let combos = produtos.filter(p => p.categoria === "combos")
+
+        let html = ""
+
+        combos.forEach(c=>{
+            html += `
+            <div class="card destaque">
+                <img src="${c.foto}" onerror="this.src='imagens/sem-imagem.png'">
+                <div class="card-content">
+                    <h3>${c.nome}</h3>
+                    <p>${c.descricao}</p>
+                    <p class="preco">R$ ${Number(c.preco).toFixed(2)}</p>
+                    <button onclick="addCarrinho('${c.nome}', ${c.preco})">
+                        Adicionar
+                    </button>
+                </div>
+            </div>
+            `
+        })
+
+        document.getElementById("combosSemana").innerHTML = html
+    })
+}
+
+// 🎬 BANNER
 let banners = [
     {nome:"Combo Família", descricao:"2 Pizzas Gigantes 35cm + 2 Refrigerantes 2l", preco:149.90, foto:"imagens/banners/combo-familia.png"},
     {nome:"Combo Amigos", descricao:"12 Heinekens lata 473ml + 1 Carvão 3kg", preco:139.90, foto:"imagens/banners/combo-amigos.png"},
     {nome:"Combo Casal", descricao:"1 Pizza Grande 30cm + 1 Refrigerante 2l", preco:99.90, foto:"imagens/banners/combo-casal.png"}
 ]
+
+let bannerIndex = 0
+
+function iniciarBanner(){
+    let bannerDiv = document.getElementById("banner")
+    if(!bannerDiv) return
+
+    mostrarBanner()
+
+    setInterval(()=>{
+        mostrarBanner()
+    },5000)
+}
+
+function mostrarBanner(){
+    let bannerDiv = document.getElementById("banner")
+    let combo = banners[bannerIndex]
+
+    bannerDiv.style.backgroundImage = `url('${combo.foto}')`
+
+    bannerDiv.onclick = function(){
+        addCarrinho(combo.nome, combo.preco)
+    }
+
+    bannerIndex++
+    if(bannerIndex >= banners.length){
+        bannerIndex = 0
+    }
+}
+
+// 🛒 CARRINHO
+function addCarrinho(nome, preco){
+    let item = carrinho.find(i => i.nome === nome)
+
+    if(item){
+        item.qtd++
+    } else {
+        carrinho.push({nome, preco: Number(preco), qtd:1})
+    }
+
+    atualizarCarrinho()
+}
+
+function atualizarCarrinho(){
+    let lista = document.getElementById("lista")
+    let total = 0
+
+    lista.innerHTML = ""
+
+    carrinho.forEach(item=>{
+        let subtotal = item.preco * item.qtd
+        total += subtotal
+
+        lista.innerHTML += `
+        <div>
+            ${item.qtd}x ${item.nome} - R$${subtotal.toFixed(2)}
+        </div>
+        `
+    })
+
+    document.getElementById("total").innerText = total.toFixed(2)
+}
