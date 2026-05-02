@@ -274,6 +274,7 @@ function addCarrinho(nome, preco, tipo = "outro"){
 
 // 📊 CONTADOR FRETE GRÁTIS
 function contarItensFreteGratis(){
+
     let total = 0
 
     carrinho.forEach(item=>{
@@ -312,7 +313,7 @@ function atualizarCarrinho(){
                 <button onclick="diminuir(${index})">➖</button>
                 <span>${item.qtd}</span>
                 <button onclick="aumentar(${index})">➕</button>
-                <span onclick="removerItem(${index})" style="cursor:pointer;">
+                <span onclick="removerItem(${index})" style="cursor:pointer; font-weight:bold;">
                     <span style="color:red;">X</span>
                     <span style="color:white;"> Remover</span>
                 </span>
@@ -333,7 +334,7 @@ function scrollCarrinho(){
     document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
 }
 
-// 📦 ENVIAR PEDIDO
+// 📦 ENVIAR PEDIDO (WHATSAPP CORRIGIDO)
 function enviarPedido(){
 
     if(carrinho.length === 0){
@@ -341,12 +342,39 @@ function enviarPedido(){
         return
     }
 
+    let endereco = document.getElementById("enderecoCliente").value || "Não informado"
+    let pagamento = document.getElementById("pagamento").value
+    let troco = document.getElementById("troco").value || "-"
+
     let msg = "Pedido:\n\n"
 
     carrinho.forEach(item=>{
         msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)}\n`
     })
 
+    msg += `\nTotal: R$${document.getElementById("total").innerText}`
+    msg += `\nEndereço: ${endereco}`
+    msg += `\nPagamento: ${pagamento}`
+    msg += `\nTroco: ${troco}`
+
+    // ✅ CORREÇÃO DO WHATSAPP AQUI
     const url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
     window.location.href = url
+}
+
+function mostrarToast(combo){
+
+    let toast = document.getElementById("toast")
+    if(!toast) return
+
+    toast.innerText = `✅ ${combo.nome} adicionado`
+    toast.className = "show"
+
+    setTimeout(()=>{
+        toast.className = ""
+    },4000)
+}
+
+function abrirMapa(){
+    window.open("https://www.google.com/maps?q=Rua+Maria+de+Lourdes+da+Cruz+378+Belo+Horizonte")
 }
