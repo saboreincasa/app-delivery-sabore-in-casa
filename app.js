@@ -499,3 +499,92 @@ function abrirAbaBairros(){
 
     document.body.insertAdjacentHTML("beforeend", html)
 }
+function abrirModalBairros(){
+
+    let modal = document.getElementById("modalBairro")
+
+    if(modal){
+        modal.remove()
+    }
+
+    let html = `
+    <div id="modalBairro" style="
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.7);
+        z-index:99999;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    ">
+
+        <div style="
+            background:#fff;
+            width:90%;
+            max-width:400px;
+            padding:20px;
+            border-radius:12px;
+        ">
+
+            <h2>🏘️ Selecione seu bairro</h2>
+
+            <div style="max-height:300px; overflow:auto;">
+
+                ${gerarListaBairros()}
+
+            </div>
+
+            <button onclick="fecharModalBairro()" style="
+                margin-top:15px;
+                width:100%;
+                padding:10px;
+                background:red;
+                color:#fff;
+                border:none;
+                border-radius:8px;
+            ">Fechar</button>
+
+        </div>
+
+    </div>
+    `
+
+    document.body.insertAdjacentHTML("beforeend", html)
+}
+
+function fecharModalBairro(){
+    document.getElementById("modalBairro").remove()
+}
+
+function gerarListaBairros(){
+
+    const todos = [
+        ...bairrosProximos,
+        ...bairrosMedios,
+        ...bairrosLongos
+    ]
+
+    return todos.map(b=>`
+        <div onclick="selecionarBairro('${b}')" style="
+            padding:10px;
+            border-bottom:1px solid #ddd;
+            cursor:pointer;
+        ">
+            📍 ${b}
+        </div>
+    `).join("")
+}
+
+function selecionarBairro(nome){
+
+    document.getElementById("bairroSelecionado").value = nome
+    fecharModalBairro()
+
+    let frete = calcularFretePorBairro(nome)
+
+    document.getElementById("freteInfo").innerHTML =
+    "🚚 Frete calculado: R$ " + frete
+}
