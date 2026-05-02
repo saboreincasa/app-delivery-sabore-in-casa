@@ -60,14 +60,14 @@
   {
     "nome": "Coca-Cola",
     "categoria": "bebidas",
-    "preco": 15.00,
+    "preco": 14.90,
     "descricao": "Refrigerante Coca-Cola",
     "foto": "imagens/bebidas/coca_cola.png"
   },
   {
     "nome": "Coca-Cola Zero",
     "categoria": "bebidas",
-    "preco": 15.00,
+    "preco": 14.90,
     "descricao": "Refrigerante Coca Zero",
     "foto": "imagens/bebidas/coca_zero.png"
   },
