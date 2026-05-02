@@ -313,10 +313,10 @@ function atualizarCarrinho(){
                 <button onclick="diminuir(${index})">➖</button>
                 <span>${item.qtd}</span>
                 <button onclick="aumentar(${index})">➕</button>
-                <span onclick="removerItem(${index})" style="cursor:pointer; font-weight:bold;">
-                    <span style="color:red;">X</span>
-                    <span style="color:white;"> Remover</span>
-                </span>
+               <span onclick="removerItem(${index})" style="cursor:pointer; font-weight:bold;">
+    <span style="color:red;">X</span>
+    <span style="color:white;"> Remover</span>
+</span>
             </div>
         </div>
         `
@@ -326,15 +326,7 @@ function atualizarCarrinho(){
     document.getElementById("total").innerText = total.toFixed(2)
 }
 
-function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
-function diminuir(i){ carrinho[i].qtd--; if(carrinho[i].qtd<=0) carrinho.splice(i,1); atualizarCarrinho() }
-function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho() }
-
-function scrollCarrinho(){
-    document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
-}
-
-// 📦 ENVIAR PEDIDO (WHATSAPP CORRIGIDO)
+// 📦 ENVIAR PEDIDO (CORRIGIDO SOMENTE WHATSAPP)
 function enviarPedido(){
 
     if(carrinho.length === 0){
@@ -352,29 +344,11 @@ function enviarPedido(){
         msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)}\n`
     })
 
-    msg += `\nTotal: R$${document.getElementById("total").innerText}`
+    msg += `\n\nTotal: R$${document.getElementById("total").innerText}`
     msg += `\nEndereço: ${endereco}`
     msg += `\nPagamento: ${pagamento}`
     msg += `\nTroco: ${troco}`
 
-    // ✅ CORREÇÃO DO WHATSAPP AQUI
-    const url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
-    window.location.href = url
-}
-
-function mostrarToast(combo){
-
-    let toast = document.getElementById("toast")
-    if(!toast) return
-
-    toast.innerText = `✅ ${combo.nome} adicionado`
-    toast.className = "show"
-
-    setTimeout(()=>{
-        toast.className = ""
-    },4000)
-}
-
-function abrirMapa(){
-    window.open("https://www.google.com/maps?q=Rua+Maria+de+Lourdes+da+Cruz+378+Belo+Horizonte")
+    // 🔥 CORREÇÃO AQUI (SÓ WHATSAPP)
+    window.open(`https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`)
 }
