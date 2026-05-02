@@ -354,14 +354,18 @@ function enviarPedido(){
         return
     }
 
-    let endereco = document.getElementById("enderecoCliente").value || "Não informado"
-    let pagamento = document.getElementById("pagamento").value
-    let troco = document.getElementById("troco").value || "-"
+    let enderecoEl = document.getElementById("enderecoCliente")
+    let pagamentoEl = document.getElementById("pagamento")
+    let trocoEl = document.getElementById("troco")
 
-    let msg = "Pedido:\n\n"
+    let endereco = enderecoEl ? enderecoEl.value : "Não informado"
+    let pagamento = pagamentoEl ? pagamentoEl.value : "Não informado"
+    let troco = trocoEl ? trocoEl.value : "-"
+
+    let msg = "🛒 *NOVO PEDIDO*\n\n"
 
     carrinho.forEach(item=>{
-        msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)}\n`
+        msg += `🍕 ${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)}\n`
     })
 
     let itens = contarItensFreteGratis()
@@ -372,14 +376,18 @@ function enviarPedido(){
         msg += `\n🚚 Faltam ${5 - itens} item(s) para FRETE GRÁTIS`
     }
 
-    msg += `\n\nTotal: R$${document.getElementById("total").innerText}`
-    msg += `\nEndereço: ${endereco}`
-    msg += `\nPagamento: ${pagamento}`
-    msg += `\nTroco: ${troco}`
+    let totalEl = document.getElementById("total")
+    let total = totalEl ? totalEl.innerText : "0.00"
 
-    window.open(`https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`)
+    msg += `\n\n💰 Total: R$${total}`
+    msg += `\n📍 Endereço: ${endereco}`
+    msg += `\n💳 Pagamento: ${pagamento}`
+    msg += `\n💵 Troco: ${troco}`
+
+    let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
+
+    window.location.href = url
 }
-
 function mostrarToast(combo){
 
     let toast = document.getElementById("toast")
