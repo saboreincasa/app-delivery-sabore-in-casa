@@ -133,6 +133,7 @@ function abrirMontagemPizza(nome){
 
 // 🍕 ADICIONAR PIZZA
 function adicionarPizza(nome){
+
     let tamanho = document.getElementById("tamanho").value
     let bordaSelect = document.getElementById("borda")
     let borda = Number(bordaSelect.value)
@@ -151,11 +152,11 @@ function adicionarPizza(nome){
     if(meio) nomeFinal += " / Meio a Meio com " + meio
     if(borda != 0) nomeFinal += " / Borda " + bordaTexto
 
-    addCarrinho(nomeFinal, preco)
+    addCarrinho(nomeFinal, preco, "pizza")
     abrirPizzas()
 }
 
-// 🔥 FILTRO (CORRIGIDO)
+// 🔥 FILTRO
 function filtrar(tipo){
 
     if(tipo === "combo"){
@@ -166,10 +167,7 @@ function filtrar(tipo){
     }
 
     fetch("produtos.json")
-    .then(res => {
-        if(!res.ok) throw new Error("Erro ao carregar JSON")
-        return res.json()
-    })
+    .then(res => res.json())
     .then(produtos => {
 
         let filtrados = produtos.filter(p => p.categoria === tipo)
@@ -194,7 +192,6 @@ function filtrar(tipo){
 
         document.getElementById("produtos").innerHTML = html
     })
-    .catch(err => console.log("Erro filtro:", err))
 }
 
 // 🔥 COMBOS
@@ -215,7 +212,7 @@ function carregarCombosSemana(){
                     <h3>${c.nome}</h3>
                     <p>${c.descricao}</p>
                     <p class="preco">R$ ${Number(c.preco).toFixed(2)}</p>
-                    <button onclick="addCarrinho('${c.nome} - ${c.descricao}', ${c.preco})">
+                    <button onclick="addCarrinho('${c.nome} - ${c.descricao}', ${c.preco}, 'combo')">
                         Adicionar
                     </button>
                 </div>
@@ -227,7 +224,7 @@ function carregarCombosSemana(){
     })
 }
 
-// 🎬 BANNER (CORRIGIDO PARA BATER COM produtos.json)
+// 🎬 BANNER
 let banners = [
     {nome:"Combo Família", descricao:"2 Pizzas Gigantes 35cm + 2 Refrigerantes 2l", preco:149.90, foto:"imagens/banners/combo-familia.png"},
     {nome:"Combo Amigos", descricao:"12 Heinekens lata 473ml + 1 Carvão 3kg", preco:139.90, foto:"imagens/banners/combo-amigos.png"},
@@ -251,7 +248,7 @@ function mostrarBanner(){
     bannerDiv.style.backgroundImage = `url('${combo.foto}')`
 
     bannerDiv.onclick = function(){
-        addCarrinho(combo.nome + " - " + combo.descricao, combo.preco)
+        addCarrinho(combo.nome + " - " + combo.descricao, combo.preco, "combo")
         mostrarToast(combo)
     }
 
@@ -261,20 +258,35 @@ function mostrarBanner(){
     }
 }
 
-// 🛒 CARRINHO (CORRIGIDO)
-function addCarrinho(nome, preco){
+// 🛒 CARRINHO
+function addCarrinho(nome, preco, tipo = "outro"){
 
     let item = carrinho.find(i => i.nome === nome)
 
     if(item){
         item.qtd++
     } else {
-        carrinho.push({nome, preco: Number(preco), qtd:1})
+        carrinho.push({nome, preco: Number(preco), qtd:1, tipo})
     }
 
     atualizarCarrinho()
 }
 
+// 📊 CONTADOR FRETE GRÁTIS
+function contarItensFreteGratis(){
+
+    let total = 0
+
+    carrinho.forEach(item=>{
+        if(item.tipo === "pizza" || item.tipo === "combo"){
+            total += item.qtd
+        }
+    })
+
+    return total
+}
+
+// 🛒 ATUALIZAR CARRINHO
 function atualizarCarrinho(){
 
     let lista = document.getElementById("lista")
@@ -309,6 +321,19 @@ function atualizarCarrinho(){
 
     if(contador) contador.innerText = carrinho.length
     document.getElementById("total").innerText = total.toFixed(2)
+
+    // 🚚 FRETE GRÁTIS UI
+    let info = document.getElementById("infoFrete")
+    if(info){
+        let itens = contarItensFreteGratis()
+        let falta = 5 - itens
+
+        if(itens >= 5){
+            info.innerHTML = "🎉 FRETE GRÁTIS ATIVADO!"
+        } else {
+            info.innerHTML = `🚚 Faltam ${falta} item(s) para FRETE GRÁTIS`
+        }
+    }
 }
 
 function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
@@ -319,6 +344,7 @@ function scrollCarrinho(){
     document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
 }
 
+// 📦 ENVIAR PEDIDO
 function enviarPedido(){
 
     if(carrinho.length === 0){
@@ -336,7 +362,15 @@ function enviarPedido(){
         msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)}\n`
     })
 
-    msg += `\nTotal: R$${document.getElementById("total").innerText}`
+    let itens = contarItensFreteGratis()
+
+    if(itens >= 5){
+        msg += `\n🎉 FRETE GRÁTIS ATIVADO`
+    } else {
+        msg += `\n🚚 Faltam ${5 - itens} item(s) para FRETE GRÁTIS`
+    }
+
+    msg += `\n\nTotal: R$${document.getElementById("total").innerText}`
     msg += `\nEndereço: ${endereco}`
     msg += `\nPagamento: ${pagamento}`
     msg += `\nTroco: ${troco}`
