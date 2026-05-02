@@ -1,4 +1,4 @@
-// 🛒 CARRINHO  
+// 🛒 CARRINHO 
 let carrinho = []
 
 // Número do WhatsApp
@@ -86,9 +86,9 @@ function abrirMontagemPizza(nome){
             <div class="campo">
                 <label>Tamanho:</label>
                 <select id="tamanho">
-                    <option value="25">Pequena 25cm - R$39,90</option>
-                    <option value="30">Grande 30cm - R$49,90</option>
-                    <option value="35">Gigante 35cm - R$59,90</option>
+                    <option value="25">Pequena 25cm - R$30</option>
+                    <option value="30">Grande 30cm - R$40</option>
+                    <option value="35">Gigante 35cm - R$50</option>
                 </select>
             </div>
 
@@ -141,9 +141,9 @@ function adicionarPizza(nome){
     let meio = document.getElementById("meio").value
 
     let preco = 0
-    if(tamanho == 25) preco = 39.90
-    if(tamanho == 30) preco = 49.90
-    if(tamanho == 35) preco = 59.90
+    if(tamanho == 25) preco = 30
+    if(tamanho == 30) preco = 40
+    if(tamanho == 35) preco = 50
 
     preco += borda
 
@@ -224,7 +224,7 @@ function carregarCombosSemana(){
     })
 }
 
-// 🎬 BANNER (MANTIDO IGUAL)
+// 🎬 BANNER
 let banners = [
     {nome:"Combo Família", descricao:"2 Pizzas Gigantes 35cm + 2 Refrigerantes 2l", preco:149.90, foto:"imagens/banners/combo-familia.png"},
     {nome:"Combo Amigos", descricao:"12 Heinekens lata 473ml + 1 Carvão 3kg", preco:139.90, foto:"imagens/banners/combo-amigos.png"},
@@ -272,7 +272,7 @@ function addCarrinho(nome, preco, tipo = "outro"){
     atualizarCarrinho()
 }
 
-// 📊 FRETE GRÁTIS (MANTIDO)
+// 📊 CONTADOR FRETE GRÁTIS
 function contarItensFreteGratis(){
 
     let total = 0
@@ -313,10 +313,10 @@ function atualizarCarrinho(){
                 <button onclick="diminuir(${index})">➖</button>
                 <span>${item.qtd}</span>
                 <button onclick="aumentar(${index})">➕</button>
-
-                <span onclick="removerItem(${index})" style="cursor:pointer; color:red;">
-                    Remover
-                </span>
+               <span onclick="removerItem(${index})" style="cursor:pointer; font-weight:bold;">
+    <span style="color:red;">X</span>
+    <span style="color:white;"> Remover</span>
+</span>
             </div>
         </div>
         `
@@ -336,29 +336,17 @@ function atualizarCarrinho(){
             info.innerHTML = `🚚 Faltam ${falta} item(s) para FRETE GRÁTIS`
         }
     }
-
-    mostrarSugestoes() // 🔥 NOVO UPSSELL
 }
 
 function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
 function diminuir(i){ carrinho[i].qtd--; if(carrinho[i].qtd<=0) carrinho.splice(i,1); atualizarCarrinho() }
 function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho() }
 
-// 🔥 NOVO UPSSELL
-function mostrarSugestoes(){
-
-    let div = document.getElementById("sugestoesCarrinho")
-    if(!div) return
-
-    div.innerHTML = `
-    <h3>🔥 Complete seu pedido</h3>
-    <button onclick="addCarrinho('Coca-Cola 2L',14.90,'extra')">Coca-Cola 2L</button>
-    <button onclick="addCarrinho('Batata Crocante',19.90,'extra')">Batata Crocante</button>
-    <button onclick="addCarrinho('Nuggets',22.90,'extra')">Nuggets</button>
-    `
+function scrollCarrinho(){
+    document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
 }
 
-// 📦 ENVIAR PEDIDO (WHATSAPP CORRIGIDO + PIX)
+// 📦 ENVIAR PEDIDO
 function enviarPedido(){
 
     if(carrinho.length === 0){
@@ -369,36 +357,238 @@ function enviarPedido(){
     let endereco = document.getElementById("enderecoCliente").value || "Não informado"
     let pagamento = document.getElementById("pagamento").value
     let troco = document.getElementById("troco").value || "-"
-    
-    // 🆕 PIX (caso exista campo no HTML)
-    let comprovantePix = document.getElementById("comprovantePix") 
-        ? document.getElementById("comprovantePix").value 
-        : "Não enviado"
 
-    let msg = "🛒 *NOVO PEDIDO - SABORE IN CASA*\n\n"
+    let msg = "Pedido:\n\n"
 
     carrinho.forEach(item=>{
-        msg += `🍕 ${item.qtd}x ${item.nome}\n💰 R$${item.preco.toFixed(2)}\n\n`
+        msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)}\n`
     })
 
     let itens = contarItensFreteGratis()
 
     if(itens >= 5){
-        msg += `🎉 FRETE GRÁTIS ATIVADO\n`
+        msg += `\n🎉 FRETE GRÁTIS ATIVADO`
     } else {
-        msg += `🚚 Faltam ${5 - itens} item(s) para FRETE GRÁTIS\n`
+        msg += `\n🚚 Faltam ${5 - itens} item(s) para FRETE GRÁTIS`
     }
 
-    msg += `\n----------------------\n`
-    msg += `💵 TOTAL: R$${document.getElementById("total").innerText}\n`
-    msg += `📍 ENDEREÇO: ${endereco}\n`
-    msg += `💳 PAGAMENTO: ${pagamento}\n`
-    msg += `💰 TROCO: ${troco}\n`
-    msg += `🧾 PIX/COMPROVANTE: ${comprovantePix}\n`
-    msg += `----------------------\n`
+    msg += `\n\nTotal: R$${document.getElementById("total").innerText}`
+    msg += `\nEndereço: ${endereco}`
+    msg += `\nPagamento: ${pagamento}`
+    msg += `\nTroco: ${troco}`
 
-    // 🔥 WHATSAPP (VERSÃO CORRETA WA.ME)
-    let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
+    window.open(`https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`)
+}
 
-    window.open(url, "_blank")
+function mostrarToast(combo){
+
+    let toast = document.getElementById("toast")
+    if(!toast) return
+
+    toast.innerText = `✅ ${combo.nome} adicionado`
+    toast.className = "show"
+
+    setTimeout(()=>{
+        toast.className = ""
+    },4000)
+}
+
+function abrirMapa(){
+    window.open("https://www.google.com/maps?q=Rua+Maria+de+Lourdes+da+Cruz+378+Belo+Horizonte")
+}
+// ===============================
+// 🚚 SISTEMA DE FRETE INTELIGENTE
+// ===============================
+
+const bairrosProximos = [
+"Mantiqueira","Juliana","São Benedito","São Tomás","Serra Verde",
+"Jardim Vitória","Vila Clóris","Jardim Da Glória","Nova Pampulha",
+"Gávea","Célvia","Minas Caixa","Céu Azul","Rio Branco","Venda Nova",
+"Parque São Pedro","Lagoinha Leblon","Jardim Dos Comerciários","Santa Branca"
+]
+
+const bairrosMedios = [
+"Justinópolis","São Benedito","Floramar","Heliópolis","Planalto",
+"Itapoã","Santa Mônica","Copacabana","São João Batista",
+"São Bernardo","Jardim Atlântico","Santa Amélia",
+"Centro De Vespasiano","Caieiras","Célvia","Nossa Senhora De Fátima",
+"Morro Alto","Gávea II","Jardim Leblon","Piratininga",
+"São José","Santa Isabel","Santa Fé","Vereda","Florença",
+"Pedra Branca","Jardim Colonial","Jardim Verona",
+"Botafogo","Areias","Veneza","Céu Azul"
+]
+
+const bairrosLongos = [
+"Centro De Ribeirão Das Neves","Belo Vale","Barcelona","Alterosa",
+"Bom Sossego","Rosaneves","Sevilha","Contagem","Santa Luzia",
+"Pampulha","Castelo","Ouro Preto","Caiçara","Padre Eustáquio",
+"Dom Bosco","Alípio De Melo","Nova Pampulha","Guarani",
+"Centro De Belo Horizonte","Lagoa Da Pampulha","Vespasiano",
+"Justinópolis","Jardim Europa"
+]
+
+function calcularFretePorBairro(bairro){
+
+    if(!bairro) return 20
+
+    let b = bairro.toLowerCase()
+
+    if(bairrosProximos.some(x => x.toLowerCase() === b)) return 7
+    if(bairrosMedios.some(x => x.toLowerCase() === b)) return 10
+    if(bairrosLongos.some(x => x.toLowerCase() === b)) return 20
+
+    return 20
+}
+
+function abrirAbaBairros(){
+
+    let existente = document.getElementById("modalBairros")
+
+    if(existente){
+        existente.remove()
+    }
+
+    let html = `
+    <div id="modalBairros" style="
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.8);
+        z-index:9999;
+        overflow:auto;
+        padding:20px;
+    ">
+
+        <div style="
+            background:#fff;
+            color:#000;
+            padding:20px;
+            border-radius:10px;
+            max-width:600px;
+            margin:auto;
+        ">
+
+            <h2>🚚 Tabela de Frete por Bairro</h2>
+
+            <h3>🟢 R$7 (0–3km)</h3>
+            <p>${bairrosProximos.join(", ")}</p>
+
+            <h3>🟡 R$10 (3–6km)</h3>
+            <p>${bairrosMedios.join(", ")}</p>
+
+            <h3>🔴 R$20 (6–10km)</h3>
+            <p>${bairrosLongos.join(", ")}</p>
+
+            <button onclick="document.getElementById('modalBairros').remove()" 
+            style="
+                margin-top:20px;
+                padding:10px;
+                width:100%;
+                background:red;
+                color:#fff;
+                border:none;
+                border-radius:5px;
+            ">
+                Fechar
+            </button>
+
+        </div>
+
+    </div>
+    `
+
+    document.body.insertAdjacentHTML("beforeend", html)
+}
+
+function abrirModalBairros(){
+
+    let modal = document.getElementById("modalBairro")
+
+    if(modal){
+        modal.remove()
+    }
+
+    let html = `
+    <div id="modalBairro" style="
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.7);
+        z-index:99999;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    ">
+
+       <div style="
+    background:#fff;
+    color:#000;
+    width:90%;
+    max-width:400px;
+    padding:20px;
+    border-radius:12px;
+">
+
+            <h2>🏘️ Selecione seu bairro</h2>
+
+            <div style="max-height:300px; overflow:auto;">
+
+                ${gerarListaBairros()}
+
+            </div>
+
+            <button onclick="fecharModalBairro()" style="
+                margin-top:15px;
+                width:100%;
+                padding:10px;
+                background:red;
+                color:#fff;
+                border:none;
+                border-radius:8px;
+            ">Fechar</button>
+
+        </div>
+
+    </div>
+    `
+
+    document.body.insertAdjacentHTML("beforeend", html)
+}
+
+function fecharModalBairro(){
+    document.getElementById("modalBairro").remove()
+}
+
+function gerarListaBairros(){
+
+    const todos = [
+        ...bairrosProximos,
+        ...bairrosMedios,
+        ...bairrosLongos
+    ]
+
+    return todos.map(b=>`
+        <div onclick="selecionarBairro('${b}')" style="
+            padding:10px;
+            border-bottom:1px solid #ddd;
+            cursor:pointer;
+        ">
+            📍 ${b}
+        </div>
+    `).join("")
+}
+
+function selecionarBairro(nome){
+
+    document.getElementById("bairroSelecionado").value = nome
+    fecharModalBairro()
+
+    let frete = calcularFretePorBairro(nome)
+
+    document.getElementById("freteInfo").innerHTML =
+    "🚚 Frete calculado: R$ " + frete
 }
