@@ -377,7 +377,8 @@ function enviarPedido(){
     msg += `\nPagamento: ${pagamento}`
     msg += `\nTroco: ${troco}`
 
-    window.open(`https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`)
+  const url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
+window.location.href = url
 }
 
 function mostrarToast(combo){
