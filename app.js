@@ -521,13 +521,14 @@ function abrirModalBairros(){
         align-items:center;
     ">
 
-        <div style="
-            background:#fff;
-            width:90%;
-            max-width:400px;
-            padding:20px;
-            border-radius:12px;
-        ">
+       <div style="
+    background:#fff;
+    color:#000;
+    width:90%;
+    max-width:400px;
+    padding:20px;
+    border-radius:12px;
+">
 
             <h2>🏘️ Selecione seu bairro</h2>
 
