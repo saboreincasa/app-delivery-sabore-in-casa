@@ -4,76 +4,6 @@ let carrinho = []
 // Número do WhatsApp
 const whatsappNumero = "5531983391576"
 
-// 📍 BASE DE ENTREGA
-const baseEndereco = "Rua Maria de Lourdes da Cruz, 378 - Mantiqueira"
-
-// 🧭 FRETE POR BAIRRO
-const freteBairros = {
-    // 🟢 0–3KM
-    "mantiqueira": 7,
-    "jardim europa": 7,
-    "serra verde": 7,
-    "minas caixa": 7,
-    "ceu azul": 7,
-    "rio branco": 7,
-    "venda nova": 7,
-    "parque sao pedro": 7,
-    "lagoinha leblon": 7,
-    "jardim dos comerciantes": 7,
-    "santa branca": 7,
-
-    // 🟡 3–6KM
-    "justinopolis": 10,
-    "sao benedito": 10,
-    "floramar": 10,
-    "heliopolis": 10,
-    "planalto": 10,
-    "itapoa": 10,
-    "santa monica": 10,
-    "copacabana": 10,
-    "sao joao batista": 10,
-    "sao bernardo": 10,
-    "jardim atlantico": 10,
-    "santa amelia": 10,
-
-    // 🔴 6–10KM
-    "centro": 20,
-    "pampulha": 20,
-    "castelo": 20,
-    "ouro preto": 20,
-    "caicara": 20,
-    "padre eustaquio": 20,
-    "dom bosco": 20,
-    "alipio de melo": 20,
-    "nova pampulha": 20,
-    "vespasiano": 20,
-    "contagem": 20
-}
-
-// 🚚 CALCULAR FRETE
-function calcularFrete() {
-
-    let bairro = (document.getElementById("bairro")?.value || "").toLowerCase().trim()
-
-    if (!bairro) return 20
-
-    return freteBairros[bairro] || 20
-}
-
-// 🍕 CONTAR ITENS FRETE GRÁTIS
-function contarItensFreteGratis(){
-
-    let total = 0
-
-    carrinho.forEach(item=>{
-        if(item.tipo === "pizza" || item.tipo === "combo"){
-            total += item.qtd
-        }
-    })
-
-    return total
-}
-
 // 🚀 INICIO
 window.onload = function(){
     carregarCombosSemana()
@@ -95,7 +25,6 @@ function mostrarCombos(){
 
 // 🍕 PIZZAS
 function abrirPizzas(){
-
     esconderCombos()
 
     let html = "<h2>🍕 Escolha sua Pizza</h2>"
@@ -132,6 +61,7 @@ function abrirPizzas(){
 
 // 🍕 MONTAGEM
 function abrirMontagemPizza(nome){
+
     let imagens = {
         "Calabresa":"imagens/pizzas/calabresa.png",
         "Frango com Catupiry":"imagens/pizzas/franco_com_catupiry.png",
@@ -149,13 +79,51 @@ function abrirMontagemPizza(nome){
 
         <h2>🍕 ${nome}</h2>
 
-        <img class="pizza-preview" src="${imagens[nome]}">
+        <img class="pizza-preview" src="${imagens[nome]}" onerror="this.src='imagens/pizza-padrao.png'">
 
-        <button onclick="adicionarPizza('${nome}')">
+        <div class="opcoes-pizza">
+
+            <div class="campo">
+                <label>Tamanho:</label>
+                <select id="tamanho">
+                    <option value="25">Pequena 25cm - R$30</option>
+                    <option value="30">Grande 30cm - R$40</option>
+                    <option value="35">Gigante 35cm - R$50</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label>Borda:</label>
+                <select id="borda">
+                    <option value="0">Normal</option>
+                    <option value="10">Catupiry (+10)</option>
+                    <option value="10">Cheddar (+10)</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label>Meio a Meio:</label>
+                <select id="meio">
+                    <option value="">Não</option>
+                    <option value="Calabresa">Calabresa</option>
+                    <option value="Frango com Catupiry">Frango com Catupiry</option>
+                    <option value="4 Queijos">4 Queijos</option>
+                    <option value="Portuguesa">Portuguesa</option>
+                    <option value="Marguerita">Marguerita</option>
+                    <option value="Baiana">Baiana</option>
+                    <option value="Napolitana">Napolitana</option>
+                    <option value="Milho com Bacon">Milho com Bacon</option>
+                    <option value="Moda da Casa">Moda da Casa</option>
+                </select>
+            </div>
+
+        </div>
+
+        <button class="btn-montar" onclick="adicionarPizza('${nome}')">
             🛒 Adicionar ao Carrinho
         </button>
 
-        <span onclick="abrirPizzas()">⬅ Voltar</span>
+        <span class="voltar" onclick="abrirPizzas()">⬅ Voltar</span>
 
     </div>
     `
@@ -165,11 +133,132 @@ function abrirMontagemPizza(nome){
 
 // 🍕 ADICIONAR PIZZA
 function adicionarPizza(nome){
-    addCarrinho(nome, 30, "pizza")
+
+    let tamanho = document.getElementById("tamanho").value
+    let bordaSelect = document.getElementById("borda")
+    let borda = Number(bordaSelect.value)
+    let bordaTexto = bordaSelect.options[bordaSelect.selectedIndex].text
+    let meio = document.getElementById("meio").value
+
+    let preco = 0
+    if(tamanho == 25) preco = 30
+    if(tamanho == 30) preco = 40
+    if(tamanho == 35) preco = 50
+
+    preco += borda
+
+    let nomeFinal = `${nome} ${tamanho}cm`
+
+    if(meio) nomeFinal += " / Meio a Meio com " + meio
+    if(borda != 0) nomeFinal += " / Borda " + bordaTexto
+
+    addCarrinho(nomeFinal, preco, "pizza")
     abrirPizzas()
 }
 
-// 🛒 ADD CARRINHO
+// 🔥 FILTRO
+function filtrar(tipo){
+
+    if(tipo === "combo"){
+        mostrarCombos()
+        return
+    } else {
+        esconderCombos()
+    }
+
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
+
+        let filtrados = produtos.filter(p => p.categoria === tipo)
+
+        let html = ""
+
+        filtrados.forEach(p=>{
+            html += `
+            <div class="card">
+                <img src="${p.foto}" onerror="this.src='imagens/sem-imagem.png'">
+                <div class="card-content">
+                    <h3>${p.nome}</h3>
+                    <p>${p.descricao}</p>
+                    <p class="preco">R$ ${Number(p.preco).toFixed(2)}</p>
+                    <button onclick="addCarrinho('${p.nome}', ${p.preco}, '${tipo}')">
+                        Adicionar
+                    </button>
+                </div>
+            </div>
+            `
+        })
+
+        document.getElementById("produtos").innerHTML = html
+    })
+}
+
+// 🔥 COMBOS
+function carregarCombosSemana(){
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
+
+        let combos = produtos.filter(p => p.categoria === "combos")
+
+        let html = ""
+
+        combos.forEach(c=>{
+            html += `
+            <div class="card destaque">
+                <img src="${c.foto}" onerror="this.src='imagens/sem-imagem.png'">
+                <div class="card-content">
+                    <h3>${c.nome}</h3>
+                    <p>${c.descricao}</p>
+                    <p class="preco">R$ ${Number(c.preco).toFixed(2)}</p>
+                    <button onclick="addCarrinho('${c.nome} - ${c.descricao}', ${c.preco}, 'combo')">
+                        Adicionar
+                    </button>
+                </div>
+            </div>
+            `
+        })
+
+        document.getElementById("combosSemana").innerHTML = html
+    })
+}
+
+// 🎬 BANNER
+let banners = [
+    {nome:"Combo Família", descricao:"2 Pizzas Gigantes 35cm + 2 Refrigerantes 2l", preco:149.90, foto:"imagens/banners/combo-familia.png"},
+    {nome:"Combo Amigos", descricao:"12 Heinekens lata 473ml + 1 Carvão 3kg", preco:139.90, foto:"imagens/banners/combo-amigos.png"},
+    {nome:"Combo Casal", descricao:"1 Pizza Grande 30cm + 1 Refrigerante 2l", preco:99.90, foto:"imagens/banners/combo-casal.png"}
+]
+
+let bannerIndex = 0
+let bannerDiv
+
+function iniciarBanner(){
+    bannerDiv = document.getElementById("banner")
+    if(!bannerDiv) return
+
+    mostrarBanner()
+    setInterval(mostrarBanner, 5000)
+}
+
+function mostrarBanner(){
+    let combo = banners[bannerIndex]
+
+    bannerDiv.style.backgroundImage = `url('${combo.foto}')`
+
+    bannerDiv.onclick = function(){
+        addCarrinho(combo.nome + " - " + combo.descricao, combo.preco, "combo")
+        mostrarToast(combo)
+    }
+
+    bannerIndex++
+    if(bannerIndex >= banners.length){
+        bannerIndex = 0
+    }
+}
+
+// 🛒 CARRINHO
 function addCarrinho(nome, preco, tipo = "outro"){
 
     let item = carrinho.find(i => i.nome === nome)
@@ -177,24 +266,36 @@ function addCarrinho(nome, preco, tipo = "outro"){
     if(item){
         item.qtd++
     } else {
-        carrinho.push({nome, preco:Number(preco), qtd:1, tipo})
+        carrinho.push({nome, preco: Number(preco), qtd:1, tipo})
     }
 
     atualizarCarrinho()
 }
 
-// 🛒 ATUALIZAR CARRINHO (IFOOD STYLE)
+// 📊 CONTADOR FRETE GRÁTIS
+function contarItensFreteGratis(){
+
+    let total = 0
+
+    carrinho.forEach(item=>{
+        if(item.tipo === "pizza" || item.tipo === "combo"){
+            total += item.qtd
+        }
+    })
+
+    return total
+}
+
+// 🛒 ATUALIZAR CARRINHO
 function atualizarCarrinho(){
 
     let lista = document.getElementById("lista")
+    let contador = document.getElementById("contador")
     let total = 0
 
     if(!lista) return
 
     lista.innerHTML = ""
-
-    let itensFrete = contarItensFreteGratis()
-    let frete = calcularFrete()
 
     carrinho.forEach((item, index)=>{
 
@@ -202,37 +303,93 @@ function atualizarCarrinho(){
         total += subtotal
 
         lista.innerHTML += `
-        <div>
-            <b>${item.nome}</b> x${item.qtd}
-            <br>R$ ${subtotal.toFixed(2)}
+        <div style="display:flex; justify-content:space-between;">
+            <div>
+                <b>${item.nome}</b><br>
+                R$ ${subtotal.toFixed(2)}
+            </div>
+
+            <div style="display:flex; gap:5px;">
+                <button onclick="diminuir(${index})">➖</button>
+                <span>${item.qtd}</span>
+                <button onclick="aumentar(${index})">➕</button>
+                <button onclick="removerItem(${index})">❌</button>
+            </div>
         </div>
         `
     })
 
-    // 🎯 FRETE GRÁTIS LÓGICA
-    let freteMsg = ""
-    if(itensFrete >= 5){
-        frete = 0
-        freteMsg = "🎉 FRETE GRÁTIS ATIVADO"
-    } else {
-        freteMsg = `🚚 Faltam ${5 - itensFrete} pizza/combos para FRETE GRÁTIS`
-    }
-
-    total += frete
-
+    if(contador) contador.innerText = carrinho.length
     document.getElementById("total").innerText = total.toFixed(2)
 
-    // 📦 INFO FRETE NO CARRINHO
     let info = document.getElementById("infoFrete")
-    if(!info){
-        let div = document.createElement("div")
-        div.id = "infoFrete"
-        document.getElementById("carrinho").prepend(div)
-        info = div
+    if(info){
+        let itens = contarItensFreteGratis()
+        let falta = 5 - itens
+
+        if(itens >= 5){
+            info.innerHTML = "🎉 FRETE GRÁTIS ATIVADO!"
+        } else {
+            info.innerHTML = `🚚 Faltam ${falta} item(s) para FRETE GRÁTIS`
+        }
+    }
+}
+
+function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
+function diminuir(i){ carrinho[i].qtd--; if(carrinho[i].qtd<=0) carrinho.splice(i,1); atualizarCarrinho() }
+function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho() }
+
+function scrollCarrinho(){
+    document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
+}
+
+// 📦 ENVIAR PEDIDO
+function enviarPedido(){
+
+    if(carrinho.length === 0){
+        alert("Seu carrinho está vazio!")
+        return
     }
 
-    info.innerHTML = `
-        <b>Frete:</b> R$ ${frete} <br>
-        ${freteMsg}
-    `
+    let endereco = document.getElementById("enderecoCliente").value || "Não informado"
+    let pagamento = document.getElementById("pagamento").value
+    let troco = document.getElementById("troco").value || "-"
+
+    let msg = "Pedido:\n\n"
+
+    carrinho.forEach(item=>{
+        msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)}\n`
+    })
+
+    let itens = contarItensFreteGratis()
+
+    if(itens >= 5){
+        msg += `\n🎉 FRETE GRÁTIS ATIVADO`
+    } else {
+        msg += `\n🚚 Faltam ${5 - itens} item(s) para FRETE GRÁTIS`
+    }
+
+    msg += `\n\nTotal: R$${document.getElementById("total").innerText}`
+    msg += `\nEndereço: ${endereco}`
+    msg += `\nPagamento: ${pagamento}`
+    msg += `\nTroco: ${troco}`
+
+    window.open(`https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`)
+}
+
+function mostrarToast(combo){
+
+    let toast = document.getElementById("toast")
+    if(!toast) return
+
+    toast.innerText = `✅ ${combo.nome} adicionado`
+    toast.className = "show"
+
+    setTimeout(()=>{
+        toast.className = ""
+    },4000)
+}
+
+function abrirMapa(){
+    window.open("https://www.google.com/maps?q=Rua+Maria+de+Lourdes+da+Cruz+378+Belo+Horizonte")
 }
