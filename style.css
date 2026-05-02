@@ -341,3 +341,61 @@ h2{
     font-size:12px;
   }
 }
+/* ========================= */
+/* 💻 AJUSTES SOMENTE DESKTOP */
+/* ========================= */
+@media (min-width:900px){
+
+  /* 🔥 PIZZAS IGUAL APP (LISTA HORIZONTAL) */
+  .pizza-card{
+    flex-direction:row !important;
+    align-items:center;
+    gap:15px;
+    padding:12px;
+    position:relative;
+  }
+
+  .pizza-card img{
+    width:100px !important;
+    height:100px !important;
+    border-radius:12px;
+    object-fit:cover;
+  }
+
+  .pizza-card .card-content{
+    flex:1;
+    padding-right:120px;
+  }
+
+  .pizza-card button{
+    position:absolute;
+    right:15px;
+    bottom:15px;
+    width:auto;
+    padding:8px 14px;
+  }
+
+  /* 🔥 COMBOS MAIS BONITOS (TAMANHO PADRÃO) */
+  #combosSemana{
+    grid-template-columns:repeat(auto-fit, minmax(220px, 260px));
+    justify-content:center;
+  }
+
+  #combosSemana .card{
+    max-width:260px;
+  }
+
+  #combosSemana .card img{
+    height:160px;
+    object-fit:cover;
+  }
+
+  /* 🔥 CENTRALIZA TUDO IGUAL APP */
+  .container,
+  #banner,
+  .endereco,
+  #carrinho{
+    max-width:900px;
+  }
+
+}
