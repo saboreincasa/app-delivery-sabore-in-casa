@@ -659,3 +659,8 @@ margin-right:auto;
 #produtos .card:not(.pizza-card):not(.destaque) .card-content{
   padding-right:110px;
 }
+.pizza-card img{
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
