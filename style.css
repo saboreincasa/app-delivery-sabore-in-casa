@@ -716,7 +716,7 @@ margin-right:auto;
 
 }
 /* =============================== */
-/* 🛒 CARRINHO - ESTILO PREMIUM (SEM CONFLITO) */
+/* 🛒 CARRINHO - ESTILO PREMIUM (FINAL LIMPO) */
 /* =============================== */
 
 /* CONTAINER */
@@ -786,7 +786,7 @@ margin-right:auto;
 }
 
 /* =============================== */
-/* ❌ BOTÃO REMOVER (APENAS X + TEXTO) */
+/* ❌ REMOVER (✖ + TEXTO LIMPO) */
 /* =============================== */
 
 #lista button[onclick*="removerItem"]{
@@ -795,24 +795,20 @@ margin-right:auto;
   padding:0;
   display:flex;
   align-items:center;
-  gap:5px;
+  gap:6px;
   color:white;
   font-size:13px;
   cursor:pointer;
+  font-weight:500;
   transition:0.2s;
 }
 
-/* X vermelho */
+/* X em vermelho sem duplicar */
 #lista button[onclick*="removerItem"]::before{
   content:"✖";
   color:red;
   font-weight:bold;
   font-size:14px;
-}
-
-/* texto branco */
-#lista button[onclick*="removerItem"]{
-  font-weight:500;
 }
 
 /* hover leve */
@@ -833,7 +829,7 @@ margin-right:auto;
 }
 
 /* =============================== */
-/* 📱 MOBILE (SÓ CARRINHO) */
+/* 📱 MOBILE */
 /* =============================== */
 
 @media (max-width:600px){
@@ -848,6 +844,9 @@ margin-right:auto;
   #lista button[onclick*="diminuir"]{
     width:30px;
     height:30px;
+    font-size:14px;
+  }
+}
     font-size:14px;
   }
 
