@@ -313,9 +313,10 @@ function atualizarCarrinho(){
                 <button onclick="diminuir(${index})">➖</button>
                 <span>${item.qtd}</span>
                 <button onclick="aumentar(${index})">➕</button>
-               <button onclick="removerItem(${index})" style="color:white; background:red; border:none; padding:5px 8px; border-radius:5px;">
-    X <span style="color:white;">Remover</span>
-</button>
+               <span onclick="removerItem(${index})" style="cursor:pointer; font-weight:bold;">
+    <span style="color:red;">X</span>
+    <span style="color:white;"> Remover</span>
+</span>
             </div>
         </div>
         `
