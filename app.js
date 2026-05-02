@@ -86,9 +86,9 @@ function abrirMontagemPizza(nome){
             <div class="campo">
                 <label>Tamanho:</label>
                 <select id="tamanho">
-                    <option value="25">Pequena 25cm - R$44.90</option>
-                    <option value="30">Grande 30cm - R$64.90</option>
-                    <option value="35">Gigante 35cm - R$84.90</option>
+                    <option value="25">Pequena 25cm - R$39.90</option>
+                    <option value="30">Grande 30cm - R$49.90</option>
+                    <option value="35">Gigante 35cm - R$59.90</option>
                 </select>
             </div>
 
@@ -140,9 +140,9 @@ function adicionarPizza(nome){
     let meio = document.getElementById("meio").value
 
     let preco = 0
-    if(tamanho == 25) preco = 44.90
-    if(tamanho == 30) preco = 64.90
-    if(tamanho == 35) preco = 84.90
+    if(tamanho == 25) preco = 39.90
+    if(tamanho == 30) preco = 49.90
+    if(tamanho == 35) preco = 59.90
 
     preco += borda
 
@@ -155,9 +155,9 @@ function adicionarPizza(nome){
     abrirPizzas()
 }
 
-// 🎬 BANNER
+// 🎬 BANNER (mantido conforme solicitado)
 let banners = [
-    {nome:"Combo Família", descricao:"2 Pizzas Gigantes 35cm + 2 Refrigerantes 2l", preco:159.90, foto:"imagens/banners/combo-familia.png"},
-    {nome:"Combo Amigos", descricao:"1 Pizza Gigante + 12 Heinekens", preco:169.90, foto:"imagens/banners/combo-amigos.png"},
-    {nome:"Combo Casal", descricao:"1 Pizza Grande 30cm + 1 Refrigerante 2l", preco:89.90, foto:"imagens/banners/combo-casal.png"}
+    {nome:"Combo Família", descricao:"2 Pizzas Gigantes 35cm + 2 Refrigerantes 2l", preco:149.90, foto:"imagens/banners/combo-familia.png"},
+    {nome:"Combo Amigos", descricao:"12 Heinekens lata 473ml + 1 Carvão 3kg", preco:139.90, foto:"imagens/banners/combo-amigos.png"},
+    {nome:"Combo Casal", descricao:"1 Pizza Grande 30cm + 1 Refrigerante 2l", preco:99.90, foto:"imagens/banners/combo-casal.png"}
 ]
