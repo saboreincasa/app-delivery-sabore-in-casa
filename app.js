@@ -12,15 +12,21 @@ window.onload = function(){
 
 // 🔥 ESCONDER COMBOS
 function esconderCombos(){
-    document.getElementById("combosSemana").innerHTML = ""
-    document.getElementById("tituloCombos").style.display = "none"
+    let combos = document.getElementById("combosSemana")
+    let titulo = document.getElementById("tituloCombos")
+
+    if(combos) combos.innerHTML = ""
+    if(titulo) titulo.style.display = "none"
 }
 
 // 🔥 MOSTRAR COMBOS
 function mostrarCombos(){
-    document.getElementById("tituloCombos").style.display = "block"
+    let titulo = document.getElementById("tituloCombos")
+    let produtos = document.getElementById("produtos")
+
+    if(titulo) titulo.style.display = "block"
     carregarCombosSemana()
-    document.getElementById("produtos").innerHTML = ""
+    if(produtos) produtos.innerHTML = ""
 }
 
 // 🍕 PIZZAS
@@ -56,7 +62,8 @@ function abrirPizzas(){
         `
     })
 
-    document.getElementById("produtos").innerHTML = html
+    let produtos = document.getElementById("produtos")
+    if(produtos) produtos.innerHTML = html
 }
 
 // 🍕 MONTAGEM
@@ -128,7 +135,8 @@ function abrirMontagemPizza(nome){
     </div>
     `
 
-    document.getElementById("produtos").innerHTML = html
+    let produtos = document.getElementById("produtos")
+    if(produtos) produtos.innerHTML = html
 }
 
 // 🍕 ADICIONAR PIZZA
@@ -181,7 +189,8 @@ function carregarCombosSemana(){
             `
         })
 
-        document.getElementById("combosSemana").innerHTML = html
+        let combosDiv = document.getElementById("combosSemana")
+        if(combosDiv) combosDiv.innerHTML = html
     })
 }
 
@@ -207,6 +216,8 @@ function iniciarBanner(){
 
 function mostrarBanner(){
     let bannerDiv = document.getElementById("banner")
+    if(!bannerDiv) return
+
     let combo = banners[bannerIndex]
 
     bannerDiv.style.backgroundImage = `url('${combo.foto}')`
@@ -238,6 +249,8 @@ function atualizarCarrinho(){
     let lista = document.getElementById("lista")
     let total = 0
 
+    if(!lista) return
+
     lista.innerHTML = ""
 
     carrinho.forEach(item=>{
@@ -251,5 +264,6 @@ function atualizarCarrinho(){
         `
     })
 
-    document.getElementById("total").innerText = total.toFixed(2)
+    let totalEl = document.getElementById("total")
+    if(totalEl) totalEl.innerText = total.toFixed(2)
 }
