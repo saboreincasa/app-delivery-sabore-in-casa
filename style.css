@@ -659,3 +659,59 @@ margin-right:auto;
 #produtos .card:not(.pizza-card):not(.destaque) .card-content{
   padding-right:110px;
 }
+/* ========================================= */
+/* 📱 CORREÇÕES MOBILE (SEM QUEBRAR DESKTOP) */
+/* ========================================= */
+@media (max-width:600px){
+
+  /* 🔥 GARANTE QUE O CARRINHO APAREÇA */
+  #botaoCarrinho{
+    display:flex !important;
+    bottom:15px;
+    right:15px;
+    width:60px;
+    height:60px;
+    font-size:24px;
+    z-index:999;
+  }
+
+  /* 🔥 ENDEREÇO CENTRALIZADO BONITO */
+  .endereco{
+    margin:10px 15px;
+    text-align:center;
+    padding:15px;
+  }
+
+  /* 🔥 BOTÃO DO ENDEREÇO (VER MAPA) */
+  .endereco button{
+    display:block;
+    margin:10px auto 0 auto;
+    width:auto;
+  }
+
+  /* 🔥 GARANTE QUE NADA FIQUE ESPREMIDO */
+  .container{
+    padding:12px;
+  }
+
+  /* 🔥 AJUSTE DOS BOTÕES (PIZZAS / BEBIDAS / ETC) */
+  .linha{
+    flex-direction:row;
+  }
+
+  .linha button{
+    font-size:14px;
+    padding:10px;
+  }
+
+  /* 🔥 PRODUTOS NÃO QUEBRAM */
+  #produtos{
+    grid-template-columns:1fr;
+  }
+
+  /* 🔥 COMBOS BONITOS NO MOBILE */
+  #combosSemana{
+    grid-template-columns:1fr;
+  }
+
+}
