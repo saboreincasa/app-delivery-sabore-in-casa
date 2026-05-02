@@ -715,3 +715,140 @@ margin-right:auto;
   }
 
 }
+/* =============================== */
+/* 🛒 CARRINHO - ESTILO PREMIUM (SEM CONFLITO) */
+/* =============================== */
+
+/* CONTAINER */
+#carrinho{
+  background:#1f1f1f;
+  padding:18px;
+  border-radius:12px;
+  margin:25px auto;
+  max-width:1000px;
+  box-shadow:0 0 15px rgba(0,0,0,0.4);
+}
+
+/* LISTA */
+#lista{
+  margin-top:10px;
+}
+
+/* ITEM DO CARRINHO */
+#lista > div{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#2a2a2a;
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:10px;
+  transition:0.2s;
+}
+
+#lista > div:hover{
+  transform:scale(1.01);
+}
+
+/* TEXTO */
+#lista b{
+  font-size:15px;
+}
+
+#lista span{
+  font-weight:bold;
+}
+
+/* =============================== */
+/* ➕ ➖ BOTÕES QUADRADOS ARREDONDADOS */
+/* =============================== */
+
+#lista button[onclick*="aumentar"],
+#lista button[onclick*="diminuir"]{
+  background:#ff9800;
+  border:none;
+  color:white;
+  width:32px;
+  height:32px;
+  border-radius:8px;
+  font-size:16px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:0.2s;
+}
+
+#lista button[onclick*="aumentar"]:hover,
+#lista button[onclick*="diminuir"]:hover{
+  background:#e68900;
+  transform:scale(1.05);
+}
+
+/* =============================== */
+/* ❌ BOTÃO REMOVER (APENAS X + TEXTO) */
+/* =============================== */
+
+#lista button[onclick*="removerItem"]{
+  background:transparent;
+  border:none;
+  padding:0;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  color:white;
+  font-size:13px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+/* X vermelho */
+#lista button[onclick*="removerItem"]::before{
+  content:"✖";
+  color:red;
+  font-weight:bold;
+  font-size:14px;
+}
+
+/* texto branco */
+#lista button[onclick*="removerItem"]{
+  font-weight:500;
+}
+
+/* hover leve */
+#lista button[onclick*="removerItem"]:hover{
+  opacity:0.8;
+  transform:scale(1.05);
+}
+
+/* =============================== */
+/* 📊 TOTAL */
+/* =============================== */
+
+.total{
+  font-size:20px;
+  margin-top:10px;
+  font-weight:bold;
+  color:#2ecc71;
+}
+
+/* =============================== */
+/* 📱 MOBILE (SÓ CARRINHO) */
+/* =============================== */
+
+@media (max-width:600px){
+
+  #lista > div{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+  }
+
+  #lista button[onclick*="aumentar"],
+  #lista button[onclick*="diminuir"]{
+    width:30px;
+    height:30px;
+    font-size:14px;
+  }
+
+}
