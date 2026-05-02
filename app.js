@@ -324,9 +324,29 @@ function atualizarCarrinho(){
 
     if(contador) contador.innerText = carrinho.length
     document.getElementById("total").innerText = total.toFixed(2)
+
+    let info = document.getElementById("infoFrete")
+    if(info){
+        let itens = contarItensFreteGratis()
+        let falta = 5 - itens
+
+        if(itens >= 5){
+            info.innerHTML = "🎉 FRETE GRÁTIS ATIVADO!"
+        } else {
+            info.innerHTML = `🚚 Faltam ${falta} item(s) para FRETE GRÁTIS`
+        }
+    }
 }
 
-// 📦 ENVIAR PEDIDO (CORRIGIDO SOMENTE WHATSAPP)
+function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
+function diminuir(i){ carrinho[i].qtd--; if(carrinho[i].qtd<=0) carrinho.splice(i,1); atualizarCarrinho() }
+function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho() }
+
+function scrollCarrinho(){
+    document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
+}
+
+// 📦 ENVIAR PEDIDO
 function enviarPedido(){
 
     if(carrinho.length === 0){
@@ -344,11 +364,231 @@ function enviarPedido(){
         msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)}\n`
     })
 
+    let itens = contarItensFreteGratis()
+
+    if(itens >= 5){
+        msg += `\n🎉 FRETE GRÁTIS ATIVADO`
+    } else {
+        msg += `\n🚚 Faltam ${5 - itens} item(s) para FRETE GRÁTIS`
+    }
+
     msg += `\n\nTotal: R$${document.getElementById("total").innerText}`
     msg += `\nEndereço: ${endereco}`
     msg += `\nPagamento: ${pagamento}`
     msg += `\nTroco: ${troco}`
 
-    // 🔥 CORREÇÃO AQUI (SÓ WHATSAPP)
-    window.open(`https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`)
+    window.open(`https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`)
+}
+
+function mostrarToast(combo){
+
+    let toast = document.getElementById("toast")
+    if(!toast) return
+
+    toast.innerText = `✅ ${combo.nome} adicionado`
+    toast.className = "show"
+
+    setTimeout(()=>{
+        toast.className = ""
+    },4000)
+}
+
+function abrirMapa(){
+    window.open("https://www.google.com/maps?q=Rua+Maria+de+Lourdes+da+Cruz+378+Belo+Horizonte")
+}
+// ===============================
+// 🚚 SISTEMA DE FRETE INTELIGENTE
+// ===============================
+
+const bairrosProximos = [
+"Mantiqueira","Juliana","São Benedito","São Tomás","Serra Verde",
+"Jardim Vitória","Vila Clóris","Jardim Da Glória","Nova Pampulha",
+"Gávea","Célvia","Minas Caixa","Céu Azul","Rio Branco","Venda Nova",
+"Parque São Pedro","Lagoinha Leblon","Jardim Dos Comerciários","Santa Branca"
+]
+
+const bairrosMedios = [
+"Justinópolis","São Benedito","Floramar","Heliópolis","Planalto",
+"Itapoã","Santa Mônica","Copacabana","São João Batista",
+"São Bernardo","Jardim Atlântico","Santa Amélia",
+"Centro De Vespasiano","Caieiras","Célvia","Nossa Senhora De Fátima",
+"Morro Alto","Gávea II","Jardim Leblon","Piratininga",
+"São José","Santa Isabel","Santa Fé","Vereda","Florença",
+"Pedra Branca","Jardim Colonial","Jardim Verona",
+"Botafogo","Areias","Veneza","Céu Azul"
+]
+
+const bairrosLongos = [
+"Centro De Ribeirão Das Neves","Belo Vale","Barcelona","Alterosa",
+"Bom Sossego","Rosaneves","Sevilha","Contagem","Santa Luzia",
+"Pampulha","Castelo","Ouro Preto","Caiçara","Padre Eustáquio",
+"Dom Bosco","Alípio De Melo","Nova Pampulha","Guarani",
+"Centro De Belo Horizonte","Lagoa Da Pampulha","Vespasiano",
+"Justinópolis","Jardim Europa"
+]
+
+function calcularFretePorBairro(bairro){
+
+    if(!bairro) return 20
+
+    let b = bairro.toLowerCase()
+
+    if(bairrosProximos.some(x => x.toLowerCase() === b)) return 7
+    if(bairrosMedios.some(x => x.toLowerCase() === b)) return 10
+    if(bairrosLongos.some(x => x.toLowerCase() === b)) return 20
+
+    return 20
+}
+
+function abrirAbaBairros(){
+
+    let existente = document.getElementById("modalBairros")
+
+    if(existente){
+        existente.remove()
+    }
+
+    let html = `
+    <div id="modalBairros" style="
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.8);
+        z-index:9999;
+        overflow:auto;
+        padding:20px;
+    ">
+
+        <div style="
+            background:#fff;
+            color:#000;
+            padding:20px;
+            border-radius:10px;
+            max-width:600px;
+            margin:auto;
+        ">
+
+            <h2>🚚 Tabela de Frete por Bairro</h2>
+
+            <h3>🟢 R$7 (0–3km)</h3>
+            <p>${bairrosProximos.join(", ")}</p>
+
+            <h3>🟡 R$10 (3–6km)</h3>
+            <p>${bairrosMedios.join(", ")}</p>
+
+            <h3>🔴 R$20 (6–10km)</h3>
+            <p>${bairrosLongos.join(", ")}</p>
+
+            <button onclick="document.getElementById('modalBairros').remove()" 
+            style="
+                margin-top:20px;
+                padding:10px;
+                width:100%;
+                background:red;
+                color:#fff;
+                border:none;
+                border-radius:5px;
+            ">
+                Fechar
+            </button>
+
+        </div>
+
+    </div>
+    `
+
+    document.body.insertAdjacentHTML("beforeend", html)
+}
+
+function abrirModalBairros(){
+
+    let modal = document.getElementById("modalBairro")
+
+    if(modal){
+        modal.remove()
+    }
+
+    let html = `
+    <div id="modalBairro" style="
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.7);
+        z-index:99999;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    ">
+
+       <div style="
+    background:#fff;
+    color:#000;
+    width:90%;
+    max-width:400px;
+    padding:20px;
+    border-radius:12px;
+">
+
+            <h2>🏘️ Selecione seu bairro</h2>
+
+            <div style="max-height:300px; overflow:auto;">
+
+                ${gerarListaBairros()}
+
+            </div>
+
+            <button onclick="fecharModalBairro()" style="
+                margin-top:15px;
+                width:100%;
+                padding:10px;
+                background:red;
+                color:#fff;
+                border:none;
+                border-radius:8px;
+            ">Fechar</button>
+
+        </div>
+
+    </div>
+    `
+
+    document.body.insertAdjacentHTML("beforeend", html)
+}
+
+function fecharModalBairro(){
+    document.getElementById("modalBairro").remove()
+}
+
+function gerarListaBairros(){
+
+    const todos = [
+        ...bairrosProximos,
+        ...bairrosMedios,
+        ...bairrosLongos
+    ]
+
+    return todos.map(b=>`
+        <div onclick="selecionarBairro('${b}')" style="
+            padding:10px;
+            border-bottom:1px solid #ddd;
+            cursor:pointer;
+        ">
+            📍 ${b}
+        </div>
+    `).join("")
+}
+
+function selecionarBairro(nome){
+
+    document.getElementById("bairroSelecionado").value = nome
+    fecharModalBairro()
+
+    let frete = calcularFretePorBairro(nome)
+
+    document.getElementById("freteInfo").innerHTML =
+    "🚚 Frete calculado: R$ " + frete
 }
