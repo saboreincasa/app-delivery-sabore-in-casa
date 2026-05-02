@@ -399,23 +399,30 @@ function abrirMapa(){
 
 // 🟢 RAIO PRÓXIMO (~0–3KM) → R$7
 const bairrosProximos = [
-"mantiqueira","jardim europa","serra verde","minas caixa","céu azul",
-"rio branco","venda nova","parque são pedro","lagoinha leblon",
-"jardim dos comerciários","santa branca"
+"Mantiqueira","Juliana","São Benedito","São Tomás","Serra Verde",
+"Jardim Vitória","Vila Clóris","Jardim Da Glória","Nova Pampulha",
+"Gávea","Célvia","Minas Caixa","Céu Azul","Rio Branco","Venda Nova",
+"Parque São Pedro","Lagoinha Leblon","Jardim Dos Comerciários","Santa Branca"
 ]
 
-// 🟡 RAIO MÉDIO (~3–6KM) → R$10
 const bairrosMedios = [
-"justinópolis","são benedito","floramar","heliópolis","planalto",
-"itapoã","santa mônica","copacabana","são joão batista",
-"são bernardo","jardim atlântico","santa amélia"
+"Justinópolis","São Benedito","Floramar","Heliópolis","Planalto",
+"Itapoã","Santa Mônica","Copacabana","São João Batista",
+"São Bernardo","Jardim Atlântico","Santa Amélia",
+"Centro De Vespasiano","Caieiras","Célvia","Nossa Senhora De Fátima",
+"Morro Alto","Gávea II","Jardim Leblon","Piratininga",
+"São José","Santa Isabel","Santa Fé","Vereda","Florença",
+"Pedra Branca","Jardim Colonial","Jardim Verona",
+"Botafogo","Areias","Veneza","Céu Azul"
 ]
 
-// 🔴 RAIO LONGO (~6–10KM) → R$20
 const bairrosLongos = [
-"centro de bh","pampulha","castelo","ouro preto","caiçara",
-"padre eustáquio","dom bosco","alípio de melo","nova pampulha",
-"ribeirão das neves","santa luzia","vespasiano","contagem"
+"Centro De Ribeirão Das Neves","Belo Vale","Barcelona","Alterosa",
+"Bom Sossego","Rosaneves","Sevilha","Contagem","Santa Luzia",
+"Pampulha","Castelo","Ouro Preto","Caiçara","Padre Eustáquio",
+"Dom Bosco","Alípio De Melo","Nova Pampulha","Guarani",
+"Centro De Belo Horizonte","Lagoa Da Pampulha","Vespasiano",
+"Justinópolis","Jardim Europa"
 ]
 
 // ===============================
