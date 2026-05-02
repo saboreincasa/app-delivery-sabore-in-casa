@@ -8,6 +8,7 @@ const whatsappNumero = "5531983391576"
 window.onload = function(){
     carregarCombosSemana()
     iniciarBanner()
+    ativarAutoCompleteBairros() // 🔥 NOVO
 }
 
 // 🔥 ESCONDER COMBOS
@@ -79,7 +80,7 @@ function abrirMontagemPizza(nome){
 
         <h2>🍕 ${nome}</h2>
 
-        <img class="pizza-preview" src="${imagens[nome]}" onerror="this.src='imagens/pizza-padrao.png'">
+        <img class="pizza-preview" src="${imagens[nome]}">
 
         <div class="opcoes-pizza">
 
@@ -97,7 +98,6 @@ function abrirMontagemPizza(nome){
                 <select id="borda">
                     <option value="0">Normal</option>
                     <option value="10">Catupiry (+10)</option>
-                    <option value="10">Cheddar (+10)</option>
                 </select>
             </div>
 
@@ -107,24 +107,12 @@ function abrirMontagemPizza(nome){
                     <option value="">Não</option>
                     <option value="Calabresa">Calabresa</option>
                     <option value="Frango com Catupiry">Frango com Catupiry</option>
-                    <option value="4 Queijos">4 Queijos</option>
-                    <option value="Portuguesa">Portuguesa</option>
-                    <option value="Marguerita">Marguerita</option>
-                    <option value="Baiana">Baiana</option>
-                    <option value="Napolitana">Napolitana</option>
-                    <option value="Milho com Bacon">Milho com Bacon</option>
-                    <option value="Moda da Casa">Moda da Casa</option>
                 </select>
             </div>
 
         </div>
 
-        <button class="btn-montar" onclick="adicionarPizza('${nome}')">
-            🛒 Adicionar ao Carrinho
-        </button>
-
-        <span class="voltar" onclick="abrirPizzas()">⬅ Voltar</span>
-
+        <button onclick="adicionarPizza('${nome}')">Adicionar</button>
     </div>
     `
 
@@ -135,27 +123,22 @@ function abrirMontagemPizza(nome){
 function adicionarPizza(nome){
 
     let tamanho = document.getElementById("tamanho").value
-    let bordaSelect = document.getElementById("borda")
-    let borda = Number(bordaSelect.value)
+    let borda = Number(document.getElementById("borda").value)
     let meio = document.getElementById("meio").value
 
-    let preco = 0
-    if(tamanho == 25) preco = 30
-    if(tamanho == 30) preco = 40
-    if(tamanho == 35) preco = 50
-
+    let preco = tamanho == 25 ? 30 : tamanho == 30 ? 40 : 50
     preco += borda
 
     let nomeFinal = `${nome} ${tamanho}cm`
-
-    if(meio) nomeFinal += " / Meio a Meio com " + meio
+    if(meio) nomeFinal += " / " + meio
 
     addCarrinho(nomeFinal, preco, "pizza")
     abrirPizzas()
 }
 
-// 🔥 FILTRO
+// 🔥 FILTRO (igual seu)
 function filtrar(tipo){
+
     if(tipo === "combo"){
         mostrarCombos()
         return
@@ -174,11 +157,11 @@ function filtrar(tipo){
         filtrados.forEach(p=>{
             html += `
             <div class="card">
-                <img src="${p.foto}" onerror="this.src='imagens/sem-imagem.png'">
+                <img src="${p.foto}">
                 <div class="card-content">
                     <h3>${p.nome}</h3>
                     <p>${p.descricao}</p>
-                    <p class="preco">R$ ${Number(p.preco).toFixed(2)}</p>
+                    <p>R$ ${p.preco}</p>
                     <button onclick="addCarrinho('${p.nome}', ${p.preco}, '${tipo}')">
                         Adicionar
                     </button>
@@ -191,82 +174,11 @@ function filtrar(tipo){
     })
 }
 
-// 🔥 COMBOS
-function carregarCombosSemana(){
-    fetch("produtos.json")
-    .then(res => res.json())
-    .then(produtos => {
-
-        let combos = produtos.filter(p => p.categoria === "combos")
-
-        let html = ""
-
-        combos.forEach(c=>{
-            html += `
-            <div class="card destaque">
-                <img src="${c.foto}" onerror="this.src='imagens/sem-imagem.png'">
-                <div class="card-content">
-                    <h3>${c.nome}</h3>
-                    <p>${c.descricao}</p>
-                    <p class="preco">R$ ${Number(c.preco).toFixed(2)}</p>
-                    <button onclick="addCarrinho('${c.nome}', ${c.preco}, 'combo')">
-                        Adicionar
-                    </button>
-                </div>
-            </div>
-            `
-        })
-
-        document.getElementById("combosSemana").innerHTML = html
-    })
-}
-
-// 🎬 BANNER (igual seu original)
-let banners = [
-    {nome:"Combo Família", descricao:"2 Pizzas Gigantes + 2 Refri", preco:149.90, foto:"imagens/banners/combo-familia.png"}
-]
-
-let bannerIndex = 0
-let bannerDiv
-
-function iniciarBanner(){
-    bannerDiv = document.getElementById("banner")
-    if(!bannerDiv) return
-    mostrarBanner()
-    setInterval(mostrarBanner, 5000)
-}
-
-function mostrarBanner(){
-    let combo = banners[bannerIndex]
-    bannerDiv.style.backgroundImage = `url('${combo.foto}')`
-
-    bannerDiv.onclick = function(){
-        addCarrinho(combo.nome, combo.preco, "combo")
-    }
-
-    bannerIndex++
-    if(bannerIndex >= banners.length) bannerIndex = 0
-}
-
-// 🛒 CARRINHO
-function addCarrinho(nome, preco, tipo = "outro"){
-    let item = carrinho.find(i => i.nome === nome)
-
-    if(item){
-        item.qtd++
-    } else {
-        carrinho.push({nome, preco:Number(preco), qtd:1, tipo})
-    }
-
-    atualizarCarrinho()
-}
-
-// 🧠 FRETE INTELIGENTE (NOVO - ADICIONADO)
+// 🧠 FRETE INTELIGENTE COMPLETO
 const freteBairros = {
     "mantiqueira": 7,
-    "jardim europa": 7,
-    "serra verde": 7,
     "venda nova": 7,
+    "serra verde": 7,
     "pampulha": 20,
     "centro": 20
 }
@@ -280,7 +192,21 @@ function calcularFrete(){
     return freteBairros[bairro] || 20
 }
 
-// 🛒 ATUALIZAR CARRINHO (COM FRETE)
+// 🛒 CARRINHO
+function addCarrinho(nome, preco, tipo="outro"){
+
+    let item = carrinho.find(i => i.nome === nome)
+
+    if(item){
+        item.qtd++
+    } else {
+        carrinho.push({nome, preco:Number(preco), qtd:1, tipo})
+    }
+
+    atualizarCarrinho()
+}
+
+// 🛒 ATUALIZAR
 function atualizarCarrinho(){
 
     let lista = document.getElementById("lista")
@@ -288,20 +214,40 @@ function atualizarCarrinho(){
 
     lista.innerHTML = ""
 
-    carrinho.forEach((item,index)=>{
+    carrinho.forEach(item=>{
         let subtotal = item.preco * item.qtd
         total += subtotal
 
         lista.innerHTML += `
         <div>
-            <b>${item.nome}</b>
-            <span>R$ ${subtotal.toFixed(2)}</span>
+            ${item.nome} - R$ ${subtotal}
         </div>
         `
     })
 
     let frete = calcularFrete()
-    let totalFinal = total + frete
+    document.getElementById("total").innerText = (total + frete).toFixed(2)
+}
 
-    document.getElementById("total").innerText = totalFinal.toFixed(2)
+// 🔥 AUTO COMPLETE BAIRROS (NOVO PROFISSIONAL)
+function ativarAutoCompleteBairros(){
+
+    const bairros = [
+        "Mantiqueira","Venda Nova","Serra Verde","Minas Caixa","Pampulha",
+        "Centro","Santa Branca","Floramar","Itapoã","Planalto"
+    ]
+
+    let input = document.getElementById("bairro")
+
+    if(!input) return
+
+    input.addEventListener("input", function(){
+        let val = this.value.toLowerCase()
+
+        let match = bairros.filter(b =>
+            b.toLowerCase().startsWith(val)
+        )
+
+        console.log("Sugestões:", match) // futuro dropdown (se quiser upgrade)
+    })
 }
