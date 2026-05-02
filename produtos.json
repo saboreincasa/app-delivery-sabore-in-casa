@@ -23,8 +23,8 @@
   {
     "nome": "Combo Amigos",
     "categoria": "combos",
-    "preco": 139.90,
-    "descricao": "12 Heinekens lata 473ml + 1 Carvão 3kg",
+    "preco": 149.90,
+    "descricao": "6 Heinekens + 6 Brahmas 473ml + 1 Pizza Gigante 35cm",
     "foto": "imagens/combos/combo-amigos.png"
   },
 
@@ -60,21 +60,21 @@
   {
     "nome": "Coca-Cola",
     "categoria": "bebidas",
-    "preco": 14.90,
+    "preco": 15.90,
     "descricao": "Refrigerante Coca-Cola",
     "foto": "imagens/bebidas/coca_cola.png"
   },
   {
     "nome": "Coca-Cola Zero",
     "categoria": "bebidas",
-    "preco": 14.90,
+    "preco": 15.90,
     "descricao": "Refrigerante Coca Zero",
     "foto": "imagens/bebidas/coca_zero.png"
   },
   {
     "nome": "Guaraná Antarctica",
     "categoria": "bebidas",
-    "preco": 13.90,
+    "preco": 14.90,
     "descricao": "Refrigerante Guaraná Antarctica",
     "foto": "imagens/bebidas/guarana.png"
   },
@@ -95,14 +95,14 @@
   {
     "nome": "Spaten",
     "categoria": "bebidas",
-    "preco": 8.90,
+    "preco": 9.90,
     "descricao": "Cerveja Spaten lata",
     "foto": "imagens/bebidas/spaten.png"
   },
   {
     "nome": "Bohemia",
     "categoria": "bebidas",
-    "preco": 8.90,
+    "preco": 9.90,
     "descricao": "Cerveja Bohemia lata",
     "foto": "imagens/bebidas/bohemia.png"
   }
