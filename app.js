@@ -358,7 +358,7 @@ function mostrarSugestoes(){
     `
 }
 
-// 📦 WHATSAPP CORRIGIDO (PRINCIPAL FIX)
+// 📦 ENVIAR PEDIDO (WHATSAPP CORRIGIDO + PIX)
 function enviarPedido(){
 
     if(carrinho.length === 0){
@@ -369,31 +369,36 @@ function enviarPedido(){
     let endereco = document.getElementById("enderecoCliente").value || "Não informado"
     let pagamento = document.getElementById("pagamento").value
     let troco = document.getElementById("troco").value || "-"
+    
+    // 🆕 PIX (caso exista campo no HTML)
+    let comprovantePix = document.getElementById("comprovantePix") 
+        ? document.getElementById("comprovantePix").value 
+        : "Não enviado"
 
-    let msg = "🍕 *PEDIDO SABORE IN CASA* 🍕\n\n"
+    let msg = "🛒 *NOVO PEDIDO - SABORE IN CASA*\n\n"
 
     carrinho.forEach(item=>{
-        msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)}\n`
+        msg += `🍕 ${item.qtd}x ${item.nome}\n💰 R$${item.preco.toFixed(2)}\n\n`
     })
 
     let itens = contarItensFreteGratis()
 
     if(itens >= 5){
-        msg += `\n🎉 FRETE GRÁTIS ATIVADO`
+        msg += `🎉 FRETE GRÁTIS ATIVADO\n`
     } else {
-        msg += `\n🚚 Faltam ${5 - itens} item(s) para FRETE GRÁTIS`
+        msg += `🚚 Faltam ${5 - itens} item(s) para FRETE GRÁTIS\n`
     }
 
-    msg += `\n\nTotal: R$${document.getElementById("total").innerText}`
-    msg += `\nEndereço: ${endereco}`
-    msg += `\nPagamento: ${pagamento}`
-    msg += `\nTroco: ${troco}`
+    msg += `\n----------------------\n`
+    msg += `💵 TOTAL: R$${document.getElementById("total").innerText}\n`
+    msg += `📍 ENDEREÇO: ${endereco}\n`
+    msg += `💳 PAGAMENTO: ${pagamento}\n`
+    msg += `💰 TROCO: ${troco}\n`
+    msg += `🧾 PIX/COMPROVANTE: ${comprovantePix}\n`
+    msg += `----------------------\n`
 
-    if(pagamento.toLowerCase().includes("pix")){
-        msg += `\n\n📸 Envie o comprovante do PIX aqui.`
-    }
+    // 🔥 WHATSAPP (VERSÃO CORRETA WA.ME)
+    let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
 
-    const url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
-
-    location.href = url
+    window.open(url, "_blank")
 }
