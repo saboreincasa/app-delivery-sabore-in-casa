@@ -659,3 +659,27 @@ margin-right:auto;
 #produtos .card:not(.pizza-card):not(.destaque) .card-content{
   padding-right:110px;
 }
+/* 🍕 PADRÃO DAS IMAGENS DAS PIZZAS */
+.pizza-card img {
+    width: 100%;
+    height: 180px;        /* tamanho fixo igual */
+    object-fit: cover;    /* corta e mantém proporcional */
+    border-radius: 12px;
+}
+
+/* 🔥 CARD PADRÃO MAIS BONITO */
+.pizza-card {
+    width: 220px;
+    background: #1a1a1a;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* 🔥 GARANTIR ALINHAMENTO */
+#produtos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
