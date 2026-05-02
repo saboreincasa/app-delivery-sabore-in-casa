@@ -90,9 +90,9 @@ function abrirMontagemPizza(nome){
             <div class="campo">
                 <label>Tamanho:</label>
                 <select id="tamanho">
-                    <option value="25">Pequena 25cm - R$30</option>
-                    <option value="30">Grande 30cm - R$40</option>
-                    <option value="35">Gigante 35cm - R$50</option>
+                    <option value="25">Pequena 25cm - R$39,90</option>
+                    <option value="30">Grande 30cm - R$49,90</option>
+                    <option value="35">Gigante 35cm - R$59,90</option>
                 </select>
             </div>
 
@@ -196,7 +196,7 @@ function filtrar(tipo){
     })
 }
 
-// 🔥 COMBOS (ALTERADO AQUI)
+// 🔥 COMBOS
 function carregarCombosSemana(){
     fetch("produtos.json")
     .then(res => res.json())
@@ -226,11 +226,26 @@ function carregarCombosSemana(){
     })
 }
 
-// 🎬 BANNER (ALTERADO AQUI)
+// 🎬 BANNER (CORRIGIDO)
 let banners = [
-    {nome:"Combo Família", descricao:"2 pizzas grandes + refrigerantes", preco:99.90, foto:"imagens/banners/combo-familia.png"},
-    {nome:"Combo Amigos", descricao:"Cerveja + carvão", preco:89.90, foto:"imagens/banners/combo-amigos.png"},
-    {nome:"Combo Casal", descricao:"2 pizzas grandes + refrigerante", preco:79.90, foto:"imagens/banners/combo-casal.png"}
+    {
+        nome:"Combo Casal",
+        descricao:"1 pizza grande + refrigerante 2L",
+        preco:99.90,
+        foto:"imagens/banners/combo-casal.png"
+    },
+    {
+        nome:"Combo Amigos",
+        descricao:"12 Heinekens + carvão 3kg",
+        preco:139.90,
+        foto:"imagens/banners/combo-amigos.png"
+    },
+    {
+        nome:"Combo Família",
+        descricao:"2 pizzas grandes + 2 refrigerantes 2L",
+        preco:149.90,
+        foto:"imagens/banners/combo-familia.png"
+    }
 ]
 
 let bannerIndex = 0
@@ -256,99 +271,4 @@ function mostrarBanner(){
     if(bannerIndex >= banners.length){
         bannerIndex = 0
     }
-}
-
-// 🛒 RESTO IGUAL
-function addCarrinho(nome, preco){
-    let item = carrinho.find(i => i.nome === nome)
-    if(item){ item.qtd++ } 
-    else { carrinho.push({nome, preco, qtd:1}) }
-    atualizarCarrinho()
-}
-
-function atualizarCarrinho(){
-    let lista = document.getElementById("lista")
-    let contador = document.getElementById("contador")
-    let total = 0
-
-    lista.innerHTML = ""
-
-    carrinho.forEach((item, index)=>{
-        let subtotal = item.preco * item.qtd
-
-        lista.innerHTML += `
-        <div style="display:flex; justify-content:space-between;">
-            <div>
-                <b>${item.nome}</b><br>
-                R$ ${subtotal.toFixed(2)}
-            </div>
-
-            <div style="display:flex; align-items:center; gap:5px;">
-                <button onclick="diminuir(${index})">➖</button>
-                <span>${item.qtd}</span>
-                <button onclick="aumentar(${index})">➕</button>
-                <button onclick="removerItem(${index})">❌</button>
-            </div>
-        </div>
-        `
-
-        total += subtotal
-    })
-
-    contador.innerText = carrinho.length
-    document.getElementById("total").innerText = total.toFixed(2)
-}
-
-function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
-function diminuir(i){ carrinho[i].qtd--; if(carrinho[i].qtd<=0) carrinho.splice(i,1); atualizarCarrinho() }
-function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho() }
-
-function scrollCarrinho(){
-    document.getElementById("carrinho").scrollIntoView({ behavior: "smooth" })
-}
-
-function enviarPedido(){
-    if(carrinho.length === 0){
-        alert("Seu carrinho está vazio!")
-        return
-    }
-
-    let endereco = document.getElementById("enderecoCliente").value || "Endereço não informado"
-    let pagamento = document.getElementById("pagamento").value
-    let troco = document.getElementById("troco").value || "-"
-
-    let msg = "Olá! Gostaria de fazer o pedido:\n\n"
-
-    carrinho.forEach(item=>{
-        msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)} cada\n`
-    })
-
-    msg += `\nTotal: R$${document.getElementById("total").innerText}\n`
-    msg += `Endereço: ${endereco}\n`
-    msg += `Pagamento: ${pagamento}\n`
-    msg += `Troco: ${troco}`
-
-    let url = `https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`
-    window.open(url,"_blank")
-}
-
-function mostrarToast(combo){
-    let toast = document.getElementById("toast")
-    toast.innerText = `✅ ${combo.nome} adicionado! Clique para ver o carrinho`
-    toast.className = "show"
-
-    toast.onclick = function(){
-        scrollCarrinho()
-    }
-
-    setTimeout(()=>{
-        toast.className = toast.className.replace("show","")
-    },4000)
-}
-
-function abrirMapa(){
-    window.open(
-        "https://www.google.com/maps?q=Rua+Maria+de+Lourdes+da+Cruz+378+Mantiqueira+Belo+Horizonte",
-        "_blank"
-    )
 }
