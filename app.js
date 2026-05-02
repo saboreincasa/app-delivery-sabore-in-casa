@@ -237,3 +237,95 @@ function carregarCombosSemana(){
         if(el) el.innerHTML = html
     })
 }
+// 🚚 SISTEMA DE FRETE POR RAIO (BLOCO NOVO)
+
+// 🟢 RAIO PRÓXIMO (~0–3KM) → R$7
+const raioProximo = [
+"mantiqueira",
+"jardim europa",
+"serra verde",
+"minas caixa",
+"céu azul",
+"ceu azul",
+"rio branco",
+"venda nova",
+"parque são pedro",
+"parque sao pedro",
+"lagoinha leblon",
+"jardim dos comerciários",
+"jardim dos comerciarios",
+"santa branca"
+]
+
+// 🟡 RAIO MÉDIO (~3–6KM) → R$10
+const raioMedio = [
+"justinópolis",
+"justinopolis",
+"são benedito",
+"sao benedito",
+"floramar",
+"heliopolis",
+"heliópolis",
+"planalto",
+"itapoã",
+"itapoa",
+"santa mônica",
+"santa monica",
+"copacabana",
+"são joão batista",
+"sao joao batista",
+"são bernardo",
+"sao bernardo",
+"jardim atlântico",
+"jardim atlantico",
+"santa amélia",
+"santa amelia"
+]
+
+// 🔴 RAIO LONGO (~6–10KM) → R$20
+const raioLongo = [
+"centro",
+"centro de bh",
+"pampulha",
+"castelo",
+"ouro preto",
+"caiçara",
+"caicara",
+"padre eustáquio",
+"padre eustaquio",
+"dom bosco",
+"alípio de melo",
+"alipio de melo",
+"nova pampulha",
+"ribeirão das neves",
+"ribeirao das neves",
+"santa luzia",
+"vespasiano",
+"contagem"
+]
+
+// 🧠 FUNÇÃO DE FRETE INTELIGENTE
+function calcularFrete(){
+
+    let bairro = (document.getElementById("bairro")?.value || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "") // remove acentos
+        .trim()
+
+    if(!bairro) return 20
+
+    if(raioProximo.includes(bairro)){
+        return 7
+    }
+
+    if(raioMedio.includes(bairro)){
+        return 10
+    }
+
+    if(raioLongo.includes(bairro)){
+        return 20
+    }
+
+    return 25 // fora da área
+}
