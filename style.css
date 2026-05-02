@@ -717,3 +717,132 @@ margin-right:auto;
   }
 
 }
+/* ========================================= */
+/* 🔥 RESPONSIVIDADE GLOBAL (SEM QUEBRAR MOBILE) */
+/* ========================================= */
+
+/* Tablets */
+@media (min-width:601px){
+
+  /* Container mais confortável */
+  .container,
+  #banner,
+  .endereco,
+  #carrinho{
+    max-width:700px;
+  }
+
+  /* Botões lado a lado */
+  .linha{
+    flex-direction:row;
+  }
+
+}
+
+/* Desktop */
+@media (min-width:900px){
+
+  /* 🔥 Centraliza layout estilo app */
+  .container,
+  #banner,
+  .endereco,
+  #carrinho{
+    max-width:900px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  /* 🔥 PRODUTOS estilo lista (igual app) */
+  #produtos{
+    grid-template-columns:1fr;
+  }
+
+  #produtos .card{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:12px;
+    position:relative;
+    max-width:700px;
+    margin:auto;
+  }
+
+  #produtos .card img{
+    width:95px;
+    height:95px;
+    border-radius:12px;
+    object-fit:cover;
+  }
+
+  #produtos .card-content{
+    flex:1;
+    padding-right:120px;
+  }
+
+  /* 🔥 BOTÃO NA DIREITA */
+  #produtos .card button{
+    position:absolute;
+    right:15px;
+    bottom:15px;
+    width:auto;
+    padding:8px 14px;
+  }
+
+  /* 🔥 PIZZAS IGUAL APP */
+  .pizza-card{
+    flex-direction:row !important;
+    align-items:center;
+    gap:15px;
+    padding:12px;
+    position:relative;
+  }
+
+  .pizza-card img{
+    width:95px !important;
+    height:95px !important;
+    border-radius:12px;
+  }
+
+  .pizza-card .card-content{
+    flex:1;
+    padding-right:120px;
+  }
+
+  .pizza-card button{
+    position:absolute;
+    right:15px;
+    bottom:15px;
+  }
+
+  /* 🔥 COMBOS BONITOS (QUADRADOS) */
+  #combosSemana{
+    grid-template-columns:repeat(auto-fit, minmax(220px, 250px));
+    justify-content:center;
+  }
+
+  #combosSemana .card{
+    max-width:250px;
+  }
+
+  #combosSemana .card img{
+    height:160px;
+    object-fit:cover;
+  }
+
+}
+
+/* Telas muito grandes */
+@media (min-width:1200px){
+
+  body{
+    background:#0b0b0b;
+  }
+
+  .container,
+  #banner,
+  .endereco,
+  #carrinho{
+    max-width:1000px;
+  }
+
+}
