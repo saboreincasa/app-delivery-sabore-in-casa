@@ -35,19 +35,15 @@ body{
 .logo-container{
   position:relative;
   z-index:2;
+  text-align:center;
 }
 
 .logo-grande{
+  width:auto;
   height:110px;
   max-width:90%;
   object-fit:contain;
-}
-
-/* CONTAINER */
-.container{
-  padding:15px;
-  max-width:1000px;
-  margin:auto;
+  filter:drop-shadow(0 5px 20px rgba(0,0,0,0.8));
 }
 
 /* ENDEREÇO */
@@ -55,8 +51,11 @@ body{
   background:#1f1f1f;
   padding:12px;
   text-align:center;
-  border-radius:8px;
+  font-size:14px;
   margin:10px auto;
+  border-radius:8px;
+  line-height:20px;
+  max-width:1000px;
 }
 
 .endereco button{
@@ -78,15 +77,26 @@ body{
   border-radius:12px;
   background-size:cover;
   background-position:center;
+  transition:background-image 0.5s ease-in-out;
+}
+
+/* CONTAINER */
+.container{
+  padding:15px;
+  max-width:1000px;
+  margin:auto;
 }
 
 /* BUSCA */
 .busca{
   width:100%;
-  padding:14px;
-  border:none;
+  padding:12px;
   border-radius:10px;
+  border:none;
   margin-bottom:15px;
+  background:white;
+  color:black;
+  font-size:15px;
 }
 
 /* BOTÕES */
@@ -94,23 +104,25 @@ body{
   display:flex;
   flex-direction:column;
   gap:8px;
-  margin-bottom:20px;
+  margin-bottom:15px;
 }
 
 .linha{
   display:flex;
   gap:10px;
+  justify-content:center;
 }
 
 .linha button{
   flex:1;
   background:#ff9800;
   border:none;
-  padding:14px;
-  border-radius:12px;
+  padding:12px;
+  border-radius:10px;
   color:white;
-  font-size:18px;
+  font-size:16px;
   cursor:pointer;
+  transition:0.2s;
 }
 
 .linha button:hover{
@@ -119,14 +131,14 @@ body{
 
 /* TITULOS */
 h2{
-  margin:20px 0;
+  margin:15px 0 10px 0;
 }
 
-/* PRODUTOS */
+/* PRODUTOS APP STYLE */
 #produtos{
   display:flex;
   flex-direction:column;
-  gap:15px;
+  gap:12px;
 }
 
 /* COMBOS */
@@ -134,108 +146,105 @@ h2{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:15px;
+  margin-bottom:20px;
 }
 
 /* CARD BASE */
 .card{
   background:#1f1f1f;
-  border-radius:14px;
+  border-radius:12px;
   overflow:hidden;
-  box-shadow:0 4px 12px rgba(0,0,0,0.4);
-  transition:.3s;
+  box-shadow:0 0 10px rgba(0,0,0,0.5);
+  transition:0.2s;
 }
 
 .card:hover{
-  transform:translateY(-3px);
+  transform:scale(1.02);
 }
 
-/* PIZZAS */
-.pizza-card{
+/* LISTA APP */
+#produtos .card{
   display:flex;
   align-items:center;
-  gap:15px;
-  padding:12px;
+  gap:12px;
+  padding:10px;
+  position:relative;
 }
 
-.pizza-card img{
-  width:120px;
-  height:120px;
+#produtos .card img{
+  width:95px;
+  height:95px;
   object-fit:cover;
   border-radius:12px;
   flex-shrink:0;
 }
 
-.pizza-card .card-content{
+#produtos .card-content{
   flex:1;
+  padding:0;
+  padding-right:110px;
 }
 
-.pizza-card button{
-  width:auto;
-  padding:10px 18px;
+#produtos .card h3{
+  font-size:18px;
+  margin-bottom:4px;
 }
 
-/* PRODUTOS APP STYLE */
-#produtos .card:not(.pizza-card){
-  display:flex;
-  align-items:center;
-  gap:15px;
-  padding:12px;
-  position:relative;
-}
-
-#produtos .card:not(.pizza-card) img{
-  width:90px;
-  height:90px;
-  object-fit:cover;
-  border-radius:10px;
-}
-
-#produtos .card:not(.pizza-card) .card-content{
-  flex:1;
-  padding-right:120px;
-}
-
-/* CARD CONTENT */
-.card-content{
-  padding:10px;
-}
-
-.card h3{
-  font-size:20px;
-  margin-bottom:6px;
-}
-
-.card p{
+#produtos .card p{
   font-size:14px;
-  color:#ddd;
+  color:#ccc;
+  line-height:18px;
 }
 
 .preco{
   color:#2ecc71;
-  font-size:18px;
-  margin-top:8px;
+  font-size:16px;
+  margin-top:5px;
   font-weight:bold;
 }
 
-/* BOTÕES CARD */
-.card button{
+#produtos .card button{
+  position:absolute;
+  right:10px;
+  bottom:10px;
   background:#ff9800;
   border:none;
-  padding:10px;
-  border-radius:10px;
+  padding:8px 14px;
+  border-radius:8px;
   color:white;
   cursor:pointer;
 }
 
-#produtos .card:not(.pizza-card) button{
-  position:absolute;
-  right:12px;
-  bottom:12px;
-}
-
-/* DESTAQUE */
+/* COMBO DESTAQUE */
 .destaque{
   border:2px solid #ff9800;
+}
+
+/* PIZZAS */
+.pizza-card{
+  display:flex !important;
+  align-items:center !important;
+  gap:12px;
+  padding:10px;
+  position:relative;
+}
+
+.pizza-card img{
+  width:95px !important;
+  height:95px !important;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+.pizza-card .card-content{
+  flex:1;
+  padding-right:120px;
+}
+
+.pizza-card button{
+  position:absolute;
+  right:10px;
+  bottom:10px;
 }
 
 /* MONTAGEM */
@@ -243,58 +252,99 @@ h2{
   background:#1f1f1f;
   padding:20px;
   border-radius:15px;
+  text-align:center;
   max-width:500px;
-  margin:auto;
+  margin:20px auto;
+  box-shadow:0 0 15px rgba(0,0,0,0.6);
 }
 
 .pizza-preview{
-  width:220px;
-  height:220px;
+  width:200px;
+  height:200px;
   object-fit:cover;
   border-radius:50%;
-  display:block;
-  margin:20px auto;
+  margin-bottom:15px;
 }
 
 .opcoes-pizza{
   display:flex;
   flex-direction:column;
-  gap:12px;
+  gap:10px;
+  margin-top:10px;
+}
+
+.campo{
+  text-align:left;
+}
+
+.campo label{
+  font-size:14px;
+  display:block;
+  margin-bottom:3px;
 }
 
 input,select{
   width:100%;
-  padding:12px;
+  padding:10px;
+  margin-top:10px;
+  border-radius:6px;
   border:none;
-  border-radius:8px;
+  font-size:14px;
+  background:white;
+  color:black;
 }
 
 .btn-montar{
-  width:100%;
   margin-top:20px;
+  width:100%;
   background:#ff9800;
+  color:white;
   border:none;
   padding:15px;
   border-radius:10px;
-  color:white;
   font-size:18px;
+  cursor:pointer;
 }
 
 .voltar{
   display:block;
-  text-align:center;
   margin-top:15px;
   cursor:pointer;
+  color:#ccc;
 }
 
 /* CARRINHO */
 #carrinho{
   background:#1f1f1f;
   padding:15px;
-  border-radius:12px;
+  border-radius:10px;
   margin:25px auto;
+  max-width:1000px;
 }
 
+#lista{
+  margin-top:10px;
+}
+
+.total{
+  font-size:20px;
+  margin-top:10px;
+  font-weight:bold;
+}
+
+.enviar{
+  background:#25D366;
+  color:white;
+  font-size:18px;
+  padding:14px;
+  margin-top:15px;
+  border-radius:20px;
+  border:none;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* BOTAO FLUTUANTE */
 #botaoCarrinho{
   position:fixed;
   bottom:20px;
@@ -316,7 +366,8 @@ input,select{
   right:-5px;
   background:red;
   color:white;
-  padding:4px 7px;
+  font-size:12px;
+  padding:4px 6px;
   border-radius:50%;
 }
 
@@ -324,11 +375,13 @@ input,select{
 footer{
   text-align:center;
   margin-top:40px;
+  font-size:13px;
   color:#aaa;
+  padding-bottom:20px;
 }
 
 /* MOBILE */
-@media(max-width:768px){
+@media (max-width:600px){
 
   .header-topo{
     height:160px;
@@ -338,21 +391,24 @@ footer{
     height:150px;
   }
 
-  .pizza-card{
-    flex-direction:column;
-    text-align:center;
-  }
-
-  .pizza-card img{
-    width:100%;
-    height:180px;
-  }
-
-  #produtos .card:not(.pizza-card){
-    flex-direction:row;
-  }
-
   .linha{
     flex-direction:column;
+  }
+
+  #produtos .card img,
+  .pizza-card img{
+    width:80px !important;
+    height:80px !important;
+  }
+
+  #produtos .card-content,
+  .pizza-card .card-content{
+    padding-right:95px;
+  }
+
+  #produtos .card button,
+  .pizza-card button{
+    padding:7px 10px;
+    font-size:12px;
   }
 }
