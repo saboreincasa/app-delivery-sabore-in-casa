@@ -86,9 +86,9 @@ function abrirMontagemPizza(nome){
             <div class="campo">
                 <label>Tamanho:</label>
                 <select id="tamanho">
-                    <option value="25">Pequena 25cm - R$30</option>
-                    <option value="30">Grande 30cm - R$40</option>
-                    <option value="35">Gigante 35cm - R$50</option>
+                    <option value="25">Pequena 25cm - R$44.90</option>
+                    <option value="30">Grande 30cm - R$64.90</option>
+                    <option value="35">Gigante 35cm - R$84.90</option>
                 </select>
             </div>
 
@@ -140,9 +140,9 @@ function adicionarPizza(nome){
     let meio = document.getElementById("meio").value
 
     let preco = 0
-    if(tamanho == 25) preco = 30
-    if(tamanho == 30) preco = 40
-    if(tamanho == 35) preco = 50
+    if(tamanho == 25) preco = 44.90
+    if(tamanho == 30) preco = 64.90
+    if(tamanho == 35) preco = 84.90
 
     preco += borda
 
@@ -155,208 +155,9 @@ function adicionarPizza(nome){
     abrirPizzas()
 }
 
-// 🔥 FILTRO (CORRIGIDO)
-function filtrar(tipo){
-
-    if(tipo === "combo"){
-        mostrarCombos()
-        return
-    } else {
-        esconderCombos()
-    }
-
-    fetch("produtos.json")
-    .then(res => {
-        if(!res.ok) throw new Error("Erro ao carregar JSON")
-        return res.json()
-    })
-    .then(produtos => {
-
-        let filtrados = produtos.filter(p => p.categoria === tipo)
-
-        let html = ""
-
-        filtrados.forEach(p=>{
-            html += `
-            <div class="card">
-                <img src="${p.foto}" onerror="this.src='imagens/sem-imagem.png'">
-                <div class="card-content">
-                    <h3>${p.nome}</h3>
-                    <p>${p.descricao}</p>
-                    <p class="preco">R$ ${Number(p.preco).toFixed(2)}</p>
-                    <button onclick="addCarrinho('${p.nome}', ${p.preco})">
-                        Adicionar
-                    </button>
-                </div>
-            </div>
-            `
-        })
-
-        document.getElementById("produtos").innerHTML = html
-    })
-    .catch(err => console.log("Erro filtro:", err))
-}
-
-// 🔥 COMBOS
-function carregarCombosSemana(){
-    fetch("produtos.json")
-    .then(res => res.json())
-    .then(produtos => {
-
-        let combos = produtos.filter(p => p.categoria === "combos")
-
-        let html = ""
-
-        combos.forEach(c=>{
-            html += `
-            <div class="card destaque">
-                <img src="${c.foto}" onerror="this.src='imagens/sem-imagem.png'">
-                <div class="card-content">
-                    <h3>${c.nome}</h3>
-                    <p>${c.descricao}</p>
-                    <p class="preco">R$ ${Number(c.preco).toFixed(2)}</p>
-                    <button onclick="addCarrinho('${c.nome} - ${c.descricao}', ${c.preco})">
-                        Adicionar
-                    </button>
-                </div>
-            </div>
-            `
-        })
-
-        document.getElementById("combosSemana").innerHTML = html
-    })
-}
-
-// 🎬 BANNER (CORRIGIDO PARA BATER COM produtos.json)
+// 🎬 BANNER
 let banners = [
-    {nome:"Combo Família", descricao:"2 Pizzas Gigantes 35cm + 2 Refrigerantes 2l", preco:149.90, foto:"imagens/banners/combo-familia.png"},
-    {nome:"Combo Amigos", descricao:"12 Heinekens lata 473ml + 1 Carvão 3kg", preco:139.90, foto:"imagens/banners/combo-amigos.png"},
-    {nome:"Combo Casal", descricao:"1 Pizza Grande 30cm + 1 Refrigerante 2l", preco:99.90, foto:"imagens/banners/combo-casal.png"}
+    {nome:"Combo Família", descricao:"2 Pizzas Gigantes 35cm + 2 Refrigerantes 2l", preco:159.90, foto:"imagens/banners/combo-familia.png"},
+    {nome:"Combo Amigos", descricao:"1 Pizza Gigante + 12 Heinekens", preco:169.90, foto:"imagens/banners/combo-amigos.png"},
+    {nome:"Combo Casal", descricao:"1 Pizza Grande 30cm + 1 Refrigerante 2l", preco:89.90, foto:"imagens/banners/combo-casal.png"}
 ]
-
-let bannerIndex = 0
-let bannerDiv
-
-function iniciarBanner(){
-    bannerDiv = document.getElementById("banner")
-    if(!bannerDiv) return
-
-    mostrarBanner()
-    setInterval(mostrarBanner, 5000)
-}
-
-function mostrarBanner(){
-    let combo = banners[bannerIndex]
-
-    bannerDiv.style.backgroundImage = `url('${combo.foto}')`
-
-    bannerDiv.onclick = function(){
-        addCarrinho(combo.nome + " - " + combo.descricao, combo.preco)
-        mostrarToast(combo)
-    }
-
-    bannerIndex++
-    if(bannerIndex >= banners.length){
-        bannerIndex = 0
-    }
-}
-
-// 🛒 CARRINHO (CORRIGIDO)
-function addCarrinho(nome, preco){
-
-    let item = carrinho.find(i => i.nome === nome)
-
-    if(item){
-        item.qtd++
-    } else {
-        carrinho.push({nome, preco: Number(preco), qtd:1})
-    }
-
-    atualizarCarrinho()
-}
-
-function atualizarCarrinho(){
-
-    let lista = document.getElementById("lista")
-    let contador = document.getElementById("contador")
-    let total = 0
-
-    if(!lista) return
-
-    lista.innerHTML = ""
-
-    carrinho.forEach((item, index)=>{
-
-        let subtotal = item.preco * item.qtd
-        total += subtotal
-
-        lista.innerHTML += `
-        <div style="display:flex; justify-content:space-between;">
-            <div>
-                <b>${item.nome}</b><br>
-                R$ ${subtotal.toFixed(2)}
-            </div>
-
-            <div style="display:flex; gap:5px;">
-                <button onclick="diminuir(${index})">➖</button>
-                <span>${item.qtd}</span>
-                <button onclick="aumentar(${index})">➕</button>
-                <button onclick="removerItem(${index})">❌</button>
-            </div>
-        </div>
-        `
-    })
-
-    if(contador) contador.innerText = carrinho.length
-    document.getElementById("total").innerText = total.toFixed(2)
-}
-
-function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
-function diminuir(i){ carrinho[i].qtd--; if(carrinho[i].qtd<=0) carrinho.splice(i,1); atualizarCarrinho() }
-function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho() }
-
-function scrollCarrinho(){
-    document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
-}
-
-function enviarPedido(){
-
-    if(carrinho.length === 0){
-        alert("Seu carrinho está vazio!")
-        return
-    }
-
-    let endereco = document.getElementById("enderecoCliente").value || "Não informado"
-    let pagamento = document.getElementById("pagamento").value
-    let troco = document.getElementById("troco").value || "-"
-
-    let msg = "Pedido:\n\n"
-
-    carrinho.forEach(item=>{
-        msg += `${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)}\n`
-    })
-
-    msg += `\nTotal: R$${document.getElementById("total").innerText}`
-    msg += `\nEndereço: ${endereco}`
-    msg += `\nPagamento: ${pagamento}`
-    msg += `\nTroco: ${troco}`
-
-    window.open(`https://api.whatsapp.com/send?phone=${whatsappNumero}&text=${encodeURIComponent(msg)}`)
-}
-
-function mostrarToast(combo){
-
-    let toast = document.getElementById("toast")
-    if(!toast) return
-
-    toast.innerText = `✅ ${combo.nome} adicionado`
-    toast.className = "show"
-
-    setTimeout(()=>{
-        toast.className = ""
-    },4000)
-}
-
-function abrirMapa(){
-    window.open("https://www.google.com/maps?q=Rua+Maria+de+Lourdes+da+Cruz+378+Belo+Horizonte")
-}
