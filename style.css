@@ -12,7 +12,7 @@ background:#111;
 color:white;
 }
 
-/* HEADER (IMAGEM PROFISSIONAL) */
+/* HEADER */
 .header-topo{
   position: relative;
   height: 220px;
@@ -21,43 +21,24 @@ color:white;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 }
 
-/* Overlay MAIS CLARO (melhoria visual) */
 .overlay{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.25); /* 🔥 mais claro */
-  z-index: 1;
-}
-
-/* LOGO (caso volte usar depois) */
-.logo-container{
-  position: relative;
-  z-index: 2;
-  text-align: center;
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.25);
 }
 
 .logo-grande{
-  width: auto;
-  height: 110px;
-  max-width: 90%;
-  object-fit: contain;
-  filter: drop-shadow(0 5px 20px rgba(0,0,0,0.8));
-  transition: 0.3s;
+  height:110px;
+  max-width:90%;
 }
 
-/* MOBILE */
+/* MOBILE HEADER */
 @media (max-width:600px){
-  .header-topo{
-    height: 160px;
-  }
-
-  .logo-grande{
-    height: 80px;
-  }
+  .header-topo{ height:160px; }
+  .logo-grande{ height:80px; }
 }
 
 /* ENDEREÇO */
@@ -65,21 +46,9 @@ color:white;
 background:#1f1f1f;
 padding:12px;
 text-align:center;
-font-size:14px;
+border-radius:8px;
 margin:10px auto;
-border-radius:8px;
-line-height:20px;
 max-width:1000px;
-}
-
-.endereco button{
-margin-top:10px;
-padding:8px 14px;
-border:none;
-border-radius:8px;
-background:#ff9800;
-color:white;
-cursor:pointer;
 }
 
 /* BANNER */
@@ -91,7 +60,6 @@ margin:10px auto;
 border-radius:12px;
 background-size:cover;
 background-position:center;
-transition: background-image 0.5s ease-in-out;
 }
 
 /* CONTAINER */
@@ -108,23 +76,12 @@ padding:12px;
 border-radius:10px;
 border:none;
 margin-bottom:15px;
-background:white;
-color:black;
-font-size:15px;
 }
 
 /* BOTÕES */
-.btn-flutuantes{
-display:flex;
-flex-direction:column;
-gap:8px;
-margin-bottom:15px;
-}
-
 .linha{
 display:flex;
 gap:10px;
-justify-content:center;
 }
 
 .linha button{
@@ -134,21 +91,10 @@ border:none;
 padding:12px;
 border-radius:10px;
 color:white;
-font-size:16px;
 cursor:pointer;
-transition:0.2s;
 }
 
-.linha button:hover{
-background:#e68900;
-}
-
-/* TÍTULOS */
-h2{
-margin:15px 0 10px 0;
-}
-
-/* PRODUTOS */
+/* GRID PRODUTOS */
 #produtos{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -163,7 +109,7 @@ gap:15px;
 margin-bottom:20px;
 }
 
-/* CARD */
+/* CARD PADRÃO */
 .card{
 background:#1f1f1f;
 border-radius:12px;
@@ -186,15 +132,9 @@ object-fit:cover;
 padding:12px;
 }
 
-.card h3{
-font-size:18px;
-margin-bottom:5px;
-}
-
 .preco{
 color:#2ecc71;
 font-size:17px;
-margin-top:6px;
 }
 
 .card button{
@@ -206,19 +146,21 @@ border-radius:8px;
 color:white;
 margin-top:8px;
 cursor:pointer;
-transition:0.2s;
 }
 
-.card button:hover{
-background:#e68900;
+/* 🔥 PIZZAS */
+.pizza-card img{
+width:100%;
+height:180px;
+object-fit:cover;
 }
 
-/* COMBO DESTAQUE */
+/* 🔥 COMBO DESTAQUE */
 .destaque{
 border:2px solid #ff9800;
 }
 
-/* CARRINHO */
+/* 🔥 CARRINHO */
 #carrinho{
 background:#1f1f1f;
 padding:15px;
@@ -230,35 +172,6 @@ max-width:1000px;
 /* LISTA */
 #lista{
 margin-top:10px;
-}
-
-/* ITEM */
-.item-carrinho{
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:#2a2a2a;
-padding:10px;
-border-radius:8px;
-margin-bottom:8px;
-}
-
-/* CONTROLE */
-.controle{
-display:flex;
-align-items:center;
-gap:8px;
-}
-
-.controle button{
-background:#ff9800;
-border:none;
-color:white;
-width:28px;
-height:28px;
-border-radius:50%;
-font-size:16px;
-cursor:pointer;
 }
 
 /* TOTAL */
@@ -275,9 +188,6 @@ padding:10px;
 margin-top:10px;
 border-radius:6px;
 border:none;
-font-size:14px;
-background:white;
-color:black;
 }
 
 /* BOTÃO WHATS */
@@ -289,12 +199,7 @@ padding:14px;
 margin-top:15px;
 border-radius:20px;
 border:none;
-font-weight:bold;
 cursor:pointer;
-}
-
-.enviar:hover{
-background:#1ebe5d;
 }
 
 /* BOTÃO FLUTUANTE */
@@ -310,7 +215,6 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-size:28px;
-cursor:pointer;
 }
 
 /* CONTADOR */
@@ -325,342 +229,61 @@ padding:4px 6px;
 border-radius:50%;
 }
 
-/* FOOTER */
-footer{
+/* 🔥 MONTAGEM */
+.montagem-box{
+background:#1f1f1f;
+padding:20px;
+border-radius:15px;
 text-align:center;
-margin-top:40px;
-font-size:13px;
-color:#aaa;
-padding-bottom:20px;
-max-width:1000px;
-margin-left:auto;
-margin-right:auto;
-}
-
-/* 🔥 FUNDO DESKTOP */
-@media (min-width:1200px){
-  body{
-    background:#0b0b0b;
-  }
-}
-
-/* MOBILE */
-@media (max-width:600px){
-  #banner{
-    height:150px;
-  }
-}
-/* 🔥 MONTAGEM DE PIZZA PROFISSIONAL */
-
-.montagem-box{
-  background:#1f1f1f;
-  padding:20px;
-  border-radius:15px;
-  text-align:center;
-  max-width:500px;
-  margin:20px auto;
-  box-shadow:0 0 15px rgba(0,0,0,0.6);
-}
-
-.montagem-box h2{
-  margin-bottom:15px;
+max-width:500px;
+margin:20px auto;
 }
 
 .pizza-preview{
-  width:200px;
-  height:200px;
-  object-fit:cover;
-  border-radius:50%;
-  margin-bottom:15px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.8);
-  transition:0.3s;
+width:200px;
+height:200px;
+object-fit:cover;
+border-radius:50%;
+margin-bottom:15px;
 }
 
-.pizza-preview:hover{
-  transform:scale(1.05);
-}
-
-.opcoes-pizza{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  margin-top:10px;
-}
-
-.campo{
-  text-align:left;
-}
-
-.campo label{
-  font-size:14px;
-  display:block;
-  margin-bottom:3px;
-}
-
-.campo select{
-  width:100%;
-  padding:10px;
-  border-radius:8px;
-  border:none;
-}
-
-.btn-montar{
-  margin-top:20px;
-  width:100%;
-  background:#ff9800;
-  color:white;
-  border:none;
-  padding:15px;
-  border-radius:10px;
-  font-size:18px;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.btn-montar:hover{
-  background:#e68900;
-  transform:scale(1.03);
-}
-
-.voltar{
-  display:block;
-  margin-top:15px;
-  cursor:pointer;
-  color:#ccc;
-}
-
-.voltar:hover{
-  color:white;
-}
-/* 🔥 PIZZAS MAIS PROFISSIONAIS (IMAGEM + CARD BONITO) */
-
-.pizza-card{
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-}
-
-/* 🔥 IMAGEM MAIS BONITA */
-.pizza-img{
-  width:100%;
-  height:160px;
-  object-fit:cover;
-}
-
-/* 🔥 TEXTO INGREDIENTES */
-.ingredientes{
-  margin-top:5px;
-  line-height:18px;
-  font-size:14px;
-  color:#ccc;
-}
-
-/* 🔥 HOVER MAIS PROFISSIONAL */
-.pizza-card:hover{
-  transform: scale(1.03);
-  box-shadow:0 0 15px rgba(255,152,0,0.3);
-}
-/* 🔥 PIZZAS MAIS PROFISSIONAIS (IMAGEM + CARD BONITO) */
-
-.pizza-card{
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-}
-
-/* 🔥 IMAGEM MAIS BONITA */
-.pizza-img{
-  width:100%;
-  height:160px;
-  object-fit:cover;
-}
-
-/* 🔥 TEXTO INGREDIENTES */
-.ingredientes{
-  margin-top:5px;
-  line-height:18px;
-  font-size:14px;
-  color:#ccc;
-}
-
-/* 🔥 HOVER MAIS PROFISSIONAL */
-.pizza-card:hover{
-  transform: scale(1.03);
-  box-shadow:0 0 15px rgba(255,152,0,0.3);
-}
-/* 🔥 MONTAGEM DE PIZZA PROFISSIONAL */
-
-.montagem-box{
-  background:#1f1f1f;
-  padding:20px;
-  border-radius:15px;
-  text-align:center;
-  max-width:500px;
-  margin:20px auto;
-  box-shadow:0 0 15px rgba(0,0,0,0.6);
-}
-
-.montagem-box h2{
-  margin-bottom:15px;
-}
-
-.pizza-preview{
-  width:200px;
-  height:200px;
-  object-fit:cover;
-  border-radius:50%;
-  margin-bottom:15px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.8);
-  transition:0.3s;
-}
-
-.pizza-preview:hover{
-  transform:scale(1.05);
-}
-
-.opcoes-pizza{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  margin-top:10px;
-}
-
-.campo{
-  text-align:left;
-}
-
-.campo label{
-  font-size:14px;
-  display:block;
-  margin-bottom:3px;
-}
-
-.campo select{
-  width:100%;
-  padding:10px;
-  border-radius:8px;
-  border:none;
-}
-
-.btn-montar{
-  margin-top:20px;
-  width:100%;
-  background:#ff9800;
-  color:white;
-  border:none;
-  padding:15px;
-  border-radius:10px;
-  font-size:18px;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.btn-montar:hover{
-  background:#e68900;
-  transform:scale(1.03);
-}
-
-.voltar{
-  display:block;
-  margin-top:15px;
-  cursor:pointer;
-  color:#ccc;
-}
-
-.voltar:hover{
-  color:white;
-}
-/* 🔥 LAYOUT TIPO APP SOMENTE PARA BEBIDAS (SEM QUEBRAR PIZZAS E COMBOS) */
-
+/* 🔥 BEBIDAS LAYOUT */
 #produtos .card:not(.pizza-card):not(.destaque){
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  gap:12px;
-  padding:10px;
+display:flex;
+align-items:center;
+gap:12px;
+padding:10px;
+position:relative;
 }
 
-/* IMAGEM LATERAL */
 #produtos .card:not(.pizza-card):not(.destaque) img{
-  width:90px;
-  height:90px;
-  object-fit:cover;
-  border-radius:10px;
+width:90px;
+height:90px;
+border-radius:10px;
 }
 
-/* CONTEÚDO */
-#produtos .card:not(.pizza-card):not(.destaque) .card-content{
-  flex:1;
-  padding:0;
-}
-
-/* TEXTO */
-#produtos .card:not(.pizza-card):not(.destaque) h3{
-  font-size:16px;
-  margin-bottom:4px;
-}
-
-#produtos .card:not(.pizza-card):not(.destaque) p{
-  font-size:13px;
-  color:#ccc;
-}
-
-/* PREÇO */
-#produtos .card:not(.pizza-card):not(.destaque) .preco{
-  font-size:15px;
-  font-weight:bold;
-}
-
-/* BOTÃO */
 #produtos .card:not(.pizza-card):not(.destaque) button{
-  width:auto;
-  padding:8px 12px;
-  font-size:14px;
-  border-radius:8px;
+position:absolute;
+right:10px;
+bottom:10px;
+width:auto;
 }
 
 /* 📱 MOBILE */
 @media (max-width:600px){
-  #produtos .card:not(.pizza-card):not(.destaque) img{
-    width:80px;
-    height:80px;
-  }
+#banner{ height:150px; }
+
+#produtos .card:not(.pizza-card):not(.destaque) img{
+width:80px;
+height:80px;
+}
 }
 
-/* 💻 DESKTOP */
+/* 💻 DESKTOP CORRIGIDO */
 @media (min-width:900px){
 
-  /* só lista de produtos, não combos */
-  #produtos{
-    grid-template-columns: 1fr;
-  }
-
-  #produtos .card{
-    max-width:700px;
-    margin:auto;
-  }
-}
-/* 🔥 BOTÃO NA DIREITA (SOMENTE BEBIDAS) */
-
-#produtos .card:not(.pizza-card):not(.destaque){
-  position:relative;
+#produtos{
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 }
 
-/* joga o botão pra direita */
-#produtos .card:not(.pizza-card):not(.destaque) button{
-  position:absolute;
-  right:10px;
-  bottom:10px;
-  width:auto;
-  padding:8px 14px;
-}
-
-/* dá espaço pro texto não bater no botão */
-#produtos .card:not(.pizza-card):not(.destaque) .card-content{
-  padding-right:110px;
-}
-.pizza-card img{
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
 }
