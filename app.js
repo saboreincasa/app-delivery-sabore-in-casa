@@ -1,16 +1,27 @@
 // 🛒 CARRINHO 
 let carrinho = []
+let produtosDB = []
 
-// 📦 CONTROLE DE PEDIDOS (FIDELIDADE)
+// 📦 FIDELIDADE
 let pedidosCliente = 0
 
-// Número do WhatsApp
+// 📲 WhatsApp
 const whatsappNumero = "5531983391576"
 
 // 🚀 INICIO
 window.onload = function(){
-    carregarCombosSemana()
+    carregarProdutos()
     iniciarBanner()
+}
+
+// 🔥 CARREGAR JSON GLOBAL
+function carregarProdutos(){
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
+        produtosDB = produtos
+        carregarCombosSemana()
+    })
 }
 
 // 🚚 FRETE INTELIGENTE
@@ -20,47 +31,56 @@ function calcularFrete(bairro){
 
     const perto = ["mantiqueira","jardim europa","serra verde","minas caixa","céu azul","rio branco","venda nova"]
     const medio = ["justinopolis","planalto","itapoa","santa monica","copacabana"]
-    
+
     if(perto.includes(bairro)) return 7
     if(medio.includes(bairro)) return 10
 
     return 20
 }
 
-// 🔥 ESCONDER COMBOS
-function esconderCombos(){
-    document.getElementById("combosSemana").innerHTML = ""
-    document.getElementById("tituloCombos").style.display = "none"
-}
+// 🔥 COMBOS (JSON)
+function carregarCombosSemana(){
 
-// 🔥 MOSTRAR COMBOS
-function mostrarCombos(){
-    document.getElementById("tituloCombos").style.display = "block"
-    carregarCombosSemana()
-    document.getElementById("produtos").innerHTML = ""
+    let combos = produtosDB.filter(p => p.categoria === "combos")
+
+    let html = ""
+
+    combos.forEach(c=>{
+        html += `
+        <div class="card destaque">
+            <img src="${c.foto}">
+            <div class="card-content">
+                <h3>${c.nome}</h3>
+                <p>${c.descricao}</p>
+                <p class="preco">R$ ${c.preco.toFixed(2)}</p>
+                <button onclick="addCarrinho('${c.nome}', ${c.preco})">
+                    Adicionar
+                </button>
+            </div>
+        </div>
+        `
+    })
+
+    document.getElementById("combosSemana").innerHTML = html
 }
 
 // 🍕 PIZZAS
 function abrirPizzas(){
-    esconderCombos()
 
     let html = "<h2>🍕 Pizzas (Massa Integral Artesanal)</h2>"
 
     const pizzas = [
-        {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola"},
-        {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry"},
+        "Calabresa",
+        "Frango com Catupiry"
     ]
 
-    pizzas.forEach(p=>{
+    pizzas.forEach(nome=>{
         html += `
-        <div class="card pizza-card">
-            <div class="card-content">
-                <h3>${p.nome}</h3>
-                <p>${p.desc}</p>
-                <button onclick="abrirMontagemPizza('${p.nome}')">
-                    🍕 Montar Pizza
-                </button>
-            </div>
+        <div class="card">
+            <h3>${nome}</h3>
+            <button onclick="abrirMontagemPizza('${nome}')">
+                Montar Pizza
+            </button>
         </div>
         `
     })
@@ -72,34 +92,23 @@ function abrirPizzas(){
 function abrirMontagemPizza(nome){
 
     let html = `
-    <div class="montagem-box">
+    <div>
+        <h2>${nome} (Massa Integral)</h2>
 
-        <h2>🍕 ${nome} (Massa Integral)</h2>
+        <select id="tamanho">
+            <option value="25">25cm - R$39.90</option>
+            <option value="30">30cm - R$49.90</option>
+            <option value="35">35cm - R$59.90</option>
+        </select>
 
-        <div class="opcoes-pizza">
-
-            <div class="campo">
-                <label>Tamanho:</label>
-                <select id="tamanho">
-                    <option value="25">25cm - R$39.90</option>
-                    <option value="30">30cm - R$49.90</option>
-                    <option value="35">35cm - R$59.90</option>
-                </select>
-            </div>
-
-        </div>
-
-        <button onclick="adicionarPizza('${nome}')">
-            🛒 Adicionar
-        </button>
-
+        <button onclick="adicionarPizza('${nome}')">Adicionar</button>
     </div>
     `
 
     document.getElementById("produtos").innerHTML = html
 }
 
-// 🍕 ADICIONAR
+// 🍕 ADD PIZZA
 function adicionarPizza(nome){
 
     let tamanho = document.getElementById("tamanho").value
@@ -128,20 +137,26 @@ function addCarrinho(nome, preco){
     atualizarCarrinho()
 }
 
-// 🔁 CROSS SELL + UPSELL
+// 🔥 UPSELL + CROSS SELL (USANDO JSON)
 function mostrarSugestoes(){
 
     let div = document.getElementById("sugestoes")
     if(!div) return
 
-    div.innerHTML = `
-    <h3>🔥 Quer turbinar seu pedido?</h3>
+    let bebidas = produtosDB.filter(p => p.categoria === "bebidas").slice(0,2)
+    let snaks = produtosDB.filter(p => p.categoria === "snaks").slice(0,2)
 
-    <button onclick="addCarrinho('Coca-Cola 2L',14.90)">🥤 Coca 2L R$14,90</button>
-    <button onclick="addCarrinho('Batata Crocante',33.90)">🍟 Batata R$33,90</button>
-    <button onclick="addCarrinho('Nuggets',35.90)">🍗 Nuggets R$35,90</button>
-    <button onclick="addCarrinho('Halls',5.90)">🍬 Halls R$5,90</button>
-    `
+    let html = "<h3>🔥 Quer turbinar seu pedido?</h3>"
+
+    bebidas.forEach(b=>{
+        html += `<button onclick="addCarrinho('${b.nome}', ${b.preco})">🥤 ${b.nome} R$${b.preco}</button>`
+    })
+
+    snaks.forEach(s=>{
+        html += `<button onclick="addCarrinho('${s.nome}', ${s.preco})">🍟 ${s.nome} R$${s.preco}</button>`
+    })
+
+    div.innerHTML = html
 }
 
 // 🛒 ATUALIZAR
@@ -182,14 +197,15 @@ function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
 function diminuir(i){ carrinho[i].qtd--; if(carrinho[i].qtd<=0) carrinho.splice(i,1); atualizarCarrinho() }
 function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho() }
 
-// 📲 ENVIO
+// 📲 WHATSAPP PROFISSIONAL
 function enviarPedido(){
 
     let bairro = document.getElementById("bairro").value || ""
     let frete = calcularFrete(bairro)
 
-    // 🎁 fidelidade
-    let pedidosValidos = carrinho.filter(i => i.nome.includes("Pizza") || i.nome.includes("Combo")).length
+    let pedidosValidos = carrinho.filter(i => 
+        i.nome.includes("Pizza") || i.nome.includes("Combo")
+    ).length
 
     if(pedidosValidos > 0){
         pedidosCliente++
@@ -213,7 +229,7 @@ function enviarPedido(){
     msg += `\n💵 Total Final: R$${totalFinal.toFixed(2)}`
 
     if(frete === 0){
-        msg += `\n🎁 Frete GRÁTIS desbloqueado!`
+        msg += `\n🎁 Frete GRÁTIS desbloqueado`
     } else {
         msg += `\n📦 Faltam ${5 - pedidosCliente} pedidos para frete grátis`
     }
