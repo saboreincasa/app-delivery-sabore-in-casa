@@ -33,6 +33,25 @@
     opacity: 1;
     bottom: 80px;
 }
+
+/* 🔥 NOVO ESTILO DO ENDEREÇO */
+.endereco-box{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-bottom:10px;
+}
+
+.endereco-box input{
+    padding:10px;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+#bairroSelecionado{
+    background:#f5f5f5;
+    cursor:pointer;
+}
 </style>
 
 </head>
@@ -75,6 +94,7 @@ Bairro Mantiqueira – Belo Horizonte
 
 <div id="produtos"></div>
 
+<!-- 🔥 CARRINHO ATUALIZADO -->
 <div id="carrinho">
 <h2>🛒 Carrinho</h2>
 
@@ -84,7 +104,22 @@ Bairro Mantiqueira – Belo Horizonte
 Total + entrega: R$ <span id="total">0.00</span>
 </div>
 
-<input id="enderecoCliente" placeholder="Digite seu endereço">
+<!-- 📍 ENDEREÇO NOVO -->
+<div class="endereco-box">
+
+<h3>📍 Endereço de entrega</h3>
+
+<input id="rua" placeholder="Rua / Avenida">
+<input id="numero" placeholder="Número">
+<input id="complemento" placeholder="Complemento (opcional)">
+
+<h3>🏘️ Bairro</h3>
+
+<input id="bairroSelecionado" placeholder="Clique para selecionar bairro" readonly onclick="abrirModalBairros()">
+
+<div id="freteInfo">🚚 Frete será calculado automaticamente</div>
+
+</div>
 
 <select id="pagamento">
 <option>PIX</option>
