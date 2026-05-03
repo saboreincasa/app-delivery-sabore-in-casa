@@ -247,10 +247,16 @@ function mostrarBanner(){
 
     bannerDiv.style.backgroundImage = `url('${combo.foto}')`
 
-    bannerDiv.onclick = function(){
+   bannerDiv.onclick = function(){
+
+    let confirmar = confirm(`🔥 PROMOÇÃO\n\n${combo.nome}\n\nAdicionar ao carrinho?`)
+
+    if(confirmar){
         addCarrinho(combo.nome + " - " + combo.descricao, combo.preco, "combo")
         mostrarToast(combo)
     }
+
+}
 
     bannerIndex++
     if(bannerIndex >= banners.length){
