@@ -393,7 +393,18 @@ function mostrarToast(combo){
     let toast = document.getElementById("toast")
     if(!toast) return
 
-    toast.innerText = `✅ ${combo.nome} adicionado`
+    if(combo.nome.includes("Família")){
+    toast.innerText = `👨‍👩‍👧‍👦 ${combo.nome} perfeito pra dividir!`
+}
+else if(combo.nome.includes("Casal")){
+    toast.innerText = `❤️ ${combo.nome} clima perfeito garantido!`
+}
+else if(combo.nome.includes("Amigos")){
+    toast.innerText = `🍻 ${combo.nome} partiu resenha!`
+}
+else{
+    toast.innerText = `🔥 ${combo.nome} adicionado!`
+}
     toast.className = "show"
 
     setTimeout(()=>{
