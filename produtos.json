@@ -30,28 +30,28 @@
 
   {
     "nome": "Batata Frita Crocante",
-    "categoria": "snaks",
+    "categoria": "snacks",
     "preco": 36.90,
     "descricao": "Porção de batata frita crocante",
     "foto": "imagens/snaks/batata-frita.png"
   },
   {
     "nome": "Nuggets de Frango",
-    "categoria": "snaks",
+    "categoria": "snacks",
     "preco": 38.90,
     "descricao": "10 nuggets crocantes",
     "foto": "imagens/snaks/nuggets-frango.png"
   },
   {
     "nome": "Halls",
-    "categoria": "snaks",
+    "categoria": "snacks",
     "preco": 6.90,
     "descricao": "Bala refrescante",
     "foto": "imagens/snaks/halls.png"
   },
   {
     "nome": "Gulão",
-    "categoria": "snaks",
+    "categoria": "snacks",
     "preco": 6.90,
     "descricao": "Gulão",
     "foto": "imagens/snaks/gulao.png"
