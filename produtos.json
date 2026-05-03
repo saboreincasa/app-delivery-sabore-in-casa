@@ -2,7 +2,7 @@
   {
     "nome": "Combo Casal",
     "categoria": "combos",
-    "preco": 89,90,
+    "preco": 99.90,
     "descricao": "1 Pizza Grande 30cm + 1 Refrigerante 2l",
     "foto": "imagens/combos/combo-casal.png"
   },
@@ -23,7 +23,7 @@
   {
     "nome": "Combo Amigos",
     "categoria": "combos",
-    "preco": 159.90,
+    "preco": 139.90,
     "descricao": "6 Heinekens + 6 Brahmas + 1 Pizza Gigante 35cm",
     "foto": "imagens/combos/combo-amigos.png"
   },
