@@ -9,14 +9,14 @@
   {
     "nome": "Combo Solteiro",
     "categoria": "combos",
-    "preco": 49.90,
+    "preco": 54.90,
     "descricao": "1 Pizza Pequena 25cm + 1 Coca-Cola 350ml",
     "foto": "imagens/combos/combo-solteiro.png"
   },
   {
     "nome": "Combo Família",
     "categoria": "combos",
-    "preco": 159.90,
+    "preco": 149.90,
     "descricao": "2 Pizzas Gigantes 35cm + 2 Refrigerantes 2l",
     "foto": "imagens/combos/combo-familia.png"
   },
@@ -31,29 +31,29 @@
   {
     "nome": "Batata Frita Crocante",
     "categoria": "snaks",
-    "preco": 33.90,
+    "preco": 36.90,
     "descricao": "Porção de batata frita crocante",
     "foto": "imagens/snaks/batata-frita.png"
   },
   {
     "nome": "Nuggets de Frango",
     "categoria": "snaks",
-    "preco": 35.90,
+    "preco": 38.90,
     "descricao": "10 nuggets crocantes",
     "foto": "imagens/snaks/nuggets-frango.png"
   },
   {
     "nome": "Halls",
     "categoria": "snaks",
-    "preco": 5.90,
+    "preco": 6.90,
     "descricao": "Bala refrescante",
     "foto": "imagens/snaks/halls.png"
   },
   {
     "nome": "Gulão",
     "categoria": "snaks",
-    "preco": 5.90,
-    "descricao": "Doce gulão",
+    "preco": 6.90,
+    "descricao": "Gulão",
     "foto": "imagens/snaks/gulao.png"
   },
 
