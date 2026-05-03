@@ -876,3 +876,118 @@ margin-right:auto;
     left: 10px;
     border-radius: 5px;
 }
+/* ========================================= */
+/* 🔥🔥🔥 UPGRADE PREMIUM FINAL (SEM QUEBRAR NADA) */
+/* ========================================= */
+
+/* 🌟 GLOW PREMIUM GLOBAL */
+.card,
+#carrinho,
+.endereco,
+#banner{
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
+
+/* 🔥 HOVER MAIS FORTE */
+.card:hover{
+  transform: scale(1.04);
+  box-shadow: 0 0 25px rgba(255,152,0,0.4);
+}
+
+/* 🍕 IMAGEM MAIS APELATIVA */
+.card img{
+  transition: 0.3s;
+  filter: brightness(0.95) contrast(1.05);
+}
+
+.card:hover img{
+  transform: scale(1.05);
+  filter: brightness(1.05) contrast(1.1);
+}
+
+/* 💰 PREÇO MAIS VENDEDOR */
+.preco{
+  color:#00ff88;
+  font-size:20px;
+  font-weight:bold;
+  text-shadow:0 0 10px rgba(0,255,136,0.4);
+}
+
+/* 🔘 BOTÕES MAIS FORTES */
+.card button,
+.btn-montar,
+.enviar{
+  font-weight:bold;
+  letter-spacing:0.5px;
+  box-shadow:0 5px 15px rgba(255,152,0,0.4);
+}
+
+/* 🔥 HOVER BOTÕES */
+.card button:hover,
+.btn-montar:hover,
+.enviar:hover{
+  transform: scale(1.05);
+  box-shadow:0 8px 25px rgba(255,152,0,0.6);
+}
+
+/* 🔥 BADGE MAIS PEDIDO PREMIUM */
+.card.destaque::before {
+    content: "🔥 MAIS PEDIDO";
+    position: absolute;
+    background: linear-gradient(45deg, #ff0000, #ff6a00);
+    color: white;
+    padding: 6px 12px;
+    font-size: 11px;
+    top: 10px;
+    left: 10px;
+    border-radius: 20px;
+    font-weight:bold;
+    box-shadow:0 0 10px rgba(255,0,0,0.6);
+}
+
+/* 🧠 ANIMAÇÃO SUAVE (EFEITO APP) */
+.card{
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* 🛒 BOTÃO FLUTUANTE PREMIUM */
+#botaoCarrinho{
+  box-shadow:0 5px 20px rgba(255,152,0,0.6);
+  transition:0.3s;
+}
+
+#botaoCarrinho:hover{
+  transform:scale(1.1);
+}
+
+/* 🔥 CARD DESTAQUE MAIS FORTE */
+.card.destaque {
+    border: 2px solid #ffcc00;
+    box-shadow: 0 0 25px rgba(255,204,0,0.9);
+    transform: scale(1.03);
+}
+
+/* ✨ LEVE BRILHO NOS COMBOS */
+#combosSemana .card{
+  position: relative;
+}
+
+#combosSemana .card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:12px;
+  pointer-events:none;
+  box-shadow:0 0 20px rgba(255,152,0,0.15);
+}
