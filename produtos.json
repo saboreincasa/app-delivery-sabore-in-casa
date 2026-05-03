@@ -26,8 +26,15 @@
     "preco": 169.90,
     "descricao": "🍕 Pizza Gigante 35cm (massa integral) + 🍺 6 Heinekens + 🍺 6 Brahmas 👉 Perfeito pra resenha!",
     "foto": "imagens/combos/combo-amigos.png"
-  }
-]
+  },
+
+  {
+    "nome": "Batata Frita Crocante",
+    "categoria": "snacks",
+    "preco": 36.90,
+    "descricao": "Porção de batata frita crocante",
+    "foto": "imagens/snaks/batata-frita.png"
+  },
   {
     "nome": "Nuggets de Frango",
     "categoria": "snacks",
@@ -67,7 +74,7 @@
   {
     "nome": "Guaraná Antarctica",
     "categoria": "bebidas",
-    "preco": 14.90,
+    "preco": 13.90,
     "descricao": "Refrigerante Guaraná Antarctica",
     "foto": "imagens/bebidas/guarana.png"
   },
