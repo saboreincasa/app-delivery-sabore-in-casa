@@ -1,40 +1,26 @@
-[
-  {
-    "nome": "Combo Casal",
-    "categoria": "combos",
-    "preco": 99.90,
-    "descricao": "1 Pizza Gigante 35cm + 1 Refrigerante 2l",
-    "foto": "imagens/combos/combo-casal.png"
   },
   {
     "nome": "Combo Solteiro",
     "categoria": "combos",
     "preco": 54.90,
-    "descricao": "1 Pizza Pequena 25cm + 1 Coca-Cola 350ml",
+    "descricao": "🍕 Pizza 25cm (massa integral) + 🥤 Coca-Cola 350ml 👉 Perfeito pra matar a fome sem gastar muito!",
     "foto": "imagens/combos/combo-solteiro.png"
   },
   {
     "nome": "Combo Família",
     "categoria": "combos",
     "preco": 149.90,
-    "descricao": "2 Pizzas Gigantes 35cm + 2 Refrigerantes 2l",
+    "descricao": "🔥 2 Pizzas Gigantes 35cm (massa integral) + 🥤🥤 2 Refrigerantes 2L 👉 Melhor custo-benefício pra família!",
     "foto": "imagens/combos/combo-familia.png"
   },
   {
     "nome": "Combo Amigos",
     "categoria": "combos",
     "preco": 169.90,
-    "descricao": "6 Heinekens + 6 Brahmas + 1 Pizza Gigante 35cm",
+    "descricao": "🍕 Pizza Gigante 35cm (massa integral) + 🍺 6 Heinekens + 🍺 6 Brahmas 👉 Perfeito pra resenha!",
     "foto": "imagens/combos/combo-amigos.png"
-  },
-
-  {
-    "nome": "Batata Frita Crocante",
-    "categoria": "snacks",
-    "preco": 36.90,
-    "descricao": "Porção de batata frita crocante",
-    "foto": "imagens/snaks/batata-frita.png"
-  },
+  }
+]
   {
     "nome": "Nuggets de Frango",
     "categoria": "snacks",
