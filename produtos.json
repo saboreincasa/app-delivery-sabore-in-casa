@@ -1,3 +1,10 @@
+[
+  {
+    "nome": "Combo Casal",
+    "categoria": "combos",
+    "preco": 99.90,
+    "descricao": "🍕 1 Pizza Gigante 35cm (massa integral) + 🥤 Refrigerante 2L 👉 Ideal para dividir e economizar!",
+    "foto": "imagens/combos/combo-casal.png"
   },
   {
     "nome": "Combo Solteiro",
