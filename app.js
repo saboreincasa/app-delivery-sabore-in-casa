@@ -86,9 +86,9 @@ function abrirMontagemPizza(nome){
             <div class="campo">
                 <label>Tamanho:</label>
                 <select id="tamanho">
-                    <option value="25">Pequena 25cm - R$30</option>
-                    <option value="30">Grande 30cm - R$40</option>
-                    <option value="35">Gigante 35cm - R$50</option>
+                    <option value="25">Pequena 25cm - R$42.90</option>
+                    <option value="30">Grande 30cm - R$54.90</option>
+                    <option value="35">Gigante 35cm - R$69.90</option>
                 </select>
             </div>
 
@@ -141,9 +141,9 @@ function adicionarPizza(nome){
     let meio = document.getElementById("meio").value
 
     let preco = 0
-    if(tamanho == 25) preco = 30
-    if(tamanho == 30) preco = 40
-    if(tamanho == 35) preco = 50
+    if(tamanho == 25) preco = 42.90
+    if(tamanho == 30) preco = 54.90
+    if(tamanho == 35) preco = 69.90
 
     preco += borda
 
