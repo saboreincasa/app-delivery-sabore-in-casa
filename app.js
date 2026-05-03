@@ -227,7 +227,7 @@ function carregarCombosSemana(){
 // 🎬 BANNER
 let banners = [
     {nome:"Combo Família", descricao:"2 Pizzas Gigantes 35cm + 2 Refrigerantes 2l", preco:149.90, foto:"imagens/banners/combo-familia.png"},
-    {nome:"Combo Amigos", descricao:"6 Heinekens + 6 Brahmas 473ml + 1 Pizza Gigante 35cm", preco:139.90, foto:"imagens/banners/combo-amigos.png"},
+    {nome:"Combo Amigos", descricao:"6 Heinekens + 6 Brahmas + 1 Pizza Gigante 35cm", preco:139.90, foto:"imagens/banners/combo-amigos.png"},
     {nome:"Combo Casal", descricao:"1 Pizza Grande 30cm + 1 Refrigerante 2l", preco:99.90, foto:"imagens/banners/combo-casal.png"}
 ]
 
