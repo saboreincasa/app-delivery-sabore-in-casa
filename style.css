@@ -858,3 +858,21 @@ margin-right:auto;
     font-size:14px;
   }
 }
+.card.destaque {
+    position: relative;
+    border: 2px solid #ffcc00;
+    box-shadow: 0 0 15px rgba(255,204,0,0.6);
+    transform: scale(1.02);
+}
+
+.card.destaque::before {
+    content: "🔥 MAIS PEDIDO";
+    position: absolute;
+    background: red;
+    color: white;
+    padding: 5px 10px;
+    font-size: 12px;
+    top: 10px;
+    left: 10px;
+    border-radius: 5px;
+}
