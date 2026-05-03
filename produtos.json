@@ -60,14 +60,14 @@
   {
     "nome": "Coca-Cola",
     "categoria": "bebidas",
-    "preco": 14.90,
+    "preco": 16.90,
     "descricao": "Refrigerante Coca-Cola",
     "foto": "imagens/bebidas/coca_cola.png"
   },
   {
     "nome": "Coca-Cola Zero",
     "categoria": "bebidas",
-    "preco": 14.90,
+    "preco": 16.90,
     "descricao": "Refrigerante Coca Zero",
     "foto": "imagens/bebidas/coca_zero.png"
   },
@@ -81,14 +81,14 @@
   {
     "nome": "Heineken",
     "categoria": "bebidas",
-    "preco": 10.00,
+    "preco": 11.90,
     "descricao": "Cerveja Heineken lata",
     "foto": "imagens/bebidas/heineken.png"
   },
   {
     "nome": "Brahma",
     "categoria": "bebidas",
-    "preco": 7.00,
+    "preco": 8.90,
     "descricao": "Cerveja Brahma lata",
     "foto": "imagens/bebidas/brahma.png"
   },
