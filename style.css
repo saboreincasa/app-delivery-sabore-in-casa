@@ -991,3 +991,27 @@ margin-right:auto;
   pointer-events:none;
   box-shadow:0 0 20px rgba(255,152,0,0.15);
 }
+/* ========================================= */
+/* 🔥 BADGE DINÂMICO (SÓ COMBO FAMÍLIA) */
+/* ========================================= */
+
+/* Remove qualquer badge padrão de todos */
+#combosSemana .card::before{
+  content: none !important;
+}
+
+/* Aplica APENAS no Combo Família */
+#combosSemana .card[data-nome="Combo Família"]::before{
+  content: "🔥 MAIS PEDIDO";
+  position: absolute;
+  background: linear-gradient(45deg, #ff0000, #ff6a00);
+  color: white;
+  padding: 6px 12px;
+  font-size: 11px;
+  top: 10px;
+  left: 10px;
+  border-radius: 20px;
+  font-weight:bold;
+  box-shadow:0 0 10px rgba(255,0,0,0.6);
+  z-index: 2;
+}
