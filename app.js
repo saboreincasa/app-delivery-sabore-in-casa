@@ -760,13 +760,18 @@ function adicionarComboFinal(nome, preco, qtdPizzas, semRefri){
         total += 10
     }
 
-    // 🥤 refri
-    if(!semRefri){
-        let refri = document.getElementById("refri1")?.value
+  // 🥤 refrigerante (1 ou 2 dependendo do combo)
+if(!semRefri){
+
+    let qtdRefri = qtdPizzas === 2 ? 2 : 1
+
+    for(let i = 1; i <= qtdRefri; i++){
+        let refri = document.getElementById(`refri${i}`)?.value
         if(refri){
-            extras += ` | Refri: ${refri}`
+            extras += ` | Refri ${i}: ${refri}`
         }
     }
+}
 
     let nomeFinal = nome + extras
 
