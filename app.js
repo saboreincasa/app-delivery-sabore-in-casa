@@ -623,23 +623,44 @@ function selecionarBairro(nome){
 
 function abrirMontagemCombo(nome){
 
-    console.log("Clicou no combo:", nome)
-
     fetch("produtos.json")
-    .then(res => {
-        if(!res.ok){
-            throw new Error("Erro ao carregar produtos.json")
-        }
-        return res.json()
-    })
+    .then(res => res.json())
     .then(produtos => {
 
         let combo = produtos.find(p => p.nome === nome)
 
         if(!combo){
-            alert("Combo não encontrado: " + nome)
+            alert("Combo não encontrado")
             return
         }
+
+        // 🔥 tenta identificar quantidades automaticamente
+        let desc = combo.descricao.toLowerCase()
+
+        let qtdPizzas = desc.includes("2 pizza") || desc.includes("2 pizzas") ? 2 : 1
+        let qtdRefri = desc.includes("2 refriger") ? 2 : 1
+
+        const pizzasOptions = `
+            <option value="">Selecione</option>
+            <option>Calabresa</option>
+            <option>Frango com Catupiry</option>
+            <option>4 Queijos</option>
+            <option>Portuguesa</option>
+            <option>Marguerita</option>
+            <option>Baiana</option>
+            <option>Napolitana</option>
+            <option>Milho com Bacon</option>
+            <option>Moda da Casa</option>
+        `
+
+        const refriOptions = `
+            <option value="">Selecione</option>
+            <option>Coca-Cola</option>
+            <option>Guaraná</option>
+            <option>Fanta Laranja</option>
+            <option>Fanta Uva</option>
+            <option>Sprite</option>
+        `
 
         let html = `
         <div class="montagem-box">
@@ -649,73 +670,74 @@ function abrirMontagemCombo(nome){
             <img class="pizza-preview" src="${combo.foto}" onerror="this.src='imagens/sem-imagem.png'">
 
             <p>${combo.descricao}</p>
+
+            <div class="opcoes-pizza">
         `
 
+        // 🍕 PIZZAS DINÂMICAS
+        for(let i=1;i<=qtdPizzas;i++){
+            html += `
+            <div class="campo">
+                <label>Pizza ${i}:</label>
+                <select id="pizza${i}">
+                    ${pizzasOptions}
+                </select>
+            </div>
+            `
+        }
+
+        // 🥤 REFRIGERANTES DINÂMICOS
+        for(let i=1;i<=qtdRefri;i++){
+            html += `
+            <div class="campo">
+                <label>Refrigerante ${i}:</label>
+                <select id="refri${i}">
+                    ${refriOptions}
+                </select>
+            </div>
+            `
+        }
+
         html += `
+            </div>
+
             <button class="btn-montar"
-                onclick="adicionarComboFinal('${combo.nome}', ${combo.preco})">
+                onclick="adicionarComboFinal('${combo.nome}', ${combo.preco}, ${qtdPizzas}, ${qtdRefri})">
                 🛒 Adicionar Combo
             </button>
 
             <span class="voltar" onclick="mostrarCombos()">⬅ Voltar</span>
+
         </div>
         `
 
         document.getElementById("produtos").innerHTML = html
     })
-    .catch(err => {
-        console.error("ERRO COMBO:", err)
-        alert("Erro ao carregar combo")
-    })
 }
+function adicionarComboFinal(nome, preco, qtdPizzas, qtdRefri){
 
+    let nomeFinal = nome
+    let extras = ""
 
-// 🛒 FINALIZAR COMBO
-function adicionarComboFinal(nome, preco){
-
-    let pizza1 = document.getElementById("pizza1")?.value
-    let pizza2 = document.getElementById("pizza2")?.value
-
-    let refri1 = document.getElementById("refri1")?.value
-    let refri2 = document.getElementById("refri2")?.value
-
-    let bordaSelect = document.getElementById("borda")
-    let borda = bordaSelect ? Number(bordaSelect.value) : 0
-    let bordaTexto = bordaSelect ? bordaSelect.options[bordaSelect.selectedIndex].text : "Normal"
-
-    let bebida = ""
-
-    if(refri1 && refri2){
-        bebida = `${refri1} + ${refri2}`
-    } else if(refri1){
-        bebida = refri1
+    // 🍕 pizzas
+    for(let i=1;i<=qtdPizzas;i++){
+        let pizza = document.getElementById(`pizza${i}`)?.value
+        if(pizza){
+            extras += ` | Pizza ${i}: ${pizza}`
+        }
     }
 
-    let nomeFinal = `${nome}`
-
-    if(pizza1){
-        nomeFinal += ` - ${pizza1}`
+    // 🥤 refrigerantes
+    for(let i=1;i<=qtdRefri;i++){
+        let refri = document.getElementById(`refri${i}`)?.value
+        if(refri){
+            extras += ` | Refri ${i}: ${refri}`
+        }
     }
 
-    if(pizza2){
-        nomeFinal += ` + ${pizza2}`
-    }
+    let nomeCompleto = nomeFinal + extras
 
-    if(bebida){
-        nomeFinal += ` + ${bebida}`
-    }
-
-    if(borda != 0){
-        nomeFinal += ` / Borda ${bordaTexto}`
-    }
-
-    let precoFinal = preco + borda
-
-    addCarrinho(nomeFinal, precoFinal, "combo")
+    addCarrinho(nomeCompleto, preco, "combo")
 
     mostrarCombos()
 }
-
-
-// 🔗 EXPORT GLOBAL (IMPORTANTE)
-window.abrirMontagemCombo = abrirMontagemCombo
