@@ -744,15 +744,37 @@ html += `
         </button>
     </div>
 `
-            <button class="btn-montar"
-                onclick="adicionarComboFinal('${combo.nome}', ${combo.preco}, ${qtdPizzas}, ${semRefri})">
-                🛒 Adicionar Combo
-            </button>
+         html += `
+    </div>
 
-            <span class="voltar" onclick="mostrarCombos()">⬅ Voltar</span>
+    <div class="campo">
+        <label>🥤 Bebidas Extras (opcional):</label>
 
-        </div>
-        `
+        <div id="extrasBebidas"></div>
+
+        <button onclick="adicionarLinhaBebida()" style="
+            margin-top:8px;
+            background:#ff9800;
+            border:none;
+            padding:10px;
+            color:#fff;
+            border-radius:8px;
+            cursor:pointer;
+            font-weight:bold;
+        ">
+            + Adicionar Bebida
+        </button>
+    </div>
+
+    <button class="btn-montar"
+        onclick="adicionarComboFinal('${combo.nome}', ${combo.preco}, ${qtdPizzas}, ${semRefri})">
+        🛒 Adicionar Combo
+    </button>
+
+    <span class="voltar" onclick="mostrarCombos()">⬅ Voltar</span>
+
+</div>
+`
 
         document.getElementById("produtos").innerHTML = html
         setTimeout(()=>{
