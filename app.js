@@ -616,3 +616,132 @@ function selecionarBairro(nome){
     document.getElementById("freteInfo").innerHTML =
     "🚚 Frete calculado: R$ " + frete
 }
+// ===============================
+// 🧩 MELHORIAS VISUAIS (SEM MEXER NO CÓDIGO PRINCIPAL)
+// ===============================
+
+// 🍕 CABEÇALHO DECORATIVO DA PIZZA (caso queira usar na tela)
+function inserirPizzaCabecalho(){
+
+    let el = document.querySelector("body")
+
+    let html = `
+    <div id="pizzaHeaderDecor" style="
+        text-align:center;
+        margin-top:10px;
+        margin-bottom:10px;
+    ">
+        <img src="imagens/pizzas/pizza-cabecalho.png"
+        style="
+            width:140px;
+            max-width:40%;
+            filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.5));
+        ">
+    </div>
+    `
+
+    if(!document.getElementById("pizzaHeaderDecor")){
+        el.insertAdjacentHTML("afterbegin", html)
+    }
+}
+
+// chama automaticamente
+inserirPizzaCabecalho()
+
+
+// ===============================
+// 🎨 BOTÕES PADRÃO MAIS BONITOS (SEM ALTERAR HTML EXISTENTE)
+// ===============================
+let style = document.createElement("style")
+style.innerHTML = `
+
+.btn-montar, button{
+    background: linear-gradient(135deg,#ff2d2d,#ff7a00);
+    color:white;
+    border:none;
+    padding:10px 14px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s;
+    box-shadow:0px 3px 10px rgba(0,0,0,0.2);
+}
+
+.btn-montar:hover, button:hover{
+    transform:scale(1.05);
+    filter:brightness(1.1);
+}
+
+.pizza-card img{
+    border-radius:12px;
+}
+
+.montagem-box{
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(10px)}
+    to{opacity:1; transform:translateY(0)}
+}
+
+/* select mais bonito */
+select{
+    padding:8px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    outline:none;
+}
+
+/* pizza destaque */
+.pizza-preview{
+    border-radius:15px;
+    box-shadow:0px 5px 15px rgba(0,0,0,0.3);
+}
+`
+
+document.head.appendChild(style)
+
+
+// ===============================
+// 🍕 CORREÇÃO IMPORTANTE DA BORDA (SEM MEXER NO RESTO)
+// ===============================
+
+function corrigirBordaSelect(){
+
+    let borda = document.getElementById("borda")
+    if(!borda) return
+
+    let opcoes = borda.querySelectorAll("option")
+
+    if(opcoes.length >= 3){
+        opcoes[1].text = "Catupiry (+10)"
+        opcoes[2].text = "Cheddar (+10)"
+    }
+}
+
+// executa quando abrir montagem
+document.addEventListener("click", function(){
+    corrigirBordaSelect()
+})
+
+
+// ===============================
+// 🍕 AJUSTE FINAL (4 QUEIJOS NÃO DUPLICA MEIO A MEIO)
+// ===============================
+
+function bloquearMeio4Queijos(){
+
+    let meio = document.getElementById("meio")
+    if(!meio) return
+
+    let opt = meio.querySelectorAll("option")
+
+    opt.forEach(o=>{
+        if(o.value === "4 Queijos"){
+            o.disabled = true
+        }
+    })
+}
+
+document.addEventListener("click", bloquearMeio4Queijos)
