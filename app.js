@@ -668,7 +668,7 @@ let bebidas = produtos.filter(p => {
 let qtdPizzas = desc.includes("família") ? 2 : 1
 
         // 🥤 combo amigos NÃO tem refri
-        let semRefri = desc.includes("amigos")
+       let semRefri = nome.toLowerCase().includes("amigos")
 
         const pizzasOptions = `
             <option value="">Selecione</option>
