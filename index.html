@@ -152,3 +152,35 @@ Desenvolvido por <b>Carlos Henrique</b>
 
 </body>
 </html>
+/* =============================== */
+/* 🔥 COMBOS ESTILO PROFISSIONAL (PREÇO ALINHADO NA ÚLTIMA LINHA) */
+/* =============================== */
+
+#combosSemana .card{
+  position:relative;
+}
+
+#combosSemana .card-content{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+/* descrição em linhas */
+#combosSemana .card p{
+  white-space: pre-line;
+  margin:0;
+  line-height:1.4;
+}
+
+/* 💰 PREÇO MAIOR E ALINHADO COM A ÚLTIMA LINHA */
+#combosSemana .preco{
+  font-size:24px; /* 🔥 maior que o resto */
+  font-weight:900;
+  color:#2ecc71;
+  text-align:right;
+
+  /* alinha visualmente com última linha */
+  margin-top:6px;
+  align-self:flex-end;
+}
