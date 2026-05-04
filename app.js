@@ -647,14 +647,14 @@ let bebidas = produtos.filter(p => {
     let nomeBebida = p.nome.toLowerCase()
 
     // 🍻 COMBO AMIGOS = TODAS bebidas liberadas
-    if(desc.includes("amigos")){
-        return true
-    }
+   if(desc.includes("amigos")){
+    return false
+}
 
     // 🥤 COMBO COM REFRIGERANTE 2L
-    if(desc.includes("refrigerante 2l")){
-        return nomeBebida.includes("2l")
-    }
+   if(desc.includes("refrigerante")){
+    return nomeBebida.includes("2l") || nomeBebida.includes("2000")
+}
 
     // 🥫 COMBO COM LATA 350ML
     if(desc.includes("lata") || desc.includes("350ml")){
@@ -811,7 +811,7 @@ function adicionarComboFinal(nome, preco, qtdPizzas, semRefri){
   // 🥤 refrigerante (1 ou 2 dependendo do combo)
 if(!semRefri){
 
-    let qtdRefri = qtdPizzas === 2 ? 2 : 1
+   let qtdRefri = nome.toLowerCase().includes("família") ? 2 : 1
 
     for(let i = 1; i <= qtdRefri; i++){
         let refri = document.getElementById(`refri${i}`)?.value
