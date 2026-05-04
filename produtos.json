@@ -57,6 +57,7 @@
     "foto": "imagens/snaks/gulao.png"
   },
 
+  // 🥤 REFRIGERANTES 2L (PRIMEIRO)
   {
     "nome": "Coca-Cola 2l",
     "categoria": "bebidas",
@@ -78,29 +79,38 @@
     "descricao": "Refrigerante Guaraná Antarctica 2l",
     "foto": "imagens/bebidas/guarana.png"
   },
+  {
+    "nome": "Sprite 2l",
+    "categoria": "bebidas",
+    "preco": 13.90,
+    "descricao": "Refrigerante Sprite 2l",
+    "foto": "imagens/bebidas/sprite.png"
+  },
 
+  // 🥤 REFRIGERANTES 350ML
   {
     "nome": "Coca-Cola 350ml",
     "categoria": "bebidas",
     "preco": 6.90,
     "descricao": "Refrigerante Coca-Cola 350ml",
-    "foto": "imagens/bebidas/coca_cola.png"
+    "foto": "imagens/bebidas/coca_cola_350ml.png"
   },
   {
     "nome": "Coca-Cola Zero 350ml",
     "categoria": "bebidas",
     "preco": 6.90,
     "descricao": "Refrigerante Coca Zero 350ml",
-    "foto": "imagens/bebidas/coca_zero.png"
+    "foto": "imagens/bebidas/coca_zero_350ml.png"
   },
   {
     "nome": "Guaraná Antarctica 350ml",
     "categoria": "bebidas",
     "preco": 5.90,
     "descricao": "Refrigerante Guaraná Antarctica 350ml",
-    "foto": "imagens/bebidas/guarana.png"
+    "foto": "imagens/bebidas/guarana_350ml.png"
   },
 
+  // 🍺 CERVEJAS 473ML
   {
     "nome": "Heineken 473ml",
     "categoria": "bebidas",
@@ -128,5 +138,21 @@
     "preco": 8.90,
     "descricao": "Cerveja Bohemia lata 473ml",
     "foto": "imagens/bebidas/bohemia.png"
+  },
+
+  // 💧 ÁGUAS (POR ÚLTIMO)
+  {
+    "nome": "Água Mineral 500ml Sem Gás",
+    "categoria": "bebidas",
+    "preco": 4.90,
+    "descricao": "Água mineral 500ml sem gás",
+    "foto": "imagens/bebidas/agua_sem_gas_500ml.png"
+  },
+  {
+    "nome": "Água Mineral 500ml Com Gás",
+    "categoria": "bebidas",
+    "preco": 5.90,
+    "descricao": "Água mineral 500ml com gás",
+    "foto": "imagens/bebidas/agua_com_gas_500ml.png"
   }
 ]
