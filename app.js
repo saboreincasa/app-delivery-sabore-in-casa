@@ -217,10 +217,9 @@ function carregarCombosSemana(){
         .join("")}
 </p>
                     <p class="preco">R$ ${Number(c.preco).toFixed(2)}</p>
-                    <button onclick="abrirMontagemCombo('${c.nome}', ${c.preco})">
+                 <button onclick="abrirMontagemCombo('${c.nome}', ${c.preco})">
     🍕 Montar Combo
 </button>
-                        Adicionar
                     </button>
                 </div>
             </div>
@@ -617,4 +616,75 @@ function selecionarBairro(nome){
 
     document.getElementById("freteInfo").innerHTML =
     "🚚 Frete calculado: R$ " + frete
+}
+let refriCombo = []
+
+function abrirMontagemCombo(nome, preco){
+
+    refriCombo = []
+
+    let html = `
+    <div class="montagem-box">
+
+        <h2>🔥 ${nome}</h2>
+
+        <h3>🍕 Pizza 1</h3>
+        <select id="pizza1">
+            <option>Calabresa</option>
+            <option>Frango com Catupiry</option>
+            <option>4 Queijos</option>
+            <option>Portuguesa</option>
+            <option>Marguerita</option>
+            <option>Baiana</option>
+            <option>Napolitana</option>
+            <option>Milho com Bacon</option>
+            <option>Moda da Casa</option>
+        </select>
+
+        <h3>🍕 Pizza 2</h3>
+        <select id="pizza2">
+            <option>Calabresa</option>
+            <option>Frango com Catupiry</option>
+            <option>4 Queijos</option>
+            <option>Portuguesa</option>
+            <option>Marguerita</option>
+            <option>Baiana</option>
+            <option>Napolitana</option>
+            <option>Milho com Bacon</option>
+            <option>Moda da Casa</option>
+        </select>
+
+        <h3>🧀 Borda (+10)</h3>
+        <select id="bordaCombo">
+            <option value="0">Normal</option>
+            <option value="10">Catupiry (+10)</option>
+            <option value="10">Cheddar (+10)</option>
+        </select>
+
+        <h3>🥤 Refrigerante 1</h3>
+        <select id="refri1">
+            <option>Coca-Cola</option>
+            <option>Coca Zero</option>
+            <option>Guaraná Antártica</option>
+            <option>Pepsi</option>
+        </select>
+
+        <h3>🥤 Refrigerante 2</h3>
+        <select id="refri2">
+            <option>Coca-Cola</option>
+            <option>Coca Zero</option>
+            <option>Guaraná Antártica</option>
+            <option>Pepsi</option>
+        </select>
+
+        <button class="btn-montar" onclick="finalizarCombo('${nome}', ${preco})">
+            🛒 Adicionar ao Carrinho
+        </button>
+
+        <span class="voltar" onclick="mostrarCombos()">⬅ Voltar</span>
+
+    </div>
+    `
+
+    document.getElementById("produtos").innerHTML = html
 }
