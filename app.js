@@ -210,12 +210,15 @@ function carregarCombosSemana(){
                 <img src="${c.foto}" onerror="this.src='imagens/sem-imagem.png'">
                 <div class="card-content">
                     <h3>${c.nome}</h3>
-                    <p style="display:flex; flex-direction:column; gap:4px;">
-                        ${c.descricao.split("+").map(item => `<span>${item.trim()}</span>`).join("")}
-                    </p>
+                   <p style="display:flex; flex-direction:column; gap:4px;">
+    ${c.descricao
+        .split("+")
+        .map(item => `<span>${item.trim()}</span>`)
+        .join("")}
+</p>
                     <p class="preco">R$ ${Number(c.preco).toFixed(2)}</p>
-                    <button onclick="abrirMontagemCombo('${c.nome}')">
-                        🛒 Montar Combo
+                   <button onclick="abrirMontagemCombo('${c.nome}')">
+ 🛒 Montar Combo
                     </button>
                 </div>
             </div>
@@ -223,10 +226,6 @@ function carregarCombosSemana(){
         })
 
         document.getElementById("combosSemana").innerHTML = html
-    })
-    .catch(err => {
-        console.error("ERRO COMBO:", err)
-        alert("Erro ao carregar combo")
     })
 }
 
@@ -277,10 +276,6 @@ function addCarrinho(nome, preco, tipo = "outro"){
 
     atualizarCarrinho()
 }
-
-// (restante do seu código continua igual até o final)
-
-window.abrirMontagemCombo = abrirMontagemCombo
 
 // 📊 CONTADOR FRETE GRÁTIS
 function contarItensFreteGratis(){
@@ -628,8 +623,15 @@ function selecionarBairro(nome){
 
 function abrirMontagemCombo(nome){
 
+    console.log("Clicou no combo:", nome)
+
     fetch("produtos.json")
-    .then(res => res.json())
+    .then(res => {
+        if(!res.ok){
+            throw new Error("Erro ao carregar produtos.json")
+        }
+        return res.json()
+    })
     .then(produtos => {
 
         let combo = produtos.find(p => p.nome === nome)
@@ -647,95 +649,73 @@ function abrirMontagemCombo(nome){
             <img class="pizza-preview" src="${combo.foto}" onerror="this.src='imagens/sem-imagem.png'">
 
             <p>${combo.descricao}</p>
-
-            <div class="opcoes-pizza">
-        `
-
-        // 🍕 PIZZAS
-        if(combo.nome.includes("Família")){
-            html += `
-            <div class="campo">
-                <label>🍕 Pizza 1</label>
-                <select id="pizza1">${gerarOpcoesPizzas()}</select>
-            </div>
-
-            <div class="campo">
-                <label>🍕 Pizza 2</label>
-                <select id="pizza2">${gerarOpcoesPizzas()}</select>
-            </div>
-            `
-        }
-        else{
-            html += `
-            <div class="campo">
-                <label>🍕 Pizza</label>
-                <select id="pizza1">${gerarOpcoesPizzas()}</select>
-            </div>
-            `
-        }
-
-        // 🥤 REFRI
-        if(combo.nome.includes("Família")){
-            html += `
-            <div class="campo">
-                <label>🥤 Refrigerante 1</label>
-                <select id="refri1">
-                    <option>Coca-Cola 2L</option>
-                    <option>Guaraná 2L</option>
-                </select>
-            </div>
-
-            <div class="campo">
-                <label>🥤 Refrigerante 2</label>
-                <select id="refri2">
-                    <option>Coca-Cola 2L</option>
-                    <option>Guaraná 2L</option>
-                </select>
-            </div>
-            `
-        }
-        else{
-            html += `
-            <div class="campo">
-                <label>🥤 Refrigerante</label>
-                <select id="refri1">
-                    <option>Coca-Cola 2L</option>
-                    <option>Guaraná 2L</option>
-                </select>
-            </div>
-            `
-        }
-
-        // 🧀 BORDA
-        html += `
-        <div class="campo">
-            <label>🧀 Borda</label>
-            <select id="borda">
-                <option value="0">Normal</option>
-                <option value="10">Catupiry</option>
-                <option value="10">Cheddar</option>
-            </select>
-        </div>
         `
 
         html += `
-            </div>
-
             <button class="btn-montar"
                 onclick="adicionarComboFinal('${combo.nome}', ${combo.preco})">
                 🛒 Adicionar Combo
             </button>
 
             <span class="voltar" onclick="mostrarCombos()">⬅ Voltar</span>
-
         </div>
         `
 
-        let container = document.getElementById("produtos")
-        if(container) container.innerHTML = html
+        document.getElementById("produtos").innerHTML = html
     })
     .catch(err => {
         console.error("ERRO COMBO:", err)
         alert("Erro ao carregar combo")
     })
 }
+
+
+// 🛒 FINALIZAR COMBO
+function adicionarComboFinal(nome, preco){
+
+    let pizza1 = document.getElementById("pizza1")?.value
+    let pizza2 = document.getElementById("pizza2")?.value
+
+    let refri1 = document.getElementById("refri1")?.value
+    let refri2 = document.getElementById("refri2")?.value
+
+    let bordaSelect = document.getElementById("borda")
+    let borda = bordaSelect ? Number(bordaSelect.value) : 0
+    let bordaTexto = bordaSelect ? bordaSelect.options[bordaSelect.selectedIndex].text : "Normal"
+
+    let bebida = ""
+
+    if(refri1 && refri2){
+        bebida = `${refri1} + ${refri2}`
+    } else if(refri1){
+        bebida = refri1
+    }
+
+    let nomeFinal = `${nome}`
+
+    if(pizza1){
+        nomeFinal += ` - ${pizza1}`
+    }
+
+    if(pizza2){
+        nomeFinal += ` + ${pizza2}`
+    }
+
+    if(bebida){
+        nomeFinal += ` + ${bebida}`
+    }
+
+    if(borda != 0){
+        nomeFinal += ` / Borda ${bordaTexto}`
+    }
+
+    let precoFinal = preco + borda
+
+    addCarrinho(nomeFinal, precoFinal, "combo")
+
+    mostrarCombos()
+}
+
+
+// 🔗 EXPORT GLOBAL (IMPORTANTE)
+window.abrirMontagemCombo = abrirMontagemCombo
