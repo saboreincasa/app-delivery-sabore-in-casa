@@ -618,7 +618,7 @@ function selecionarBairro(nome){
 }
 
 // 🔥 ===============================
-// 🎁 SISTEMA DE COMBOS PROFISSIONAL (ATUALIZADO)
+// 🎁 SISTEMA DE COMBOS (FINAL LIMPO)
 // ===============================
 
 function abrirMontagemCombo(nome){
@@ -634,13 +634,13 @@ function abrirMontagemCombo(nome){
             return
         }
 
-        let desc = combo.descricao.toLowerCase()
+        let desc = combo.nome.toLowerCase()
 
-        // 🍕 quantidade de pizzas
-        let qtdPizzas = desc.includes("2 pizza") || desc.includes("2 pizzas") ? 2 : 1
+        // 🍕 só combo família tem 2 pizzas
+        let qtdPizzas = desc.includes("família") ? 2 : 1
 
-        // 🍻 combo amigos não tem refrigerante
-        let semRefri = nome.toLowerCase().includes("amigos")
+        // 🥤 combo amigos NÃO tem refri
+        let semRefri = desc.includes("amigos")
 
         const pizzasOptions = `
             <option value="">Selecione</option>
@@ -671,12 +671,10 @@ function abrirMontagemCombo(nome){
 
             <img class="pizza-preview" src="${combo.foto}" onerror="this.src='imagens/sem-imagem.png'">
 
-            <p>${combo.descricao}</p>
-
             <div class="opcoes-pizza">
         `
 
-        // 🍕 PIZZAS
+        // 🍕 pizzas
         for(let i=1;i<=qtdPizzas;i++){
             html += `
             <div class="campo">
@@ -688,19 +686,19 @@ function abrirMontagemCombo(nome){
             `
         }
 
-        // 🧀 TODAS AS BORDAS (R$10)
+        // 🧀 borda (todos combos)
         html += `
         <div class="campo">
-            <label>Borda:</label>
+            <label>Borda (+R$10):</label>
             <select id="borda">
                 <option value="0">Normal</option>
-                <option value="10">Catupiry (+R$10)</option>
-                <option value="10">Cheddar (+R$10)</option>
+                <option value="10">Catupiry</option>
+                <option value="10">Cheddar</option>
             </select>
         </div>
         `
 
-        // 🥤 REFRIGERANTE (EXCETO AMIGOS)
+        // 🥤 refrigerante (exceto amigos)
         if(!semRefri){
             html += `
             <div class="campo">
@@ -730,11 +728,11 @@ function abrirMontagemCombo(nome){
 }
 
 
-// 🛒 FINALIZAR COMBO (ATUALIZADO)
+// 🛒 FINALIZAR COMBO
 function adicionarComboFinal(nome, preco, qtdPizzas, semRefri){
 
-    let nomeFinal = nome
     let extras = ""
+    let total = preco
 
     // 🍕 pizzas
     for(let i=1;i<=qtdPizzas;i++){
@@ -744,17 +742,16 @@ function adicionarComboFinal(nome, preco, qtdPizzas, semRefri){
         }
     }
 
-    // 🧀 borda (R$10 sempre que escolhida)
-    let bordaSelect = document.getElementById("borda")
-    let borda = bordaSelect ? Number(bordaSelect.value) : 0
-    let bordaTexto = bordaSelect ? bordaSelect.options[bordaSelect.selectedIndex].text : ""
+    // 🧀 borda
+    let borda = document.getElementById("borda")?.value
+    let bordaTexto = document.getElementById("borda")?.selectedOptions[0]?.text
 
-    if(borda > 0){
+    if(Number(borda) === 10){
         extras += ` | Borda ${bordaTexto}`
-        preco += 10
+        total += 10
     }
 
-    // 🥤 refrigerante (se existir)
+    // 🥤 refri
     if(!semRefri){
         let refri = document.getElementById("refri1")?.value
         if(refri){
@@ -762,9 +759,9 @@ function adicionarComboFinal(nome, preco, qtdPizzas, semRefri){
         }
     }
 
-    let nomeCompleto = nomeFinal + extras
+    let nomeFinal = nome + extras
 
-    addCarrinho(nomeCompleto, preco, "combo")
+    addCarrinho(nomeFinal, total, "combo")
 
     mostrarCombos()
 }
