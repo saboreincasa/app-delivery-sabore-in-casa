@@ -640,7 +640,29 @@ if(!combo){
 
 let desc = combo.descricao.toLowerCase() // 👈 COLE EXATAMENTE AQUI
 
-let bebidas = produtos.filter(p => p.categoria === "bebidas")
+let bebidas = produtos.filter(p => {
+
+    if(p.categoria !== "bebidas") return false
+
+    let nome = p.nome.toLowerCase()
+
+    // 🍻 COMBO AMIGOS = TODAS bebidas
+    if(desc.includes("amigos")){
+        return true
+    }
+
+    // 🥤 COMBO FAMÍLIA / CASAL = só refri 2L
+    if(desc.includes("refrigerante 2l")){
+        return nome.includes("2l")
+    }
+
+    // 🥫 COMBO COM LATA
+    if(desc.includes("lata") || desc.includes("350ml")){
+        return nome.includes("350") || nome.includes("lata")
+    }
+
+    return false
+})
 
 // 🍕 só combo família tem 2 pizzas
 let qtdPizzas = desc.includes("família") ? 2 : 1
