@@ -1,613 +1,993 @@
-// 🛒 CARRINHO 
-let carrinho = []
-
-// Número do WhatsApp
-const whatsappNumero = "5531983391576"
-
-// 🚀 INICIO
-window.onload = function(){
-    carregarCombosSemana()
-    iniciarBanner()
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-// 🔥 ESCONDER COMBOS
-function esconderCombos(){
-    document.getElementById("combosSemana").innerHTML = ""
-    document.getElementById("tituloCombos").style.display = "none"
+/* BODY */
+body{
+font-family:Arial, Helvetica, sans-serif;
+background:#111;
+color:white;
 }
 
-// 🔥 MOSTRAR COMBOS
-function mostrarCombos(){
-    document.getElementById("tituloCombos").style.display = "block"
-    carregarCombosSemana()
-    document.getElementById("produtos").innerHTML = ""
+/* HEADER (IMAGEM PROFISSIONAL) */
+.header-topo{
+  position: relative;
+  height: 220px;
+  background: url("imagens/capa.png") no-repeat center center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-// 🍕 PIZZAS
-function abrirPizzas(){
-    esconderCombos()
-
-    let html = "<h2>🍕 Escolha sua Pizza</h2>"
-
-    const pizzas = [
-        {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola", img:"imagens/pizzas/calabresa.png"},
-        {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"imagens/pizzas/franco_com_catupiry.png"},
-        {nome:"4 Queijos",desc:"Mussarela, provolone, parmesão, catupiry", img:"imagens/pizzas/quatro_queijos.png"},
-        {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha", img:"imagens/pizzas/portuguesa.png"},
-        {nome:"Marguerita",desc:"Mussarela, tomate, manjericão", img:"imagens/pizzas/marguerita.png"},
-        {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola", img:"imagens/pizzas/baiana.png"},
-        {nome:"Napolitana",desc:"Mussarela, tomate, parmesão", img:"imagens/pizzas/napolitana.png"},
-        {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela", img:"imagens/pizzas/milho_com_bacon.png"},
-        {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry", img:"imagens/pizzas/moda_da_casa.png"}
-    ]
-
-    pizzas.forEach(p=>{
-        html += `
-        <div class="card pizza-card">
-            <img src="${p.img}" onerror="this.src='imagens/pizza-padrao.png'">
-            <div class="card-content">
-                <h3>${p.nome}</h3>
-                <p>${p.desc}</p>
-                <button onclick="abrirMontagemPizza('${p.nome}')">
-                    🍕 Montar Pizza
-                </button>
-            </div>
-        </div>
-        `
-    })
-
-    document.getElementById("produtos").innerHTML = html
+/* Overlay MAIS CLARO (melhoria visual) */
+.overlay{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.25); /* 🔥 mais claro */
+  z-index: 1;
 }
 
-// 🍕 MONTAGEM
-function abrirMontagemPizza(nome){
-
-    let imagens = {
-        "Calabresa":"imagens/pizzas/calabresa.png",
-        "Frango com Catupiry":"imagens/pizzas/franco_com_catupiry.png",
-        "4 Queijos":"imagens/pizzas/quatro_queijos.png",
-        "Portuguesa":"imagens/pizzas/portuguesa.png",
-        "Marguerita":"imagens/pizzas/marguerita.png",
-        "Baiana":"imagens/pizzas/baiana.png",
-        "Napolitana":"imagens/pizzas/napolitana.png",
-        "Milho com Bacon":"imagens/pizzas/milho_com_bacon.png",
-        "Moda da Casa":"imagens/pizzas/moda_da_casa.png"
-    }
-
-    let html = `
-    <div class="montagem-box">
-
-        <h2>🍕 ${nome}</h2>
-
-        <img class="pizza-preview" src="${imagens[nome]}" onerror="this.src='imagens/pizza-padrao.png'">
-
-        <div class="opcoes-pizza">
-
-            <div class="campo">
-                <label>Tamanho:</label>
-                <select id="tamanho">
-                    <option value="25">Pequena 25cm - R$42.90</option>
-                    <option value="30">Grande 30cm - R$54.90</option>
-                    <option value="35">Gigante 35cm - R$69.90</option>
-                </select>
-            </div>
-
-            <div class="campo">
-                <label>Borda:</label>
-                <select id="borda">
-                    <option value="0">Normal</option>
-                    <option value="10">Catupiry (+10)</option>
-                    <option value="10">Cheddar (+10)</option>
-                </select>
-            </div>
-
-            <div class="campo">
-                <label>Meio a Meio:</label>
-                <select id="meio">
-                    <option value="">Não</option>
-                    <option value="Calabresa">Calabresa</option>
-                    <option value="Frango com Catupiry">Frango com Catupiry</option>
-                    <option value="4 Queijos">4 Queijos</option>
-                    <option value="Portuguesa">Portuguesa</option>
-                    <option value="Marguerita">Marguerita</option>
-                    <option value="Baiana">Baiana</option>
-                    <option value="Napolitana">Napolitana</option>
-                    <option value="Milho com Bacon">Milho com Bacon</option>
-                    <option value="Moda da Casa">Moda da Casa</option>
-                </select>
-            </div>
-
-        </div>
-
-        <button class="btn-montar" onclick="adicionarPizza('${nome}')">
-            🛒 Adicionar ao Carrinho
-        </button>
-
-        <span class="voltar" onclick="abrirPizzas()">⬅ Voltar</span>
-
-    </div>
-    `
-
-    document.getElementById("produtos").innerHTML = html
+/* LOGO (caso volte usar depois) */
+.logo-container{
+  position: relative;
+  z-index: 2;
+  text-align: center;
 }
 
-// 🍕 ADICIONAR PIZZA
-function adicionarPizza(nome){
-
-    let tamanho = document.getElementById("tamanho").value
-    let bordaSelect = document.getElementById("borda")
-    let borda = Number(bordaSelect.value)
-    let bordaTexto = bordaSelect.options[bordaSelect.selectedIndex].text
-    let meio = document.getElementById("meio").value
-
-    let preco = 0
-    if(tamanho == 25) preco = 42.90
-    if(tamanho == 30) preco = 54.90
-    if(tamanho == 35) preco = 69.90
-
-    preco += borda
-
-    let nomeFinal = `${nome} ${tamanho}cm`
-
-    if(meio) nomeFinal += " / Meio a Meio com " + meio
-    if(borda != 0) nomeFinal += " / Borda " + bordaTexto
-
-    addCarrinho(nomeFinal, preco, "pizza")
-    abrirPizzas()
+.logo-grande{
+  width: auto;
+  height: 110px;
+  max-width: 90%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 20px rgba(0,0,0,0.8));
+  transition: 0.3s;
 }
 
-// 🔥 FILTRO
-function filtrar(tipo){
+/* MOBILE */
+@media (max-width:600px){
+  .header-topo{
+    height: 160px;
+  }
 
-    if(tipo === "combo"){
-        mostrarCombos()
-        return
-    } else {
-        esconderCombos()
-    }
-
-    fetch("produtos.json")
-    .then(res => res.json())
-    .then(produtos => {
-
-        let filtrados = produtos.filter(p => p.categoria === tipo)
-
-        let html = ""
-
-        filtrados.forEach(p=>{
-            html += `
-            <div class="card">
-                <img src="${p.foto}" onerror="this.src='imagens/sem-imagem.png'">
-                <div class="card-content">
-                    <h3>${p.nome}</h3>
-                    <p>${p.descricao}</p>
-                    <p class="preco">R$ ${Number(p.preco).toFixed(2)}</p>
-                    <button onclick="addCarrinho('${p.nome}', ${p.preco}, '${tipo}')">
-                        Adicionar
-                    </button>
-                </div>
-            </div>
-            `
-        })
-
-        document.getElementById("produtos").innerHTML = html
-    })
+  .logo-grande{
+    height: 80px;
+  }
 }
 
-// 🔥 COMBOS
-function carregarCombosSemana(){
-    fetch("produtos.json")
-    .then(res => res.json())
-    .then(produtos => {
-
-        let combos = produtos.filter(p => p.categoria === "combos")
-
-        let html = ""
-
-        combos.forEach(c=>{
-            html += `
-            <div class="card destaque">
-                <img src="${c.foto}" onerror="this.src='imagens/sem-imagem.png'">
-                <div class="card-content">
-                    <h3>${c.nome}</h3>
-                    <p>${c.descricao}</p>
-                    <p class="preco">R$ ${Number(c.preco).toFixed(2)}</p>
-                    <button onclick="addCarrinho('${c.nome} - ${c.descricao}', ${c.preco}, 'combo')">
-                        Adicionar
-                    </button>
-                </div>
-            </div>
-            `
-        })
-
-        document.getElementById("combosSemana").innerHTML = html
-    })
+/* ENDEREÇO */
+.endereco{
+background:#1f1f1f;
+padding:12px;
+text-align:center;
+font-size:14px;
+margin:10px auto;
+border-radius:8px;
+line-height:20px;
+max-width:1000px;
 }
 
-// 🎬 BANNER
-let banners = [
-    {nome:"Combo Família", descricao:"2 Pizzas Gigantes 35cm + 2 Refrigerantes 2l", preco:168.90, foto:"imagens/banners/combo-familia.png"},
-    {nome:"Combo Amigos", descricao:"6 Heinekens + 6 Brahmas + 1 Pizza Gigante 35cm", preco:169.90, foto:"imagens/banners/combo-amigos.png"},
-    {nome:"Combo Casal", descricao:"1 Pizza Gigante 35cm + 1 Refrigerante 2l", preco:82.90, foto:"imagens/banners/combo-casal.png"}
-]
-
-let bannerIndex = 0
-let bannerDiv
-
-function iniciarBanner(){
-    bannerDiv = document.getElementById("banner")
-    if(!bannerDiv) return
-
-    mostrarBanner()
-    setInterval(mostrarBanner, 5000)
+.endereco button{
+margin-top:10px;
+padding:8px 14px;
+border:none;
+border-radius:8px;
+background:#ff9800;
+color:white;
+cursor:pointer;
 }
 
-function mostrarBanner(){
-    let combo = banners[bannerIndex]
-
-    bannerDiv.style.backgroundImage = `url('${combo.foto}')`
-
-    bannerDiv.onclick = function(){
-        addCarrinho(combo.nome + " - " + combo.descricao, combo.preco, "combo")
-        mostrarToast(combo)
-    }
-
-    bannerIndex++
-    if(bannerIndex >= banners.length){
-        bannerIndex = 0
-    }
+/* BANNER */
+#banner{
+width:100%;
+max-width:1000px;
+height:220px;
+margin:10px auto;
+border-radius:12px;
+background-size:cover;
+background-position:center;
+transition: background-image 0.5s ease-in-out;
 }
 
-// 🛒 CARRINHO
-function addCarrinho(nome, preco, tipo = "outro"){
-
-    let item = carrinho.find(i => i.nome === nome)
-
-    if(item){
-        item.qtd++
-    } else {
-        carrinho.push({nome, preco: Number(preco), qtd:1, tipo})
-    }
-
-    atualizarCarrinho()
+/* CONTAINER */
+.container{
+padding:15px;
+max-width:1000px;
+margin:auto;
 }
 
-// 📊 CONTADOR FRETE GRÁTIS
-function contarItensFreteGratis(){
-
-    let total = 0
-
-    carrinho.forEach(item=>{
-        if(item.tipo === "pizza" || item.tipo === "combo"){
-            total += item.qtd
-        }
-    })
-
-    return total
+/* BUSCA */
+.busca{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:none;
+margin-bottom:15px;
+background:white;
+color:black;
+font-size:15px;
 }
 
-// 🛒 ATUALIZAR CARRINHO
-function atualizarCarrinho(){
-
-    let lista = document.getElementById("lista")
-    let contador = document.getElementById("contador")
-    let total = 0
-
-    if(!lista) return
-
-    lista.innerHTML = ""
-
-    carrinho.forEach((item, index)=>{
-
-        let subtotal = item.preco * item.qtd
-        total += subtotal
-
-        lista.innerHTML += `
-        <div style="display:flex; justify-content:space-between;">
-            <div>
-                <b>${item.nome}</b><br>
-                R$ ${subtotal.toFixed(2)}
-            </div>
-
-            <div style="display:flex; gap:5px;">
-                <button onclick="diminuir(${index})">➖</button>
-                <span>${item.qtd}</span>
-                <button onclick="aumentar(${index})">➕</button>
-               <span onclick="removerItem(${index})" style="cursor:pointer; font-weight:bold;">
-    <span style="color:red;">X</span>
-    <span style="color:white;"> Remover</span>
-</span>
-            </div>
-        </div>
-        `
-    })
-
-    if(contador) contador.innerText = carrinho.length
-    document.getElementById("total").innerText = total.toFixed(2)
-
-    let info = document.getElementById("infoFrete")
-    if(info){
-        let itens = contarItensFreteGratis()
-        let falta = 5 - itens
-
-        if(itens >= 5){
-            info.innerHTML = "🎉 FRETE GRÁTIS ATIVADO!"
-        } else {
-            info.innerHTML = `🚚 Faltam ${falta} item(s) para FRETE GRÁTIS`
-        }
-    }
+/* BOTÕES */
+.btn-flutuantes{
+display:flex;
+flex-direction:column;
+gap:8px;
+margin-bottom:15px;
 }
 
-function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
-function diminuir(i){ carrinho[i].qtd--; if(carrinho[i].qtd<=0) carrinho.splice(i,1); atualizarCarrinho() }
-function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho() }
-
-function scrollCarrinho(){
-    document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
+.linha{
+display:flex;
+gap:10px;
+justify-content:center;
 }
 
-// 📦 ENVIAR PEDIDO
-function enviarPedido(){
-
-    if(carrinho.length === 0){
-        alert("Seu carrinho está vazio!")
-        return
-    }
-
-    let enderecoEl = document.getElementById("enderecoCliente")
-    let pagamentoEl = document.getElementById("pagamento")
-    let trocoEl = document.getElementById("troco")
-
-    let endereco = enderecoEl ? enderecoEl.value : "Não informado"
-    let pagamento = pagamentoEl ? pagamentoEl.value : "Não informado"
-    let troco = trocoEl ? trocoEl.value : "-"
-
-    let msg = "🛒 *NOVO PEDIDO*\n\n"
-
-    carrinho.forEach(item=>{
-        msg += `🍕 ${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)}\n`
-    })
-
-    let itens = contarItensFreteGratis()
-
-    if(itens >= 5){
-        msg += `\n🎉 FRETE GRÁTIS ATIVADO`
-    } else {
-        msg += `\n🚚 Faltam ${5 - itens} item(s) para FRETE GRÁTIS`
-    }
-
-    let totalEl = document.getElementById("total")
-    let total = totalEl ? totalEl.innerText : "0.00"
-
-    msg += `\n\n💰 Total: R$${total}`
-    msg += `\n📍 Endereço: ${endereco}`
-    msg += `\n💳 Pagamento: ${pagamento}`
-    msg += `\n💵 Troco: ${troco}`
-
-    let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
-
-    window.location.href = url
-}
-function mostrarToast(combo){
-
-    let toast = document.getElementById("toast")
-    if(!toast) return
-
-    if(combo.nome.includes("Família")){
-    toast.innerText = `👨‍👩‍👧‍👦 ${combo.nome} perfeito pra dividir!`
-}
-else if(combo.nome.includes("Casal")){
-    toast.innerText = `❤️ ${combo.nome} clima perfeito garantido!`
-}
-else if(combo.nome.includes("Amigos")){
-    toast.innerText = `🍻 ${combo.nome} partiu resenha!`
-}
-else{
-    toast.innerText = `🔥 ${combo.nome} adicionado!`
-}
-    toast.className = "show"
-
-    setTimeout(()=>{
-        toast.className = ""
-    },4000)
+.linha button{
+flex:1;
+background:#ff9800;
+border:none;
+padding:12px;
+border-radius:10px;
+color:white;
+font-size:16px;
+cursor:pointer;
+transition:0.2s;
 }
 
-function abrirMapa(){
-    window.open("https://www.google.com/maps?q=Rua+Maria+de+Lourdes+da+Cruz+378+Belo+Horizonte")
-}
-// ===============================
-// 🚚 SISTEMA DE FRETE INTELIGENTE
-// ===============================
-
-const bairrosProximos = [
-"Mantiqueira","Juliana","São Benedito","São Tomás","Serra Verde",
-"Jardim Vitória","Vila Clóris","Jardim Da Glória","Nova Pampulha",
-"Gávea","Célvia","Minas Caixa","Céu Azul","Rio Branco","Venda Nova",
-"Parque São Pedro","Lagoinha Leblon","Jardim Dos Comerciários","Santa Branca"
-]
-
-const bairrosMedios = [
-"Justinópolis","São Benedito","Floramar","Heliópolis","Planalto",
-"Itapoã","Santa Mônica","Copacabana","São João Batista",
-"São Bernardo","Jardim Atlântico","Santa Amélia",
-"Centro De Vespasiano","Caieiras","Célvia","Nossa Senhora De Fátima",
-"Morro Alto","Gávea II","Jardim Leblon","Piratininga",
-"São José","Santa Isabel","Santa Fé","Vereda","Florença",
-"Pedra Branca","Jardim Colonial","Jardim Verona",
-"Botafogo","Areias","Veneza","Céu Azul"
-]
-
-const bairrosLongos = [
-"Centro De Ribeirão Das Neves","Belo Vale","Barcelona","Alterosa",
-"Bom Sossego","Rosaneves","Sevilha","Contagem","Santa Luzia",
-"Pampulha","Castelo","Ouro Preto","Caiçara","Padre Eustáquio",
-"Dom Bosco","Alípio De Melo","Nova Pampulha","Guarani",
-"Centro De Belo Horizonte","Lagoa Da Pampulha","Vespasiano",
-"Justinópolis","Jardim Europa"
-]
-
-function calcularFretePorBairro(bairro){
-
-    if(!bairro) return 20
-
-    let b = bairro.toLowerCase()
-
-    if(bairrosProximos.some(x => x.toLowerCase() === b)) return 7
-    if(bairrosMedios.some(x => x.toLowerCase() === b)) return 10
-    if(bairrosLongos.some(x => x.toLowerCase() === b)) return 20
-
-    return 20
+.linha button:hover{
+background:#e68900;
 }
 
-function abrirAbaBairros(){
-
-    let existente = document.getElementById("modalBairros")
-
-    if(existente){
-        existente.remove()
-    }
-
-    let html = `
-    <div id="modalBairros" style="
-        position:fixed;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-        background:rgba(0,0,0,0.8);
-        z-index:9999;
-        overflow:auto;
-        padding:20px;
-    ">
-
-        <div style="
-            background:#fff;
-            color:#000;
-            padding:20px;
-            border-radius:10px;
-            max-width:600px;
-            margin:auto;
-        ">
-
-            <h2>🚚 Tabela de Frete por Bairro</h2>
-
-            <h3>🟢 R$7 (0–3km)</h3>
-            <p>${bairrosProximos.join(", ")}</p>
-
-            <h3>🟡 R$10 (3–6km)</h3>
-            <p>${bairrosMedios.join(", ")}</p>
-
-            <h3>🔴 R$20 (6–10km)</h3>
-            <p>${bairrosLongos.join(", ")}</p>
-
-            <button onclick="document.getElementById('modalBairros').remove()" 
-            style="
-                margin-top:20px;
-                padding:10px;
-                width:100%;
-                background:red;
-                color:#fff;
-                border:none;
-                border-radius:5px;
-            ">
-                Fechar
-            </button>
-
-        </div>
-
-    </div>
-    `
-
-    document.body.insertAdjacentHTML("beforeend", html)
+/* TÍTULOS */
+h2{
+margin:15px 0 10px 0;
 }
 
-function abrirModalBairros(){
-
-    let modal = document.getElementById("modalBairro")
-
-    if(modal){
-        modal.remove()
-    }
-
-    let html = `
-    <div id="modalBairro" style="
-        position:fixed;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-        background:rgba(0,0,0,0.7);
-        z-index:99999;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-    ">
-
-       <div style="
-    background:#fff;
-    color:#000;
-    width:90%;
-    max-width:400px;
-    padding:20px;
-    border-radius:12px;
-">
-
-            <h2>🏘️ Selecione seu bairro</h2>
-
-            <div style="max-height:300px; overflow:auto;">
-
-                ${gerarListaBairros()}
-
-            </div>
-
-            <button onclick="fecharModalBairro()" style="
-                margin-top:15px;
-                width:100%;
-                padding:10px;
-                background:red;
-                color:#fff;
-                border:none;
-                border-radius:8px;
-            ">Fechar</button>
-
-        </div>
-
-    </div>
-    `
-
-    document.body.insertAdjacentHTML("beforeend", html)
+/* PRODUTOS */
+#produtos{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
 }
 
-function fecharModalBairro(){
-    document.getElementById("modalBairro").remove()
+/* COMBOS */
+#combosSemana{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-bottom:20px;
 }
 
-function gerarListaBairros(){
-
-    const todos = [
-        ...bairrosProximos,
-        ...bairrosMedios,
-        ...bairrosLongos
-    ]
-
-    return todos.map(b=>`
-        <div onclick="selecionarBairro('${b}')" style="
-            padding:10px;
-            border-bottom:1px solid #ddd;
-            cursor:pointer;
-        ">
-            📍 ${b}
-        </div>
-    `).join("")
+/* CARD */
+.card{
+background:#1f1f1f;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 0 10px rgba(0,0,0,0.5);
+transition:0.2s;
 }
 
-function selecionarBairro(nome){
+.card:hover{
+transform:scale(1.03);
+}
 
-    document.getElementById("bairroSelecionado").value = nome
-    fecharModalBairro()
+.card img{
+width:100%;
+height:140px;
+object-fit:cover;
+}
 
-    let frete = calcularFretePorBairro(nome)
+.card-content{
+padding:12px;
+}
 
-    document.getElementById("freteInfo").innerHTML =
-    "🚚 Frete calculado: R$ " + frete
+.card h3{
+font-size:18px;
+margin-bottom:5px;
+}
+
+.preco{
+color:#2ecc71;
+font-size:17px;
+margin-top:6px;
+}
+
+.card button{
+background:#ff9800;
+border:none;
+padding:10px;
+width:100%;
+border-radius:8px;
+color:white;
+margin-top:8px;
+cursor:pointer;
+transition:0.2s;
+}
+
+.card button:hover{
+background:#e68900;
+}
+
+/* COMBO DESTAQUE */
+.destaque{
+border:2px solid #ff9800;
+}
+
+/* CARRINHO */
+#carrinho{
+background:#1f1f1f;
+padding:15px;
+border-radius:10px;
+margin:25px auto;
+max-width:1000px;
+}
+
+/* LISTA */
+#lista{
+margin-top:10px;
+}
+
+/* ITEM */
+.item-carrinho{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#2a2a2a;
+padding:10px;
+border-radius:8px;
+margin-bottom:8px;
+}
+
+/* CONTROLE */
+.controle{
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.controle button{
+background:#ff9800;
+border:none;
+color:white;
+width:28px;
+height:28px;
+border-radius:50%;
+font-size:16px;
+cursor:pointer;
+}
+
+/* TOTAL */
+.total{
+font-size:20px;
+margin-top:10px;
+font-weight:bold;
+}
+
+/* INPUTS */
+input,select{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:6px;
+border:none;
+font-size:14px;
+background:white;
+color:black;
+}
+
+/* BOTÃO WHATS */
+.enviar{
+background:#25D366;
+color:white;
+font-size:18px;
+padding:14px;
+margin-top:15px;
+border-radius:20px;
+border:none;
+font-weight:bold;
+cursor:pointer;
+}
+
+.enviar:hover{
+background:#1ebe5d;
+}
+
+/* BOTÃO FLUTUANTE */
+#botaoCarrinho{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#ff9800;
+width:65px;
+height:65px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+cursor:pointer;
+}
+
+/* CONTADOR */
+#contador{
+position:absolute;
+top:-5px;
+right:-5px;
+background:red;
+color:white;
+font-size:12px;
+padding:4px 6px;
+border-radius:50%;
+}
+
+/* FOOTER */
+footer{
+text-align:center;
+margin-top:40px;
+font-size:13px;
+color:#aaa;
+padding-bottom:20px;
+max-width:1000px;
+margin-left:auto;
+margin-right:auto;
+}
+
+/* 🔥 FUNDO DESKTOP */
+@media (min-width:1200px){
+  body{
+    background:#0b0b0b;
+  }
+}
+
+/* MOBILE */
+@media (max-width:600px){
+  #banner{
+    height:150px;
+  }
+}
+/* 🔥 MONTAGEM DE PIZZA PROFISSIONAL */
+
+.montagem-box{
+  background:#1f1f1f;
+  padding:20px;
+  border-radius:15px;
+  text-align:center;
+  max-width:500px;
+  margin:20px auto;
+  box-shadow:0 0 15px rgba(0,0,0,0.6);
+}
+
+.montagem-box h2{
+  margin-bottom:15px;
+}
+
+.pizza-preview{
+  width:200px;
+  height:200px;
+  object-fit:cover;
+  border-radius:50%;
+  margin-bottom:15px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.8);
+  transition:0.3s;
+}
+
+.pizza-preview:hover{
+  transform:scale(1.05);
+}
+
+.opcoes-pizza{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:10px;
+}
+
+.campo{
+  text-align:left;
+}
+
+.campo label{
+  font-size:14px;
+  display:block;
+  margin-bottom:3px;
+}
+
+.campo select{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:none;
+}
+
+.btn-montar{
+  margin-top:20px;
+  width:100%;
+  background:#ff9800;
+  color:white;
+  border:none;
+  padding:15px;
+  border-radius:10px;
+  font-size:18px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.btn-montar:hover{
+  background:#e68900;
+  transform:scale(1.03);
+}
+
+.voltar{
+  display:block;
+  margin-top:15px;
+  cursor:pointer;
+  color:#ccc;
+}
+
+.voltar:hover{
+  color:white;
+}
+/* 🔥 PIZZAS MAIS PROFISSIONAIS (IMAGEM + CARD BONITO) */
+
+.pizza-card{
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+/* 🔥 IMAGEM MAIS BONITA */
+.pizza-img{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+}
+
+/* 🔥 TEXTO INGREDIENTES */
+.ingredientes{
+  margin-top:5px;
+  line-height:18px;
+  font-size:14px;
+  color:#ccc;
+}
+
+/* 🔥 HOVER MAIS PROFISSIONAL */
+.pizza-card:hover{
+  transform: scale(1.03);
+  box-shadow:0 0 15px rgba(255,152,0,0.3);
+}
+/* 🔥 PIZZAS MAIS PROFISSIONAIS (IMAGEM + CARD BONITO) */
+
+.pizza-card{
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+/* 🔥 IMAGEM MAIS BONITA */
+.pizza-img{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+}
+
+/* 🔥 TEXTO INGREDIENTES */
+.ingredientes{
+  margin-top:5px;
+  line-height:18px;
+  font-size:14px;
+  color:#ccc;
+}
+
+/* 🔥 HOVER MAIS PROFISSIONAL */
+.pizza-card:hover{
+  transform: scale(1.03);
+  box-shadow:0 0 15px rgba(255,152,0,0.3);
+}
+/* 🔥 MONTAGEM DE PIZZA PROFISSIONAL */
+
+.montagem-box{
+  background:#1f1f1f;
+  padding:20px;
+  border-radius:15px;
+  text-align:center;
+  max-width:500px;
+  margin:20px auto;
+  box-shadow:0 0 15px rgba(0,0,0,0.6);
+}
+
+.montagem-box h2{
+  margin-bottom:15px;
+}
+
+.pizza-preview{
+  width:200px;
+  height:200px;
+  object-fit:cover;
+  border-radius:50%;
+  margin-bottom:15px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.8);
+  transition:0.3s;
+}
+
+.pizza-preview:hover{
+  transform:scale(1.05);
+}
+
+.opcoes-pizza{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:10px;
+}
+
+.campo{
+  text-align:left;
+}
+
+.campo label{
+  font-size:14px;
+  display:block;
+  margin-bottom:3px;
+}
+
+.campo select{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:none;
+}
+
+.btn-montar{
+  margin-top:20px;
+  width:100%;
+  background:#ff9800;
+  color:white;
+  border:none;
+  padding:15px;
+  border-radius:10px;
+  font-size:18px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.btn-montar:hover{
+  background:#e68900;
+  transform:scale(1.03);
+}
+
+.voltar{
+  display:block;
+  margin-top:15px;
+  cursor:pointer;
+  color:#ccc;
+}
+
+.voltar:hover{
+  color:white;
+}
+/* 🔥 LAYOUT TIPO APP SOMENTE PARA BEBIDAS (SEM QUEBRAR PIZZAS E COMBOS) */
+
+#produtos .card:not(.pizza-card):not(.destaque){
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:12px;
+  padding:10px;
+}
+
+/* IMAGEM LATERAL */
+#produtos .card:not(.pizza-card):not(.destaque) img{
+  width:90px;
+  height:90px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+/* CONTEÚDO */
+#produtos .card:not(.pizza-card):not(.destaque) .card-content{
+  flex:1;
+  padding:0;
+}
+
+/* TEXTO */
+#produtos .card:not(.pizza-card):not(.destaque) h3{
+  font-size:16px;
+  margin-bottom:4px;
+}
+
+#produtos .card:not(.pizza-card):not(.destaque) p{
+  font-size:13px;
+  color:#ccc;
+}
+
+/* PREÇO */
+#produtos .card:not(.pizza-card):not(.destaque) .preco{
+  font-size:15px;
+  font-weight:bold;
+}
+
+/* BOTÃO */
+#produtos .card:not(.pizza-card):not(.destaque) button{
+  width:auto;
+  padding:8px 12px;
+  font-size:14px;
+  border-radius:8px;
+}
+
+/* 📱 MOBILE */
+@media (max-width:600px){
+  #produtos .card:not(.pizza-card):not(.destaque) img{
+    width:80px;
+    height:80px;
+  }
+}
+
+/* 💻 DESKTOP */
+@media (min-width:900px){
+
+  /* só lista de produtos, não combos */
+  #produtos{
+    grid-template-columns: 1fr;
+  }
+
+  #produtos .card{
+    max-width:700px;
+    margin:auto;
+  }
+}
+/* 🔥 BOTÃO NA DIREITA (SOMENTE BEBIDAS) */
+
+#produtos .card:not(.pizza-card):not(.destaque){
+  position:relative;
+}
+
+/* joga o botão pra direita */
+#produtos .card:not(.pizza-card):not(.destaque) button{
+  position:absolute;
+  right:10px;
+  bottom:10px;
+  width:auto;
+  padding:8px 14px;
+}
+
+/* dá espaço pro texto não bater no botão */
+#produtos .card:not(.pizza-card):not(.destaque) .card-content{
+  padding-right:110px;
+}
+/* ========================================= */
+/* 📱 CORREÇÕES MOBILE (SEM QUEBRAR DESKTOP) */
+/* ========================================= */
+@media (max-width:600px){
+
+  /* 🔥 GARANTE QUE O CARRINHO APAREÇA */
+  #botaoCarrinho{
+    display:flex !important;
+    bottom:15px;
+    right:15px;
+    width:60px;
+    height:60px;
+    font-size:24px;
+    z-index:999;
+  }
+
+  /* 🔥 ENDEREÇO CENTRALIZADO BONITO */
+  .endereco{
+    margin:10px 15px;
+    text-align:center;
+    padding:15px;
+  }
+
+  /* 🔥 BOTÃO DO ENDEREÇO (VER MAPA) */
+  .endereco button{
+    display:block;
+    margin:10px auto 0 auto;
+    width:auto;
+  }
+
+  /* 🔥 GARANTE QUE NADA FIQUE ESPREMIDO */
+  .container{
+    padding:12px;
+  }
+
+  /* 🔥 AJUSTE DOS BOTÕES (PIZZAS / BEBIDAS / ETC) */
+  .linha{
+    flex-direction:row;
+  }
+
+  .linha button{
+    font-size:14px;
+    padding:10px;
+  }
+
+  /* 🔥 PRODUTOS NÃO QUEBRAM */
+  #produtos{
+    grid-template-columns:1fr;
+  }
+
+  /* 🔥 COMBOS BONITOS NO MOBILE */
+  #combosSemana{
+    grid-template-columns:1fr;
+  }
+
+}
+/* =============================== */
+/* 🛒 CARRINHO - ESTILO PREMIUM (FINAL LIMPO) */
+/* =============================== */
+
+/* CONTAINER */
+#carrinho{
+  background:#1f1f1f;
+  padding:18px;
+  border-radius:12px;
+  margin:25px auto;
+  max-width:1000px;
+  box-shadow:0 0 15px rgba(0,0,0,0.4);
+}
+
+/* LISTA */
+#lista{
+  margin-top:10px;
+}
+
+/* ITEM DO CARRINHO */
+#lista > div{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#2a2a2a;
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:10px;
+  transition:0.2s;
+}
+
+#lista > div:hover{
+  transform:scale(1.01);
+}
+
+/* TEXTO */
+#lista b{
+  font-size:15px;
+}
+
+#lista span{
+  font-weight:bold;
+}
+
+/* =============================== */
+/* ➕ ➖ BOTÕES QUADRADOS ARREDONDADOS */
+/* =============================== */
+
+#lista button[onclick*="aumentar"],
+#lista button[onclick*="diminuir"]{
+  background:#ff9800;
+  border:none;
+  color:white;
+  width:32px;
+  height:32px;
+  border-radius:8px;
+  font-size:16px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:0.2s;
+}
+
+#lista button[onclick*="aumentar"]:hover,
+#lista button[onclick*="diminuir"]:hover{
+  background:#e68900;
+  transform:scale(1.05);
+}
+
+/* =============================== */
+/* ❌ REMOVER (X + TEXTO LIMPO FINAL) */
+/* =============================== */
+
+#lista button[onclick*="removerItem"]{
+  background:transparent;
+  border:none;
+  padding:0;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:13px;
+  cursor:pointer;
+  font-weight:500;
+  transition:0.2s;
+  color:white;
+  text-transform:none;
+}
+
+/* 🔥 garante que NÃO duplica X */
+#lista button[onclick*="removerItem"]::before{
+  content:none !important;
+}
+
+/* 🔴 X vermelho (primeiro elemento) */
+#lista button[onclick*="removerItem"] span:first-child{
+  color:red;
+  font-weight:bold;
+  font-size:14px;
+}
+
+/* ⚪ texto "Remover" com R maiúsculo garantido */
+#lista button[onclick*="removerItem"] span:last-child{
+  color:white;
+  text-transform:capitalize;
+}
+
+/* hover leve */
+#lista button[onclick*="removerItem"]:hover{
+  opacity:0.8;
+  transform:scale(1.05);
+}
+
+/* =============================== */
+/* 📊 TOTAL */
+/* =============================== */
+
+.total{
+  font-size:20px;
+  margin-top:10px;
+  font-weight:bold;
+  color:#2ecc71;
+}
+
+/* =============================== */
+/* 📱 MOBILE */
+/* =============================== */
+
+@media (max-width:600px){
+
+  #lista > div{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+  }
+
+  #lista button[onclick*="aumentar"],
+  #lista button[onclick*="diminuir"]{
+    width:30px;
+    height:30px;
+    font-size:14px;
+  }
+}
+.card.destaque {
+    position: relative;
+    border: 2px solid #ffcc00;
+    box-shadow: 0 0 15px rgba(255,204,0,0.6);
+    transform: scale(1.02);
+}
+
+.card.destaque::before {
+    content: "🔥 MAIS PEDIDO";
+    position: absolute;
+    background: red;
+    color: white;
+    padding: 5px 10px;
+    font-size: 12px;
+    top: 10px;
+    left: 10px;
+    border-radius: 5px;
+}
+/* ========================================= */
+/* 🔥🔥🔥 UPGRADE PREMIUM FINAL (SEM QUEBRAR NADA) */
+/* ========================================= */
+
+/* 🌟 GLOW PREMIUM GLOBAL */
+.card,
+#carrinho,
+.endereco,
+#banner{
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
+
+/* 🔥 HOVER MAIS FORTE */
+.card:hover{
+  transform: scale(1.04);
+  box-shadow: 0 0 25px rgba(255,152,0,0.4);
+}
+
+/* 🍕 IMAGEM MAIS APELATIVA */
+.card img{
+  transition: 0.3s;
+  filter: brightness(0.95) contrast(1.05);
+}
+
+.card:hover img{
+  transform: scale(1.05);
+  filter: brightness(1.05) contrast(1.1);
+}
+
+/* 💰 PREÇO MAIS VENDEDOR */
+.preco{
+  color:#00ff88;
+  font-size:20px;
+  font-weight:bold;
+  text-shadow:0 0 10px rgba(0,255,136,0.4);
+}
+
+/* 🔘 BOTÕES MAIS FORTES */
+.card button,
+.btn-montar,
+.enviar{
+  font-weight:bold;
+  letter-spacing:0.5px;
+  box-shadow:0 5px 15px rgba(255,152,0,0.4);
+}
+
+/* 🔥 HOVER BOTÕES */
+.card button:hover,
+.btn-montar:hover,
+.enviar:hover{
+  transform: scale(1.05);
+  box-shadow:0 8px 25px rgba(255,152,0,0.6);
+}
+
+/* 🔥 BADGE MAIS PEDIDO PREMIUM */
+.card.destaque::before {
+    content: "🔥 MAIS PEDIDO";
+    position: absolute;
+    background: linear-gradient(45deg, #ff0000, #ff6a00);
+    color: white;
+    padding: 6px 12px;
+    font-size: 11px;
+    top: 10px;
+    left: 10px;
+    border-radius: 20px;
+    font-weight:bold;
+    box-shadow:0 0 10px rgba(255,0,0,0.6);
+}
+
+/* 🧠 ANIMAÇÃO SUAVE (EFEITO APP) */
+.card{
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* 🛒 BOTÃO FLUTUANTE PREMIUM */
+#botaoCarrinho{
+  box-shadow:0 5px 20px rgba(255,152,0,0.6);
+  transition:0.3s;
+}
+
+#botaoCarrinho:hover{
+  transform:scale(1.1);
+}
+
+/* 🔥 CARD DESTAQUE MAIS FORTE */
+.card.destaque {
+    border: 2px solid #ffcc00;
+    box-shadow: 0 0 25px rgba(255,204,0,0.9);
+    transform: scale(1.03);
+}
+
+/* ✨ LEVE BRILHO NOS COMBOS */
+#combosSemana .card{
+  position: relative;
+}
+
+#combosSemana .card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:12px;
+  pointer-events:none;
+  box-shadow:0 0 20px rgba(255,152,0,0.15);
 }
