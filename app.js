@@ -661,14 +661,13 @@ let qtdPizzas = desc.includes("família") ? 2 : 1
             <option>Moda da Casa</option>
         `
 
-        const refriOptions = `
-            <option value="">Selecione</option>
-            <option>Coca-Cola</option>
-            <option>Guaraná</option>
-            <option>Fanta Laranja</option>
-            <option>Fanta Uva</option>
-            <option>Sprite</option>
-        `
+      let refriOptions = `<option value="">Selecione</option>`
+
+bebidas.forEach(b => {
+    refriOptions += `<option value="${b.nome}">
+        ${b.nome}
+    </option>`
+})
 
         let html = `
         <div class="montagem-box">
