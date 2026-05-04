@@ -686,7 +686,7 @@ function abrirMontagemCombo(nome){
             `
         }
 
-      // 🧀 borda (visual melhorado)
+// 🧀 borda (visual melhorado)
 html += `
 <div class="campo">
     <label>Borda:</label>
@@ -697,7 +697,6 @@ html += `
     </select>
 </div>
 `
-        `
 
         // 🥤 refrigerante (exceto amigos)
         if(!semRefri){
