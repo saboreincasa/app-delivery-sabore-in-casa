@@ -651,7 +651,7 @@ function abrirMontagemCombo(nome){
             <div class="opcoes-pizza">
         `
 
-        // 🍕 AUTOMÁTICO - PIZZAS (DINÂMICO)
+        // 🍕 PIZZAS
         if(combo.nome.includes("Família")){
             html += `
             <div class="campo">
@@ -665,14 +665,6 @@ function abrirMontagemCombo(nome){
             </div>
             `
         }
-        else if(combo.nome.includes("Casal")){
-            html += `
-            <div class="campo">
-                <label>🍕 Pizza</label>
-                <select id="pizza1">${gerarOpcoesPizzas()}</select>
-            </div>
-            `
-        }
         else{
             html += `
             <div class="campo">
@@ -682,7 +674,7 @@ function abrirMontagemCombo(nome){
             `
         }
 
-        // 🥤 REFRIGERANTE DINÂMICO
+        // 🥤 REFRI
         if(combo.nome.includes("Família")){
             html += `
             <div class="campo">
@@ -702,7 +694,7 @@ function abrirMontagemCombo(nome){
             </div>
             `
         }
-        else if(combo.nome.includes("Casal")){
+        else{
             html += `
             <div class="campo">
                 <label>🥤 Refrigerante</label>
@@ -714,7 +706,7 @@ function abrirMontagemCombo(nome){
             `
         }
 
-        // 🧀 BORDA (SEMPRE OPCIONAL)
+        // 🧀 BORDA
         html += `
         <div class="campo">
             <label>🧀 Borda</label>
@@ -739,62 +731,11 @@ function abrirMontagemCombo(nome){
         </div>
         `
 
-        document.getElementById("produtos").innerHTML = html
+        let container = document.getElementById("produtos")
+        if(container) container.innerHTML = html
     })
-}
     .catch(err => {
         console.error("ERRO COMBO:", err)
         alert("Erro ao carregar combo")
     })
 }
-
-
-// 🛒 FINALIZAR COMBO
-function adicionarComboFinal(nome, preco){
-
-    let pizza1 = document.getElementById("pizza1")?.value
-    let pizza2 = document.getElementById("pizza2")?.value
-
-    let refri1 = document.getElementById("refri1")?.value
-    let refri2 = document.getElementById("refri2")?.value
-
-    let bordaSelect = document.getElementById("borda")
-    let borda = bordaSelect ? Number(bordaSelect.value) : 0
-    let bordaTexto = bordaSelect ? bordaSelect.options[bordaSelect.selectedIndex].text : "Normal"
-
-    let bebida = ""
-
-    if(refri1 && refri2){
-        bebida = `${refri1} + ${refri2}`
-    } else if(refri1){
-        bebida = refri1
-    }
-
-    let nomeFinal = `${nome}`
-
-    if(pizza1){
-        nomeFinal += ` - ${pizza1}`
-    }
-
-    if(pizza2){
-        nomeFinal += ` + ${pizza2}`
-    }
-
-    if(bebida){
-        nomeFinal += ` + ${bebida}`
-    }
-
-    if(borda != 0){
-        nomeFinal += ` / Borda ${bordaTexto}`
-    }
-
-    let precoFinal = preco + borda
-
-    addCarrinho(nomeFinal, precoFinal, "combo")
-
-    mostrarCombos()
-}
-
-
-// 🔗 EXPORT GLOBAL (IMPORTANTE)
-window.abrirMontagemCombo = abrirMontagemCombo
