@@ -57,7 +57,6 @@
     "foto": "imagens/snaks/gulao.png"
   },
 
-  // 🥤 REFRIGERANTES 2L (PRIMEIRO)
   {
     "nome": "Coca-Cola 2l",
     "categoria": "bebidas",
@@ -87,7 +86,6 @@
     "foto": "imagens/bebidas/sprite.png"
   },
 
-  // 🥤 REFRIGERANTES 350ML
   {
     "nome": "Coca-Cola 350ml",
     "categoria": "bebidas",
@@ -110,7 +108,6 @@
     "foto": "imagens/bebidas/guarana_350ml.png"
   },
 
-  // 🍺 CERVEJAS 473ML
   {
     "nome": "Heineken 473ml",
     "categoria": "bebidas",
@@ -140,7 +137,6 @@
     "foto": "imagens/bebidas/bohemia.png"
   },
 
-  // 💧 ÁGUAS (POR ÚLTIMO)
   {
     "nome": "Água Mineral 500ml Sem Gás",
     "categoria": "bebidas",
