@@ -638,7 +638,7 @@ function abrirMontagemCombo(nome){
             return
         }
 
-        let desc = combo.nome.toLowerCase()
+        let bebidas = produtos.filter(p => p.categoria === "bebidas")
 
         // 🍕 só combo família tem 2 pizzas
         let qtdPizzas = desc.includes("família") ? 2 : 1
@@ -722,7 +722,26 @@ if(!semRefri){
 
         html += `
             </div>
+html += `
+<div class="campo">
+    <label>🥤 Bebidas Extras (opcional):</label>
 
+    <div id="extrasBebidas"></div>
+
+    <button onclick="adicionarLinhaBebida()" style="
+        margin-top:8px;
+        background:#ff9800;
+        border:none;
+        padding:10px;
+        color:#fff;
+        border-radius:8px;
+        cursor:pointer;
+        font-weight:bold;
+    ">
+        + Adicionar Bebida
+    </button>
+</div>
+`
             <button class="btn-montar"
                 onclick="adicionarComboFinal('${combo.nome}', ${combo.preco}, ${qtdPizzas}, ${semRefri})">
                 🛒 Adicionar Combo
@@ -776,7 +795,23 @@ if(!semRefri){
         }
     }
 }
+// 🥤 EXTRAS DE BEBIDAS
+let bebidasExtras = document.querySelectorAll("#extrasBebidas > div")
 
+bebidasExtras.forEach(div => {
+
+    let select = div.querySelector(".bebidaSelect")
+    let id = div.id.split("_")[1]
+    let qtd = Number(document.getElementById("qtd_" + id).innerText)
+
+    let nomeBebida = select.value
+    let preco = Number(select.selectedOptions[0]?.dataset.preco || 0)
+
+    if(nomeBebida){
+        extras += ` | ${qtd}x ${nomeBebida}`
+        total += preco * qtd
+    }
+})
     let nomeFinal = nome + extras
 
     addCarrinho(nomeFinal, total, "combo")
