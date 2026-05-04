@@ -1015,3 +1015,11 @@ margin-right:auto;
   box-shadow:0 0 10px rgba(255,0,0,0.6);
   z-index: 2;
 }
+/* 📱 IMAGENS DOS COMBOS MENOR NO CELULAR */
+@media (max-width:600px){
+
+  #combosSemana .card img{
+    height:120px; /* antes 140px */
+  }
+
+}
