@@ -623,15 +623,8 @@ function selecionarBairro(nome){
 
 function abrirMontagemCombo(nome){
 
-    console.log("Clicou no combo:", nome)
-
     fetch("produtos.json")
-    .then(res => {
-        if(!res.ok){
-            throw new Error("Erro ao carregar produtos.json")
-        }
-        return res.json()
-    })
+    .then(res => res.json())
     .then(produtos => {
 
         let combo = produtos.find(p => p.nome === nome)
@@ -649,20 +642,101 @@ function abrirMontagemCombo(nome){
             <img class="pizza-preview" src="${combo.foto}" onerror="this.src='imagens/sem-imagem.png'">
 
             <p>${combo.descricao}</p>
+
+            <div class="opcoes-pizza">
+        `
+
+        // 🍕 AUTOMÁTICO - PIZZAS (DINÂMICO)
+        if(combo.nome.includes("Família")){
+            html += `
+            <div class="campo">
+                <label>🍕 Pizza 1</label>
+                <select id="pizza1">${gerarOpcoesPizzas()}</select>
+            </div>
+
+            <div class="campo">
+                <label>🍕 Pizza 2</label>
+                <select id="pizza2">${gerarOpcoesPizzas()}</select>
+            </div>
+            `
+        }
+        else if(combo.nome.includes("Casal")){
+            html += `
+            <div class="campo">
+                <label>🍕 Pizza</label>
+                <select id="pizza1">${gerarOpcoesPizzas()}</select>
+            </div>
+            `
+        }
+        else{
+            html += `
+            <div class="campo">
+                <label>🍕 Pizza</label>
+                <select id="pizza1">${gerarOpcoesPizzas()}</select>
+            </div>
+            `
+        }
+
+        // 🥤 REFRIGERANTE DINÂMICO
+        if(combo.nome.includes("Família")){
+            html += `
+            <div class="campo">
+                <label>🥤 Refrigerante 1</label>
+                <select id="refri1">
+                    <option>Coca-Cola 2L</option>
+                    <option>Guaraná 2L</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label>🥤 Refrigerante 2</label>
+                <select id="refri2">
+                    <option>Coca-Cola 2L</option>
+                    <option>Guaraná 2L</option>
+                </select>
+            </div>
+            `
+        }
+        else if(combo.nome.includes("Casal")){
+            html += `
+            <div class="campo">
+                <label>🥤 Refrigerante</label>
+                <select id="refri1">
+                    <option>Coca-Cola 2L</option>
+                    <option>Guaraná 2L</option>
+                </select>
+            </div>
+            `
+        }
+
+        // 🧀 BORDA (SEMPRE OPCIONAL)
+        html += `
+        <div class="campo">
+            <label>🧀 Borda</label>
+            <select id="borda">
+                <option value="0">Normal</option>
+                <option value="10">Catupiry</option>
+                <option value="10">Cheddar</option>
+            </select>
+        </div>
         `
 
         html += `
+            </div>
+
             <button class="btn-montar"
                 onclick="adicionarComboFinal('${combo.nome}', ${combo.preco})">
                 🛒 Adicionar Combo
             </button>
 
             <span class="voltar" onclick="mostrarCombos()">⬅ Voltar</span>
+
         </div>
         `
 
         document.getElementById("produtos").innerHTML = html
     })
+}
     .catch(err => {
         console.error("ERRO COMBO:", err)
         alert("Erro ao carregar combo")
