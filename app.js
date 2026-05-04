@@ -48,7 +48,9 @@ function abrirPizzas(){
             <div class="card-content">
                 <h3>${p.nome}</h3>
                 <p>${p.desc}</p>
-                <button onclick="abrirMontagemPizza('${p.nome}')">🍕 Montar Pizza</button>
+                <button onclick="abrirMontagemPizza('${p.nome}')">
+                    🍕 Montar Pizza
+                </button>
             </div>
         </div>
         `
@@ -117,7 +119,9 @@ function abrirMontagemPizza(nome){
 
         </div>
 
-        <button class="btn-montar" onclick="adicionarPizza('${nome}')">🛒 Adicionar ao Carrinho</button>
+        <button class="btn-montar" onclick="adicionarPizza('${nome}')">
+            🛒 Adicionar ao Carrinho
+        </button>
 
         <span class="voltar" onclick="abrirPizzas()">⬅ Voltar</span>
 
@@ -136,7 +140,11 @@ function adicionarPizza(nome){
     let bordaTexto = bordaSelect.options[bordaSelect.selectedIndex].text
     let meio = document.getElementById("meio").value
 
-    let preco = tamanho == 25 ? 42.90 : tamanho == 30 ? 54.90 : 69.90
+    let preco = 0
+    if(tamanho == 25) preco = 42.90
+    if(tamanho == 30) preco = 54.90
+    if(tamanho == 35) preco = 69.90
+
     preco += borda
 
     let nomeFinal = `${nome} ${tamanho}cm`
@@ -186,34 +194,27 @@ function filtrar(tipo){
     })
 }
 
-// 🔥 COMBOS (CORRIGIDO)
+// 🔥 COMBOS
 function carregarCombosSemana(){
-
     fetch("produtos.json")
     .then(res => res.json())
     .then(produtos => {
 
         let combos = produtos.filter(p => p.categoria === "combos")
+
         let html = ""
 
         combos.forEach(c=>{
-
-            let descricaoFormatada = c.descricao.replaceAll(" + ", "\n")
-
             html += `
             <div class="card destaque">
                 <img src="${c.foto}" onerror="this.src='imagens/sem-imagem.png'">
-
-                <div class="card-content">
-
+                <div class="card-content" style="text-align:center;">
                     <h3>${c.nome}</h3>
-                    <p>${descricaoFormatada}</p>
+                    <p>${c.descricao}</p>
                     <p class="preco">R$ ${Number(c.preco).toFixed(2)}</p>
-
                     <button onclick="addCarrinho('${c.nome} - ${c.descricao}', ${c.preco}, 'combo')">
                         Adicionar
                     </button>
-
                 </div>
             </div>
             `
