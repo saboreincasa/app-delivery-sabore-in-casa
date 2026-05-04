@@ -107,9 +107,12 @@ function abrirMontagemPizza(nome){
                     <option value="">Não</option>
                     <option value="Calabresa">Calabresa</option>
                     <option value="Frango com Catupiry">Frango com Catupiry</option>
-                    <option value="4 Queijos">4 Queijos</option>
                     <option value="Portuguesa">Portuguesa</option>
                     <option value="Marguerita">Marguerita</option>
+                    <option value="Baiana">Baiana</option>
+                    <option value="Napolitana">Napolitana</option>
+                    <option value="Milho com Bacon">Milho com Bacon</option>
+                    <option value="Moda da Casa">Moda da Casa</option>
                 </select>
             </div>
 
@@ -150,7 +153,7 @@ function adicionarPizza(nome){
     abrirPizzas()
 }
 
-// 🔥 COMBOS (MODIFICADO PARA MONTAGEM INTELIGENTE)
+// 🔥 COMBOS
 function carregarCombosSemana(){
     fetch("produtos.json")
     .then(res => res.json())
@@ -186,7 +189,7 @@ function carregarCombosSemana(){
     })
 }
 
-// 🧠 COMBO INTELIGENTE (NOVA FUNÇÃO)
+// 🧠 COMBO INTELIGENTE (ATUALIZADO)
 function abrirComboInteligente(nome, preco){
 
     let html = `
@@ -199,13 +202,23 @@ function abrirComboInteligente(nome, preco){
         <select id="pizza1">
             <option>Calabresa</option>
             <option>Frango com Catupiry</option>
-            <option>4 Queijos</option>
+            <option>Portuguesa</option>
+            <option>Marguerita</option>
+            <option>Baiana</option>
+            <option>Napolitana</option>
+            <option>Milho com Bacon</option>
+            <option>Moda da Casa</option>
         </select>
 
         <select id="pizza2">
             <option>Calabresa</option>
             <option>Frango com Catupiry</option>
-            <option>4 Queijos</option>
+            <option>Portuguesa</option>
+            <option>Marguerita</option>
+            <option>Baiana</option>
+            <option>Napolitana</option>
+            <option>Milho com Bacon</option>
+            <option>Moda da Casa</option>
         </select>
 
         <h3>🥤 Refrigerante</h3>
@@ -214,6 +227,14 @@ function abrirComboInteligente(nome, preco){
             <option>Coca-Cola 2L</option>
             <option>Guaraná 2L</option>
             <option>Pepsi 2L</option>
+        </select>
+
+        <h3>🧀 Borda da Pizza</h3>
+
+        <select id="bordaCombo">
+            <option value="0">Normal</option>
+            <option value="10">Catupiry (+10)</option>
+            <option value="10">Cheddar (+10)</option>
         </select>
 
         <button onclick="finalizarCombo('${nome}', ${preco})">
@@ -232,56 +253,12 @@ function finalizarCombo(nome, preco){
     let p1 = document.getElementById("pizza1").value
     let p2 = document.getElementById("pizza2").value
     let refri = document.getElementById("refri").value
+    let borda = document.getElementById("bordaCombo").value
 
-    let descricao = `${nome} | ${p1} + ${p2} | ${refri}`
+    let descricao = `${nome} | ${p1} + ${p2} | ${refri} | Borda ${borda}`
 
     addCarrinho(descricao, preco, "combo")
     mostrarCombos()
-}
-
-// 🧠 RESUMO INTELIGENTE DO CARRINHO
-function resumoInteligente(){
-
-    let totalPizza = 0
-    let totalCombo = 0
-    let totalOutros = 0
-
-    carrinho.forEach(i=>{
-        if(i.tipo === "pizza") totalPizza += i.preco * i.qtd
-        else if(i.tipo === "combo") totalCombo += i.preco * i.qtd
-        else totalOutros += i.preco * i.qtd
-    })
-
-    console.log("🍕 Pizza:", totalPizza)
-    console.log("🍔 Combo:", totalCombo)
-    console.log("📦 Outros:", totalOutros)
-}
-
-// 🛒 ATUALIZAR CARRINHO (COM RESUMO)
-function atualizarCarrinho(){
-
-    let lista = document.getElementById("lista")
-    let total = 0
-
-    if(!lista) return
-
-    lista.innerHTML = ""
-
-    carrinho.forEach((item, index)=>{
-
-        let subtotal = item.preco * item.qtd
-        total += subtotal
-
-        lista.innerHTML += `
-        <div>
-            <b>${item.nome}</b> - R$ ${subtotal.toFixed(2)}
-        </div>
-        `
-    })
-
-    document.getElementById("total").innerText = total.toFixed(2)
-
-    resumoInteligente()
 }
 
 // 🛒 BASE
