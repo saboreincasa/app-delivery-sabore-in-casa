@@ -633,15 +633,17 @@ function abrirMontagemCombo(nome){
 
         let combo = produtos.find(p => p.nome === nome)
 
-        if(!combo){
-            alert("Combo não encontrado")
-            return
-        }
+if(!combo){
+    alert("Combo não encontrado")
+    return
+}
 
-        let bebidas = produtos.filter(p => p.categoria === "bebidas")
+let desc = combo.descricao.toLowerCase() // 👈 COLE EXATAMENTE AQUI
 
-        // 🍕 só combo família tem 2 pizzas
-        let qtdPizzas = desc.includes("família") ? 2 : 1
+let bebidas = produtos.filter(p => p.categoria === "bebidas")
+
+// 🍕 só combo família tem 2 pizzas
+let qtdPizzas = desc.includes("família") ? 2 : 1
 
         // 🥤 combo amigos NÃO tem refri
         let semRefri = desc.includes("amigos")
