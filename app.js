@@ -783,3 +783,68 @@ if(!semRefri){
 
     mostrarCombos()
 }
+// ===============================
+// 🥤 SISTEMA PREMIUM DE BEBIDAS
+// ===============================
+
+function adicionarLinhaBebida(){
+
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
+
+        let bebidas = produtos.filter(p => p.categoria === "bebidas")
+
+        let options = `<option value="">Selecione</option>`
+        bebidas.forEach(b=>{
+            options += `<option value="${b.nome}" data-preco="${b.preco}">
+                ${b.nome} - R$${b.preco.toFixed(2)}
+            </option>`
+        })
+
+        let id = Date.now()
+
+        let linha = `
+        <div id="bebida_${id}" style="
+            display:flex;
+            align-items:center;
+            gap:8px;
+            margin-top:8px;
+        ">
+
+            <select class="bebidaSelect">
+                ${options}
+            </select>
+
+            <button onclick="diminuirBebida(${id})">−</button>
+
+            <span id="qtd_${id}">1</span>
+
+            <button onclick="aumentarBebida(${id})">+</button>
+
+            <button onclick="removerLinhaBebida(${id})">X</button>
+
+        </div>
+        `
+
+        document.getElementById("extrasBebidas")
+        .insertAdjacentHTML("beforeend", linha)
+    })
+}
+
+function aumentarBebida(id){
+    let el = document.getElementById("qtd_" + id)
+    el.innerText = Number(el.innerText) + 1
+}
+
+function diminuirBebida(id){
+    let el = document.getElementById("qtd_" + id)
+    let val = Number(el.innerText)
+    if(val > 1){
+        el.innerText = val - 1
+    }
+}
+
+function removerLinhaBebida(id){
+    document.getElementById("bebida_" + id).remove()
+}
