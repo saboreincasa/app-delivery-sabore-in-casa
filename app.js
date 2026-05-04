@@ -630,6 +630,12 @@ function abrirMontagemCombo(nome){
 
         let combo = produtos.find(p => p.nome === nome)
 
+        // 🔥 SEGURANÇA (EVITA QUEBRAR O BOTÃO)
+        if(!combo){
+            alert("Combo não encontrado!")
+            return
+        }
+
         let html = `
         <div class="montagem-box">
 
@@ -642,9 +648,6 @@ function abrirMontagemCombo(nome){
             <div class="opcoes-pizza">
         `
 
-        // =========================
-        // 🍕 COMBO CASAL
-        // =========================
         if(combo.nome === "Combo Casal"){
 
             html += `
@@ -665,28 +668,21 @@ function abrirMontagemCombo(nome){
             `
         }
 
-        // =========================
-        // 👨‍👩‍👧 COMBO FAMÍLIA (FIXO)
-        // =========================
         else if(combo.nome === "Combo Família"){
 
             html += `
                 <div class="campo">
                     <label>🍕 Pizza 1</label>
-                    <select id="pizza1">
-                        ${gerarOpcoesPizzas()}
-                    </select>
+                    <select id="pizza1">${gerarOpcoesPizzas()}</select>
                 </div>
 
                 <div class="campo">
                     <label>🍕 Pizza 2</label>
-                    <select id="pizza2">
-                        ${gerarOpcoesPizzas()}
-                    </select>
+                    <select id="pizza2">${gerarOpcoesPizzas()}</select>
                 </div>
 
                 <div class="campo">
-                    <label>🥤 Refrigerante 1 (2L)</label>
+                    <label>🥤 Refrigerante 1</label>
                     <select id="refri1">
                         <option value="Coca-Cola 2L">Coca-Cola 2L</option>
                         <option value="Guaraná Antarctica 2L">Guaraná Antarctica 2L</option>
@@ -694,7 +690,7 @@ function abrirMontagemCombo(nome){
                 </div>
 
                 <div class="campo">
-                    <label>🥤 Refrigerante 2 (2L)</label>
+                    <label>🥤 Refrigerante 2</label>
                     <select id="refri2">
                         <option value="Coca-Cola 2L">Coca-Cola 2L</option>
                         <option value="Guaraná Antarctica 2L">Guaraná Antarctica 2L</option>
@@ -712,9 +708,6 @@ function abrirMontagemCombo(nome){
             `
         }
 
-        // =========================
-        // 🍻 COMBO AMIGOS (SEM ESCOLHA BEBIDA)
-        // =========================
         else if(combo.nome === "Combo Amigos"){
 
             html += `
@@ -738,24 +731,19 @@ function abrirMontagemCombo(nome){
             `
         }
 
-        // =========================
-        // 🧍 COMBO SOLTEIRO
-        // =========================
         else if(combo.nome === "Combo Solteiro"){
 
             html += `
                 <div class="campo">
                     <label>🍕 Pizza</label>
-                    <select id="pizza1">
-                        ${gerarOpcoesPizzas()}
-                    </select>
+                    <select id="pizza1">${gerarOpcoesPizzas()}</select>
                 </div>
 
                 <div class="campo">
                     <label>🥤 Lata</label>
                     <select id="refri1">
                         <option value="Coca-Cola Lata">Coca-Cola Lata</option>
-                        <option value="Guaraná Antarctica Lata">Guaraná Lata</option>
+                        <option value="Guaraná Lata">Guaraná Lata</option>
                     </select>
                 </div>
 
@@ -785,7 +773,6 @@ function abrirMontagemCombo(nome){
         document.getElementById("produtos").innerHTML = html
     })
 }
-
 
 // 🍕 LISTA DE PIZZAS
 function gerarOpcoesPizzas(){
