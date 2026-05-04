@@ -252,10 +252,14 @@ function mostrarBanner(){
 
     bannerDiv.style.backgroundImage = `url('${combo.foto}')`
 
-    bannerDiv.onclick = function(){
-        addCarrinho(combo.nome + " - " + combo.descricao, combo.preco, "combo")
-        mostrarToast(combo)
-    }
+   bannerDiv.onclick = function(){
+
+    mostrarToast(combo)
+
+    setTimeout(()=>{
+        abrirMontagemCombo(combo.nome)
+    }, 800)
+}
 
     bannerIndex++
     if(bannerIndex >= banners.length){
