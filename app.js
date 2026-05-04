@@ -722,28 +722,7 @@ if(!semRefri){
     }
 }
 
-html += `
-    </div>
 
-    <div class="campo">
-        <label>🥤 Bebidas Extras (opcional):</label>
-
-        <div id="extrasBebidas"></div>
-
-        <button onclick="adicionarLinhaBebida()" style="
-            margin-top:8px;
-            background:#ff9800;
-            border:none;
-            padding:10px;
-            color:#fff;
-            border-radius:8px;
-            cursor:pointer;
-            font-weight:bold;
-        ">
-            + Adicionar Bebida
-        </button>
-    </div>
-`
          html += `
     </div>
 
