@@ -624,9 +624,48 @@ function selecionarBairro(nome){
 
 function abrirMontagemCombo(nome){
 
+    console.log("Clicou no combo:", nome)
+
     fetch("produtos.json")
-    .then(res => res.json())
+    .then(res => {
+        if(!res.ok){
+            throw new Error("Erro ao carregar produtos.json")
+        }
+        return res.json()
+    })
     .then(produtos => {
+
+        let combo = produtos.find(p => p.nome === nome)
+
+        if(!combo){
+            alert("Combo não encontrado: " + nome)
+            return
+        }
+
+        let html = `
+        <div class="montagem-box">
+            <h2>🎁 ${combo.nome}</h2>
+            <img class="pizza-preview" src="${combo.foto}">
+            <p>${combo.descricao}</p>
+        `
+
+        html += `
+            <button class="btn-montar"
+                onclick="adicionarComboFinal('${combo.nome}', ${combo.preco})">
+                🛒 Adicionar Combo
+            </button>
+
+            <span class="voltar" onclick="mostrarCombos()">⬅ Voltar</span>
+        </div>
+        `
+
+        document.getElementById("produtos").innerHTML = html
+    })
+    .catch(err => {
+        console.error("ERRO COMBO:", err)
+        alert("Erro ao carregar combo")
+    })
+}
 
         let combo = produtos.find(p => p.nome === nome)
 
@@ -835,3 +874,4 @@ function adicionarComboFinal(nome, preco){
 
     mostrarCombos()
 }
+window.abrirMontagemCombo = abrirMontagemCombo
