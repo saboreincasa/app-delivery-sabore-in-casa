@@ -195,7 +195,47 @@ function filtrar(tipo){
 }
 
 // 🔥 COMBOS
+// 🔥 COMBOS
 function carregarCombosSemana(){
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
+
+        let combos = produtos.filter(p => p.categoria === "combos")
+
+        let html = ""
+
+        combos.forEach(c=>{
+
+            // 🔥 TRANSFORMA DESCRIÇÃO EM LINHAS
+            let descricaoFormatada = c.descricao
+                .replaceAll(" + ", "\n")
+                .replaceAll("👉", "\n👉")
+
+            html += `
+            <div class="card destaque">
+                <img src="${c.foto}" onerror="this.src='imagens/sem-imagem.png'">
+
+                <div class="card-content">
+
+                    <h3>${c.nome}</h3>
+
+                    <p>${descricaoFormatada}</p>
+
+                    <p class="preco">R$ ${Number(c.preco).toFixed(2)}</p>
+
+                    <button onclick="addCarrinho('${c.nome} - ${c.descricao}', ${c.preco}, 'combo')">
+                        Adicionar
+                    </button>
+
+                </div>
+            </div>
+            `
+        })
+
+        document.getElementById("combosSemana").innerHTML = html
+    })
+}
     fetch("produtos.json")
     .then(res => res.json())
     .then(produtos => {
