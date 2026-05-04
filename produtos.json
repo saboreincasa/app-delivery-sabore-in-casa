@@ -82,23 +82,65 @@
     "nome": "Coca-Cola",
     "categoria": "bebidas",
     "preco": 16.9,
-    "descricao": "Refrigerante Coca-Cola",
+    "descricao": "Refrigerante Coca-Cola 2L",
     "foto": "imagens/bebidas/coca_cola.png"
   },
   {
     "nome": "Coca-Cola Zero",
     "categoria": "bebidas",
     "preco": 16.9,
-    "descricao": "Refrigerante Coca Zero",
+    "descricao": "Refrigerante Coca-Cola Zero 2L",
     "foto": "imagens/bebidas/coca_zero.png"
   },
+
+  {
+    "nome": "Coca-Cola Zero 350ml",
+    "categoria": "bebidas",
+    "preco": 6.9,
+    "descricao": "Refrigerante Coca-Cola Zero lata 350ml",
+    "foto": "imagens/bebidas/coca_zero_350.png"
+  },
+
   {
     "nome": "Guaraná Antarctica",
     "categoria": "bebidas",
     "preco": 13.9,
-    "descricao": "Refrigerante Guaraná Antarctica",
+    "descricao": "Refrigerante Guaraná Antarctica 2L",
     "foto": "imagens/bebidas/guarana.png"
   },
+
+  {
+    "nome": "Guaraná Antarctica 350ml",
+    "categoria": "bebidas",
+    "preco": 6.9,
+    "descricao": "Refrigerante Guaraná Antarctica lata 350ml",
+    "foto": "imagens/bebidas/guarana_350.png"
+  },
+
+  {
+    "nome": "Fanta Laranja 350ml",
+    "categoria": "bebidas",
+    "preco": 6.9,
+    "descricao": "Refrigerante Fanta Laranja lata 350ml",
+    "foto": "imagens/bebidas/fanta_laranja_350.png"
+  },
+
+  {
+    "nome": "Fanta Laranja 2L",
+    "categoria": "bebidas",
+    "preco": 13.9,
+    "descricao": "Refrigerante Fanta Laranja 2 litros",
+    "foto": "imagens/bebidas/fanta_laranja_2l.png"
+  },
+
+  {
+    "nome": "Sprite 2L",
+    "categoria": "bebidas",
+    "preco": 13.9,
+    "descricao": "Refrigerante Sprite 2 litros",
+    "foto": "imagens/bebidas/sprite_2l.png"
+  },
+
   {
     "nome": "Heineken",
     "categoria": "bebidas",
