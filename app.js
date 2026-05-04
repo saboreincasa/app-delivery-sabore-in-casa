@@ -644,21 +644,21 @@ let bebidas = produtos.filter(p => {
 
     if(p.categoria !== "bebidas") return false
 
-    let nome = p.nome.toLowerCase()
+    let nomeBebida = p.nome.toLowerCase()
 
-    // 🍻 COMBO AMIGOS = TODAS bebidas
+    // 🍻 COMBO AMIGOS = TODAS bebidas liberadas
     if(desc.includes("amigos")){
         return true
     }
 
-    // 🥤 COMBO FAMÍLIA / CASAL = só refri 2L
+    // 🥤 COMBO COM REFRIGERANTE 2L
     if(desc.includes("refrigerante 2l")){
-        return nome.includes("2l")
+        return nomeBebida.includes("2l")
     }
 
-    // 🥫 COMBO COM LATA
+    // 🥫 COMBO COM LATA 350ML
     if(desc.includes("lata") || desc.includes("350ml")){
-        return nome.includes("350") || nome.includes("lata")
+        return nomeBebida.includes("350") || nomeBebida.includes("lata")
     }
 
     return false
