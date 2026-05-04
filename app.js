@@ -210,15 +210,12 @@ function carregarCombosSemana(){
                 <img src="${c.foto}" onerror="this.src='imagens/sem-imagem.png'">
                 <div class="card-content">
                     <h3>${c.nome}</h3>
-                   <p style="display:flex; flex-direction:column; gap:4px;">
-    ${c.descricao
-        .split("+")
-        .map(item => `<span>${item.trim()}</span>`)
-        .join("")}
-</p>
+                    <p style="display:flex; flex-direction:column; gap:4px;">
+                        ${c.descricao.split("+").map(item => `<span>${item.trim()}</span>`).join("")}
+                    </p>
                     <p class="preco">R$ ${Number(c.preco).toFixed(2)}</p>
-                   <button onclick="abrirMontagemCombo('${c.nome}')">
- 🛒 Montar Combo
+                    <button onclick="abrirMontagemCombo('${c.nome}')">
+                        🛒 Montar Combo
                     </button>
                 </div>
             </div>
@@ -226,6 +223,10 @@ function carregarCombosSemana(){
         })
 
         document.getElementById("combosSemana").innerHTML = html
+    })
+    .catch(err => {
+        console.error("ERRO COMBO:", err)
+        alert("Erro ao carregar combo")
     })
 }
 
@@ -276,6 +277,10 @@ function addCarrinho(nome, preco, tipo = "outro"){
 
     atualizarCarrinho()
 }
+
+// (restante do seu código continua igual até o final)
+
+window.abrirMontagemCombo = abrirMontagemCombo
 
 // 📊 CONTADOR FRETE GRÁTIS
 function contarItensFreteGratis(){
