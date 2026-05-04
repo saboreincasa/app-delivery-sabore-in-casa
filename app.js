@@ -724,6 +724,9 @@ html += `
         `
 
         document.getElementById("produtos").innerHTML = html
+        setTimeout(()=>{
+    document.getElementById("produtos").scrollIntoView({behavior:"smooth"})
+},100)
     })
 }
 
