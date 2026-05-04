@@ -640,12 +640,12 @@ function abrirMontagemCombo(nome){
 
         let desc = combo.nome.toLowerCase()
 
-        // 🍕 só combo família tem 2 pizzas
-        let qtdPizzas = desc.includes("família") ? 2 : 1
+        let qtdPizzas = combo.config?.pizzas || 1
+        let qtdRefri = combo.config?.refrigerantes || 0
 
-        // 🥤 combo amigos NÃO tem refri
-        let semRefri = desc.includes("amigos")
+        let semRefri = qtdRefri === 0
 
+        // 🍕 pizzas fixas
         const pizzasOptions = `
             <option value="">Selecione</option>
             <option>Calabresa</option>
@@ -659,21 +659,32 @@ function abrirMontagemCombo(nome){
             <option>Moda da Casa</option>
         `
 
-        const refriOptions = `
-            <option value="">Selecione</option>
-            <option>Coca-Cola</option>
-            <option>Guaraná</option>
-            <option>Fanta Laranja</option>
-            <option>Fanta Uva</option>
-            <option>Sprite</option>
+        // 🧀 borda
+        const bordaOptions = `
+            <option value="0">Normal</option>
+            <option value="10">Catupiry +R$10</option>
+            <option value="10">Cheddar +R$10</option>
         `
+
+        // 🔥 BUSCAR BEBIDAS DO JSON
+        let bebidas = produtos.filter(p => p.categoria === "bebidas")
+
+        let refri2l = bebidas.filter(b => b.nome.includes("2L"))
+        let refri350 = bebidas.filter(b => b.nome.includes("350"))
+
+        let cervejas = bebidas.filter(b =>
+            b.nome.toLowerCase().includes("heineken") ||
+            b.nome.toLowerCase().includes("brahma") ||
+            b.nome.toLowerCase().includes("spaten") ||
+            b.nome.toLowerCase().includes("bohemia")
+        )
 
         let html = `
         <div class="montagem-box">
 
             <h2>🎁 ${combo.nome}</h2>
 
-            <img class="pizza-preview" src="${combo.foto}" onerror="this.src='imagens/sem-imagem.png'">
+            <img class="pizza-preview" src="${combo.foto}">
 
             <div class="opcoes-pizza">
         `
@@ -690,35 +701,76 @@ function abrirMontagemCombo(nome){
             `
         }
 
-// 🧀 borda (visual melhorado)
-html += `
-<div class="campo">
-    <label>Borda:</label>
-    <select id="borda">
-        <option value="0">Normal</option>
-        <option value="10">Catupiry +R$10</option>
-        <option value="10">Cheddar +R$10</option>
-    </select>
-</div>
-`
-
-        // 🥤 refrigerante (exceto amigos)
-// 🥤 refrigerante (Combo Família tem 2)
-if(!semRefri){
-
-    let qtdRefri = desc.includes("família") ? 2 : 1
-
-    for(let i = 1; i <= qtdRefri; i++){
+        // 🧀 borda
         html += `
         <div class="campo">
-            <label>Refrigerante ${i}:</label>
-            <select id="refri${i}">
-                ${refriOptions}
+            <label>Borda:</label>
+            <select id="borda">
+                ${bordaOptions}
             </select>
         </div>
         `
-    }
-}
+
+        // 🥤 REGRAS INTELIGENTES
+
+        if(qtdRefri > 0){
+
+            // 🥤 SOLTEIRO → só 350ml
+            if(qtdPizzas === 1 && qtdRefri === 1){
+
+                html += `
+                <div class="campo">
+                    <label>Refrigerante 350ml:</label>
+                    <select id="refri1">
+                        <option value="">Selecione</option>
+                        ${refri350.map(r => `<option>${r.nome}</option>`).join("")}
+                    </select>
+                </div>
+                `
+            }
+
+            // 🍾 CASAL / FAMÍLIA → só 2L
+            else if(qtdRefri >= 1){
+
+                for(let i=1;i<=qtdRefri;i++){
+                    html += `
+                    <div class="campo">
+                        <label>Refrigerante 2L ${i}:</label>
+                        <select id="refri${i}">
+                            <option value="">Selecione</option>
+                            ${refri2l.map(r => `<option>${r.nome}</option>`).join("")}
+                        </select>
+                    </div>
+                    `
+                }
+            }
+        }
+
+        // 🍻 COMBO AMIGOS → turbo livre
+        if(desc.includes("amigos")){
+
+            html += `
+            <div class="campo">
+                <label>Refrigerante (quantidade):</label>
+                <input type="number" id="qtdRefri" value="0" min="0">
+
+                <select id="refriExtra">
+                    <option value="">Escolher refrigerante</option>
+                    ${bebidas.map(b => `<option>${b.nome}</option>`).join("")}
+                </select>
+            </div>
+
+            <div class="campo">
+                <label>Cerveja (quantidade):</label>
+                <input type="number" id="qtdCerveja" value="0" min="0">
+
+                <select id="cervejaExtra">
+                    <option value="">Escolher cerveja</option>
+                    ${cervejas.map(c => `<option>${c.nome}</option>`).join("")}
+                </select>
+            </div>
+            `
+        }
 
         html += `
             </div>
@@ -734,52 +786,5 @@ if(!semRefri){
         `
 
         document.getElementById("produtos").innerHTML = html
-        setTimeout(()=>{
-    document.getElementById("produtos").scrollIntoView({behavior:"smooth"})
-},100)
     })
-}
-
-
-// 🛒 FINALIZAR COMBO
-function adicionarComboFinal(nome, preco, qtdPizzas, semRefri){
-
-    let extras = ""
-    let total = preco
-
-    // 🍕 pizzas
-    for(let i=1;i<=qtdPizzas;i++){
-        let pizza = document.getElementById(`pizza${i}`)?.value
-        if(pizza){
-            extras += ` | Pizza ${i}: ${pizza}`
-        }
-    }
-
-    // 🧀 borda
-    let borda = document.getElementById("borda")?.value
-    let bordaTexto = document.getElementById("borda")?.selectedOptions[0]?.text
-
-    if(Number(borda) === 10){
-        extras += ` | Borda ${bordaTexto}`
-        total += 10
-    }
-
-  // 🥤 refrigerante (1 ou 2 dependendo do combo)
-if(!semRefri){
-
-    let qtdRefri = qtdPizzas === 2 ? 2 : 1
-
-    for(let i = 1; i <= qtdRefri; i++){
-        let refri = document.getElementById(`refri${i}`)?.value
-        if(refri){
-            extras += ` | Refri ${i}: ${refri}`
-        }
-    }
-}
-
-    let nomeFinal = nome + extras
-
-    addCarrinho(nomeFinal, total, "combo")
-
-    mostrarCombos()
 }
