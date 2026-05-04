@@ -1,54 +1,47 @@
-// ===============================
-// 🛒 CARRINHO GLOBAL
-// ===============================
-let carrinho = [];
+// 🛒 CARRINHO 
+let carrinho = []
 
 // Número do WhatsApp
-const whatsappNumero = "5531983391576";
+const whatsappNumero = "5531983391576"
 
-// ===============================
-// 🚀 INICIALIZAÇÃO
-// ===============================
-window.onload = function () {
-    carregarCombosSemana();
-    iniciarBanner();
-};
-
-// ===============================
-// 🔥 COMBOS VISUAL
-// ===============================
-function esconderCombos() {
-    document.getElementById("combosSemana").innerHTML = "";
-    document.getElementById("tituloCombos").style.display = "none";
+// 🚀 INICIO
+window.onload = function(){
+    carregarCombosSemana()
+    iniciarBanner()
 }
 
-function mostrarCombos() {
-    document.getElementById("tituloCombos").style.display = "block";
-    carregarCombosSemana();
-    document.getElementById("produtos").innerHTML = "";
+// 🔥 ESCONDER COMBOS
+function esconderCombos(){
+    document.getElementById("combosSemana").innerHTML = ""
+    document.getElementById("tituloCombos").style.display = "none"
 }
 
-// ===============================
+// 🔥 MOSTRAR COMBOS
+function mostrarCombos(){
+    document.getElementById("tituloCombos").style.display = "block"
+    carregarCombosSemana()
+    document.getElementById("produtos").innerHTML = ""
+}
+
 // 🍕 PIZZAS
-// ===============================
-function abrirPizzas() {
-    esconderCombos();
+function abrirPizzas(){
+    esconderCombos()
 
-    let html = "<h2>🍕 Escolha sua Pizza</h2>";
+    let html = "<h2>🍕 Escolha sua Pizza</h2>"
 
     const pizzas = [
-        { nome: "Calabresa", desc: "Molho, mussarela, calabresa, cebola", img: "imagens/pizzas/calabresa.png" },
-        { nome: "Frango com Catupiry", desc: "Molho, frango desfiado, catupiry", img: "imagens/pizzas/franco_com_catupiry.png" },
-        { nome: "4 Queijos", desc: "Mussarela, provolone, parmesão, catupiry", img: "imagens/pizzas/quatro_queijos.png" },
-        { nome: "Portuguesa", desc: "Presunto, ovo, cebola, ervilha", img: "imagens/pizzas/portuguesa.png" },
-        { nome: "Marguerita", desc: "Mussarela, tomate, manjericão", img: "imagens/pizzas/marguerita.png" },
-        { nome: "Baiana", desc: "Calabresa, ovo, pimenta, cebola", img: "imagens/pizzas/baiana.png" },
-        { nome: "Napolitana", desc: "Mussarela, tomate, parmesão", img: "imagens/pizzas/napolitana.png" },
-        { nome: "Milho com Bacon", desc: "Milho, bacon, mussarela", img: "imagens/pizzas/milho_com_bacon.png" },
-        { nome: "Moda da Casa", desc: "Frango, bacon, milho, catupiry", img: "imagens/pizzas/moda_da_casa.png" }
-    ];
+        {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola", img:"imagens/pizzas/calabresa.png"},
+        {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"imagens/pizzas/franco_com_catupiry.png"},
+        {nome:"4 Queijos",desc:"Mussarela, provolone, parmesão, catupiry", img:"imagens/pizzas/quatro_queijos.png"},
+        {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha", img:"imagens/pizzas/portuguesa.png"},
+        {nome:"Marguerita",desc:"Mussarela, tomate, manjericão", img:"imagens/pizzas/marguerita.png"},
+        {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola", img:"imagens/pizzas/baiana.png"},
+        {nome:"Napolitana",desc:"Mussarela, tomate, parmesão", img:"imagens/pizzas/napolitana.png"},
+        {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela", img:"imagens/pizzas/milho_com_bacon.png"},
+        {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry", img:"imagens/pizzas/moda_da_casa.png"}
+    ]
 
-    pizzas.forEach(p => {
+    pizzas.forEach(p=>{
         html += `
         <div class="card pizza-card">
             <img src="${p.img}" onerror="this.src='imagens/pizza-padrao.png'">
@@ -59,28 +52,27 @@ function abrirPizzas() {
                     🍕 Montar Pizza
                 </button>
             </div>
-        </div>`;
-    });
+        </div>
+        `
+    })
 
-    document.getElementById("produtos").innerHTML = html;
+    document.getElementById("produtos").innerHTML = html
 }
 
-// ===============================
-// 🍕 MONTAGEM PIZZA
-// ===============================
-function abrirMontagemPizza(nome) {
+// 🍕 MONTAGEM
+function abrirMontagemPizza(nome){
 
-    const imagens = {
-        "Calabresa": "imagens/pizzas/calabresa.png",
-        "Frango com Catupiry": "imagens/pizzas/franco_com_catupiry.png",
-        "4 Queijos": "imagens/pizzas/quatro_queijos.png",
-        "Portuguesa": "imagens/pizzas/portuguesa.png",
-        "Marguerita": "imagens/pizzas/marguerita.png",
-        "Baiana": "imagens/pizzas/baiana.png",
-        "Napolitana": "imagens/pizzas/napolitana.png",
-        "Milho com Bacon": "imagens/pizzas/milho_com_bacon.png",
-        "Moda da Casa": "imagens/pizzas/moda_da_casa.png"
-    };
+    let imagens = {
+        "Calabresa":"imagens/pizzas/calabresa.png",
+        "Frango com Catupiry":"imagens/pizzas/franco_com_catupiry.png",
+        "4 Queijos":"imagens/pizzas/quatro_queijos.png",
+        "Portuguesa":"imagens/pizzas/portuguesa.png",
+        "Marguerita":"imagens/pizzas/marguerita.png",
+        "Baiana":"imagens/pizzas/baiana.png",
+        "Napolitana":"imagens/pizzas/napolitana.png",
+        "Milho com Bacon":"imagens/pizzas/milho_com_bacon.png",
+        "Moda da Casa":"imagens/pizzas/moda_da_casa.png"
+    }
 
     let html = `
     <div class="montagem-box">
@@ -133,198 +125,109 @@ function abrirMontagemPizza(nome) {
 
         <span class="voltar" onclick="abrirPizzas()">⬅ Voltar</span>
 
-    </div>`;
+    </div>
+    `
 
-    document.getElementById("produtos").innerHTML = html;
+    document.getElementById("produtos").innerHTML = html
 }
 
-// ===============================
 // 🍕 ADICIONAR PIZZA
-// ===============================
-function adicionarPizza(nome) {
+function adicionarPizza(nome){
 
-    let tamanho = document.getElementById("tamanho").value;
-    let bordaEl = document.getElementById("borda");
-    let borda = Number(bordaEl.value);
-    let bordaTexto = bordaEl.options[bordaEl.selectedIndex].text;
-    let meio = document.getElementById("meio").value;
+    let tamanho = document.getElementById("tamanho").value
+    let bordaSelect = document.getElementById("borda")
+    let borda = Number(bordaSelect.value)
+    let bordaTexto = bordaSelect.options[bordaSelect.selectedIndex].text
+    let meio = document.getElementById("meio").value
 
-    let preco = tamanho == 25 ? 42.90 : tamanho == 30 ? 54.90 : 69.90;
-    preco += borda;
+    let preco = 0
+    if(tamanho == 25) preco = 42.90
+    if(tamanho == 30) preco = 54.90
+    if(tamanho == 35) preco = 69.90
 
-    let nomeFinal = `${nome} ${tamanho}cm`;
+    preco += borda
 
-    if (meio) nomeFinal += " / Meio a Meio com " + meio;
-    if (borda !== 0) nomeFinal += " / " + bordaTexto;
+    let nomeFinal = `${nome} ${tamanho}cm`
 
-    addCarrinho(nomeFinal, preco, "pizza");
-    abrirPizzas();
+    if(meio) nomeFinal += " / Meio a Meio com " + meio
+    if(borda != 0) nomeFinal += " / Borda " + bordaTexto
+
+    addCarrinho(nomeFinal, preco, "pizza")
+    abrirPizzas()
 }
 
-// ===============================
-// 🔥 FILTRO PRODUTOS
-// ===============================
-function filtrar(tipo) {
+// 🔥 FILTRO
+function filtrar(tipo){
 
-    if (tipo === "combo") {
-        mostrarCombos();
-        return;
+    if(tipo === "combo"){
+        mostrarCombos()
+        return
     } else {
-        esconderCombos();
+        esconderCombos()
     }
 
     fetch("produtos.json")
-        .then(res => res.json())
-        .then(produtos => {
+    .then(res => res.json())
+    .then(produtos => {
 
-            let filtrados = produtos.filter(p => p.categoria === tipo);
+        let filtrados = produtos.filter(p => p.categoria === tipo)
 
-            let html = "";
+        let html = ""
 
-            filtrados.forEach(p => {
-                html += `
-                <div class="card">
-                    <img src="${p.foto}" onerror="this.src='imagens/sem-imagem.png'">
-                    <div class="card-content">
-                        <h3>${p.nome}</h3>
-                        <p>${p.descricao}</p>
-                        <p class="preco">R$ ${Number(p.preco).toFixed(2)}</p>
-                        <button onclick="addCarrinho('${p.nome}', ${p.preco}, '${tipo}')">
-                            Adicionar
-                        </button>
-                    </div>
-                </div>`;
-            });
-
-            document.getElementById("produtos").innerHTML = html;
+        filtrados.forEach(p=>{
+            html += `
+            <div class="card">
+                <img src="${p.foto}" onerror="this.src='imagens/sem-imagem.png'">
+                <div class="card-content">
+                    <h3>${p.nome}</h3>
+                    <p>${p.descricao}</p>
+                    <p class="preco">R$ ${Number(p.preco).toFixed(2)}</p>
+                    <button onclick="addCarrinho('${p.nome}', ${p.preco}, '${tipo}')">
+                        Adicionar
+                    </button>
+                </div>
+            </div>
+            `
         })
-        .catch(err => console.error("Erro ao filtrar:", err));
+
+        document.getElementById("produtos").innerHTML = html
+    })
 }
 
-// ===============================
 // 🔥 COMBOS
-// ===============================
-function carregarCombosSemana() {
-
+function carregarCombosSemana(){
     fetch("produtos.json")
-        .then(res => res.json())
-        .then(produtos => {
+    .then(res => res.json())
+    .then(produtos => {
 
-            let combos = produtos.filter(p => p.categoria === "combos");
+        let combos = produtos.filter(p => p.categoria === "combos")
 
-            let html = "";
+        let html = ""
 
-            combos.forEach(c => {
-                html += `
-                <div class="card destaque">
-                    <img src="${c.foto}" onerror="this.src='imagens/sem-imagem.png'">
-                    <div class="card-content">
-                        <h3>${c.nome}</h3>
-                        <p>${c.descricao}</p>
-                        <p class="preco">R$ ${Number(c.preco).toFixed(2)}</p>
-                        <button onclick="abrirMontagemCombo('${c.nome}', ${c.preco})">
-                            🍕 Montar Combo
-                        </button>
-                    </div>
-                </div>`;
-            });
-
-            document.getElementById("combosSemana").innerHTML = html;
+        combos.forEach(c=>{
+            html += `
+            <div class="card destaque">
+                <img src="${c.foto}" onerror="this.src='imagens/sem-imagem.png'">
+                <div class="card-content">
+                    <h3>${c.nome}</h3>
+                   <p style="display:flex; flex-direction:column; gap:4px;">
+    ${c.descricao
+        .split("+")
+        .map(item => `<span>${item.trim()}</span>`)
+        .join("")}
+</p>
+                    <p class="preco">R$ ${Number(c.preco).toFixed(2)}</p>
+                    <button onclick="addCarrinho('${c.nome} - ${c.descricao}', ${c.preco}, 'combo')">
+                        Adicionar
+                    </button>
+                </div>
+            </div>
+            `
         })
-        .catch(err => console.error("Erro combos:", err));
+
+        document.getElementById("combosSemana").innerHTML = html
+    })
 }
-
-// ===============================
-// 🍕 MONTAGEM COMBO (CORRIGIDO)
-// ===============================
-function abrirMontagemCombo(nome, preco) {
-
-    fetch("produtos.json")
-        .then(res => res.json())
-        .then(produtos => {
-
-            let refrigerantes = produtos.filter(p => p.categoria === "bebidas");
-
-            let refriOptions = refrigerantes.map(r =>
-                `<option value="${r.nome}">${r.nome}</option>`
-            ).join("");
-
-            let html = `
-            <div class="montagem-box">
-
-                <h2>🔥 ${nome}</h2>
-
-                <h3>🍕 Pizza 1</h3>
-                <select id="pizza1"></select>
-
-                <h3>🍕 Pizza 2</h3>
-                <select id="pizza2"></select>
-
-                <h3>🧀 Borda (+10)</h3>
-                <select id="bordaCombo">
-                    <option value="0">Normal</option>
-                    <option value="10">Catupiry</option>
-                    <option value="10">Cheddar</option>
-                </select>
-
-                <h3>🥤 Refrigerante 1</h3>
-                <select id="refri1">${refriOptions}</select>
-
-                <h3>🥤 Refrigerante 2</h3>
-                <select id="refri2">${refriOptions}</select>
-
-                <button onclick="finalizarCombo('${nome}', ${preco})">
-                    🛒 Adicionar ao Carrinho
-                </button>
-
-                <span onclick="mostrarCombos()">⬅ Voltar</span>
-
-            </div>`;
-
-            document.getElementById("produtos").innerHTML = html;
-        });
-}
-
-// ===============================
-// 🍕 FINALIZAR COMBO (FIX CRÍTICO)
-// ===============================
-function finalizarCombo(nome, preco) {
-
-    let pizza1 = document.getElementById("pizza1").value;
-    let pizza2 = document.getElementById("pizza2").value;
-    let borda = Number(document.getElementById("bordaCombo").value);
-    let refri1 = document.getElementById("refri1").value;
-    let refri2 = document.getElementById("refri2").value;
-
-    let nomeFinal = `${nome} | ${pizza1} + ${pizza2} | ${refri1} + ${refri2}`;
-
-    addCarrinho(nomeFinal, preco + borda, "combo");
-    mostrarCombos();
-}
-
-// ===============================
-// 🛒 CARRINHO
-// ===============================
-function addCarrinho(nome, preco, tipo = "outro") {
-
-    let item = carrinho.find(i => i.nome === nome);
-
-    if (item) item.qtd++;
-    else carrinho.push({ nome, preco, qtd: 1, tipo });
-
-    atualizarCarrinho();
-}
-
-// ===============================
-// 📦 RESTANTE (mantido igual)
-// ===============================
-function atualizarCarrinho(){/* seu código igual */}
-function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho(); }
-function diminuir(i){ carrinho[i].qtd--; if(carrinho[i].qtd<=0)carrinho.splice(i,1); atualizarCarrinho(); }
-function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho(); }
-function enviarPedido(){/* seu código igual */}
-function mostrarToast(combo){/* seu código igual */}
-function abrirMapa(){ window.open("https://www.google.com/maps?q=Rua+Maria+de+Lourdes+da+Cruz+378+Belo+Horizonte"); }
 
 // 🎬 BANNER
 let banners = [
@@ -712,84 +615,4 @@ function selecionarBairro(nome){
 
     document.getElementById("freteInfo").innerHTML =
     "🚚 Frete calculado: R$ " + frete
-}
-let refriCombo = []
-
-let refriCombo = []
-
-function abrirMontagemCombo(nome, preco){
-
-    refriCombo = []
-
-    fetch("produtos.json")
-    .then(res => res.json())
-    .then(produtos => {
-
-        let refrigerantes = produtos.filter(p => p.categoria === "bebidas")
-
-        let refriOptions = refrigerantes.map(r => `
-            <option value="${r.nome}">
-                ${r.nome}
-            </option>
-        `).join("")
-
-        let html = `
-        <div class="montagem-box">
-
-            <h2>🔥 ${nome}</h2>
-
-            <h3>🍕 Pizza 1</h3>
-            <select id="pizza1">
-                <option>Calabresa</option>
-                <option>Frango com Catupiry</option>
-                <option>4 Queijos</option>
-                <option>Portuguesa</option>
-                <option>Marguerita</option>
-                <option>Baiana</option>
-                <option>Napolitana</option>
-                <option>Milho com Bacon</option>
-                <option>Moda da Casa</option>
-            </select>
-
-            <h3>🍕 Pizza 2</h3>
-            <select id="pizza2">
-                <option>Calabresa</option>
-                <option>Frango com Catupiry</option>
-                <option>4 Queijos</option>
-                <option>Portuguesa</option>
-                <option>Marguerita</option>
-                <option>Baiana</option>
-                <option>Napolitana</option>
-                <option>Milho com Bacon</option>
-                <option>Moda da Casa</option>
-            </select>
-
-            <h3>🧀 Borda (+10)</h3>
-            <select id="bordaCombo">
-                <option value="0">Normal</option>
-                <option value="10">Catupiry (+10)</option>
-                <option value="10">Cheddar (+10)</option>
-            </select>
-
-            <h3>🥤 Refrigerante 1</h3>
-            <select id="refri1">
-                ${refriOptions}
-            </select>
-
-            <h3>🥤 Refrigerante 2</h3>
-            <select id="refri2">
-                ${refriOptions}
-            </select>
-
-            <button class="btn-montar" onclick="finalizarCombo('${nome}', ${preco})">
-                🛒 Adicionar ao Carrinho
-            </button>
-
-            <span class="voltar" onclick="mostrarCombos()">⬅ Voltar</span>
-
-        </div>
-        `
-
-        document.getElementById("produtos").innerHTML = html
-    })
 }
