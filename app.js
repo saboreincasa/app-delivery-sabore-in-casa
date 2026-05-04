@@ -27,12 +27,18 @@ function mostrarCombos(){
 function abrirPizzas(){
     esconderCombos()
 
-    let html = "<h2>🍕 Escolha sua Pizza</h2>"
+    let html = `
+    <div style="text-align:center; margin-bottom:20px;">
+        <img src="imagens/pizzas/pizza-cabecalho.png" 
+        style="width:120px; max-width:40%; filter:drop-shadow(0px 4px 6px rgba(0,0,0,0.5));">
+
+        <h2 style="margin-top:10px;">🍕 Escolha sua Pizza</h2>
+    </div>
+    `
 
     const pizzas = [
         {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola", img:"imagens/pizzas/calabresa.png"},
         {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry", img:"imagens/pizzas/franco_com_catupiry.png"},
-        {nome:"4 Queijos",desc:"Mussarela, provolone, parmesão, catupiry", img:"imagens/pizzas/quatro_queijos.png"},
         {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha", img:"imagens/pizzas/portuguesa.png"},
         {nome:"Marguerita",desc:"Mussarela, tomate, manjericão", img:"imagens/pizzas/marguerita.png"},
         {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola", img:"imagens/pizzas/baiana.png"},
@@ -48,9 +54,11 @@ function abrirPizzas(){
             <div class="card-content">
                 <h3>${p.nome}</h3>
                 <p>${p.desc}</p>
-                <button onclick="abrirMontagemPizza('${p.nome}')">
+
+                <button class="btn-montar" onclick="abrirMontagemPizza('${p.nome}')">
                     🍕 Montar Pizza
                 </button>
+
             </div>
         </div>
         `
@@ -65,7 +73,6 @@ function abrirMontagemPizza(nome){
     let imagens = {
         "Calabresa":"imagens/pizzas/calabresa.png",
         "Frango com Catupiry":"imagens/pizzas/franco_com_catupiry.png",
-        "4 Queijos":"imagens/pizzas/quatro_queijos.png",
         "Portuguesa":"imagens/pizzas/portuguesa.png",
         "Marguerita":"imagens/pizzas/marguerita.png",
         "Baiana":"imagens/pizzas/baiana.png",
@@ -96,8 +103,8 @@ function abrirMontagemPizza(nome){
                 <label>Borda:</label>
                 <select id="borda">
                     <option value="0">Normal</option>
-                    <option value="10">Catupiry (+10)</option>
-                    <option value="10">Cheddar (+10)</option>
+                    <option value="10">Catupiry</option>
+                    <option value="10">Cheddar</option>
                 </select>
             </div>
 
@@ -176,7 +183,7 @@ function carregarCombosSemana(){
 
                     <p class="preco">R$ ${Number(c.preco).toFixed(2)}</p>
 
-                    <button onclick="abrirComboInteligente('${c.nome}', ${c.preco})">
+                    <button class="btn-montar" onclick="abrirComboInteligente('${c.nome}', ${c.preco})">
                         🛒 Montar Combo
                     </button>
 
@@ -187,78 +194,6 @@ function carregarCombosSemana(){
 
         document.getElementById("combosSemana").innerHTML = html
     })
-}
-
-// 🧠 COMBO INTELIGENTE (ATUALIZADO)
-function abrirComboInteligente(nome, preco){
-
-    let html = `
-    <div class="montagem-box">
-
-        <h2>🔥 ${nome}</h2>
-
-        <h3>🍕 Escolha 2 sabores de pizza</h3>
-
-        <select id="pizza1">
-            <option>Calabresa</option>
-            <option>Frango com Catupiry</option>
-            <option>Portuguesa</option>
-            <option>Marguerita</option>
-            <option>Baiana</option>
-            <option>Napolitana</option>
-            <option>Milho com Bacon</option>
-            <option>Moda da Casa</option>
-        </select>
-
-        <select id="pizza2">
-            <option>Calabresa</option>
-            <option>Frango com Catupiry</option>
-            <option>Portuguesa</option>
-            <option>Marguerita</option>
-            <option>Baiana</option>
-            <option>Napolitana</option>
-            <option>Milho com Bacon</option>
-            <option>Moda da Casa</option>
-        </select>
-
-        <h3>🥤 Refrigerante</h3>
-
-        <select id="refri">
-            <option>Coca-Cola 2L</option>
-            <option>Guaraná 2L</option>
-            <option>Pepsi 2L</option>
-        </select>
-
-        <h3>🧀 Borda da Pizza</h3>
-
-        <select id="bordaCombo">
-            <option value="0">Normal</option>
-            <option value="10">Catupiry (+10)</option>
-            <option value="10">Cheddar (+10)</option>
-        </select>
-
-        <button onclick="finalizarCombo('${nome}', ${preco})">
-            🛒 Adicionar Combo
-        </button>
-
-    </div>
-    `
-
-    document.getElementById("produtos").innerHTML = html
-}
-
-// 🛒 FINALIZAR COMBO
-function finalizarCombo(nome, preco){
-
-    let p1 = document.getElementById("pizza1").value
-    let p2 = document.getElementById("pizza2").value
-    let refri = document.getElementById("refri").value
-    let borda = document.getElementById("bordaCombo").value
-
-    let descricao = `${nome} | ${p1} + ${p2} | ${refri} | Borda ${borda}`
-
-    addCarrinho(descricao, preco, "combo")
-    mostrarCombos()
 }
 
 // 🛒 BASE
