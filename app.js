@@ -731,18 +731,19 @@ if(!semRefri){
 
         <div id="extrasBebidas"></div>
 
-        <button onclick="adicionarLinhaBebida()" style="
-            margin-top:8px;
-            background:#ff9800;
-            border:none;
-            padding:10px;
-            color:#fff;
-            border-radius:8px;
-            cursor:pointer;
-            font-weight:bold;
-        ">
-            + Adicionar Bebida
-        </button>
+       <button onclick="adicionarLinhaBebida()" style="
+    margin:12px auto 0 auto;
+    display:block;
+    background:#ff9800;
+    border:none;
+    padding:10px 20px;
+    color:#fff;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+">
+    + Adicionar Bebida
+</button>
     </div>
 
     <button class="btn-montar"
