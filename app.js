@@ -217,8 +217,8 @@ function carregarCombosSemana(){
         .join("")}
 </p>
                     <p class="preco">R$ ${Number(c.preco).toFixed(2)}</p>
-                    <button onclick="addCarrinho('${c.nome} - ${c.descricao}', ${c.preco}, 'combo')">
-                        Adicionar
+                   <button onclick="abrirMontagemCombo('${c.nome}')">
+ 🛒 Montar Combo
                     </button>
                 </div>
             </div>
