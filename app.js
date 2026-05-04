@@ -618,9 +618,8 @@ function selecionarBairro(nome){
 }
 
 // 🔥 ===============================
-// 🎁 SISTEMA DE COMBOS PROFISSIONAL
+// 🎁 SISTEMA DE COMBOS PROFISSIONAL (CORRIGIDO)
 // ===============================
-
 
 function abrirMontagemCombo(nome){
 
@@ -644,8 +643,11 @@ function abrirMontagemCombo(nome){
 
         let html = `
         <div class="montagem-box">
+
             <h2>🎁 ${combo.nome}</h2>
-            <img class="pizza-preview" src="${combo.foto}">
+
+            <img class="pizza-preview" src="${combo.foto}" onerror="this.src='imagens/sem-imagem.png'">
+
             <p>${combo.descricao}</p>
         `
 
@@ -667,169 +669,6 @@ function abrirMontagemCombo(nome){
     })
 }
 
-        let combo = produtos.find(p => p.nome === nome)
-
-        // 🔥 SEGURANÇA (EVITA QUEBRAR O BOTÃO)
-        if(!combo){
-            alert("Combo não encontrado!")
-            return
-        }
-
-        let html = `
-        <div class="montagem-box">
-
-            <h2>🎁 ${combo.nome}</h2>
-
-            <img class="pizza-preview" src="${combo.foto}" onerror="this.src='imagens/sem-imagem.png'">
-
-            <p>${combo.descricao}</p>
-
-            <div class="opcoes-pizza">
-        `
-
-        if(combo.nome === "Combo Casal"){
-
-            html += `
-                <div class="campo">
-                    <label>🍕 Pizza</label>
-                    <select id="pizza1">
-                        ${gerarOpcoesPizzas()}
-                    </select>
-                </div>
-
-                <div class="campo">
-                    <label>🥤 Refrigerante 2L</label>
-                    <select id="refri1">
-                        <option value="Coca-Cola 2L">Coca-Cola 2L</option>
-                        <option value="Guaraná Antarctica 2L">Guaraná Antarctica 2L</option>
-                    </select>
-                </div>
-            `
-        }
-
-        else if(combo.nome === "Combo Família"){
-
-            html += `
-                <div class="campo">
-                    <label>🍕 Pizza 1</label>
-                    <select id="pizza1">${gerarOpcoesPizzas()}</select>
-                </div>
-
-                <div class="campo">
-                    <label>🍕 Pizza 2</label>
-                    <select id="pizza2">${gerarOpcoesPizzas()}</select>
-                </div>
-
-                <div class="campo">
-                    <label>🥤 Refrigerante 1</label>
-                    <select id="refri1">
-                        <option value="Coca-Cola 2L">Coca-Cola 2L</option>
-                        <option value="Guaraná Antarctica 2L">Guaraná Antarctica 2L</option>
-                    </select>
-                </div>
-
-                <div class="campo">
-                    <label>🥤 Refrigerante 2</label>
-                    <select id="refri2">
-                        <option value="Coca-Cola 2L">Coca-Cola 2L</option>
-                        <option value="Guaraná Antarctica 2L">Guaraná Antarctica 2L</option>
-                    </select>
-                </div>
-
-                <div class="campo">
-                    <label>🧀 Borda</label>
-                    <select id="borda">
-                        <option value="0">Normal</option>
-                        <option value="10">Catupiry</option>
-                        <option value="10">Cheddar</option>
-                    </select>
-                </div>
-            `
-        }
-
-        else if(combo.nome === "Combo Amigos"){
-
-            html += `
-                <div class="campo">
-                    <label>🍕 Pizza</label>
-                    <select id="pizza1">
-                        ${gerarOpcoesPizzas()}
-                    </select>
-                </div>
-
-                <div class="campo">
-                    <label>🧀 Borda</label>
-                    <select id="borda">
-                        <option value="0">Normal</option>
-                        <option value="10">Catupiry</option>
-                        <option value="10">Cheddar</option>
-                    </select>
-                </div>
-
-                <p>🍺 Incluso: 6 Heineken + 6 Brahma</p>
-            `
-        }
-
-        else if(combo.nome === "Combo Solteiro"){
-
-            html += `
-                <div class="campo">
-                    <label>🍕 Pizza</label>
-                    <select id="pizza1">${gerarOpcoesPizzas()}</select>
-                </div>
-
-                <div class="campo">
-                    <label>🥤 Lata</label>
-                    <select id="refri1">
-                        <option value="Coca-Cola Lata">Coca-Cola Lata</option>
-                        <option value="Guaraná Lata">Guaraná Lata</option>
-                    </select>
-                </div>
-
-                <div class="campo">
-                    <label>🧀 Borda</label>
-                    <select id="borda">
-                        <option value="0">Normal</option>
-                        <option value="10">Catupiry</option>
-                        <option value="10">Cheddar</option>
-                    </select>
-                </div>
-            `
-        }
-
-        html += `
-            </div>
-
-            <button class="btn-montar" onclick="adicionarComboFinal('${combo.nome}', ${combo.preco})">
-                🛒 Adicionar Combo
-            </button>
-
-            <span class="voltar" onclick="mostrarCombos()">⬅ Voltar</span>
-
-        </div>
-        `
-
-        document.getElementById("produtos").innerHTML = html
-    })
-}
-
-// 🍕 LISTA DE PIZZAS
-function gerarOpcoesPizzas(){
-
-    const pizzas = [
-        "Calabresa",
-        "Frango com Catupiry",
-        "Portuguesa",
-        "Marguerita",
-        "Baiana",
-        "Napolitana",
-        "Milho com Bacon",
-        "Moda da Casa"
-    ]
-
-    return pizzas.map(p => `<option value="${p}">${p}</option>`).join("")
-}
-
 
 // 🛒 FINALIZAR COMBO
 function adicionarComboFinal(nome, preco){
@@ -846,15 +685,17 @@ function adicionarComboFinal(nome, preco){
 
     let bebida = ""
 
-    // 🔥 CASO FAMÍLIA
     if(refri1 && refri2){
         bebida = `${refri1} + ${refri2}`
-    }
-    else if(refri1){
+    } else if(refri1){
         bebida = refri1
     }
 
-    let nomeFinal = `${nome} - ${pizza1 || ""}`
+    let nomeFinal = `${nome}`
+
+    if(pizza1){
+        nomeFinal += ` - ${pizza1}`
+    }
 
     if(pizza2){
         nomeFinal += ` + ${pizza2}`
@@ -874,4 +715,7 @@ function adicionarComboFinal(nome, preco){
 
     mostrarCombos()
 }
+
+
+// 🔗 EXPORT GLOBAL (IMPORTANTE)
 window.abrirMontagemCombo = abrirMontagemCombo
