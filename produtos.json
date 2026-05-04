@@ -2,57 +2,78 @@
   {
     "nome": "Combo Casal",
     "categoria": "combos",
-    "preco": 99.90,
+    "preco": 99.9,
     "descricao": "🍕 1 Pizza Gigante 35cm (massa integral) + 🥤 Refrigerante 2L 👉 Ideal para dividir e economizar!",
-    "foto": "imagens/combos/combo-casal.png"
+    "foto": "imagens/combos/combo-casal.png",
+    "config": {
+      "pizzas": 1,
+      "refrigerantes": 1,
+      "borda": true
+    }
   },
   {
     "nome": "Combo Solteiro",
     "categoria": "combos",
-    "preco": 54.90,
+    "preco": 54.9,
     "descricao": "🍕 Pizza 25cm (massa integral) + 🥤 Coca-Cola 350ml 👉 Perfeito pra matar a fome sem gastar muito!",
-    "foto": "imagens/combos/combo-solteiro.png"
+    "foto": "imagens/combos/combo-solteiro.png",
+    "config": {
+      "pizzas": 1,
+      "refrigerantes": 1,
+      "borda": false
+    }
   },
   {
     "nome": "Combo Família",
     "categoria": "combos",
-    "preco": 149.90,
+    "preco": 149.9,
     "descricao": "🔥 2 Pizzas Gigantes 35cm (massa integral) + 🥤🥤 2 Refrigerantes 2L 👉 Melhor custo-benefício pra família!",
-    "foto": "imagens/combos/combo-familia.png"
+    "foto": "imagens/combos/combo-familia.png",
+    "config": {
+      "pizzas": 2,
+      "refrigerantes": 2,
+      "borda": true
+    }
   },
   {
     "nome": "Combo Amigos",
     "categoria": "combos",
-    "preco": 169.90,
+    "preco": 169.9,
     "descricao": "🍕 Pizza Gigante 35cm (massa integral) + 🍺 6 Heinekens + 🍺 6 Brahmas 👉 Perfeito pra resenha!",
-    "foto": "imagens/combos/combo-amigos.png"
+    "foto": "imagens/combos/combo-amigos.png",
+    "config": {
+      "pizzas": 1,
+      "refrigerantes": 0,
+      "bebidas": 12,
+      "borda": false
+    }
   },
 
   {
     "nome": "Batata Frita Crocante",
     "categoria": "snacks",
-    "preco": 36.90,
+    "preco": 36.9,
     "descricao": "Porção de batata frita crocante",
     "foto": "imagens/snaks/batata-frita.png"
   },
   {
     "nome": "Nuggets de Frango",
     "categoria": "snacks",
-    "preco": 38.90,
+    "preco": 38.9,
     "descricao": "10 nuggets crocantes",
     "foto": "imagens/snaks/nuggets-frango.png"
   },
   {
     "nome": "Halls",
     "categoria": "snacks",
-    "preco": 6.90,
+    "preco": 6.9,
     "descricao": "Bala refrescante",
     "foto": "imagens/snaks/halls.png"
   },
   {
     "nome": "Gulão",
     "categoria": "snacks",
-    "preco": 6.90,
+    "preco": 6.9,
     "descricao": "Gulão",
     "foto": "imagens/snaks/gulao.png"
   },
@@ -60,49 +81,49 @@
   {
     "nome": "Coca-Cola",
     "categoria": "bebidas",
-    "preco": 16.90,
+    "preco": 16.9,
     "descricao": "Refrigerante Coca-Cola",
     "foto": "imagens/bebidas/coca_cola.png"
   },
   {
     "nome": "Coca-Cola Zero",
     "categoria": "bebidas",
-    "preco": 16.90,
+    "preco": 16.9,
     "descricao": "Refrigerante Coca Zero",
     "foto": "imagens/bebidas/coca_zero.png"
   },
   {
     "nome": "Guaraná Antarctica",
     "categoria": "bebidas",
-    "preco": 13.90,
+    "preco": 13.9,
     "descricao": "Refrigerante Guaraná Antarctica",
     "foto": "imagens/bebidas/guarana.png"
   },
   {
     "nome": "Heineken",
     "categoria": "bebidas",
-    "preco": 11.90,
+    "preco": 11.9,
     "descricao": "Cerveja Heineken lata",
     "foto": "imagens/bebidas/heineken.png"
   },
   {
     "nome": "Brahma",
     "categoria": "bebidas",
-    "preco": 8.90,
+    "preco": 8.9,
     "descricao": "Cerveja Brahma lata",
     "foto": "imagens/bebidas/brahma.png"
   },
   {
     "nome": "Spaten",
     "categoria": "bebidas",
-    "preco": 8.90,
+    "preco": 8.9,
     "descricao": "Cerveja Spaten lata",
     "foto": "imagens/bebidas/spaten.png"
   },
   {
     "nome": "Bohemia",
     "categoria": "bebidas",
-    "preco": 8.90,
+    "preco": 8.9,
     "descricao": "Cerveja Bohemia lata",
     "foto": "imagens/bebidas/bohemia.png"
   }
