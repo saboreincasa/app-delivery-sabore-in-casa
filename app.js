@@ -686,16 +686,17 @@ function abrirMontagemCombo(nome){
             `
         }
 
-        // 🧀 borda (todos combos)
-        html += `
-        <div class="campo">
-            <label>Borda (+R$10):</label>
-            <select id="borda">
-                <option value="0">Normal</option>
-                <option value="10">Catupiry</option>
-                <option value="10">Cheddar</option>
-            </select>
-        </div>
+      // 🧀 borda (visual melhorado)
+html += `
+<div class="campo">
+    <label>Borda:</label>
+    <select id="borda">
+        <option value="0">Normal</option>
+        <option value="10">Catupiry +R$10</option>
+        <option value="10">Cheddar +R$10</option>
+    </select>
+</div>
+`
         `
 
         // 🥤 refrigerante (exceto amigos)
