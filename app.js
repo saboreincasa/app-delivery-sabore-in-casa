@@ -619,72 +619,81 @@ function selecionarBairro(nome){
 }
 let refriCombo = []
 
+let refriCombo = []
+
 function abrirMontagemCombo(nome, preco){
 
     refriCombo = []
 
-    let html = `
-    <div class="montagem-box">
+    fetch("produtos.json")
+    .then(res => res.json())
+    .then(produtos => {
 
-        <h2>🔥 ${nome}</h2>
+        let refrigerantes = produtos.filter(p => p.categoria === "bebidas")
 
-        <h3>🍕 Pizza 1</h3>
-        <select id="pizza1">
-            <option>Calabresa</option>
-            <option>Frango com Catupiry</option>
-            <option>4 Queijos</option>
-            <option>Portuguesa</option>
-            <option>Marguerita</option>
-            <option>Baiana</option>
-            <option>Napolitana</option>
-            <option>Milho com Bacon</option>
-            <option>Moda da Casa</option>
-        </select>
+        let refriOptions = refrigerantes.map(r => `
+            <option value="${r.nome}">
+                ${r.nome}
+            </option>
+        `).join("")
 
-        <h3>🍕 Pizza 2</h3>
-        <select id="pizza2">
-            <option>Calabresa</option>
-            <option>Frango com Catupiry</option>
-            <option>4 Queijos</option>
-            <option>Portuguesa</option>
-            <option>Marguerita</option>
-            <option>Baiana</option>
-            <option>Napolitana</option>
-            <option>Milho com Bacon</option>
-            <option>Moda da Casa</option>
-        </select>
+        let html = `
+        <div class="montagem-box">
 
-        <h3>🧀 Borda (+10)</h3>
-        <select id="bordaCombo">
-            <option value="0">Normal</option>
-            <option value="10">Catupiry (+10)</option>
-            <option value="10">Cheddar (+10)</option>
-        </select>
+            <h2>🔥 ${nome}</h2>
 
-        <h3>🥤 Refrigerante 1</h3>
-        <select id="refri1">
-            <option>Coca-Cola</option>
-            <option>Coca Zero</option>
-            <option>Guaraná Antártica</option>
-            <option>Pepsi</option>
-        </select>
+            <h3>🍕 Pizza 1</h3>
+            <select id="pizza1">
+                <option>Calabresa</option>
+                <option>Frango com Catupiry</option>
+                <option>4 Queijos</option>
+                <option>Portuguesa</option>
+                <option>Marguerita</option>
+                <option>Baiana</option>
+                <option>Napolitana</option>
+                <option>Milho com Bacon</option>
+                <option>Moda da Casa</option>
+            </select>
 
-        <h3>🥤 Refrigerante 2</h3>
-        <select id="refri2">
-            <option>Coca-Cola</option>
-            <option>Coca Zero</option>
-            <option>Guaraná Antártica</option>
-            <option>Pepsi</option>
-        </select>
+            <h3>🍕 Pizza 2</h3>
+            <select id="pizza2">
+                <option>Calabresa</option>
+                <option>Frango com Catupiry</option>
+                <option>4 Queijos</option>
+                <option>Portuguesa</option>
+                <option>Marguerita</option>
+                <option>Baiana</option>
+                <option>Napolitana</option>
+                <option>Milho com Bacon</option>
+                <option>Moda da Casa</option>
+            </select>
 
-        <button class="btn-montar" onclick="finalizarCombo('${nome}', ${preco})">
-            🛒 Adicionar ao Carrinho
-        </button>
+            <h3>🧀 Borda (+10)</h3>
+            <select id="bordaCombo">
+                <option value="0">Normal</option>
+                <option value="10">Catupiry (+10)</option>
+                <option value="10">Cheddar (+10)</option>
+            </select>
 
-        <span class="voltar" onclick="mostrarCombos()">⬅ Voltar</span>
+            <h3>🥤 Refrigerante 1</h3>
+            <select id="refri1">
+                ${refriOptions}
+            </select>
 
-    </div>
-    `
+            <h3>🥤 Refrigerante 2</h3>
+            <select id="refri2">
+                ${refriOptions}
+            </select>
 
-    document.getElementById("produtos").innerHTML = html
+            <button class="btn-montar" onclick="finalizarCombo('${nome}', ${preco})">
+                🛒 Adicionar ao Carrinho
+            </button>
+
+            <span class="voltar" onclick="mostrarCombos()">⬅ Voltar</span>
+
+        </div>
+        `
+
+        document.getElementById("produtos").innerHTML = html
+    })
 }
