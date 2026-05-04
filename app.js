@@ -210,7 +210,12 @@ function carregarCombosSemana(){
                 <img src="${c.foto}" onerror="this.src='imagens/sem-imagem.png'">
                 <div class="card-content">
                     <h3>${c.nome}</h3>
-                    <p>${c.descricao}</p>
+                   <p style="display:flex; flex-direction:column; gap:4px;">
+    ${c.descricao
+        .split("+")
+        .map(item => `<span>${item.trim()}</span>`)
+        .join("")}
+</p>
                     <p class="preco">R$ ${Number(c.preco).toFixed(2)}</p>
                     <button onclick="addCarrinho('${c.nome} - ${c.descricao}', ${c.preco}, 'combo')">
                         Adicionar
