@@ -699,16 +699,22 @@ html += `
 `
 
         // 🥤 refrigerante (exceto amigos)
-        if(!semRefri){
-            html += `
-            <div class="campo">
-                <label>Refrigerante:</label>
-                <select id="refri1">
-                    ${refriOptions}
-                </select>
-            </div>
-            `
-        }
+// 🥤 refrigerante (Combo Família tem 2)
+if(!semRefri){
+
+    let qtdRefri = desc.includes("família") ? 2 : 1
+
+    for(let i = 1; i <= qtdRefri; i++){
+        html += `
+        <div class="campo">
+            <label>Refrigerante ${i}:</label>
+            <select id="refri${i}">
+                ${refriOptions}
+            </select>
+        </div>
+        `
+    }
+}
 
         html += `
             </div>
