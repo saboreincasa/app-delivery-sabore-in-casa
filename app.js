@@ -361,10 +361,15 @@ function scrollCarrinho(){
 // 📦 ENVIAR PEDIDO
 function enviarPedido(){
 
-    if(carrinho.length === 0){
-        alert("Seu carrinho está vazio!")
-        return
-    }
+   if(!nomeCliente){
+    let campo = document.getElementById("nomeCliente")
+
+    campo.style.border = "2px solid red"
+    campo.placeholder = "Digite seu nome aqui 👈"
+    campo.focus()
+
+    return
+}
 
  
 
