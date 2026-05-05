@@ -336,14 +336,26 @@ function atualizarCarrinho(){
 
     let info = document.getElementById("infoFrete")
     if(info){
-        let itens = contarItensFreteGratis()
-        let falta = 5 - itens
+     let itens = contarItensFreteGratis()
+let falta = 5 - itens
 
-        if(itens >= 5){
-            info.innerHTML = "🎉 FRETE GRÁTIS ATIVADO!"
-        } else {
-            info.innerHTML = `🚚 Faltam ${falta} item(s) para FRETE GRÁTIS`
-        }
+if(itens >= 5){
+    msg += `\n\n🎉 *FRETE GRÁTIS ATIVADO!* 🚚🔥`
+    msg += `\nVocê atingiu a promoção dos 5 pedidos!`
+} else {
+
+    msg += `\n\n🚚 *Promoção ativa:*`
+    msg += `\nPeça 5 pizzas ou combos e ganhe *FRETE GRÁTIS!*`
+
+    msg += `\n👉 Você já tem *${itens} item(s)* válido(s)`
+
+    if(falta === 1){
+        msg += `\n🔥 Falta só *1 item* pra liberar o frete grátis!`
+    } else if(falta <= 3){
+        msg += `\n⚡ Faltam apenas *${falta} itens* pra ganhar o frete grátis!`
+        msg += `\n💡 Dica: adicione mais uma pizza ou combo 😉`
+    } else {
+        msg += `\nFaltam ${falta} itens para frete grátis`
     }
 }
 
