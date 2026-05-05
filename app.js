@@ -356,24 +356,29 @@ if(info){
         `
     }
 }
-    msg += `\nVocê atingiu a promoção dos 5 pedidos!`
-} else {
+let info = document.getElementById("infoFrete")
+if(info){
 
-    msg += `\n\n🚚 *Promoção ativa:*`
-    msg += `\nPeça 5 pizzas ou combos e ganhe *FRETE GRÁTIS!*`
+    let itens = contarItensFreteGratis()
+    let falta = 5 - itens
 
-    msg += `\n👉 Você já tem *${itens} item(s)* válido(s)`
-
-    if(falta === 1){
-        msg += `\n🔥 Falta só *1 item* pra liberar o frete grátis!`
-    } else if(falta <= 3){
-        msg += `\n⚡ Faltam apenas *${falta} itens* pra ganhar o frete grátis!`
-        msg += `\n💡 Dica: adicione mais uma pizza ou combo 😉`
+    if(itens >= 5){
+        info.innerHTML = `
+        🎉 <b>FRETE GRÁTIS ATIVADO!</b> 🚚🔥<br>
+        Você atingiu a promoção!
+        `
     } else {
-        msg += `\nFaltam ${falta} itens para frete grátis`
+
+        info.innerHTML = `
+        🚚 <b>Promoção ativa:</b><br>
+        Peça 5 pizzas ou combos e ganhe <b>FRETE GRÁTIS</b><br><br>
+
+        👉 Você tem <b>${itens}</b> item(s)<br>
+        Falta <b>${falta}</b> para liberar
+        `
     }
 }
-
+}
 function aumentar(i){ carrinho[i].qtd++; atualizarCarrinho() }
 function diminuir(i){ carrinho[i].qtd--; if(carrinho[i].qtd<=0) carrinho.splice(i,1); atualizarCarrinho() }
 function removerItem(i){ carrinho.splice(i,1); atualizarCarrinho() }
