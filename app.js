@@ -970,3 +970,86 @@ function diminuirBebida(id){
 function removerLinhaBebida(id){
     document.getElementById("bebida_" + id).remove()
 }
+function enviarPedido(){
+
+    let nomeCliente = document.getElementById("nomeCliente")?.value
+
+    // 👤 se não tiver nome, abre um aviso bonito (sem alert)
+    if(!nomeCliente || nomeCliente.trim() === ""){
+
+        let campo = document.getElementById("nomeCliente")
+
+        campo.style.border = "2px solid red"
+        campo.placeholder = "Digite seu nome primeiro 👈"
+        campo.focus()
+
+        return
+    }
+
+    // 🔁 SEU CÓDIGO CONTINUA NORMAL A PARTIR DAQUI
+
+    // 🔢 GERAR NÚMERO DO PEDIDO
+    numeroPedido++
+    localStorage.setItem("numeroPedido", numeroPedido)
+
+    let numeroFormatado = numeroPedido.toString().padStart(2, "0")
+
+    // 📍 ENDEREÇO
+    let rua = document.getElementById("rua")?.value || ""
+    let numero = document.getElementById("numero")?.value || ""
+    let bairro = document.getElementById("bairroSelecionado")?.value || ""
+    let complemento = document.getElementById("complemento")?.value || ""
+
+    let enderecoCompleto = `${rua}, Nº ${numero} - ${bairro}`
+    if(complemento) enderecoCompleto += ` (${complemento})`
+
+    // 💳 PAGAMENTO
+    let pagamento = document.getElementById("pagamento")?.value || "Não informado"
+    let troco = document.getElementById("troco")?.value || "-"
+
+    // 🚚 FRETE
+    let frete = calcularFretePorBairro(bairro)
+
+    // 💰 TOTAL
+    let total = Number(document.getElementById("total")?.innerText || 0)
+
+    // 🧾 MENSAGEM
+    let msg = `🍕 *SABORE IN CASA* 🍕\n`
+    msg += `📦 *Pedido Nº ${numeroFormatado}*\n\n`
+
+    msg += `👤 *Cliente:* ${nomeCliente}\n\n`
+    msg += "🛒 *ITENS:*\n"
+
+    carrinho.forEach(item=>{
+        msg += `• ${item.qtd}x ${item.nome}\n`
+    })
+
+    msg += "\n━━━━━━━━━━━━━━\n"
+
+    let itens = contarItensFreteGratis()
+
+    if(itens >= 5){
+        msg += "🎉 *FRETE GRÁTIS ATIVADO*\n"
+        frete = 0
+    } else {
+        msg += `🚚 Faltam ${5 - itens} item(s) para frete grátis\n`
+    }
+
+    msg += `\n💰 Subtotal: R$${total.toFixed(2)}`
+    msg += `\n🚚 Frete: R$${frete.toFixed(2)}`
+
+    let totalFinal = total + frete
+
+    msg += `\n💵 *TOTAL: R$${totalFinal.toFixed(2)}*\n`
+
+    msg += `\n📍 ${enderecoCompleto}\n`
+    msg += `💳 ${pagamento}\n`
+
+    if(pagamento === "Dinheiro"){
+        msg += `💵 Troco: R$${troco}\n`
+    }
+
+    let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
+
+    window.location.href = url
+}
