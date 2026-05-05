@@ -1,9 +1,6 @@
 // 🛒 CARRINHO 
 let carrinho = []
 
-// 🔢 CONTADOR DE PEDIDOS
-let numeroPedido = Number(localStorage.getItem("numeroPedido")) || 0
-
 // Número do WhatsApp
 const whatsappNumero = "5531983391576"
 
@@ -278,16 +275,12 @@ function addCarrinho(nome, preco, tipo = "outro"){
     if(item){
         item.qtd++
     } else {
-        carrinho.push({
-            nome,
-            preco: Number(preco),
-            qtd: 1,
-            tipo
-        })
+        carrinho.push({nome, preco: Number(preco), qtd:1, tipo})
     }
 
     atualizarCarrinho()
 }
+
 // 📊 CONTADOR FRETE GRÁTIS
 function contarItensFreteGratis(){
 
@@ -339,10 +332,7 @@ function atualizarCarrinho(){
     })
 
     if(contador) contador.innerText = carrinho.length
-    let totalEl = document.getElementById("total")
-if(totalEl){
-    totalEl.innerText = total.toFixed(2)
-}
+    document.getElementById("total").innerText = total.toFixed(2)
 
     let info = document.getElementById("infoFrete")
     if(info){
@@ -352,7 +342,7 @@ if(totalEl){
         if(itens >= 5){
             info.innerHTML = "🎉 FRETE GRÁTIS ATIVADO!"
         } else {
-           info.innerHTML = `🚚 Faltam ${falta} item(s) para ganhar FRETE GRÁTIS`
+            info.innerHTML = `🚚 Faltam ${falta} item(s) para FRETE GRÁTIS`
         }
     }
 }
@@ -365,100 +355,44 @@ function scrollCarrinho(){
     document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
 }
 
-  // 🔢 GERAR NÚMERO DO PEDIDO
-numeroPedido++
-localStorage.setItem("numeroPedido", numeroPedido)
+// 📦 ENVIAR PEDIDO
+function enviarPedido(){
 
-// FORMATO 01, 02, 03...
-let numeroFormatado = numeroPedido.toString().padStart(2, "0")
+    if(carrinho.length === 0){
+        alert("Seu carrinho está vazio!")
+        return
+    }
 
-// 👤 NOME
-let nomeCliente = document.getElementById("nomeCliente")?.value
+    let enderecoEl = document.getElementById("enderecoCliente")
+    let pagamentoEl = document.getElementById("pagamento")
+    let trocoEl = document.getElementById("troco")
 
-if(!nomeCliente){
-    alert("Por favor, informe seu nome!")
-    return
-}
+    let endereco = enderecoEl ? enderecoEl.value : "Não informado"
+    let pagamento = pagamentoEl ? pagamentoEl.value : "Não informado"
+    let troco = trocoEl ? trocoEl.value : "-"
 
-// 📍 ENDEREÇO COMPLETO
-let rua = document.getElementById("enderecoCliente")?.value || ""
-let numero = document.getElementById("numeroCliente")?.value || ""
-let bairro = document.getElementById("bairroSelecionado")?.value || ""
-let complemento = document.getElementById("complementoCliente")?.value || ""
+    let msg = "🛒 *NOVO PEDIDO*\n\n"
 
-let enderecoCompleto = `${rua}, Nº ${numero} - ${bairro}`
-if(complemento) enderecoCompleto += ` (${complemento})`
+    carrinho.forEach(item=>{
+        msg += `🍕 ${item.qtd}x ${item.nome} - R$${item.preco.toFixed(2)}\n`
+    })
 
-// 💳 PAGAMENTO
-let pagamento = document.getElementById("pagamento")?.value || "Não informado"
-let troco = document.getElementById("troco")?.value || "-"
+    let itens = contarItensFreteGratis()
 
-// 🚚 FRETE
-let frete = calcularFretePorBairro(bairro)
+    if(itens >= 5){
+        msg += `\n🎉 FRETE GRÁTIS ATIVADO`
+    } else {
+        msg += `\n🚚 Faltam ${5 - itens} item(s) para FRETE GRÁTIS`
+    }
 
-// 💰 TOTAL
-let total = Number(document.getElementById("total")?.innerText || 0)
+    let totalEl = document.getElementById("total")
+    let total = totalEl ? totalEl.innerText : "0.00"
 
-// 🧾 MENSAGEM NOVA PROFISSIONAL
-let msg = `🍕 *SABORE IN CASA* 🍕\n`
-msg += `📦 *Pedido Nº ${numeroFormatado}*\n`
-msg += "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg += `\n\n💰 Total: R$${total}`
+    msg += `\n📍 Endereço: ${endereco}`
+    msg += `\n💳 Pagamento: ${pagamento}`
+    msg += `\n💵 Troco: ${troco}`
 
-msg += `👤 *Cliente:* ${nomeCliente}\n\n`
-
-msg += "🛒 *ITENS:*\n"
-
-carrinho.forEach(item=>{
-    msg += `• ${item.qtd}x ${item.nome}\n`
-})
-
-msg += "\n━━━━━━━━━━━━━━━━━━━━━━━\n"
-
-let itens = contarItensFreteGratis()
-
-let pedidosFrete = Number(localStorage.getItem("pedidosFrete")) || 0
-
-pedidosFrete++
-localStorage.setItem("pedidosFrete", pedidosFrete)
-
-let pedidosRestantes = 5 - pedidosFrete
-
-if(pedidosFrete >= 5){
-    msg += "🎉 *FRETE GRÁTIS ATIVADO*\n"
-    frete = 0
-
-    // zera ciclo
-    pedidosFrete = 0
-    localStorage.setItem("pedidosFrete", 0)
-
-} else {
-    msg += `🚚 Faltam ${pedidosRestantes} pedido(s) para frete grátis\n`
-}
-
-msg += "\n💰 *RESUMO*\n"
-msg += `Subtotal: R$${total.toFixed(2)}\n`
-msg += `Frete: R$${frete.toFixed(2)}\n`
-
-let totalFinal = total + frete
-
-msg += `*TOTAL: R$${totalFinal.toFixed(2)}*\n`
-
-msg += "\n📍 *ENTREGA*\n"
-msg += `${enderecoCompleto}\n`
-
-msg += "\n💳 *PAGAMENTO*\n"
-msg += `${pagamento}\n`
-
-if(pagamento === "Dinheiro"){
-    msg += `💵 Troco para: R$${troco}\n`
-}
-
-if(pagamento.toLowerCase().includes("pix")){
-    msg += "\n📲 *PIX*\n"
-    msg += "👉 Enviar comprovante para agilizar\n"
-}
-
-msg += "\n🙏 Obrigado pela preferência!"
     let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
 
     window.location.href = url
@@ -973,87 +907,4 @@ function diminuirBebida(id){
 
 function removerLinhaBebida(id){
     document.getElementById("bebida_" + id).remove()
-}
-function enviarPedido(){
-
-    let nomeCliente = document.getElementById("nomeCliente")?.value
-
-    // 👤 se não tiver nome, abre um aviso bonito (sem alert)
-    if(!nomeCliente || nomeCliente.trim() === ""){
-
-        let campo = document.getElementById("nomeCliente")
-
-        campo.style.border = "2px solid red"
-        campo.placeholder = "Digite seu nome primeiro 👈"
-        campo.focus()
-
-        return
-    }
-
-    // 🔁 SEU CÓDIGO CONTINUA NORMAL A PARTIR DAQUI
-
-    // 🔢 GERAR NÚMERO DO PEDIDO
-    numeroPedido++
-    localStorage.setItem("numeroPedido", numeroPedido)
-
-    let numeroFormatado = numeroPedido.toString().padStart(2, "0")
-
-    // 📍 ENDEREÇO
-    let rua = document.getElementById("rua")?.value || ""
-    let numero = document.getElementById("numero")?.value || ""
-    let bairro = document.getElementById("bairroSelecionado")?.value || ""
-    let complemento = document.getElementById("complemento")?.value || ""
-
-    let enderecoCompleto = `${rua}, Nº ${numero} - ${bairro}`
-    if(complemento) enderecoCompleto += ` (${complemento})`
-
-    // 💳 PAGAMENTO
-    let pagamento = document.getElementById("pagamento")?.value || "Não informado"
-    let troco = document.getElementById("troco")?.value || "-"
-
-    // 🚚 FRETE
-    let frete = calcularFretePorBairro(bairro)
-
-    // 💰 TOTAL
-    let total = Number(document.getElementById("total")?.innerText || 0)
-
-    // 🧾 MENSAGEM
-    let msg = `🍕 *SABORE IN CASA* 🍕\n`
-    msg += `📦 *Pedido Nº ${numeroFormatado}*\n\n`
-
-    msg += `👤 *Cliente:* ${nomeCliente}\n\n`
-    msg += "🛒 *ITENS:*\n"
-
-    carrinho.forEach(item=>{
-        msg += `• ${item.qtd}x ${item.nome}\n`
-    })
-
-    msg += "\n━━━━━━━━━━━━━━\n"
-
-    let itens = contarItensFreteGratis()
-
-    if(itens >= 5){
-        msg += "🎉 *FRETE GRÁTIS ATIVADO*\n"
-        frete = 0
-    } else {
-        msg += `🚚 Faltam ${5 - itens} item(s) para frete grátis\n`
-    }
-
-    msg += `\n💰 Subtotal: R$${total.toFixed(2)}`
-    msg += `\n🚚 Frete: R$${frete.toFixed(2)}`
-
-    let totalFinal = total + frete
-
-    msg += `\n💵 *TOTAL: R$${totalFinal.toFixed(2)}*\n`
-
-    msg += `\n📍 ${enderecoCompleto}\n`
-    msg += `💳 ${pagamento}\n`
-
-    if(pagamento === "Dinheiro"){
-        msg += `💵 Troco: R$${troco}\n`
-    }
-
-    let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
-
-    window.location.href = url
 }
