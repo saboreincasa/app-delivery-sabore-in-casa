@@ -11,6 +11,23 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
+
+/* 🔥 INPUTS PROFISSIONAIS */
+input, select{
+    width:100%;
+    padding:12px;
+    margin-top:6px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    outline:none;
+    font-size:14px;
+}
+
+input:focus, select:focus{
+    border:2px solid #ff6600;
+}
+
+/* 🔥 TOAST */
 #toast {
     visibility: hidden;
     min-width: 250px;
@@ -28,13 +45,14 @@
     opacity: 0;
     transition: opacity 0.5s, bottom 0.5s;
 }
+
 #toast.show {
     visibility: visible;
     opacity: 1;
     bottom: 80px;
 }
 
-/* 🔥 NOVO ESTILO DO ENDEREÇO */
+/* 🔥 ENDEREÇO */
 .endereco-box{
     display:flex;
     flex-direction:column;
@@ -42,16 +60,28 @@
     margin-bottom:10px;
 }
 
-.endereco-box input{
-    padding:10px;
-    border-radius:6px;
-    border:1px solid #ccc;
-}
-
 #bairroSelecionado{
     background:#f5f5f5;
     cursor:pointer;
 }
+
+/* 🔥 BOTÃO FINAL */
+.enviar{
+    background:#ff6600;
+    color:#fff;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    width:100%;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+.enviar:hover{
+    opacity:0.9;
+}
+
 </style>
 
 </head>
@@ -94,8 +124,9 @@ Bairro Mantiqueira – Belo Horizonte
 
 <div id="produtos"></div>
 
-<!-- 🔥 CARRINHO ATUALIZADO -->
+<!-- 🔥 CARRINHO -->
 <div id="carrinho">
+
 <h2>🛒 Carrinho</h2>
 
 <div id="lista"></div>
@@ -104,7 +135,11 @@ Bairro Mantiqueira – Belo Horizonte
 Total + entrega: R$ <span id="total">0.00</span>
 </div>
 
-<!-- 📍 ENDEREÇO NOVO -->
+<!-- 👤 NOME (CORREÇÃO IMPORTANTE) -->
+<h3>👤 Seu nome</h3>
+<input id="nomeCliente" placeholder="Digite seu nome">
+
+<!-- 📍 ENDEREÇO -->
 <div class="endereco-box">
 
 <h3>📍 Endereço de entrega</h3>
@@ -121,6 +156,7 @@ Total + entrega: R$ <span id="total">0.00</span>
 
 </div>
 
+<!-- 💳 PAGAMENTO -->
 <select id="pagamento">
 <option>PIX</option>
 <option>Dinheiro</option>
@@ -129,6 +165,7 @@ Total + entrega: R$ <span id="total">0.00</span>
 
 <input id="troco" placeholder="Troco para quanto?">
 
+<!-- 🚀 BOTÃO FINAL -->
 <button class="enviar" onclick="enviarPedido()">
 Enviar pedido no WhatsApp
 </button>
@@ -137,15 +174,18 @@ Enviar pedido no WhatsApp
 
 </div>
 
+<!-- 🛒 CARRINHO FLUTUANTE -->
 <div id="botaoCarrinho" onclick="scrollCarrinho()">
 🛒 <div id="contador">0</div>
 </div>
 
+<!-- 🔻 FOOTER -->
 <footer>
 © Sabore In Casa<br>
 Desenvolvido por <b>Carlos Henrique</b>
 </footer>
 
+<!-- 🔥 TOAST -->
 <div id="toast"></div>
 
 <script src="app.js"></script>
