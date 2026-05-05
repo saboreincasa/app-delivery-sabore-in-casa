@@ -419,7 +419,9 @@ msg += "\n━━━━━━━━━━━━━━━━━━━━━━━\
 
 let itens = contarItensFreteGratis()
 
-ipedidosFrete++
+let pedidosFrete = Number(localStorage.getItem("pedidosFrete")) || 0
+
+pedidosFrete++
 localStorage.setItem("pedidosFrete", pedidosFrete)
 
 let pedidosRestantes = 5 - pedidosFrete
