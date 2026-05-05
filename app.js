@@ -365,9 +365,6 @@ function scrollCarrinho(){
     document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
 }
 
-// 📦 ENVIAR PEDIDO
-function enviarPedido(){
-
   // 🔢 GERAR NÚMERO DO PEDIDO
 numeroPedido++
 localStorage.setItem("numeroPedido", numeroPedido)
