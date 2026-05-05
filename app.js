@@ -273,8 +273,7 @@ function mostrarBanner(){
 // 🛒 CARRINHO
 function addCarrinho(nome, preco, tipo = "outro"){
 
-    let item = carrinho.find(i => i.nome === nome)
-
+   let pedidosFrete = Number(localStorage.getItem("pedidosFrete")) || 0
     if(item){
         item.qtd++
     } else {
@@ -424,11 +423,21 @@ msg += "\n━━━━━━━━━━━━━━━━━━━━━━━\
 
 let itens = contarItensFreteGratis()
 
-if(itens >= 5){
+ipedidosFrete++
+localStorage.setItem("pedidosFrete", pedidosFrete)
+
+let pedidosRestantes = 5 - pedidosFrete
+
+if(pedidosFrete >= 5){
     msg += "🎉 *FRETE GRÁTIS ATIVADO*\n"
     frete = 0
+
+    // zera ciclo
+    pedidosFrete = 0
+    localStorage.setItem("pedidosFrete", 0)
+
 } else {
-    msg += `🚚 Faltam ${5 - itens} item(s) para frete grátis\n`
+    msg += `🚚 Faltam ${pedidosRestantes} pedido(s) para frete grátis\n`
 }
 
 msg += "\n💰 *RESUMO*\n"
