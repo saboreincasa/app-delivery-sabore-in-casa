@@ -273,16 +273,21 @@ function mostrarBanner(){
 // 🛒 CARRINHO
 function addCarrinho(nome, preco, tipo = "outro"){
 
-   let pedidosFrete = Number(localStorage.getItem("pedidosFrete")) || 0
+    let item = carrinho.find(i => i.nome === nome)
+
     if(item){
         item.qtd++
     } else {
-        carrinho.push({nome, preco: Number(preco), qtd:1, tipo})
+        carrinho.push({
+            nome,
+            preco: Number(preco),
+            qtd: 1,
+            tipo
+        })
     }
 
     atualizarCarrinho()
 }
-
 // 📊 CONTADOR FRETE GRÁTIS
 function contarItensFreteGratis(){
 
