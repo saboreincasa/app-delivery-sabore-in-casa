@@ -1,6 +1,9 @@
 // 🛒 CARRINHO 
 let carrinho = []
 
+// 🔢 CONTADOR DE PEDIDOS
+let numeroPedido = Number(localStorage.getItem("numeroPedido")) || 0
+
 // Número do WhatsApp
 const whatsappNumero = "5531983391576"
 
@@ -363,13 +366,7 @@ function enviarPedido(){
         return
     }
 
-    let enderecoEl = document.getElementById("enderecoCliente")
-    let pagamentoEl = document.getElementById("pagamento")
-    let trocoEl = document.getElementById("troco")
-
-    let endereco = enderecoEl ? enderecoEl.value : "Não informado"
-    let pagamento = pagamentoEl ? pagamentoEl.value : "Não informado"
-    let troco = trocoEl ? trocoEl.value : "-"
+ 
 
   // 🔢 GERAR NÚMERO DO PEDIDO
 numeroPedido++
