@@ -334,7 +334,10 @@ function atualizarCarrinho(){
     })
 
     if(contador) contador.innerText = carrinho.length
-    document.getElementById("total").innerText = total.toFixed(2)
+    let totalEl = document.getElementById("total")
+if(totalEl){
+    totalEl.innerText = total.toFixed(2)
+}
 
     let info = document.getElementById("infoFrete")
     if(info){
@@ -344,7 +347,7 @@ function atualizarCarrinho(){
         if(itens >= 5){
             info.innerHTML = "🎉 FRETE GRÁTIS ATIVADO!"
         } else {
-            info.innerHTML = `🚚 Faltam ${falta} item(s) para FRETE GRÁTIS`
+           info.innerHTML = `🚚 Faltam ${falta} item(s) para ganhar FRETE GRÁTIS`
         }
     }
 }
@@ -359,18 +362,6 @@ function scrollCarrinho(){
 
 // 📦 ENVIAR PEDIDO
 function enviarPedido(){
-
-   if(!nomeCliente){
-    let campo = document.getElementById("nomeCliente")
-
-    campo.style.border = "2px solid red"
-    campo.placeholder = "Digite seu nome aqui 👈"
-    campo.focus()
-
-    return
-}
-
- 
 
   // 🔢 GERAR NÚMERO DO PEDIDO
 numeroPedido++
