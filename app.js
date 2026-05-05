@@ -334,13 +334,28 @@ function atualizarCarrinho(){
     if(contador) contador.innerText = carrinho.length
     document.getElementById("total").innerText = total.toFixed(2)
 
-    let info = document.getElementById("infoFrete")
-    if(info){
-     let itens = contarItensFreteGratis()
-let falta = 5 - itens
+   let info = document.getElementById("infoFrete")
+if(info){
 
-if(itens >= 5){
-    msg += `\n\n🎉 *FRETE GRÁTIS ATIVADO!* 🚚🔥`
+    let itens = contarItensFreteGratis()
+    let falta = 5 - itens
+
+    if(itens >= 5){
+        info.innerHTML = `
+        🎉 <b>FRETE GRÁTIS ATIVADO!</b> 🚚🔥<br>
+        Você atingiu a promoção!
+        `
+    } else {
+
+        info.innerHTML = `
+        🚚 <b>Promoção ativa:</b><br>
+        Peça 5 pizzas ou combos e ganhe <b>FRETE GRÁTIS</b><br><br>
+
+        👉 Você tem <b>${itens}</b> item(s)<br>
+        Falta <b>${falta}</b> para liberar
+        `
+    }
+}
     msg += `\nVocê atingiu a promoção dos 5 pedidos!`
 } else {
 
