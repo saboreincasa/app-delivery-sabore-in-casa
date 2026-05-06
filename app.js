@@ -1,38 +1,3 @@
-// 👤 SISTEMA DE CLIENTE AUTOMÁTICO
-let clienteAtual = null
-
-function identificarCliente(){
-
-    let telefone = whatsappNumero
-    let nome = document.getElementById("nomeCliente")?.value || ""
-
-    if(!nome) return null
-
-    let clientes = JSON.parse(localStorage.getItem("clientes")) || {}
-
-    // 🔑 chave única
-    let idCliente = telefone + "_" + nome.toLowerCase().trim()
-
-    // 🆕 se não existe, cria cliente
-    if(!clientes[idCliente]){
-        clientes[idCliente] = {
-            nome: nome,
-            telefone: telefone,
-            pedidos: 0,
-            ultimoPedido: null
-        }
-    }
-
-    // 📊 atualiza dados
-    clientes[idCliente].pedidos += 1
-    clientes[idCliente].ultimoPedido = new Date().toISOString()
-
-    localStorage.setItem("clientes", JSON.stringify(clientes))
-
-    clienteAtual = clientes[idCliente]
-
-    return clienteAtual
-}
 // 🛒 CARRINHO 
 let carrinho = []
 
@@ -1007,14 +972,10 @@ function removerLinhaBebida(id){
 }
 function enviarPedido(){
 
-   let nomeCliente = document.getElementById("nomeCliente")?.value || ""
+    let nomeCliente = document.getElementById("nomeCliente")?.value
 
-if(nomeCliente.trim() === ""){
-    return
-}
-
-// 👤 IDENTIFICA CLIENTE AUTOMATICAMENTE
-let cliente = identificarCliente()
+    // 👤 se não tiver nome, abre um aviso bonito (sem alert)
+    if(!nomeCliente || nomeCliente.trim() === ""){
 
         let campo = document.getElementById("nomeCliente")
 
@@ -1055,8 +1016,7 @@ let cliente = identificarCliente()
     // 🧾 MENSAGEM
     let msg = `🍕 *SABORE IN CASA* 🍕\n`
     msg += `📦 *Pedido Nº ${numeroFormatado}*\n\n`
-msg += `👤 Cliente: ${cliente.nome}\n`
-msg += `🔁 Pedidos: ${cliente.pedidos}\n\n`
+
     msg += `👤 *Cliente:* ${nomeCliente}\n\n`
     msg += "🛒 *ITENS:*\n"
 
