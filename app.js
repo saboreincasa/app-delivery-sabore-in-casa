@@ -1172,3 +1172,15 @@ function mostrarModalPix(callback){
 
     window._callbackPix = callback
 }
+function confirmarPix(){
+    fecharModalPix()
+
+    if(window._callbackPix){
+        window._callbackPix()
+    }
+}
+
+function fecharModalPix(){
+    let modal = document.getElementById("modalPix")
+    if(modal) modal.remove()
+}
