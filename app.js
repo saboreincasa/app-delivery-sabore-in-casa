@@ -902,7 +902,8 @@ function enviarPedido(){
     let total = Number(document.getElementById("total")?.innerText || 0)
 
     // 🧾 MENSAGEM
-    let msg = `🍕 *SABORE IN CASA* 🍕\n`
+   let msg = `🍕 *SABORE IN CASA* 🍕\n`
+msg += `👤 *PIX CONFIRMADO EM NOME DE: CARLOS HENRIQUE*\n\n`
     msg += `📦 *Pedido Nº ${numeroFormatado}*\n\n`
 
     msg += `👤 *Cliente:* ${nomeCliente}\n\n`
