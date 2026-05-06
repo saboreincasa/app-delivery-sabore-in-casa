@@ -1054,24 +1054,22 @@ if(pagamento === "Pix"){
     msg += "💳 *PAGAMENTO VIA PIX*\n\n"
 
     msg += "⚠️ *IMPORTANTE*\n"
-    msg += "Seu pedido só entra em preparação após o envio do comprovante do PIX.\n\n"
+    msg += "Seu pedido só entra em preparo após o envio do comprovante.\n\n"
 
-    msg += "📲 *DADOS PARA PAGAMENTO:*\n"
-    msg += "👤 Recebedor: Carlos Henrique\n"
-    msg += "📌 Chave PIX (Telefone): 31983391576\n\n"
+    msg += "👤 *Recebedor:* Carlos Henrique\n"
+    msg += "📌 *Chave PIX:* 31983391576\n\n"
 
-    msg += "📋 *COPIAR E COLAR:*\n"
+    msg += "📋 *COPIAR CHAVE:*\n"
     msg += "31983391576\n\n"
 
     msg += "🧾 *Como pagar:*\n"
-    msg += "1. Copie a chave PIX acima\n"
-    msg += "2. Faça o pagamento do valor total\n"
-    msg += "3. Envie o comprovante aqui no WhatsApp\n\n"
+    msg += "• Copie a chave PIX\n"
+    msg += "• Faça o pagamento do valor total\n"
+    msg += "• Envie o comprovante no WhatsApp\n\n"
 
-    msg += "🚀 Após confirmação, seu pedido entra em preparo imediato.\n\n"
+    msg += "🚀 Liberação imediata após confirmação do pagamento.\n\n"
 
-    msg += "📷 *QR CODE (opcional):*\n"
-    msg += "Use o app do seu banco para ler o QR Code ou gerar PIX manual com a chave informada.\n"
+    msg += "📷 Você pode usar o QR Code do seu banco com a chave acima.\n"
 
     msg += "━━━━━━━━━━━━━━\n"
 }
