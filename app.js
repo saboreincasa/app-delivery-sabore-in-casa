@@ -374,10 +374,6 @@ function scrollCarrinho(){
     document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
 }
 
-// 📦 ENVIAR PEDIDO
-function enviarPedido(){
-
-
 // ===============================
 // 🚚 SISTEMA DE FRETE INTELIGENTE
 // ===============================
