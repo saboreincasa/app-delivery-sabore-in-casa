@@ -1043,11 +1043,38 @@ function enviarPedido(){
     msg += `\n💵 *TOTAL: R$${totalFinal.toFixed(2)}*\n`
 
     msg += `\n📍 ${enderecoCompleto}\n`
-    msg += `💳 ${pagamento}\n`
+ msg += `💳 ${pagamento}\n`
 
-    if(pagamento === "Dinheiro"){
-        msg += `💵 Troco: R$${troco}\n`
+// 🔥 AVISO INTELIGENTE POR TIPO DE PAGAMENTO
+msg += "\n━━━━━━━━━━━━━━\n"
+
+if(pagamento === "Pix"){
+
+    msg += "🚨 *ATENÇÃO AO PAGAMENTO* 🚨\n\n"
+    msg += "📲 *PAGAMENTO VIA PIX*\n"
+    msg += "💡 _Envie o comprovante aqui no WhatsApp para liberar seu pedido._\n"
+    msg += "🔥 *Após a confirmação, começamos o preparo imediatamente!*\n"
+
+}
+else if(pagamento === "Dinheiro"){
+
+    msg += "💵 *PAGAMENTO NA ENTREGA*\n"
+    msg += "🚚 Você irá pagar ao receber o pedido.\n"
+
+    if(troco && troco !== "-"){
+        msg += `💰 Troco para: R$${troco}\n`
     }
+
+}
+else if(pagamento === "Cartão"){
+
+    msg += "💳 *PAGAMENTO NA ENTREGA*\n"
+    msg += "📲 Cartão será passado na maquininha no momento da entrega.\n"
+    msg += "🚚 Tenha o cartão em mãos para agilizar.\n"
+
+}
+
+msg += "━━━━━━━━━━━━━━\n"
 
     let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
 
