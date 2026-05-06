@@ -938,11 +938,16 @@ msg += "\n━━━━━━━━━━━━━━\n"
 
 if(pagamento === "Pix"){
 
-    msg += "🚨 *ATENÇÃO AO PAGAMENTO* 🚨\n\n"
-    msg += "📲 *PAGAMENTO VIA PIX*\n"
-    msg += "💡 _Envie o comprovante aqui no WhatsApp para liberar seu pedido._\n"
-    msg += "🔥 *Após a confirmação, começamos o preparo imediatamente!*\n"
+   msg += "🚨 *ATENÇÃO AO PAGAMENTO VIA PIX* 🚨\n\n"
+msg += "📲 *PIX EM NOME DE:* CARLOS HENRIQUE\n"
+msg += "🔑 *CHAVE PIX:* 31983391576 (CELULAR)\n\n"
 
+msg += "⚠️ CONFIRA ANTES DE PAGAR:\n"
+msg += "• Nome: CARLOS HENRIQUE\n"
+msg += "• Chave: 31983391576\n\n"
+
+msg += "💡 _Após o pagamento envie o comprovante aqui no WhatsApp._\n"
+msg += "🔥 *Seu pedido será confirmado imediatamente após validação!*\n"
 }
 else if(pagamento === "Dinheiro"){
 
