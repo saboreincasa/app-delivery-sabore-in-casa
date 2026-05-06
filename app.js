@@ -1055,7 +1055,8 @@ let cliente = identificarCliente()
     // 🧾 MENSAGEM
     let msg = `🍕 *SABORE IN CASA* 🍕\n`
     msg += `📦 *Pedido Nº ${numeroFormatado}*\n\n`
-
+msg += `👤 Cliente: ${cliente.nome}\n`
+msg += `🔁 Pedidos: ${cliente.pedidos}\n\n`
     msg += `👤 *Cliente:* ${nomeCliente}\n\n`
     msg += "🛒 *ITENS:*\n"
 
