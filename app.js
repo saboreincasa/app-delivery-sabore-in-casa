@@ -456,15 +456,8 @@ if(pagamento === "Dinheiro"){
     msg += `💵 Troco para: R$${troco}\n`
 }
 
-if(pagamento.toLowerCase().includes("pix")){
-    msg += "\n📲 *PIX*\n"
-    msg += "👉 Enviar comprovante para agilizar\n"
-}
-
 msg += "\n🙏 Obrigado pela preferência!"
-    let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
 
-    window.location.href = url
 }
 function mostrarToast(combo){
 
@@ -1059,4 +1052,86 @@ function enviarPedido(){
     let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
 
     window.location.href = url
+}
+function finalizarPedido(msg){
+    let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
+    window.location.href = url
+}
+function mostrarModalPix(callback){
+
+    let existente = document.getElementById("modalPix")
+    if(existente) existente.remove()
+
+    let html = `
+    <div id="modalPix" style="
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.8);
+        z-index:99999;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    ">
+
+        <div style="
+            background:#fff;
+            color:#000;
+            padding:25px;
+            border-radius:12px;
+            max-width:400px;
+            width:90%;
+            text-align:center;
+        ">
+
+            <h2>📲 Pagamento via PIX</h2>
+
+            <p style="margin-top:10px;">
+                ⚠️ Seu pedido só será preparado após o envio do comprovante.
+            </p>
+
+            <p style="margin-top:10px;">
+                👉 Envie o comprovante no WhatsApp logo após finalizar.
+            </p>
+
+            <div style="margin-top:20px; display:flex; gap:10px;">
+                <button onclick="confirmarPix()" style="
+                    flex:1;
+                    background:green;
+                    color:#fff;
+                    border:none;
+                    padding:10px;
+                    border-radius:8px;
+                    font-weight:bold;
+                ">Já vou enviar</button>
+
+                <button onclick="fecharModalPix()" style="
+                    flex:1;
+                    background:red;
+                    color:#fff;
+                    border:none;
+                    padding:10px;
+                    border-radius:8px;
+                    font-weight:bold;
+                ">Cancelar</button>
+            </div>
+
+        </div>
+    </div>
+    `
+
+    document.body.insertAdjacentHTML("beforeend", html)
+
+    window._callbackPix = callback
+}
+
+function fecharModalPix(){
+    document.getElementById("modalPix")?.remove()
+}
+
+function confirmarPix(){
+    fecharModalPix()
+    if(window._callbackPix) window._callbackPix()
 }
