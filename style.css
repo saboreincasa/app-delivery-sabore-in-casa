@@ -991,3 +991,110 @@ margin-right:auto;
   pointer-events:none;
   box-shadow:0 0 20px rgba(255,152,0,0.15);
 }
+/* ========================================= */
+/* 🔥 SCROLL MAIS BONITO (APP STYLE) */
+/* ========================================= */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ff9800;
+  border-radius: 10px;
+}
+
+/* ========================================= */
+/* 🔥 TOQUE DE APP (CLIQUE MAIS REALISTA) */
+/* ========================================= */
+
+button:active {
+  transform: scale(0.96);
+}
+
+/* ========================================= */
+/* 🔥 INPUT FOCUS (UX PROFISSIONAL) */
+/* ========================================= */
+
+input:focus,
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255,152,0,0.5);
+}
+
+/* ========================================= */
+/* 🔥 TRANSIÇÃO GLOBAL MAIS SUAVE */
+/* ========================================= */
+
+*{
+  transition: all 0.2s ease;
+}
+
+/* ========================================= */
+/* 🔥 LOADING SIMPLES (CASO QUEIRA USAR) */
+/* ========================================= */
+
+.loading{
+  text-align:center;
+  padding:20px;
+  font-size:14px;
+  color:#aaa;
+}
+
+/* ========================================= */
+/* 🔥 MELHOR ESPAÇAMENTO MOBILE */
+/* ========================================= */
+
+@media (max-width:600px){
+
+  h2{
+    font-size:20px;
+  }
+
+  .card h3{
+    font-size:16px;
+  }
+
+  .preco{
+    font-size:18px;
+  }
+}
+
+/* ========================================= */
+/* 🔥 EFEITO DE CLIQUE NO CARD */
+/* ========================================= */
+
+.card:active{
+  transform: scale(0.98);
+}
+
+/* ========================================= */
+/* 🔥 MELHOR VISUAL DO FRETE */
+/* ========================================= */
+
+#infoFrete{
+  margin-top:10px;
+  font-size:14px;
+  text-align:center;
+  padding:8px;
+  border-radius:8px;
+  background:#2a2a2a;
+}
+
+/* ========================================= */
+/* 🔥 BOTÃO WHATS MAIS CHAMATIVO */
+/* ========================================= */
+
+.enviar{
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse{
+  0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7); }
+  70%{ box-shadow:0 0 0 10px rgba(37,211,102,0); }
+  100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
+}
