@@ -292,21 +292,12 @@ function addCarrinho(nome, preco, tipo = "outro"){
 function contarItensFreteGratis(){
 
     let total = 0
-    let temComida = false
 
     carrinho.forEach(item=>{
-
-        if(item.tipo === "bebidas"){
-            return
+        if(item.tipo === "pizza" || item.tipo === "combo"){
+            total += item.qtd
         }
-
-        temComida = true
-        total += item.qtd
     })
-
-    if(!temComida){
-        return 0
-    }
 
     return total
 }
@@ -374,6 +365,127 @@ function scrollCarrinho(){
     document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
 }
 
+// 📦 ENVIAR PEDIDO
+function enviarPedido(){
+
+  // 🔢 GERAR NÚMERO DO PEDIDO
+numeroPedido++
+localStorage.setItem("numeroPedido", numeroPedido)
+
+// FORMATO 01, 02, 03...
+let numeroFormatado = numeroPedido.toString().padStart(2, "0")
+
+// 👤 NOME
+let nomeCliente = document.getElementById("nomeCliente")?.value
+
+if(!nomeCliente){
+    alert("Por favor, informe seu nome!")
+    return
+}
+
+// 📍 ENDEREÇO COMPLETO
+let rua = document.getElementById("enderecoCliente")?.value || ""
+let numero = document.getElementById("numeroCliente")?.value || ""
+let bairro = document.getElementById("bairroSelecionado")?.value || ""
+let complemento = document.getElementById("complementoCliente")?.value || ""
+
+let enderecoCompleto = `${rua}, Nº ${numero} - ${bairro}`
+if(complemento) enderecoCompleto += ` (${complemento})`
+
+// 💳 PAGAMENTO
+let pagamento = document.getElementById("pagamento")?.value || "Não informado"
+let troco = document.getElementById("troco")?.value || "-"
+
+// 🚚 FRETE
+let frete = calcularFretePorBairro(bairro)
+
+// 💰 TOTAL
+let total = Number(document.getElementById("total")?.innerText || 0)
+
+// 🧾 MENSAGEM NOVA PROFISSIONAL
+let msg = `🍕 *SABORE IN CASA* 🍕\n`
+msg += `📦 *Pedido Nº ${numeroFormatado}*\n`
+msg += "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+
+msg += `👤 *Cliente:* ${nomeCliente}\n\n`
+
+msg += "🛒 *ITENS:*\n"
+
+carrinho.forEach(item=>{
+    msg += `• ${item.qtd}x ${item.nome}\n`
+})
+
+msg += "\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+
+let itens = contarItensFreteGratis()
+
+let pedidosFrete = Number(localStorage.getItem("pedidosFrete")) || 0
+
+pedidosFrete++
+localStorage.setItem("pedidosFrete", pedidosFrete)
+
+let pedidosRestantes = 5 - pedidosFrete
+
+if(pedidosFrete >= 5){
+    msg += "🎉 *FRETE GRÁTIS ATIVADO*\n"
+    frete = 0
+
+    // zera ciclo
+    pedidosFrete = 0
+    localStorage.setItem("pedidosFrete", 0)
+
+} else {
+    msg += `🚚 Faltam ${pedidosRestantes} pedido(s) para frete grátis\n`
+}
+
+msg += "\n💰 *RESUMO*\n"
+msg += `Subtotal: R$${total.toFixed(2)}\n`
+msg += `Frete: R$${frete.toFixed(2)}\n`
+
+let totalFinal = total + frete
+
+msg += `*TOTAL: R$${totalFinal.toFixed(2)}*\n`
+
+msg += "\n📍 *ENTREGA*\n"
+msg += `${enderecoCompleto}\n`
+
+msg += "\n💳 *PAGAMENTO*\n"
+msg += `${pagamento}\n`
+
+if(pagamento === "Dinheiro"){
+    msg += `💵 Troco para: R$${troco}\n`
+}
+
+msg += "\n🙏 Obrigado pela preferência!"
+
+}
+function mostrarToast(combo){
+
+    let toast = document.getElementById("toast")
+    if(!toast) return
+
+    if(combo.nome.includes("Família")){
+    toast.innerText = `👨‍👩‍👧‍👦 ${combo.nome} perfeito pra dividir!`
+}
+else if(combo.nome.includes("Casal")){
+    toast.innerText = `❤️ ${combo.nome} clima perfeito garantido!`
+}
+else if(combo.nome.includes("Amigos")){
+    toast.innerText = `🍻 ${combo.nome} partiu resenha!`
+}
+else{
+    toast.innerText = `🔥 ${combo.nome} adicionado!`
+}
+    toast.className = "show"
+
+    setTimeout(()=>{
+        toast.className = ""
+    },4000)
+}
+
+function abrirMapa(){
+    window.open("https://www.google.com/maps?q=Rua+Maria+de+Lourdes+da+Cruz+378+Belo+Horizonte")
+}
 // ===============================
 // 🚚 SISTEMA DE FRETE INTELIGENTE
 // ===============================
@@ -902,8 +1014,7 @@ function enviarPedido(){
     let total = Number(document.getElementById("total")?.innerText || 0)
 
     // 🧾 MENSAGEM
-   let msg = `🍕 *SABORE IN CASA* 🍕\n`
-msg += `👤 *PIX CONFIRMADO EM NOME DE: CARLOS HENRIQUE*\n\n`
+    let msg = `🍕 *SABORE IN CASA* 🍕\n`
     msg += `📦 *Pedido Nº ${numeroFormatado}*\n\n`
 
     msg += `👤 *Cliente:* ${nomeCliente}\n\n`
@@ -939,16 +1050,11 @@ msg += "\n━━━━━━━━━━━━━━\n"
 
 if(pagamento === "Pix"){
 
-   msg += "🚨 *ATENÇÃO AO PAGAMENTO VIA PIX* 🚨\n\n"
-msg += "📲 *PIX EM NOME DE:* CARLOS HENRIQUE\n"
-msg += "🔑 *CHAVE PIX:* 31983391576 (CELULAR)\n\n"
+    msg += "🚨 *ATENÇÃO AO PAGAMENTO* 🚨\n\n"
+    msg += "📲 *PAGAMENTO VIA PIX*\n"
+    msg += "💡 _Envie o comprovante aqui no WhatsApp para liberar seu pedido._\n"
+    msg += "🔥 *Após a confirmação, começamos o preparo imediatamente!*\n"
 
-msg += "⚠️ CONFIRA ANTES DE PAGAR:\n"
-msg += "• Nome: CARLOS HENRIQUE\n"
-msg += "• Chave: 31983391576\n\n"
-
-msg += "💡 _Após o pagamento envie o comprovante aqui no WhatsApp._\n"
-msg += "🔥 *Seu pedido será confirmado imediatamente após validação!*\n"
 }
 else if(pagamento === "Dinheiro"){
 
