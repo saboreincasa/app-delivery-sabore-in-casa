@@ -1050,11 +1050,13 @@ msg += "\n━━━━━━━━━━━━━━\n"
 
 if(pagamento === "Pix"){
 
-    msg += "🚨 *ATENÇÃO AO PAGAMENTO* 🚨\n\n"
-    msg += "📲 *PAGAMENTO VIA PIX*\n"
-    msg += "💡 _Envie o comprovante aqui no WhatsApp para liberar seu pedido._\n"
-    msg += "🔥 *Após a confirmação, começamos o preparo imediatamente!*\n"
+   if(pagamento === "Pix"){
 
+    msg += "🚨 *CONFIRMAÇÃO DE PAGAMENTO* 🚨\n\n"
+    msg += "📲 Envie o *comprovante do PIX* para este WhatsApp.\n"
+    msg += "🧾 Seu pedido será encaminhado para a *produção* após a confirmação.\n\n"
+    msg += "🔥 *Agilize o envio para não atrasar seu pedido!* 🚀\n"
+    msg += "⏱️ *Pedidos sem comprovante não entram em produção.*\n"
 }
 else if(pagamento === "Dinheiro"){
 
@@ -1076,9 +1078,18 @@ else if(pagamento === "Cartão"){
 
 msg += "━━━━━━━━━━━━━━\n"
 
-    let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
+   if(pagamento === "Pix"){
 
+    mostrarModalPix(() => {
+        let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
+        window.location.href = url
+    })
+
+} else {
+
+    let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
     window.location.href = url
+
 }
 function finalizarPedido(msg){
     let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
@@ -1115,12 +1126,18 @@ function mostrarModalPix(callback){
 
             <h2>📲 Pagamento via PIX</h2>
 
-            <p style="margin-top:10px;">
-                ⚠️ Seu pedido só será preparado após o envio do comprovante.
+            <img src="imagens/qrcode-pix.png" style="
+                width:220px;
+                margin-top:15px;
+                border-radius:8px;
+            ">
+
+            <p style="margin-top:15px;">
+                📌 Escaneie o QR Code para pagar
             </p>
 
-            <p style="margin-top:10px;">
-                👉 Envie o comprovante no WhatsApp logo após finalizar.
+            <p style="margin-top:10px; font-size:14px;">
+                ⚠️ Envie o comprovante aqui no WhatsApp para seu pedido entrar na produção.
             </p>
 
             <div style="margin-top:20px; display:flex; gap:10px;">
@@ -1129,19 +1146,21 @@ function mostrarModalPix(callback){
                     background:green;
                     color:#fff;
                     border:none;
-                    padding:10px;
+                    padding:12px;
                     border-radius:8px;
                     font-weight:bold;
-                ">Já vou enviar</button>
+                    cursor:pointer;
+                ">Já fiz o pagamento</button>
 
                 <button onclick="fecharModalPix()" style="
                     flex:1;
                     background:red;
                     color:#fff;
                     border:none;
-                    padding:10px;
+                    padding:12px;
                     border-radius:8px;
                     font-weight:bold;
+                    cursor:pointer;
                 ">Cancelar</button>
             </div>
 
@@ -1152,13 +1171,4 @@ function mostrarModalPix(callback){
     document.body.insertAdjacentHTML("beforeend", html)
 
     window._callbackPix = callback
-}
-
-function fecharModalPix(){
-    document.getElementById("modalPix")?.remove()
-}
-
-function confirmarPix(){
-    fecharModalPix()
-    if(window._callbackPix) window._callbackPix()
 }
