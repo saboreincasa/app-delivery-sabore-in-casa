@@ -1048,31 +1048,117 @@ function enviarPedido(){
 // 🔥 AVISO INTELIGENTE POR TIPO DE PAGAMENTO
 msg += "\n━━━━━━━━━━━━━━\n"
 
-if (pagamento?.trim().toLowerCase() === "pix") {
+if(pagamento === "Pix"){
 
-    msg += "\n━━━━━━━━━━━━━━\n"
+    msg += "━━━━━━━━━━━━━━\n"
     msg += "💳 *PAGAMENTO VIA PIX*\n\n"
 
     msg += "⚠️ *IMPORTANTE*\n"
-    msg += "Seu pedido só entra em preparo após a confirmação do pagamento.\n\n"
+    msg += "Seu pedido só entra em preparação após o envio do comprovante do PIX.\n\n"
 
     msg += "📲 *DADOS PARA PAGAMENTO:*\n"
     msg += "👤 Recebedor: Carlos Henrique\n"
     msg += "📌 Chave PIX (Telefone): 31983391576\n\n"
 
-    msg += "📋 *CHAVE PARA COPIAR E COLAR:*\n"
-    msg += "`31983391576`\n\n"
+    msg += "📋 *COPIAR E COLAR:*\n"
+    msg += "31983391576\n\n"
 
-    msg += "🧾 *COMO PAGAR:*\n"
+    msg += "🧾 *Como pagar:*\n"
     msg += "1. Copie a chave PIX acima\n"
-    msg += "2. Faça o pagamento do valor total do pedido\n"
-    msg += "3. Envie o comprovante neste WhatsApp\n\n"
+    msg += "2. Faça o pagamento do valor total\n"
+    msg += "3. Envie o comprovante aqui no WhatsApp\n\n"
 
-    msg += "🚀 Após a confirmação, seu pedido será preparado imediatamente!\n\n"
+    msg += "🚀 Após confirmação, seu pedido entra em preparo imediato.\n\n"
 
-    msg += "📷 *QR CODE PIX:*\n"
-    msg += "Use o QR Code abaixo para pagar rapidamente:\n"
-    msg += "🖼️ (imagem do QR Code)\n\n"
+    msg += "📷 *QR CODE (opcional):*\n"
+    msg += "Use o app do seu banco para ler o QR Code ou gerar PIX manual com a chave informada.\n"
 
     msg += "━━━━━━━━━━━━━━\n"
+}
+
+    let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
+
+    window.location.href = url
+}
+function finalizarPedido(msg){
+    let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
+    window.location.href = url
+}
+function mostrarModalPix(callback){
+
+    let existente = document.getElementById("modalPix")
+    if(existente) existente.remove()
+
+    let html = `
+    <div id="modalPix" style="
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.8);
+        z-index:99999;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    ">
+
+        <div style="
+            background:#fff;
+            color:#000;
+            padding:25px;
+            border-radius:12px;
+            max-width:400px;
+            width:90%;
+            text-align:center;
+        ">
+
+            <h2>📲 Pagamento via PIX</h2>
+
+            <p style="margin-top:10px;">
+                ⚠️ Seu pedido só será preparado após o envio do comprovante.
+            </p>
+
+            <p style="margin-top:10px;">
+                👉 Envie o comprovante no WhatsApp logo após finalizar.
+            </p>
+
+            <div style="margin-top:20px; display:flex; gap:10px;">
+                <button onclick="confirmarPix()" style="
+                    flex:1;
+                    background:green;
+                    color:#fff;
+                    border:none;
+                    padding:10px;
+                    border-radius:8px;
+                    font-weight:bold;
+                ">Já vou enviar</button>
+
+                <button onclick="fecharModalPix()" style="
+                    flex:1;
+                    background:red;
+                    color:#fff;
+                    border:none;
+                    padding:10px;
+                    border-radius:8px;
+                    font-weight:bold;
+                ">Cancelar</button>
+            </div>
+
+        </div>
+    </div>
+    `
+
+    document.body.insertAdjacentHTML("beforeend", html)
+
+    window._callbackPix = callback
+}
+
+function fecharModalPix(){
+    document.getElementById("modalPix")?.remove()
+}
+
+function confirmarPix(){
+    fecharModalPix()
+    if(window._callbackPix) window._callbackPix()
 }
