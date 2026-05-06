@@ -292,12 +292,21 @@ function addCarrinho(nome, preco, tipo = "outro"){
 function contarItensFreteGratis(){
 
     let total = 0
+    let temComida = false
 
     carrinho.forEach(item=>{
-        if(item.tipo === "pizza" || item.tipo === "combo"){
-            total += item.qtd
+
+        if(item.tipo === "bebidas"){
+            return
         }
+
+        temComida = true
+        total += item.qtd
     })
+
+    if(!temComida){
+        return 0
+    }
 
     return total
 }
