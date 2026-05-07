@@ -365,100 +365,6 @@ function scrollCarrinho(){
     document.getElementById("carrinho").scrollIntoView({behavior:"smooth"})
 }
 
-// 📦 ENVIAR PEDIDO
-function enviarPedido(){
-
-  // 🔢 GERAR NÚMERO DO PEDIDO
-numeroPedido++
-localStorage.setItem("numeroPedido", numeroPedido)
-
-// FORMATO 01, 02, 03...
-let numeroFormatado = numeroPedido.toString().padStart(2, "0")
-
-// 👤 NOME
-let nomeCliente = document.getElementById("nomeCliente")?.value
-
-if(!nomeCliente){
-    alert("Por favor, informe seu nome!")
-    return
-}
-
-// 📍 ENDEREÇO COMPLETO
-let rua = document.getElementById("enderecoCliente")?.value || ""
-let numero = document.getElementById("numeroCliente")?.value || ""
-let bairro = document.getElementById("bairroSelecionado")?.value || ""
-let complemento = document.getElementById("complementoCliente")?.value || ""
-
-let enderecoCompleto = `${rua}, Nº ${numero} - ${bairro}`
-if(complemento) enderecoCompleto += ` (${complemento})`
-
-// 💳 PAGAMENTO
-let pagamento = document.getElementById("pagamento")?.value || "Não informado"
-let troco = document.getElementById("troco")?.value || "-"
-
-// 🚚 FRETE
-let frete = calcularFretePorBairro(bairro)
-
-// 💰 TOTAL
-let total = Number(document.getElementById("total")?.innerText || 0)
-
-// 🧾 MENSAGEM NOVA PROFISSIONAL
-let msg = `🍕 *SABORE IN CASA* 🍕\n`
-msg += `📦 *Pedido Nº ${numeroFormatado}*\n`
-msg += "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-
-msg += `👤 *Cliente:* ${nomeCliente}\n\n`
-
-msg += "🛒 *ITENS:*\n"
-
-carrinho.forEach(item=>{
-    msg += `• ${item.qtd}x ${item.nome}\n`
-})
-
-msg += "\n━━━━━━━━━━━━━━━━━━━━━━━\n"
-
-let itens = contarItensFreteGratis()
-
-let pedidosFrete = Number(localStorage.getItem("pedidosFrete")) || 0
-
-pedidosFrete++
-localStorage.setItem("pedidosFrete", pedidosFrete)
-
-let pedidosRestantes = 5 - pedidosFrete
-
-if(pedidosFrete >= 5){
-    msg += "🎉 *FRETE GRÁTIS ATIVADO*\n"
-    frete = 0
-
-    // zera ciclo
-    pedidosFrete = 0
-    localStorage.setItem("pedidosFrete", 0)
-
-} else {
-    msg += `🚚 Faltam ${pedidosRestantes} pedido(s) para frete grátis\n`
-}
-
-msg += "\n💰 *RESUMO*\n"
-msg += `Subtotal: R$${total.toFixed(2)}\n`
-msg += `Frete: R$${frete.toFixed(2)}\n`
-
-let totalFinal = total + frete
-
-msg += `*TOTAL: R$${totalFinal.toFixed(2)}*\n`
-
-msg += "\n📍 *ENTREGA*\n"
-msg += `${enderecoCompleto}\n`
-
-msg += "\n💳 *PAGAMENTO*\n"
-msg += `${pagamento}\n`
-
-if(pagamento === "Dinheiro"){
-    msg += `💵 Troco para: R$${troco}\n`
-}
-
-msg += "\n🙏 Obrigado pela preferência!"
-
-}
 function mostrarToast(combo){
 
     let toast = document.getElementById("toast")
@@ -700,7 +606,7 @@ if(!combo){
     return
 }
 
-let desc = combo.descricao.toLowerCase() // 👈 COLE EXATAMENTE AQUI
+let desc = combo.descricao.toLowerCase()
 
 let bebidas = produtos.filter(p => {
 
@@ -708,17 +614,14 @@ let bebidas = produtos.filter(p => {
 
     let nomeBebida = p.nome.toLowerCase()
 
-    // 🍻 COMBO AMIGOS = TODAS bebidas liberadas
    if(desc.includes("amigos")){
     return false
 }
 
-    // 🥤 COMBO COM REFRIGERANTE 2L
    if(desc.includes("refrigerante")){
     return nomeBebida.includes("2l") || nomeBebida.includes("2000")
 }
 
-    // 🥫 COMBO COM LATA 350ML
     if(desc.includes("lata") || desc.includes("350ml")){
         return nomeBebida.includes("350") || nomeBebida.includes("lata")
     }
@@ -726,10 +629,8 @@ let bebidas = produtos.filter(p => {
     return false
 })
 
-// 🍕 só combo família tem 2 pizzas
 let qtdPizzas = desc.includes("família") ? 2 : 1
 
-        // 🥤 combo amigos NÃO tem refri
        let semRefri = nome.toLowerCase().includes("amigos")
 
         const pizzasOptions = `
@@ -763,7 +664,6 @@ bebidas.forEach(b => {
             <div class="opcoes-pizza">
         `
 
-        // 🍕 pizzas
         for(let i=1;i<=qtdPizzas;i++){
             html += `
             <div class="campo">
@@ -775,7 +675,6 @@ bebidas.forEach(b => {
             `
         }
 
-// 🧀 borda (visual melhorado)
 html += `
 <div class="campo">
     <label>Borda:</label>
@@ -787,8 +686,6 @@ html += `
 </div>
 `
 
-        // 🥤 refrigerante (exceto amigos)
-// 🥤 refrigerante (Combo Família tem 2)
 if(!semRefri){
 
     let qtdRefri = desc.includes("família") ? 2 : 1
@@ -853,7 +750,6 @@ function adicionarComboFinal(nome, preco, qtdPizzas, semRefri){
     let extras = ""
     let total = preco
 
-    // 🍕 pizzas
     for(let i=1;i<=qtdPizzas;i++){
         let pizza = document.getElementById(`pizza${i}`)?.value
         if(pizza){
@@ -861,7 +757,6 @@ function adicionarComboFinal(nome, preco, qtdPizzas, semRefri){
         }
     }
 
-    // 🧀 borda
     let borda = document.getElementById("borda")?.value
     let bordaTexto = document.getElementById("borda")?.selectedOptions[0]?.text
 
@@ -870,7 +765,6 @@ function adicionarComboFinal(nome, preco, qtdPizzas, semRefri){
         total += 10
     }
 
-  // 🥤 refrigerante (1 ou 2 dependendo do combo)
 if(!semRefri){
 
    let qtdRefri = nome.toLowerCase().includes("família") ? 2 : 1
@@ -882,7 +776,7 @@ if(!semRefri){
         }
     }
 }
-// 🥤 EXTRAS DE BEBIDAS
+
 let bebidasExtras = document.querySelectorAll("#extrasBebidas > div")
 
 bebidasExtras.forEach(div => {
@@ -970,53 +864,145 @@ function diminuirBebida(id){
 function removerLinhaBebida(id){
     document.getElementById("bebida_" + id).remove()
 }
+
+
+// ===============================
+// 💳 GERADOR DE PIX EMV/BR CODE
+// ===============================
+
+/**
+ * Gera o código PIX (Copia e Cola / QR Code) no padrão EMV BR Code
+ * com valor fixo — compatível com todos os bancos brasileiros.
+ *
+ * @param {string} chavePix   - Chave PIX (telefone, CPF, email, CNPJ ou chave aleatória)
+ * @param {string} nomeRecebedor - Nome do recebedor (até 25 caracteres)
+ * @param {string} cidade     - Cidade do recebedor (até 15 caracteres)
+ * @param {number} valor      - Valor da transação em reais (ex: 82.90)
+ * @param {string} txid       - Identificador da transação (até 25 caracteres, sem espaços)
+ * @returns {string}          - Código PIX EMV pronto para gerar QR Code ou copiar
+ */
+function gerarCodigoPix(chavePix, nomeRecebedor, cidade, valor, txid = "PEDIDO") {
+
+    // Formata valor com 2 casas decimais sem vírgula
+    const valorFormatado = valor.toFixed(2)
+
+    // Limpa e normaliza campos de texto (remove acentos e caracteres especiais)
+    const limpar = (str, maxLen) => {
+        return str
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")  // remove acentos
+            .replace(/[^a-zA-Z0-9 ]/g, "")    // só letras, números e espaço
+            .substring(0, maxLen)
+            .trim()
+    }
+
+    const nome   = limpar(nomeRecebedor, 25)
+    const cid    = limpar(cidade, 15)
+    const tx     = limpar(txid, 25).replace(/ /g, "")
+
+    // Helper: formata campo EMV (ID + tamanho 2 dígitos + valor)
+    const campo = (id, valor) => {
+        const tam = String(valor.length).padStart(2, "0")
+        return `${id}${tam}${valor}`
+    }
+
+    // --- Monta Merchant Account Info (ID 26) ---
+    // GUI = identificador do arranjo PIX
+    const gui = campo("00", "BR.GOV.BCB.PIX")
+    // Chave PIX
+    const chave = campo("01", chavePix)
+    // Campo 26 completo
+    const merchantAccountInfo = campo("26", gui + chave)
+
+    // --- Monta Additional Data (ID 62) ---
+    // txid dentro do campo 62
+    const txidField = campo("05", tx || "***")
+    const additionalData = campo("62", txidField)
+
+    // --- Monta o payload SEM CRC ---
+    let payload =
+        campo("00", "01")                  // Payload Format Indicator
+      + merchantAccountInfo                // Merchant Account Information
+      + campo("52", "0000")               // Merchant Category Code
+      + campo("53", "986")                // Transaction Currency (BRL)
+      + campo("54", valorFormatado)       // Transaction Amount
+      + campo("58", "BR")                 // Country Code
+      + campo("59", nome)                 // Merchant Name
+      + campo("60", cid)                  // Merchant City
+      + additionalData                    // Additional Data Field
+      + "6304"                            // CRC placeholder (ID + 4 chars reservados)
+
+    // --- Calcula CRC16-CCITT ---
+    function crc16(str) {
+        let crc = 0xFFFF
+        for (let i = 0; i < str.length; i++) {
+            crc ^= str.charCodeAt(i) << 8
+            for (let j = 0; j < 8; j++) {
+                if (crc & 0x8000) {
+                    crc = (crc << 1) ^ 0x1021
+                } else {
+                    crc <<= 1
+                }
+                crc &= 0xFFFF
+            }
+        }
+        return crc.toString(16).toUpperCase().padStart(4, "0")
+    }
+
+    return payload + crc16(payload)
+}
+
+
+// ===============================
+// 📦 ENVIAR PEDIDO (com PIX dinâmico)
+// ===============================
+
 function enviarPedido(){
 
     let nomeCliente = document.getElementById("nomeCliente")?.value
 
-    // 👤 se não tiver nome, abre um aviso bonito (sem alert)
     if(!nomeCliente || nomeCliente.trim() === ""){
-
         let campo = document.getElementById("nomeCliente")
-
         campo.style.border = "2px solid red"
         campo.placeholder = "Digite seu nome primeiro 👈"
         campo.focus()
-
         return
     }
 
-    // 🔁 SEU CÓDIGO CONTINUA NORMAL A PARTIR DAQUI
-
-    // 🔢 GERAR NÚMERO DO PEDIDO
+    // 🔢 NÚMERO DO PEDIDO
     numeroPedido++
     localStorage.setItem("numeroPedido", numeroPedido)
-
     let numeroFormatado = numeroPedido.toString().padStart(2, "0")
 
     // 📍 ENDEREÇO
-    let rua = document.getElementById("rua")?.value || ""
-    let numero = document.getElementById("numero")?.value || ""
-    let bairro = document.getElementById("bairroSelecionado")?.value || ""
-    let complemento = document.getElementById("complemento")?.value || ""
+    let rua          = document.getElementById("rua")?.value || ""
+    let numero       = document.getElementById("numero")?.value || ""
+    let bairro       = document.getElementById("bairroSelecionado")?.value || ""
+    let complemento  = document.getElementById("complemento")?.value || ""
 
     let enderecoCompleto = `${rua}, Nº ${numero} - ${bairro}`
     if(complemento) enderecoCompleto += ` (${complemento})`
 
     // 💳 PAGAMENTO
     let pagamento = document.getElementById("pagamento")?.value || "Não informado"
-    let troco = document.getElementById("troco")?.value || "-"
+    let troco     = document.getElementById("troco")?.value || "-"
 
     // 🚚 FRETE
     let frete = calcularFretePorBairro(bairro)
 
     // 💰 TOTAL
-    let total = Number(document.getElementById("total")?.innerText || 0)
+    let subtotal = Number(document.getElementById("total")?.innerText || 0)
 
-    // 🧾 MENSAGEM
+    // 🎉 FRETE GRÁTIS
+    let itens = contarItensFreteGratis()
+    if(itens >= 5) frete = 0
+
+    let totalFinal = subtotal + frete
+
+    // 🧾 MENSAGEM WHATSAPP
     let msg = `🍕 *SABORE IN CASA* 🍕\n`
-    msg += `📦 *Pedido Nº ${numeroFormatado}*\n\n`
-
+    msg += `📦 *Pedido Nº ${numeroFormatado}*\n`
+    msg += "━━━━━━━━━━━━━━━━━━━━━━━\n\n"
     msg += `👤 *Cliente:* ${nomeCliente}\n\n`
     msg += "🛒 *ITENS:*\n"
 
@@ -1024,65 +1010,75 @@ function enviarPedido(){
         msg += `• ${item.qtd}x ${item.nome}\n`
     })
 
-    msg += "\n━━━━━━━━━━━━━━\n"
-
-    let itens = contarItensFreteGratis()
+    msg += "\n━━━━━━━━━━━━━━━━━━━━━━━\n"
 
     if(itens >= 5){
         msg += "🎉 *FRETE GRÁTIS ATIVADO*\n"
-        frete = 0
     } else {
         msg += `🚚 Faltam ${5 - itens} item(s) para frete grátis\n`
     }
 
-    msg += `\n💰 Subtotal: R$${total.toFixed(2)}`
+    msg += `\n💰 Subtotal: R$${subtotal.toFixed(2)}`
     msg += `\n🚚 Frete: R$${frete.toFixed(2)}`
-
-    let totalFinal = total + frete
-
     msg += `\n💵 *TOTAL: R$${totalFinal.toFixed(2)}*\n`
-
     msg += `\n📍 ${enderecoCompleto}\n`
- msg += `💳 ${pagamento}\n`
+    msg += `💳 ${pagamento}\n`
 
-// 🔥 AVISO INTELIGENTE POR TIPO DE PAGAMENTO
-msg += "\n━━━━━━━━━━━━━━\n"
+    // 💳 SE PIX: gera código dinâmico com valor exato
+    if(pagamento === "Pix"){
 
-if(pagamento === "Pix"){
+        // Gera txid único baseado no número do pedido
+        const txid = "SABORECASA" + numeroFormatado
 
-    msg += "━━━━━━━━━━━━━━\n"
-    msg += "💳 *PAGAMENTO VIA PIX*\n\n"
+        // Gera o código PIX com o valor total real
+        const codigoPix = gerarCodigoPix(
+            "31983391576",       // ← sua chave PIX (telefone)
+            "Carlos Henrique",   // ← nome do recebedor
+            "Belo Horizonte",    // ← cidade
+            totalFinal,          // ← valor calculado automaticamente
+            txid                 // ← identificador do pedido
+        )
 
-    msg += "⚠️ *IMPORTANTE*\n"
-    msg += "Seu pedido só entra em preparo após o envio do comprovante.\n\n"
+        msg += "\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg += "💳 *PAGAMENTO VIA PIX*\n\n"
+        msg += `💰 *Valor exato: R$${totalFinal.toFixed(2)}*\n\n`
+        msg += "📋 *PIX COPIA E COLA:*\n"
+        msg += `\`${codigoPix}\`\n\n`
+        msg += "⚠️ *IMPORTANTE:*\n"
+        msg += "• Cole o código acima no seu banco\n"
+        msg += "• O valor já estará preenchido automaticamente\n"
+        msg += "• Envie o comprovante após o pagamento\n"
+        msg += "• Pedido entra em preparo após confirmação\n"
+        msg += "━━━━━━━━━━━━━━━━━━━━━━━\n"
 
-    msg += "👤 *Recebedor:* Carlos Henrique\n"
-    msg += "📌 *Chave PIX:* 31983391576\n\n"
+        // Abre modal PIX antes de redirecionar pro WhatsApp
+        mostrarModalPix(totalFinal, codigoPix, () => {
+            finalizarPedido(msg)
+        })
 
-    msg += "📋 *COPIAR CHAVE:*\n"
-    msg += "31983391576\n\n"
+        return
+    }
 
-    msg += "🧾 *Como pagar:*\n"
-    msg += "• Copie a chave PIX\n"
-    msg += "• Faça o pagamento do valor total\n"
-    msg += "• Envie o comprovante no WhatsApp\n\n"
+    if(pagamento === "Dinheiro"){
+        msg += `💵 Troco para: R$${troco}\n`
+    }
 
-    msg += "🚀 Liberação imediata após confirmação do pagamento.\n\n"
+    msg += "\n🙏 Obrigado pela preferência!"
 
-    msg += "📷 Você pode usar o QR Code do seu banco com a chave acima.\n"
-
-    msg += "━━━━━━━━━━━━━━\n"
+    finalizarPedido(msg)
 }
 
-    let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
-
-    window.location.href = url
-}
 function finalizarPedido(msg){
     let url = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
     window.location.href = url
 }
-function mostrarModalPix(callback){
+
+
+// ===============================
+// 📲 MODAL PIX (com QR Code + Copia e Cola)
+// ===============================
+
+function mostrarModalPix(valor, codigoPix, callback){
 
     let existente = document.getElementById("modalPix")
     if(existente) existente.remove()
@@ -1094,53 +1090,119 @@ function mostrarModalPix(callback){
         left:0;
         width:100%;
         height:100%;
-        background:rgba(0,0,0,0.8);
+        background:rgba(0,0,0,0.85);
         z-index:99999;
         display:flex;
         justify-content:center;
         align-items:center;
+        padding:15px;
     ">
 
         <div style="
             background:#fff;
             color:#000;
             padding:25px;
-            border-radius:12px;
-            max-width:400px;
-            width:90%;
+            border-radius:16px;
+            max-width:420px;
+            width:100%;
             text-align:center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
         ">
 
-            <h2>📲 Pagamento via PIX</h2>
+            <h2 style="color:#2d9e57; margin-bottom:5px;">📲 Pague com PIX</h2>
 
-            <p style="margin-top:10px;">
-                ⚠️ Seu pedido só será preparado após o envio do comprovante.
+            <p style="font-size:22px; font-weight:bold; color:#333; margin:10px 0;">
+                R$ ${valor.toFixed(2).replace(".", ",")}
             </p>
 
-            <p style="margin-top:10px;">
-                👉 Envie o comprovante no WhatsApp logo após finalizar.
+            <p style="font-size:13px; color:#666; margin-bottom:15px;">
+                Valor já preenchido automaticamente no seu banco 🎉
             </p>
 
-            <div style="margin-top:20px; display:flex; gap:10px;">
+            <!-- QR Code gerado via API pública -->
+            <div style="
+                background:#f5f5f5;
+                border-radius:12px;
+                padding:12px;
+                margin-bottom:15px;
+                display:flex;
+                justify-content:center;
+            ">
+                <img
+                    id="qrcodePix"
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(codigoPix)}"
+                    alt="QR Code PIX"
+                    style="width:200px; height:200px; border-radius:8px;"
+                    onerror="this.style.display='none'; document.getElementById('qrErro').style.display='block'"
+                />
+                <p id="qrErro" style="display:none; color:#999; font-size:13px;">
+                    Use o código abaixo para pagar
+                </p>
+            </div>
+
+            <!-- Copia e Cola -->
+            <p style="font-size:13px; font-weight:bold; color:#333; margin-bottom:6px;">
+                📋 PIX Copia e Cola:
+            </p>
+
+            <div style="
+                background:#f0f0f0;
+                border-radius:8px;
+                padding:10px;
+                font-size:11px;
+                word-break:break-all;
+                color:#444;
+                text-align:left;
+                max-height:80px;
+                overflow:auto;
+                margin-bottom:12px;
+                font-family:monospace;
+            " id="codigoPixTexto">
+                ${codigoPix}
+            </div>
+
+            <button onclick="copiarCodigoPix()" style="
+                width:100%;
+                background:#2d9e57;
+                color:#fff;
+                border:none;
+                padding:12px;
+                border-radius:8px;
+                font-size:15px;
+                font-weight:bold;
+                cursor:pointer;
+                margin-bottom:8px;
+            ">
+                📋 Copiar Código PIX
+            </button>
+
+            <p style="font-size:12px; color:#888; margin-bottom:15px;">
+                👤 Recebedor: <b>Carlos Henrique</b><br>
+                ⚠️ Envie o comprovante após o pagamento
+            </p>
+
+            <div style="display:flex; gap:8px;">
                 <button onclick="confirmarPix()" style="
                     flex:1;
-                    background:green;
+                    background:#2d9e57;
                     color:#fff;
                     border:none;
-                    padding:10px;
+                    padding:12px;
                     border-radius:8px;
                     font-weight:bold;
-                ">Já vou enviar</button>
+                    cursor:pointer;
+                ">✅ Já paguei!</button>
 
                 <button onclick="fecharModalPix()" style="
                     flex:1;
-                    background:red;
+                    background:#e53935;
                     color:#fff;
                     border:none;
-                    padding:10px;
+                    padding:12px;
                     border-radius:8px;
                     font-weight:bold;
-                ">Cancelar</button>
+                    cursor:pointer;
+                ">❌ Cancelar</button>
             </div>
 
         </div>
@@ -1148,8 +1210,45 @@ function mostrarModalPix(callback){
     `
 
     document.body.insertAdjacentHTML("beforeend", html)
-
     window._callbackPix = callback
+}
+
+function copiarCodigoPix(){
+    let codigo = document.getElementById("codigoPixTexto")?.innerText?.trim()
+    if(!codigo) return
+
+    if(navigator.clipboard){
+        navigator.clipboard.writeText(codigo).then(()=>{
+            mostrarToastSimples("✅ Código PIX copiado!")
+        }).catch(()=>{
+            copiarFallback(codigo)
+        })
+    } else {
+        copiarFallback(codigo)
+    }
+}
+
+function copiarFallback(texto){
+    let input = document.createElement("textarea")
+    input.value = texto
+    document.body.appendChild(input)
+    input.select()
+    document.execCommand("copy")
+    document.body.removeChild(input)
+    mostrarToastSimples("✅ Código PIX copiado!")
+}
+
+function mostrarToastSimples(mensagem){
+    let toast = document.getElementById("toast")
+    if(toast){
+        let textoAnterior = toast.innerText
+        toast.innerText = mensagem
+        toast.className = "show"
+        setTimeout(()=>{
+            toast.className = ""
+            toast.innerText = textoAnterior
+        }, 3000)
+    }
 }
 
 function fecharModalPix(){
