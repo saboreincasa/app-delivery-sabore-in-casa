@@ -359,18 +359,7 @@ h2 {
 }
 
 .card.destaque::before {
-    content: "🔥 MAIS PEDIDO";
-    position: absolute;
-    background: linear-gradient(45deg, #ff0000, #ff6a00);
-    color: white;
-    padding: 5px 12px;
-    font-size: 11px;
-    font-weight: 800;
-    top: 10px;
-    left: 10px;
-    border-radius: 20px;
-    box-shadow: 0 0 12px rgba(255,0,0,0.5);
-    z-index: 2;
+    content: none;
 }
 
 #combosSemana .card::after {
