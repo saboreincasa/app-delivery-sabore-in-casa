@@ -7,6 +7,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="styles.css">
 <style>
+/* 🔥 TOAST */
 #toast {
     visibility: hidden;
     min-width: 250px;
@@ -29,6 +30,7 @@
     opacity: 1;
     bottom: 80px;
 }
+/* 🔥 ENDEREÇO */
 .endereco-box{
     display:flex;
     flex-direction:column;
@@ -75,6 +77,7 @@
     <div id="combosSemana"></div>
     <div id="produtos"></div>
 
+    <!-- 🔥 CARRINHO -->
     <div id="carrinho">
 
         <h2>🛒 Carrinho</h2>
@@ -86,9 +89,11 @@
 
         <div id="infoFrete">🚚 Frete será calculado automaticamente</div>
 
+        <!-- 👤 NOME -->
         <h3 style="margin-top:16px;">👤 Seu nome</h3>
         <input id="nomeCliente" placeholder="Digite seu nome">
 
+        <!-- 📍 ENDEREÇO -->
         <div class="endereco-box">
             <h3>📍 Endereço de entrega</h3>
             <input id="rua" placeholder="Rua / Avenida">
@@ -99,6 +104,7 @@
             <div id="freteInfo">🚚 Frete será calculado automaticamente</div>
         </div>
 
+        <!-- 💳 PAGAMENTO -->
         <select id="pagamento">
             <option>Pix</option>
             <option>Dinheiro</option>
@@ -106,6 +112,7 @@
         </select>
         <input id="troco" placeholder="Troco para quanto?">
 
+        <!-- 🚀 BOTÃO FINAL -->
         <button class="enviar" onclick="enviarPedido()">
             📲 Enviar pedido no WhatsApp
         </button>
@@ -113,17 +120,21 @@
     </div>
 </div>
 
+<!-- 🛒 CARRINHO FLUTUANTE -->
 <div id="botaoCarrinho" onclick="scrollCarrinho()">
     🛒 <div id="contador">0</div>
 </div>
 
+<!-- 🔻 FOOTER -->
 <footer>
     © Sabore In Casa<br>
     Desenvolvido por <b>Carlos Henrique</b>
 </footer>
 
+<!-- 🔥 TOAST -->
 <div id="toast"></div>
 
+<!-- 🔥 QRCODE LOCAL (deve vir ANTES do app.js) -->
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 <script src="app.js"></script>
 
