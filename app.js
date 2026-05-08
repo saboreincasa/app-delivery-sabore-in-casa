@@ -3,10 +3,7 @@
 // ===============================
 let carrinho = []
 
-// 🔢 CONTADOR DE PEDIDOS
 let numeroPedido = Number(localStorage.getItem("numeroPedido")) || 0
-
-// Número do WhatsApp
 const whatsappNumero = "5531983391576"
 
 // ===============================
@@ -45,25 +42,27 @@ function getNivelInfo(nivel){
 }
 
 // ===============================
-// ⏰ HORÁRIO DE FUNCIONAMENTO
+// ⏰ HORÁRIO — SÓ AVISO, NUNCA BLOQUEIA
 // ===============================
 
 function verificarHorario(){
     const agora = new Date()
-    const dia   = agora.getDay()   // 0=dom 1=seg
-    const hora  = agora.getHours()
-    const min   = agora.getMinutes()
-    const h     = hora + min/60
+    const dia   = agora.getDay()
+    const h     = agora.getHours() + agora.getMinutes()/60
 
-    if(dia === 1) return { aberto: false, msg: "😴 Fechado hoje (segunda-feira)" }
+    if(dia === 1) return { aberto: false, msg: "😴 Fechado hoje (segunda-feira) • Pedidos entram na fila para amanhã!" }
 
     if(h >= 18 && h < 24){
-        return { aberto: true, msg: `🟢 Aberto agora • Fecha às 00:00` }
+        return { aberto: true, msg: "🟢 Aberto agora • Fecha às 00:00" }
     }
+
     const falta = 18 - h
     const hf = Math.floor(falta)
     const mf = Math.floor((falta % 1) * 60)
-    return { aberto: false, msg: `🔴 Fechado • Abre em ${hf > 0 ? hf+"h" : ""}${mf}min` }
+    return {
+        aberto: false,
+        msg: `🔴 Abrimos às 18h • Faltam ${hf > 0 ? hf+"h " : ""}${mf}min • Seu pedido entrará na fila de produção!`
+    }
 }
 
 function mostrarHorario(){
@@ -125,10 +124,10 @@ function verificarAniversario(){
 let cupomAplicado = null
 
 const cupons = {
-    "SABORE10":  { desconto:10, tipo:"percentual", condicao:()=> fidelidade.totalGasto >= 500,  msg:"10% off — Cliente Ouro!" },
-    "SABORE15":  { desconto:15, tipo:"percentual", condicao:()=> fidelidade.totalGasto >= 1000, msg:"15% off — Cliente Diamante!" },
-    "SABOREANIV":{ desconto:10, tipo:"percentual", condicao:()=> verificarAniversario(),         msg:"🎂 Desconto de aniversário!" },
-    "SABORECASA":{ desconto:10, tipo:"percentual", condicao:()=> true,                           msg:"Cupom especial Sabore In Casa!" }
+    "SABORE10":  { desconto:10, condicao:()=> fidelidade.totalGasto >= 500,  msg:"10% off — Cliente Ouro!" },
+    "SABORE15":  { desconto:15, condicao:()=> fidelidade.totalGasto >= 1000, msg:"15% off — Cliente Diamante!" },
+    "SABOREANIV":{ desconto:10, condicao:()=> verificarAniversario(),         msg:"🎂 Desconto de aniversário!" },
+    "SABORECASA":{ desconto:10, condicao:()=> true,                           msg:"Cupom especial Sabore In Casa!" }
 }
 
 function aplicarCupom(){
@@ -141,7 +140,7 @@ function aplicarCupom(){
     if(!cupom.condicao()){
         if(codigo === "SABORE10"){
             const falta = (500 - fidelidade.totalGasto).toFixed(2)
-            mostrarMsgCupom(`❌ Faltam R$${falta} em compras para usar este cupom`,"erro")
+            mostrarMsgCupom(`❌ Faltam R$${falta} em compras para desbloquear este cupom`,"erro")
         } else if(codigo === "SABOREANIV"){
             mostrarMsgCupom("❌ Válido apenas no seu mês de aniversário","erro")
         } else {
@@ -151,7 +150,7 @@ function aplicarCupom(){
     }
 
     cupomAplicado = { codigo, ...cupom }
-    mostrarMsgCupom(`✅ ${cupom.msg} (-${cupom.desconto}%)`,"sucesso")
+    mostrarMsgCupom(`✅ ${cupom.msg} (−${cupom.desconto}%)`,"sucesso")
     atualizarCarrinho()
 }
 
@@ -180,16 +179,15 @@ function mostrarPainelFidelidade(){
 
     const nivel = calcularNivel()
     const info  = getNivelInfo(nivel)
-
-    const metas = { bronze:200, prata:500, ouro:1000, diamante:null }
-    const proxNomes = { bronze:"Prata", prata:"Ouro", ouro:"Diamante", diamante:null }
+    const metas      = { bronze:200, prata:500, ouro:1000, diamante:null }
+    const proxNomes  = { bronze:"Prata", prata:"Ouro", ouro:"Diamante", diamante:null }
     const meta = metas[nivel]
     const pct  = meta ? Math.min(100,(fidelidade.totalGasto/meta)*100).toFixed(0) : 100
     const falta = meta ? Math.max(0,meta-fidelidade.totalGasto).toFixed(2) : 0
 
-    const pizzasPct = ((fidelidade.pizzasContadas%10)/10*100).toFixed(0)
+    const pizzasPct  = ((fidelidade.pizzasContadas%10)/10*100).toFixed(0)
     const pizzasRest = 10-(fidelidade.pizzasContadas%10)
-    const pedRest = Math.max(0,5-fidelidade.pedidosComComida)
+    const pedRest    = Math.max(0,5-fidelidade.pedidosComComida)
 
     let progresso = meta
         ? `<div class="fid-progresso-box">
@@ -319,7 +317,7 @@ function indicarAmigo(){
 
 function mostrarModalSubiuNivel(info){
     document.getElementById("modalNivel")?.remove()
-    let html = `
+    document.body.insertAdjacentHTML("beforeend",`
     <div id="modalNivel" style="position:fixed;inset:0;background:rgba(0,0,0,0.92);display:flex;justify-content:center;align-items:center;z-index:999999;padding:20px;">
       <div style="background:#1f1f1f;border-radius:22px;padding:32px 24px;text-align:center;max-width:340px;width:100%;border:2px solid ${info.cor};box-shadow:0 0 50px ${info.cor}88;animation:pixShow .3s ease">
         <div style="font-size:64px;margin-bottom:12px">${info.emoji}</div>
@@ -328,8 +326,7 @@ function mostrarModalSubiuNivel(info){
         <p style="color:#ccc;font-size:14px;margin-bottom:22px">${info.desc}</p>
         <button onclick="document.getElementById('modalNivel').remove()" style="background:${info.cor};border:none;color:#000;padding:14px;border-radius:12px;font-weight:800;font-size:16px;cursor:pointer;width:100%">🎉 Incrível!</button>
       </div>
-    </div>`
-    document.body.insertAdjacentHTML("beforeend", html)
+    </div>`)
 }
 
 function mostrarProgressoFidelidade(totalFinal, temComida){
@@ -353,15 +350,13 @@ function mostrarProgressoFidelidade(totalFinal, temComida){
         return
     }
 
-    // Pizza grátis
     if(fidelidade.pizzasContadas > 0 && fidelidade.pizzasContadas % 10 === 0){
         setTimeout(()=> mostrarToastSimples("🍕 Parabéns! Você ganhou uma pizza grátis! Avise no próximo pedido."), 2000)
     }
 
-    // Progresso
-    const metas = { bronze:200, prata:500, ouro:1000, diamante:null }
+    const metas     = { bronze:200, prata:500, ouro:1000, diamante:null }
     const proxNomes = { bronze:"Prata", prata:"Ouro", ouro:"Diamante" }
-    const meta = metas[nivelDepois]
+    const meta      = metas[nivelDepois]
     if(meta){
         const falta = Math.max(0, meta - fidelidade.totalGasto).toFixed(2)
         mostrarToastSimples(`🏆 Faltam R$${falta} para virar ${proxNomes[nivelDepois]}!`)
@@ -378,7 +373,7 @@ function mostrarBarraFidelidade(){
 
     const nivel = calcularNivel()
     const info  = getNivelInfo(nivel)
-    const metas = { bronze:200, prata:500, ouro:1000, diamante:null }
+    const metas     = { bronze:200, prata:500, ouro:1000, diamante:null }
     const proxNomes = { bronze:"Prata", prata:"Ouro", ouro:"Diamante", diamante:null }
     const meta = metas[nivel]
     const pct  = meta ? Math.min(100,(fidelidade.totalGasto/meta)*100) : 100
@@ -426,7 +421,7 @@ window.onload = function(){
     setInterval(mostrarHorario, 60000)
 
     if(verificarAniversario()){
-        setTimeout(()=> mostrarToastSimples("🎂 Feliz Aniversário! Use o cupom SABOREANIV para 10% off!"), 2000)
+        setTimeout(()=> mostrarToastSimples("🎂 Feliz Aniversário! Use SABOREANIV para 10% off!"), 2000)
     }
 }
 
@@ -590,7 +585,7 @@ function addCarrinho(nome, preco, tipo="outro"){
 }
 
 function contarItensFreteGratis(){
-    return carrinho.reduce((a,i)=>a + (i.tipo==="pizza"||i.tipo==="combo" ? i.qtd : 0), 0)
+    return carrinho.reduce((a,i)=>a+(i.tipo==="pizza"||i.tipo==="combo"?i.qtd:0),0)
 }
 
 function temComidaNoCarrinho(){
@@ -625,11 +620,11 @@ function atualizarCarrinho(){
 
     if(contador) contador.innerText = carrinho.length
 
-    // Calcular descontos
+    // Descontos
     let descRelampago = verificarRelampago() ? subtotal * 0.05 : 0
-    let descCupom = cupomAplicado ? (subtotal - descRelampago) * (cupomAplicado.desconto/100) : 0
-    let descDiamante = (calcularNivel()==="diamante" && !cupomAplicado) ? subtotal * 0.15 : 0
-    let totalComDesc = subtotal - descRelampago - descCupom - descDiamante
+    let descCupom     = cupomAplicado ? (subtotal - descRelampago) * (cupomAplicado.desconto/100) : 0
+    let descDiamante  = (calcularNivel()==="diamante" && !cupomAplicado) ? subtotal * 0.15 : 0
+    let totalComDesc  = subtotal - descRelampago - descCupom - descDiamante
 
     const totalEl = document.getElementById("total")
     if(totalEl) totalEl.innerText = totalComDesc.toFixed(2).replace(".",",")
@@ -644,21 +639,36 @@ function atualizarCarrinho(){
         descEl.innerHTML = tags
     }
 
-    // Frete info
-    const info = document.getElementById("infoFrete")
-    if(info){
+    // Frete info — texto melhorado
+    const infoEl = document.getElementById("infoFrete")
+    if(infoEl){
         const itens = contarItensFreteGratis()
         const freteGratis = itens>=5 || fidelidade.pedidosComComida>=5 || calcularNivel()==="diamante"
         if(freteGratis){
-            info.innerHTML = "🎉 FRETE GRÁTIS ATIVADO!"
-            info.style.color = "#2ecc71"
+            infoEl.innerHTML = `
+            <div class="frete-badge frete-gratis">
+                🎉 Parabéns! Você ganhou <b>FRETE GRÁTIS</b>!
+            </div>`
         } else {
-            info.innerHTML = `🚚 Faltam ${5-itens} item(s) para frete grátis`
-            info.style.color = ""
+            const falta = 5 - itens
+            const pct   = Math.min(100,(itens/5)*100)
+            infoEl.innerHTML = `
+            <div class="frete-badge frete-progresso">
+                <div class="frete-texto">
+                    🚚 Adicione mais <b>${falta} item(s)</b> com comida e ganhe <b>frete grátis!</b>
+                </div>
+                <div class="frete-barra-bg">
+                    <div class="frete-barra-fill" style="width:${pct}%"></div>
+                </div>
+                <div class="frete-steps">
+                    ${"🍕".repeat(itens)}${"⬜".repeat(Math.max(0,5-itens))}
+                    <span>${itens}/5</span>
+                </div>
+            </div>`
         }
     }
 
-    // Troco visível só no dinheiro
+    // Troco só no dinheiro
     const pag = document.getElementById("pagamento")?.value
     const trocoBox = document.getElementById("trocoBox")
     if(trocoBox) trocoBox.style.display = pag==="Dinheiro" ? "block" : "none"
@@ -726,7 +736,7 @@ function abrirModalBairros(){
       <div style="background:#fff;color:#000;width:90%;max-width:400px;padding:20px;border-radius:12px">
         <h2>🏘️ Selecione seu bairro</h2>
         <div style="max-height:300px;overflow:auto">${gerarListaBairros()}</div>
-        <button onclick="fecharModalBairro()" style="margin-top:14px;width:100%;padding:10px;background:red;color:#fff;border:none;border-radius:8px">Fechar</button>
+        <button onclick="fecharModalBairro()" style="margin-top:14px;width:100%;padding:10px;background:red;color:#fff;border:none;border-radius:8px;font-weight:bold">Fechar</button>
       </div>
     </div>`)
 }
@@ -735,7 +745,7 @@ function fecharModalBairro(){ document.getElementById("modalBairro")?.remove() }
 
 function gerarListaBairros(){
     return [...bairrosProximos,...bairrosMedios,...bairrosLongos]
-        .map(b=>`<div onclick="selecionarBairro('${b}')" style="padding:10px;border-bottom:1px solid #ddd;cursor:pointer">📍 ${b}</div>`)
+        .map(b=>`<div onclick="selecionarBairro('${b}')" style="padding:10px;border-bottom:1px solid #ddd;cursor:pointer;font-size:14px">📍 ${b}</div>`)
         .join("")
 }
 
@@ -744,7 +754,10 @@ function selecionarBairro(nome){
     fecharModalBairro()
     const frete = calcularFretePorBairro(nome)
     const tempo = tempoEstimadoPorBairro(nome)
-    document.getElementById("freteInfo").innerHTML = `🚚 Frete: <b>R$${frete}</b> &nbsp;|&nbsp; ⏱️ Estimativa: <b>${tempo}</b>`
+    document.getElementById("freteInfo").innerHTML = `
+    <div class="frete-badge frete-info-bairro">
+        🚚 Frete: <b>R$${frete},00</b> &nbsp;•&nbsp; ⏱️ Estimativa: <b>${tempo}</b>
+    </div>`
 }
 
 // ===============================
@@ -869,8 +882,9 @@ function gerarCodigoPix(chave,nome,cidade,valor,txid="PEDIDO"){
 // ===============================
 
 function enviarPedido(){
-    const status=verificarHorario()
-    if(!status.aberto){ mostrarToastSimples("⚠️ Estamos fechados! Abrimos Ter–Dom às 18h."); return }
+    // ✅ NUNCA bloqueia — apenas avisa se fechado
+    const status = verificarHorario()
+
     if(carrinho.length===0){ mostrarToastSimples("⚠️ Seu carrinho está vazio!"); return }
 
     const nomeCliente=document.getElementById("nomeCliente")?.value
@@ -884,15 +898,15 @@ function enviarPedido(){
     localStorage.setItem("numeroPedido",numeroPedido)
     const nf=numeroPedido.toString().padStart(2,"0")
 
-    const rua        = document.getElementById("rua")?.value||""
-    const numero     = document.getElementById("numero")?.value||""
-    const bairro     = document.getElementById("bairroSelecionado")?.value||""
-    const compl      = document.getElementById("complemento")?.value||""
+    const rua    = document.getElementById("rua")?.value||""
+    const numero = document.getElementById("numero")?.value||""
+    const bairro = document.getElementById("bairroSelecionado")?.value||""
+    const compl  = document.getElementById("complemento")?.value||""
     let end=`${rua}, Nº ${numero} - ${bairro}`
     if(compl) end+=` (${compl})`
 
-    const pagamento  = document.getElementById("pagamento")?.value||"Não informado"
-    const troco      = document.getElementById("troco")?.value||"-"
+    const pagamento = document.getElementById("pagamento")?.value||"Não informado"
+    const troco     = document.getElementById("troco")?.value||"-"
 
     let frete=calcularFretePorBairro(bairro)
     const tempo=tempoEstimadoPorBairro(bairro)
@@ -908,35 +922,58 @@ function enviarPedido(){
 
     const nivelInfo=getNivelInfo(calcularNivel())
 
-    let msg=`🍕 *SABORE IN CASA* 🍕\n📦 *Pedido Nº ${nf}*\n`
+    let msg=`🍕 *SABORE IN CASA* 🍕\n`
+    msg+=`📦 *Pedido Nº ${nf}*\n`
+
+    // Aviso se fora do horário
+    if(!status.aberto){
+        msg+=`⏰ *Pedido agendado — entrará na fila ao abrir às 18h*\n`
+    }
+
     msg+="━━━━━━━━━━━━━━━━━━━━━━━\n\n"
     msg+=`👤 *Cliente:* ${nomeCliente}\n`
     msg+=`🏆 *Nível:* ${nivelInfo.emoji} ${nivelInfo.nome}\n\n`
-    msg+="🛒 *ITENS:*\n"
-    carrinho.forEach(i=>{ msg+=`• ${i.qtd}x ${i.nome}\n` })
+    msg+="🛒 *ITENS DO PEDIDO:*\n"
+    carrinho.forEach(i=>{ msg+=`  • ${i.qtd}x ${i.nome}\n` })
+
     msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
     msg+=`💰 Subtotal: R$${sub.toFixed(2)}\n`
-    if(dr>0) msg+=`⚡ Desconto relâmpago: −R$${dr.toFixed(2)}\n`
+    if(dr>0) msg+=`⚡ Desconto relâmpago (5%): −R$${dr.toFixed(2)}\n`
     if(dc>0) msg+=`🎫 Cupom ${cupomAplicado.codigo}: −R$${dc.toFixed(2)}\n`
-    if(dd>0) msg+=`💎 Desconto Diamante: −R$${dd.toFixed(2)}\n`
+    if(dd>0) msg+=`💎 Desconto Diamante (15%): −R$${dd.toFixed(2)}\n`
     msg+=`🚚 Frete: ${freteGratis?"GRÁTIS 🎉":"R$"+frete.toFixed(2)}\n`
-    msg+=`💵 *TOTAL: R$${total.toFixed(2)}*\n`
-    msg+=`\n⏱️ Estimativa: *${tempo}*\n`
-    msg+=`📍 ${end}\n💳 ${pagamento}\n`
+    msg+=`\n💵 *TOTAL A PAGAR: R$${total.toFixed(2)}*\n`
+    msg+=`\n⏱️ Tempo estimado: *${tempo}*\n`
+    msg+=`📍 *Endereço:* ${end}\n`
+    msg+=`💳 *Pagamento:* ${pagamento}\n`
 
     if(pagamento==="Pix"){
         const cod=gerarCodigoPix("31983391576","Carlos Henrique","Belo Horizonte",total,"SABORECASA"+nf)
-        msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n💳 *PAGAMENTO VIA PIX*\n\n"
-        msg+=`💰 *Valor: R$${total.toFixed(2)}*\n\n📋 *PIX Copia e Cola:*\n\`${cod}\`\n\n`
-        msg+="📸 Envie o comprovante após o pagamento.\n⚡ Seu pedido entra na fila após confirmação.\n"
+
+        msg+="\n━━━━━━━━━━━━━━━━━━━━━━━\n"
+        msg+="💳 *INSTRUÇÕES DE PAGAMENTO PIX*\n\n"
+        msg+=`📌 *Valor exato:* R$${total.toFixed(2)}\n`
+        msg+=`👤 *Recebedor:* Carlos Henrique\n\n`
+        msg+="📋 *PIX Copia e Cola:*\n"
+        msg+=`\`${cod}\`\n\n`
+        msg+="✅ *Como pagar:*\n"
+        msg+="  1️⃣ Abra o app do seu banco\n"
+        msg+="  2️⃣ Vá em PIX → Copia e Cola\n"
+        msg+="  3️⃣ Cole o código acima\n"
+        msg+="  4️⃣ O valor já aparece preenchido!\n\n"
+        msg+="📸 *Após pagar:* Envie o comprovante aqui no WhatsApp\n"
+        msg+="⚡ Seu pedido entra na fila de preparo assim que confirmarmos!\n"
         msg+="━━━━━━━━━━━━━━━━━━━━━━━\n"
+
         mostrarProgressoFidelidade(total,temComidaNoCarrinho())
         mostrarModalPix(total,cod,()=>finalizarPedido(msg))
         return
     }
 
     if(pagamento==="Dinheiro") msg+=`💵 Troco para: R$${troco}\n`
-    msg+="\n🙏 Obrigado pela preferência!"
+    msg+="\n🙏 Obrigado pela preferência!\n"
+    msg+="Acompanhe seu pedido pelo WhatsApp."
+
     mostrarProgressoFidelidade(total,temComidaNoCarrinho())
     finalizarPedido(msg)
 }
@@ -965,11 +1002,21 @@ function mostrarModalPix(valor,codigoPix,callback){
           <label>PIX Copia e Cola</label>
           <textarea id="codigoPixTexto" readonly>${codigoPix}</textarea>
         </div>
-        <div class="pix-botoes">
-          <button class="btn-copiar" onclick="copiarCodigoPix()">📋 Copiar</button>
-          <button class="btn-pago"   onclick="confirmarPix()">📸 Enviar Comprovante</button>
+        <div class="pix-steps">
+          <div class="pix-step"><span>1️⃣</span> Abra o app do banco</div>
+          <div class="pix-step"><span>2️⃣</span> Vá em PIX → Copia e Cola</div>
+          <div class="pix-step"><span>3️⃣</span> Cole o código acima</div>
+          <div class="pix-step"><span>4️⃣</span> Confirme o pagamento</div>
         </div>
-        <div class="pix-info">👤 Carlos Henrique<br>⚠️ Envie o comprovante no WhatsApp</div>
+        <div class="pix-botoes">
+          <button class="btn-copiar" onclick="copiarCodigoPix()">📋 Copiar Código</button>
+          <button class="btn-pago"   onclick="confirmarPix()">📸 Enviei o Comprovante</button>
+        </div>
+        <div class="pix-info">
+          👤 <b>Carlos Henrique</b><br>
+          ⚠️ Envie o comprovante no WhatsApp após pagar<br>
+          ⚡ Pedido entra na fila assim que confirmarmos!
+        </div>
         <button class="fechar-pix" onclick="fecharModalPix()">✖ Fechar</button>
       </div>
     </div>`)
@@ -985,14 +1032,14 @@ function mostrarModalPix(valor,codigoPix,callback){
 function copiarCodigoPix(){
     const cod=document.getElementById("codigoPixTexto")?.value?.trim()
     if(!cod) return
-    navigator.clipboard?.writeText(cod).then(()=>mostrarToastSimples("✅ Código PIX copiado!")).catch(()=>copiarFallback(cod))
-        ?? copiarFallback(cod)
+    if(navigator.clipboard){
+        navigator.clipboard.writeText(cod).then(()=>mostrarToastSimples("✅ Código PIX copiado!")).catch(()=>copiarFallback(cod))
+    } else { copiarFallback(cod) }
 }
 function copiarFallback(t){ const el=document.createElement("textarea"); el.value=t; document.body.appendChild(el); el.select(); document.execCommand("copy"); document.body.removeChild(el); mostrarToastSimples("✅ Código PIX copiado!") }
 function fecharModalPix(){ document.getElementById("modalPix")?.remove() }
 function confirmarPix(){ fecharModalPix(); window._callbackPix?.() }
 
-// Troco dinâmico
 document.addEventListener("DOMContentLoaded",()=>{
     document.getElementById("pagamento")?.addEventListener("change", atualizarCarrinho)
 })
