@@ -40,7 +40,6 @@ body {
 img { display: block; max-width: 100%; }
 button { font-family: var(--font-body); cursor: pointer; transition: transform 0.15s, box-shadow 0.15s, background 0.15s; }
 button:active { transform: scale(0.95) !important; }
-input, select, textarea { font-family: var(--font-body); }
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #111; }
@@ -73,18 +72,18 @@ input, select, textarea { font-family: var(--font-body); }
 .logo-grande:hover { transform: scale(1.04); }
 
 /* =============================================
-   STATUS HORÁRIO
+   ⏰ STATUS HORÁRIO
 ============================================= */
 
 #statusHorario {
     text-align: center;
-    padding: 8px 16px;
+    padding: 10px 16px;
     font-size: 14px;
     font-weight: 700;
-    border-radius: 0 0 10px 10px;
+    letter-spacing: 0.3px;
 }
-.horario-aberto  { background: #1a3a1a; color: #2ecc71; }
-.horario-fechado { background: #3a1a1a; color: #ff6b6b; }
+.horario-aberto  { background: #0d2e0d; color: #4ade80; border-bottom: 2px solid #2ecc7133; }
+.horario-fechado { background: #2e0d0d; color: #fca5a5; border-bottom: 2px solid #e5393533; }
 
 /* =============================================
    ⚡ BANNER RELÂMPAGO
@@ -137,19 +136,11 @@ input, select, textarea { font-family: var(--font-body); }
 }
 .fid-barra-topo:hover { background: #2a2a2a; }
 
-.fid-nivel-badge { font-weight: 800; font-size: 14px; white-space: nowrap; }
-
-.fid-barra-mini-bg {
-    flex: 1;
-    height: 8px;
-    background: #333;
-    border-radius: 4px;
-    overflow: hidden;
-}
+.fid-nivel-badge  { font-weight: 800; font-size: 14px; white-space: nowrap; }
+.fid-barra-mini-bg { flex: 1; height: 8px; background: #333; border-radius: 4px; overflow: hidden; }
 .fid-barra-mini-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
-
-.fid-falta-texto { font-size: 12px; color: #aaa; white-space: nowrap; }
-.fid-ver-btn { font-size: 12px; color: var(--laranja); font-weight: 700; white-space: nowrap; }
+.fid-falta-texto  { font-size: 12px; color: #aaa; white-space: nowrap; }
+.fid-ver-btn      { font-size: 12px; color: var(--laranja); font-weight: 700; white-space: nowrap; }
 
 /* =============================================
    ENDEREÇO
@@ -217,6 +208,7 @@ input, select, textarea { font-family: var(--font-body); }
     color: black;
     font-size: 15px;
     outline: none;
+    font-family: var(--font-body);
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 .busca:focus { border-color: var(--laranja); box-shadow: 0 0 0 3px rgba(255,152,0,0.25); }
@@ -252,8 +244,8 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
    PRODUTOS
 ============================================= */
 
-#produtos       { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 16px; }
-#combosSemana   { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 16px; margin-bottom: 22px; }
+#produtos     { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 16px; }
+#combosSemana { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 16px; margin-bottom: 22px; }
 
 /* =============================================
    CARD
@@ -268,7 +260,7 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
     animation: fadeIn 0.4s ease;
     position: relative;
 }
-.card:hover { transform: scale(1.04); box-shadow: 0 8px 28px rgba(255,152,0,0.3); }
+.card:hover  { transform: scale(1.04); box-shadow: 0 8px 28px rgba(255,152,0,0.3); }
 .card:active { transform: scale(0.98); }
 
 .card img { width: 100%; height: 145px; object-fit: cover; transition: transform 0.3s, filter 0.3s; filter: brightness(0.95) contrast(1.05); }
@@ -298,13 +290,8 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
 
 .card.destaque { border: 2px solid #ffcc00; box-shadow: 0 0 22px rgba(255,204,0,0.6); }
 
-/* =============================================
-   BEBIDAS (layout lateral)
-============================================= */
-
-#produtos .card:not(.pizza-card):not(.destaque) {
-    display: flex; flex-direction: row; align-items: center; gap: 12px; padding: 12px; position: relative;
-}
+/* Bebidas layout lateral */
+#produtos .card:not(.pizza-card):not(.destaque) { display: flex; flex-direction: row; align-items: center; gap: 12px; padding: 12px; position: relative; }
 #produtos .card:not(.pizza-card):not(.destaque) img { width: 90px; height: 90px; object-fit: cover; border-radius: 10px; flex-shrink: 0; }
 #produtos .card:not(.pizza-card):not(.destaque) .card-content { flex: 1; padding: 0; padding-right: 115px; }
 #produtos .card:not(.pizza-card):not(.destaque) button { position: absolute; right: 12px; bottom: 12px; width: auto; padding: 8px 14px; font-size: 13px; margin-top: 0; }
@@ -350,17 +337,18 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
     width: 34px;
     height: 34px;
     border-radius: 8px;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 800;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 8px rgba(255,152,0,0.4);
+    line-height: 1;
 }
-.btn-qtd:hover { background: var(--laranja-esc); transform: scale(1.1); }
+.btn-qtd:hover { background: var(--laranja-esc); transform: scale(1.12); }
 
 .item-carr-qtd {
-    min-width: 28px;
+    min-width: 30px;
     text-align: center;
     font-weight: 800;
     font-size: 16px;
@@ -381,35 +369,91 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background 0.2s, color 0.2s;
 }
 .btn-remover:hover { background: var(--vermelho); color: white; }
 
-/* Total */
 .total { font-size: 22px; margin-top: 14px; font-weight: 800; color: var(--verde); }
 
 /* Tags de desconto */
 #descontosAtivos { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
 
 .desc-tag {
-    background: linear-gradient(135deg, #1a3a1a, #2a4a2a);
-    color: #2ecc71;
-    border: 1px solid #2ecc7166;
+    background: linear-gradient(135deg, #0d2e0d, #1a4a1a);
+    color: #4ade80;
+    border: 1px solid #2ecc7155;
     border-radius: 20px;
     padding: 4px 12px;
     font-size: 12px;
     font-weight: 700;
 }
 
-/* Frete info */
-#infoFrete {
-    margin-top: 10px;
+/* =============================================
+   🚚 FRETE BADGE — VISUAL PREMIUM
+============================================= */
+
+.frete-badge {
+    margin-top: 12px;
+    border-radius: 12px;
+    padding: 14px 16px;
     font-size: 14px;
-    text-align: center;
-    padding: 10px;
-    border-radius: 8px;
-    background: var(--bg-item);
     font-weight: 700;
 }
+
+.frete-gratis {
+    background: linear-gradient(135deg, #0d2e0d, #1a4a1a);
+    color: #4ade80;
+    border: 2px solid #2ecc7155;
+    text-align: center;
+    font-size: 15px;
+    animation: pulsoVerde 2s infinite;
+}
+
+@keyframes pulsoVerde {
+    0%   { box-shadow: 0 0 0 0 rgba(46,204,113,0.4); }
+    70%  { box-shadow: 0 0 0 10px rgba(46,204,113,0); }
+    100% { box-shadow: 0 0 0 0 rgba(46,204,113,0); }
+}
+
+.frete-progresso {
+    background: var(--bg-item);
+    border: 1px solid #444;
+}
+
+.frete-texto { margin-bottom: 10px; color: #eee; }
+.frete-texto b { color: var(--laranja); }
+
+.frete-barra-bg {
+    height: 10px;
+    background: #333;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+.frete-barra-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--laranja), #ffcc00);
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+
+.frete-steps {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: #aaa;
+}
+.frete-steps span { color: var(--laranja); font-weight: 800; margin-left: 6px; }
+
+.frete-info-bairro {
+    background: linear-gradient(135deg, #1a2a3a, #0d1f30);
+    color: #7dd3fc;
+    border: 1px solid #3b82f655;
+    text-align: center;
+    font-size: 14px;
+}
+.frete-info-bairro b { color: #fff; }
 
 /* =============================================
    🎫 CUPOM
@@ -435,11 +479,13 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
     text-transform: uppercase;
     letter-spacing: 1px;
     outline: none;
+    font-family: var(--font-body);
     transition: border-color 0.2s;
 }
 .cupom-box input:focus { border-color: var(--laranja); }
+.cupom-box input::placeholder { color: #666; letter-spacing: 0; text-transform: none; font-weight: 600; }
 
-.cupom-box button {
+.cupom-box .btn-aplicar {
     background: var(--laranja);
     border: none;
     color: white;
@@ -448,41 +494,104 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
     font-weight: 800;
     font-size: 14px;
 }
-.cupom-box button:hover { background: var(--laranja-esc); }
+.cupom-box .btn-aplicar:hover { background: var(--laranja-esc); }
 
 .btn-remover-cupom {
     background: transparent !important;
     border: 2px solid var(--vermelho) !important;
     color: var(--vermelho) !important;
     padding: 11px 14px !important;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 14px;
 }
 .btn-remover-cupom:hover { background: var(--vermelho) !important; color: white !important; }
 
 #msgCupom { font-size: 13px; margin-top: 6px; font-weight: 700; }
-.cupom-sucesso { color: #2ecc71; }
-.cupom-erro    { color: #ff6b6b; }
+.cupom-sucesso { color: #4ade80; }
+.cupom-erro    { color: #fca5a5; }
 
 /* =============================================
-   INPUTS CARRINHO
+   📝 FORMULÁRIO PEDIDO — INPUTS BRANCOS
 ============================================= */
 
-#carrinho input,
-#carrinho select {
+.form-section {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 18px;
+    margin-top: 18px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.form-section h3 {
+    font-family: var(--font-titulo);
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-section h3:not(:first-child) {
+    margin-top: 16px;
+}
+
+.form-input {
     width: 100%;
-    padding: 11px 13px;
-    margin-top: 10px;
-    border-radius: 8px;
-    border: 2px solid #444;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+    background: #ffffff;
+    color: #111;
     font-size: 14px;
-    background: #2a2a2a;
-    color: white;
+    font-weight: 600;
+    font-family: var(--font-body);
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
+    margin-bottom: 10px;
 }
-#carrinho input:focus,
-#carrinho select:focus { border-color: var(--laranja); box-shadow: 0 0 0 3px rgba(255,152,0,0.2); }
+.form-input:focus {
+    border-color: var(--laranja);
+    box-shadow: 0 0 0 3px rgba(255,152,0,0.15);
+}
+.form-input::placeholder { color: #aaa; font-weight: 500; }
 
-#carrinho select option { background: #1f1f1f; }
+.form-input.bairro-input {
+    cursor: pointer;
+    background: #fffbf5;
+    border-color: #ffd580;
+    color: #333;
+}
+.form-input.bairro-input:focus {
+    border-color: var(--laranja);
+}
+
+.form-select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+    background: #ffffff;
+    color: #111;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font-body);
+    outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    margin-bottom: 10px;
+}
+.form-select:focus {
+    border-color: var(--laranja);
+    box-shadow: 0 0 0 3px rgba(255,152,0,0.15);
+}
+
+#freteInfo { margin-top: 0; }
 
 /* =============================================
    BOTÃO WHATSAPP
@@ -515,7 +624,7 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
 ============================================= */
 
 .btn-add-bebida {
-    margin: 12px auto 0 auto;
+    margin: 12px auto 0;
     display: block;
     background: var(--laranja);
     border: none;
@@ -548,6 +657,7 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
     background: #1f1f1f;
     color: white;
     font-size: 13px;
+    font-family: var(--font-body);
     outline: none;
 }
 .linha-bebida-extra select:focus { border-color: var(--laranja); }
@@ -585,14 +695,12 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
 }
 #botaoCarrinho:hover { transform: scale(1.12); }
 
-#botaoCarrinho.pulsar {
-    animation: pulsarBtn 0.6s ease;
-}
+#botaoCarrinho.pulsar { animation: pulsarBtn 0.6s ease; }
 @keyframes pulsarBtn {
-    0%   { transform: scale(1); }
-    30%  { transform: scale(1.25); }
-    60%  { transform: scale(0.95); }
-    100% { transform: scale(1); }
+    0%  { transform: scale(1); }
+    30% { transform: scale(1.25); }
+    60% { transform: scale(0.95); }
+    100%{ transform: scale(1); }
 }
 
 #contador {
@@ -632,7 +740,10 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
     transition: opacity 0.3s;
 }
 #toast.show { visibility: visible; opacity: 1; animation: toastIn 0.3s ease; }
-@keyframes toastIn { from { opacity:0; transform:translateX(-50%) translateY(10px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+@keyframes toastIn {
+    from { opacity:0; transform:translateX(-50%) translateY(10px); }
+    to   { opacity:1; transform:translateX(-50%) translateY(0); }
+}
 
 /* =============================================
    MONTAGEM PIZZA
@@ -651,8 +762,7 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
 
 .pizza-preview {
     width: 200px; height: 200px;
-    object-fit: cover;
-    border-radius: 50%;
+    object-fit: cover; border-radius: 50%;
     margin: 0 auto 16px;
     box-shadow: 0 5px 24px rgba(0,0,0,0.8);
     transition: transform 0.3s;
@@ -660,10 +770,9 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
 .pizza-preview:hover { transform: scale(1.06); }
 
 .opcoes-pizza { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
-
 .campo { text-align: left; }
 .campo label { font-size: 14px; font-weight: 700; display: block; margin-bottom: 4px; }
-.campo select { width: 100%; padding: 10px; border-radius: 8px; border: none; color: #000; }
+.campo select { width: 100%; padding: 10px; border-radius: 8px; border: none; color: #000; font-family: var(--font-body); }
 
 .btn-montar {
     margin-top: 22px; width: 100%;
@@ -678,7 +787,7 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
 .voltar:hover { color: white; }
 
 /* =============================================
-   PIX MODAL
+   📲 PIX MODAL PREMIUM
 ============================================= */
 
 .modal-pix {
@@ -701,21 +810,42 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
 
 @keyframes pixShow { from { transform:scale(0.88); opacity:0; } to { transform:scale(1); opacity:1; } }
 
-.pix-topo h2  { font-family: var(--font-titulo); font-size: 26px; color: var(--verde-pix); margin-bottom: 10px; }
-.pix-valor    { font-family: var(--font-titulo); font-size: 40px; font-weight: 900; color: #111; margin-bottom: 8px; }
-.pix-topo p   { color: #666; font-size: 13px; }
+.pix-topo h2  { font-family: var(--font-titulo); font-size: 24px; color: var(--verde-pix); margin-bottom: 8px; }
+.pix-valor    { font-family: var(--font-titulo); font-size: 42px; font-weight: 900; color: #111; margin-bottom: 6px; line-height: 1; }
+.pix-topo p   { color: #666; font-size: 13px; margin-bottom: 4px; }
 
-.pix-qrcode-area { margin: 22px 0 18px; display: flex; justify-content: center; }
-
-#qrcode { padding: 14px; background: #fff; border-radius: 16px; border: 3px solid #e0e0e0; display: inline-block; line-height: 0; }
+.pix-qrcode-area { margin: 18px 0 14px; display: flex; justify-content: center; }
+#qrcode { padding: 14px; background: #fff; border-radius: 16px; border: 3px solid #e0e0e0; display: inline-block; line-height: 0; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
 #qrcode img, #qrcode canvas { border-radius: 6px; display: block; }
 
-.pix-copia-box { text-align: left; }
+.pix-copia-box { text-align: left; margin-bottom: 14px; }
 .pix-copia-box label { font-weight: 800; font-size: 13px; display: block; margin-bottom: 6px; color: #333; }
-.pix-copia-box textarea { width: 100%; height: 88px; resize: none; border: none; background: #f5f5f5; border-radius: 12px; padding: 12px; font-size: 11px; font-family: monospace; outline: none; color: #444; line-height: 1.5; }
+.pix-copia-box textarea { width: 100%; height: 80px; resize: none; border: 2px solid #e0e0e0; background: #f9f9f9; border-radius: 10px; padding: 10px; font-size: 11px; font-family: monospace; outline: none; color: #444; line-height: 1.5; }
 
-.pix-botoes { display: flex; gap: 10px; margin-top: 18px; }
-.pix-botoes button { flex: 1; border: none; padding: 15px 10px; border-radius: 12px; font-weight: 800; font-size: 14px; }
+/* Passos de como pagar */
+.pix-steps {
+    background: #f5f5f5;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    text-align: left;
+}
+
+.pix-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 0;
+    font-size: 13px;
+    color: #444;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+}
+.pix-step:last-child { border-bottom: none; }
+.pix-step span { font-size: 16px; }
+
+.pix-botoes { display: flex; gap: 10px; margin-bottom: 14px; }
+.pix-botoes button { flex: 1; border: none; padding: 14px 10px; border-radius: 12px; font-weight: 800; font-size: 14px; }
 
 .btn-copiar { background: #ff9800; color: #fff; box-shadow: 0 4px 14px rgba(255,152,0,0.4); }
 .btn-copiar:hover { background: #e68900; transform: scale(1.04); }
@@ -723,9 +853,19 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
 .btn-pago   { background: var(--verde-pix); color: #fff; box-shadow: 0 4px 14px rgba(46,125,50,0.4); }
 .btn-pago:hover { background: #1b5e20; transform: scale(1.04); }
 
-.pix-info { margin-top: 18px; color: #666; font-size: 13px; line-height: 1.7; padding: 12px; background: #f9f9f9; border-radius: 10px; }
+.pix-info {
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: #5d4037;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 10px;
+    text-align: left;
+}
 
-.fechar-pix { margin-top: 16px; border: none; background: none; color: var(--vermelho); font-weight: 700; font-size: 14px; cursor: pointer; padding: 6px 12px; border-radius: 8px; }
+.fechar-pix { margin-top: 4px; border: none; background: none; color: var(--vermelho); font-weight: 700; font-size: 14px; cursor: pointer; padding: 6px 12px; border-radius: 8px; }
 .fechar-pix:hover { background: #ffeaea; }
 
 /* =============================================
@@ -751,13 +891,7 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
     animation: pixShow 0.25s ease;
 }
 
-.fid-header {
-    padding: 24px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    position: relative;
-}
+.fid-header { padding: 24px; display: flex; align-items: center; gap: 16px; position: relative; }
 .fid-header h2 { font-size: 22px; margin-bottom: 4px; }
 .fid-header p  { color: #ccc; font-size: 13px; }
 
@@ -767,20 +901,9 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
     color: white; width: 32px; height: 32px;
     border-radius: 50%; font-size: 14px; font-weight: 800;
 }
-.fid-fechar:hover { background: rgba(255,255,255,0.2); }
 
-.fid-stats {
-    display: flex;
-    gap: 0;
-    border-top: 1px solid #333;
-    border-bottom: 1px solid #333;
-}
-.fid-stat {
-    flex: 1;
-    padding: 16px;
-    text-align: center;
-    border-right: 1px solid #333;
-}
+.fid-stats { display: flex; border-top: 1px solid #333; border-bottom: 1px solid #333; }
+.fid-stat  { flex: 1; padding: 16px; text-align: center; border-right: 1px solid #333; }
 .fid-stat:last-child { border-right: none; }
 .fid-stat-num   { display: block; font-size: 20px; font-weight: 900; color: var(--laranja); }
 .fid-stat-label { display: block; font-size: 11px; color: #888; margin-top: 2px; }
@@ -789,35 +912,25 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
 .fid-progresso-box p     { font-size: 14px; margin-bottom: 8px; }
 .fid-progresso-box small { font-size: 12px; color: #888; }
 
-.fid-barra-bg { height: 10px; background: #333; border-radius: 5px; overflow: hidden; margin-bottom: 4px; }
+.fid-barra-bg   { height: 10px; background: #333; border-radius: 5px; overflow: hidden; margin-bottom: 4px; }
 .fid-barra-fill { height: 100%; border-radius: 5px; transition: width 0.6s ease; }
 
-.fid-missao {
-    display: flex;
-    gap: 14px;
-    padding: 14px 20px;
-    border-top: 1px solid #2a2a2a;
-    align-items: flex-start;
-}
-.fid-missao-icone { font-size: 28px; flex-shrink: 0; }
-.fid-missao-info  { flex: 1; }
+.fid-missao      { display: flex; gap: 14px; padding: 14px 20px; border-top: 1px solid #2a2a2a; align-items: flex-start; }
+.fid-missao-icone{ font-size: 28px; flex-shrink: 0; }
+.fid-missao-info { flex: 1; }
 .fid-missao-info b     { font-size: 14px; display: block; margin-bottom: 4px; }
 .fid-missao-info small { font-size: 12px; color: #888; display: block; margin-top: 2px; }
 
-.fid-mini-barra-bg { height: 6px; background: #333; border-radius: 3px; overflow: hidden; margin: 6px 0 2px; }
+.fid-mini-barra-bg   { height: 6px; background: #333; border-radius: 3px; overflow: hidden; margin: 6px 0 2px; }
 .fid-mini-barra-fill { height: 100%; background: var(--laranja); border-radius: 3px; transition: width 0.5s; }
 
-.fid-cupons { padding: 16px 20px; border-top: 1px solid #2a2a2a; }
+.fid-cupons    { padding: 16px 20px; border-top: 1px solid #2a2a2a; }
 .fid-cupons h3 { font-size: 15px; margin-bottom: 10px; }
 
 .fid-cupom-item {
     display: flex; align-items: center; gap: 8px;
-    padding: 10px 12px;
-    background: #222;
-    border-radius: 8px;
-    margin-bottom: 6px;
-    font-size: 13px;
-    flex-wrap: wrap;
+    padding: 10px 12px; background: #222;
+    border-radius: 8px; margin-bottom: 6px; font-size: 13px; flex-wrap: wrap;
 }
 .fid-cupom-item button {
     margin-left: auto;
@@ -830,9 +943,7 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
 .fid-btn-fechar {
     width: 100%; padding: 16px;
     background: #2a2a2a; border: none;
-    color: #aaa; font-size: 15px; font-weight: 700;
-    cursor: pointer;
-    transition: background 0.2s;
+    color: #aaa; font-size: 15px; font-weight: 700; cursor: pointer;
 }
 .fid-btn-fechar:hover { background: #333; color: white; }
 
@@ -842,12 +953,11 @@ h2 { font-family: var(--font-titulo); margin: 16px 0 12px; font-size: 22px; }
 
 footer {
     text-align: center;
-    margin-top: 50px;
     font-size: 13px;
     color: #aaa;
-    padding-bottom: 90px;
+    padding: 30px 0 90px;
     max-width: 1000px;
-    margin-left: auto; margin-right: auto;
+    margin: 30px auto 0;
 }
 
 /* =============================================
@@ -868,23 +978,21 @@ footer {
 
 @media (max-width: 600px) {
     .header-topo { height: 155px; }
-    .logo-grande { height: 80px; }
-    #banner { height: 150px; }
-    .container { padding: 12px; }
-    .endereco { margin: 10px 12px; }
+    .logo-grande  { height: 80px; }
+    #banner       { height: 150px; }
+    .container    { padding: 12px; }
+    .endereco     { margin: 10px 12px; }
     .linha button { font-size: 13px; padding: 11px 8px; }
     #produtos, #combosSemana { grid-template-columns: 1fr; }
     h2 { font-size: 19px; }
-    .card h3 { font-size: 15px; }
-    .preco { font-size: 18px; }
 
     .item-carr { flex-direction: column; align-items: flex-start; }
     .item-carr-ctrl { align-self: flex-end; }
 
     #botaoCarrinho { bottom: 14px; right: 14px; width: 60px; height: 60px; font-size: 24px; }
 
-    .pix-box { padding: 20px 16px; }
-    .pix-valor { font-size: 32px; }
+    .pix-box    { padding: 20px 16px; }
+    .pix-valor  { font-size: 34px; }
     .pix-botoes { flex-direction: column; }
     #qrcode img, #qrcode canvas { width: 200px !important; height: 200px !important; }
 
@@ -892,16 +1000,12 @@ footer {
     .pizza-preview { width: 160px; height: 160px; }
 
     .fid-barra-topo { flex-wrap: wrap; gap: 6px; }
-    .fid-stats { flex-direction: row; }
-    .fid-stat-num { font-size: 16px; }
-
-    #bannerRelampago { font-size: 13px; }
-
-    .cupom-box { flex-direction: column; }
+    .cupom-box      { flex-direction: column; }
     .cupom-box input, .cupom-box button { width: 100%; }
+
+    .form-section { padding: 14px; }
 }
 
-/* iPhone safe area */
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
     #botaoCarrinho { bottom: calc(20px + env(safe-area-inset-bottom)); }
     footer { padding-bottom: calc(90px + env(safe-area-inset-bottom)); }
