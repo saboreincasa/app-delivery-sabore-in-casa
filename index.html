@@ -1,32 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Sabore In Casa</title>
-
 <link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="style.css">
-
+<link rel="stylesheet" href="styles.css">
 <style>
-
-/* 🔥 INPUTS PROFISSIONAIS */
-input, select{
-    width:100%;
-    padding:12px;
-    margin-top:6px;
-    border-radius:8px;
-    border:1px solid #ccc;
-    outline:none;
-    font-size:14px;
-}
-
-input:focus, select:focus{
-    border:2px solid #ff6600;
-}
-
 /* 🔥 TOAST */
 #toast {
     visibility: hidden;
@@ -45,13 +25,11 @@ input:focus, select:focus{
     opacity: 0;
     transition: opacity 0.5s, bottom 0.5s;
 }
-
 #toast.show {
     visibility: visible;
     opacity: 1;
     bottom: 80px;
 }
-
 /* 🔥 ENDEREÇO */
 .endereco-box{
     display:flex;
@@ -59,33 +37,12 @@ input:focus, select:focus{
     gap:8px;
     margin-bottom:10px;
 }
-
 #bairroSelecionado{
     background:#f5f5f5;
     cursor:pointer;
 }
-
-/* 🔥 BOTÃO FINAL */
-.enviar{
-    background:#ff6600;
-    color:#fff;
-    padding:15px;
-    border:none;
-    border-radius:10px;
-    font-size:16px;
-    width:100%;
-    margin-top:10px;
-    cursor:pointer;
-}
-
-.enviar:hover{
-    opacity:0.9;
-}
-
 </style>
-
 </head>
-
 <body>
 
 <header class="header-topo">
@@ -93,101 +50,92 @@ input:focus, select:focus{
 </header>
 
 <div class="endereco">
-📍 Rua Maria de Lourdes da Cruz Nº 378<br>
-Bairro Mantiqueira – Belo Horizonte
-<br>
-<button onclick="abrirMapa()">📍 Ver no mapa</button>
+    📍 Rua Maria de Lourdes da Cruz Nº 378<br>
+    Bairro Mantiqueira – Belo Horizonte
+    <br>
+    <button onclick="abrirMapa()">📍 Ver no mapa</button>
 </div>
 
 <div id="banner" class="banner" style="cursor:pointer;"></div>
 
 <div class="container">
 
-<input class="busca" id="busca" placeholder="🔎 Buscar produto">
+    <input class="busca" id="busca" placeholder="🔎 Buscar produto">
 
-<div class="btn-flutuantes">
+    <div class="btn-flutuantes">
+        <div class="linha">
+            <button onclick="abrirPizzas()">🍕 Pizzas</button>
+            <button onclick="filtrar('bebidas')">🥤 Bebidas</button>
+        </div>
+        <div class="linha">
+            <button onclick="filtrar('combo')">🎁 Combos</button>
+            <button onclick="filtrar('snacks')">🍟 Snacks</button>
+        </div>
+    </div>
 
-<div class="linha">
-<button onclick="abrirPizzas()">🍕 Pizzas</button>
-<button onclick="filtrar('bebidas')">🥤 Bebidas</button>
-</div>
+    <h2 id="tituloCombos">⭐ Combos da Semana</h2>
+    <div id="combosSemana"></div>
+    <div id="produtos"></div>
 
-<div class="linha">
-<button onclick="filtrar('combo')">🎁 Combos</button>
-<button onclick="filtrar('snacks')">🍟 Snacks</button>
-</div>
+    <!-- 🔥 CARRINHO -->
+    <div id="carrinho">
 
-</div>
+        <h2>🛒 Carrinho</h2>
+        <div id="lista"></div>
 
-<h2 id="tituloCombos">⭐ Combos da Semana</h2>
-<div id="combosSemana"></div>
+        <div class="total">
+            Total + entrega: R$ <span id="total">0.00</span>
+        </div>
 
-<div id="produtos"></div>
+        <div id="infoFrete">🚚 Frete será calculado automaticamente</div>
 
-<!-- 🔥 CARRINHO -->
-<div id="carrinho">
+        <!-- 👤 NOME -->
+        <h3 style="margin-top:16px;">👤 Seu nome</h3>
+        <input id="nomeCliente" placeholder="Digite seu nome">
 
-<h2>🛒 Carrinho</h2>
+        <!-- 📍 ENDEREÇO -->
+        <div class="endereco-box">
+            <h3>📍 Endereço de entrega</h3>
+            <input id="rua" placeholder="Rua / Avenida">
+            <input id="numero" placeholder="Número">
+            <input id="complemento" placeholder="Complemento (opcional)">
+            <h3>🏘️ Bairro</h3>
+            <input id="bairroSelecionado" placeholder="Clique para selecionar bairro" readonly onclick="abrirModalBairros()">
+            <div id="freteInfo">🚚 Frete será calculado automaticamente</div>
+        </div>
 
-<div id="lista"></div>
+        <!-- 💳 PAGAMENTO -->
+        <select id="pagamento">
+            <option>Pix</option>
+            <option>Dinheiro</option>
+            <option>Cartão</option>
+        </select>
+        <input id="troco" placeholder="Troco para quanto?">
 
-<div class="total">
-Total + entrega: R$ <span id="total">0.00</span>
-</div>
+        <!-- 🚀 BOTÃO FINAL -->
+        <button class="enviar" onclick="enviarPedido()">
+            📲 Enviar pedido no WhatsApp
+        </button>
 
-<!-- 👤 NOME (CORREÇÃO IMPORTANTE) -->
-<h3>👤 Seu nome</h3>
-<input id="nomeCliente" placeholder="Digite seu nome">
-
-<!-- 📍 ENDEREÇO -->
-<div class="endereco-box">
-
-<h3>📍 Endereço de entrega</h3>
-
-<input id="rua" placeholder="Rua / Avenida">
-<input id="numero" placeholder="Número">
-<input id="complemento" placeholder="Complemento (opcional)">
-
-<h3>🏘️ Bairro</h3>
-
-<input id="bairroSelecionado" placeholder="Clique para selecionar bairro" readonly onclick="abrirModalBairros()">
-
-<div id="freteInfo">🚚 Frete será calculado automaticamente</div>
-
-</div>
-
-<!-- 💳 PAGAMENTO -->
-<select id="pagamento">
-<option>PIX</option>
-<option>Dinheiro</option>
-<option>Cartão</option>
-</select>
-
-<input id="troco" placeholder="Troco para quanto?">
-
-<!-- 🚀 BOTÃO FINAL -->
-<button class="enviar" onclick="enviarPedido()">
-Enviar pedido no WhatsApp
-</button>
-
-</div>
-
+    </div>
 </div>
 
 <!-- 🛒 CARRINHO FLUTUANTE -->
 <div id="botaoCarrinho" onclick="scrollCarrinho()">
-🛒 <div id="contador">0</div>
+    🛒 <div id="contador">0</div>
 </div>
 
 <!-- 🔻 FOOTER -->
 <footer>
-© Sabore In Casa<br>
-Desenvolvido por <b>Carlos Henrique</b>
+    © Sabore In Casa<br>
+    Desenvolvido por <b>Carlos Henrique</b>
 </footer>
 
 <!-- 🔥 TOAST -->
 <div id="toast"></div>
 
+<!-- 🔥 QRCODE LOCAL (deve vir ANTES do app.js) -->
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 <script src="app.js"></script>
 
 </body>
