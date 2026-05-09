@@ -665,10 +665,58 @@ footer { text-align:center; font-size:15px; color:#aaa; padding:30px 0 95px; max
 ============================================= */
 
 @media (min-width:1200px) {
-    body { background:#0b0b0b; }
-    #produtos { grid-template-columns:1fr; }
-    #produtos .card { max-width:700px; margin:auto; }
-    .combo-slide { flex:0 0 320px; }
+
+    body{
+        background:#0b0b0b;
+    }
+
+    .container{
+        max-width:1400px;
+        margin:auto;
+        padding:24px;
+    }
+
+    #produtos{
+        grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+        gap:24px;
+    }
+
+    #produtos .card{
+        max-width:100%;
+        margin:0;
+    }
+
+    .header-topo{
+        height:320px;
+    }
+
+    .logo-grande{
+        height:150px;
+    }
+
+    #banner{
+        height:320px;
+        max-width:1400px;
+    }
+
+    .combos-carrossel{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+        gap:20px;
+    }
+
+    .combo-slide{
+        flex:none;
+    }
+
+    #carrinho{
+        max-width:1400px;
+    }
+
+    footer{
+        max-width:1400px;
+    }
+
 }
 
 @media (min-width:601px) and (max-width:900px) {
