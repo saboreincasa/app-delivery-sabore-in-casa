@@ -1,689 +1,1006 @@
 /* =============================================
-   SABORE IN CASA — CSS COMPLETO v5
+   SABORE IN CASA — CSS COMPLETO v5 PREMIUM
 ============================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Montserrat:wght@700;800;900&display=swap');
 
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-
-:root {
-    --laranja:     #ff9800;
-    --laranja-esc: #e68900;
-    --verde:       #2ecc71;
-    --verde-pix:   #2e7d32;
-    --verde-wpp:   #25D366;
-    --vermelho:    #e53935;
-    --bg-dark:     #111;
-    --bg-card:     #1f1f1f;
-    --bg-item:     #2a2a2a;
-    --radius:      14px;
-    --shadow:      0 4px 24px rgba(0,0,0,0.5);
-    --font-body:   'Nunito', Arial, sans-serif;
-    --font-titulo: 'Montserrat', Arial, sans-serif;
-    --fs-base:     17px;
-    --fs-input:    17px;
-    --fs-label:    16px;
-    --fs-btn:      17px;
-    --fs-preco:    22px;
-    --fs-preco-destaque: 28px;
+*, *::before, *::after{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
 }
 
-html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
-body { font-family:var(--font-body); background:var(--bg-dark); color:#fff; min-height:100vh; overflow-x:hidden; font-size:var(--fs-base); line-height:1.5; }
-img  { display:block; max-width:100%; }
-button { font-family:var(--font-body); cursor:pointer; transition:transform 0.15s, box-shadow 0.15s, background 0.15s; }
-button:active { transform:scale(0.95) !important; }
+:root{
+    --laranja:#ff9800;
+    --laranja-esc:#e68900;
+    --laranja-claro:#ffb74d;
 
-::-webkit-scrollbar { width:6px; }
-::-webkit-scrollbar-track { background:#111; }
-::-webkit-scrollbar-thumb { background:var(--laranja); border-radius:10px; }
+    --verde:#2ecc71;
+    --verde-pix:#2e7d32;
+    --verde-wpp:#25D366;
+
+    --vermelho:#e53935;
+
+    --bg-dark:#111;
+    --bg-dark-2:#181818;
+    --bg-card:#1f1f1f;
+    --bg-item:#2a2a2a;
+
+    --texto:#ffffff;
+    --texto-soft:#cccccc;
+    --texto-muted:#888888;
+
+    --radius:14px;
+    --radius-lg:22px;
+
+    --shadow:
+    0 4px 24px rgba(0,0,0,.5);
+
+    --shadow-hover:
+    0 10px 30px rgba(255,152,0,.25);
+
+    --font-body:'Nunito', Arial, sans-serif;
+    --font-titulo:'Montserrat', Arial, sans-serif;
+
+    --fs-base:17px;
+    --fs-input:17px;
+    --fs-label:16px;
+    --fs-btn:17px;
+    --fs-preco:22px;
+    --fs-preco-destaque:28px;
+}
+
+html{
+    scroll-behavior:smooth;
+    -webkit-text-size-adjust:100%;
+}
+
+body{
+    font-family:var(--font-body);
+    background:
+    radial-gradient(circle at top,#1d1d1d 0%, #111 40%);
+    color:var(--texto);
+    min-height:100vh;
+    overflow-x:hidden;
+    font-size:var(--fs-base);
+    line-height:1.5;
+}
 
 /* =============================================
-   MODAL CADASTRO CHECKOUT
+   GERAL
 ============================================= */
 
-.modal-cadastro {
-    position:fixed; inset:0; background:rgba(0,0,0,0.95);
-    display:flex; justify-content:center; align-items:center;
-    z-index:999999; padding:16px; backdrop-filter:blur(8px); overflow-y:auto;
+img{
+    display:block;
+    max-width:100%;
 }
 
-.cadastro-box {
-    background:#1a1a1a; width:100%; max-width:430px;
-    border-radius:22px; overflow:hidden;
-    box-shadow:0 20px 60px rgba(0,0,0,0.8);
-    animation:pixShow 0.3s ease; margin:auto;
+button{
+    font-family:var(--font-body);
+    cursor:pointer;
+    transition:
+    transform .18s,
+    box-shadow .18s,
+    background .18s,
+    opacity .18s;
 }
 
-.cadastro-header {
-    background:linear-gradient(135deg,#ff6600,#ff9800,#ffcc00);
-    padding:28px 24px 20px; text-align:center; color:#000;
-}
-.cadastro-logo { font-size:20px; font-weight:900; margin-bottom:8px; letter-spacing:1px; }
-.cadastro-header h2 { font-family:var(--font-titulo); font-size:24px; font-weight:900; margin-bottom:6px; line-height:1.2; }
-.cadastro-header h2 span { color:#7d2d00; }
-.cadastro-header p { font-size:15px; opacity:0.8; }
-
-.cadastro-beneficios {
-    display:grid; grid-template-columns:1fr 1fr; gap:8px;
-    padding:16px; background:#222;
-}
-.beneficio-item {
-    background:#2a2a2a; border-radius:10px; padding:12px;
-    font-size:14px; font-weight:700; text-align:center; border:1px solid #333;
+button:active{
+    transform:scale(.95)!important;
 }
 
-.cadastro-form { padding:22px; }
-.cadastro-form label { display:block; font-size:var(--fs-label); font-weight:800; color:#ccc; margin-bottom:6px; margin-top:16px; }
-.cadastro-form label:first-child { margin-top:0; }
-
-.cadastro-input {
-    width:100%; padding:15px 16px; border-radius:14px; border:2px solid #444;
-    background:#fff; color:#111; font-size:var(--fs-input); font-weight:600;
-    font-family:var(--font-body); outline:none;
-    transition:border-color 0.2s, box-shadow 0.2s;
+a{
+    text-decoration:none;
+    color:inherit;
 }
-.cadastro-input:focus { border-color:var(--laranja); box-shadow:0 0 0 3px rgba(255,152,0,0.2); }
-.cadastro-input::placeholder { color:#aaa; font-weight:500; }
 
-.cadastro-erro { color:#fca5a5; font-size:14px; font-weight:700; margin-top:8px; min-height:20px; }
-
-.btn-cadastrar {
-    width:100%; background:linear-gradient(135deg,#ff6600,#ff9800); color:#fff;
-    border:none; padding:17px; border-radius:14px; font-weight:900; font-size:var(--fs-btn);
-    margin-top:20px; box-shadow:0 6px 20px rgba(255,152,0,0.5); font-family:var(--font-titulo);
+::-webkit-scrollbar{
+    width:6px;
 }
-.btn-cadastrar:hover { transform:scale(1.03); }
 
-.btn-pular {
-    width:100%; background:transparent; border:none; color:#666;
-    font-size:14px; padding:10px; margin-top:8px; text-decoration:underline; cursor:pointer;
+::-webkit-scrollbar-track{
+    background:#111;
+}
+
+::-webkit-scrollbar-thumb{
+    background:var(--laranja);
+    border-radius:10px;
+}
+
+/* =============================================
+   ANIMAÇÕES
+============================================= */
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes pulse{
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.03);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+
+@keyframes glow{
+    0%{
+        box-shadow:0 0 0 rgba(255,152,0,0);
+    }
+
+    50%{
+        box-shadow:0 0 20px rgba(255,152,0,.35);
+    }
+
+    100%{
+        box-shadow:0 0 0 rgba(255,152,0,0);
+    }
+}
+
+/* =============================================
+   HEADER
+============================================= */
+
+.header-topo{
+    position:relative;
+    height:240px;
+
+    background:
+    linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.55)),
+    url("imagens/capa.png")
+    center center/cover no-repeat;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+}
+
+.header-topo::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:
+    radial-gradient(circle at center,
+    rgba(255,152,0,.15),
+    transparent 70%);
+}
+
+.logo-container{
+    position:relative;
+    z-index:2;
+    text-align:center;
+}
+
+.logo-grande{
+    width:auto;
+    height:115px;
+    max-width:92%;
+    object-fit:contain;
+
+    filter:
+    drop-shadow(0 6px 18px rgba(0,0,0,.8));
+
+    transition:
+    transform .3s,
+    filter .3s;
+}
+
+.logo-grande:hover{
+    transform:scale(1.05);
+}
+
+/* =============================================
+   STATUS
+============================================= */
+
+#statusHorario{
+    text-align:center;
+    padding:13px 16px;
+    font-size:16px;
+    font-weight:800;
+}
+
+.horario-aberto{
+    background:#0d2e0d;
+    color:#4ade80;
+    border-bottom:2px solid rgba(46,204,113,.25);
+}
+
+.horario-fechado{
+    background:#2e0d0d;
+    color:#fca5a5;
+    border-bottom:2px solid rgba(229,57,53,.25);
 }
 
 /* =============================================
    BOAS VINDAS
 ============================================= */
 
-#boasVindas {
-    display:none; background:linear-gradient(135deg,#1a2a1a,#0d1f0d);
-    color:#4ade80; text-align:center; padding:12px 16px;
-    font-size:16px; font-weight:700; border-bottom:2px solid #2ecc7133; cursor:pointer;
+#boasVindas{
+    display:none;
+
+    background:
+    linear-gradient(135deg,#143214,#0d1f0d);
+
+    color:#4ade80;
+
+    text-align:center;
+
+    padding:13px 16px;
+
+    font-size:16px;
+    font-weight:800;
+
+    border-bottom:
+    2px solid rgba(46,204,113,.25);
+
+    animation:fadeIn .4s ease;
 }
-#boasVindas:hover { background:#1f321f; }
-
-/* =============================================
-   PERFIL
-============================================= */
-
-.perfil-dados { padding:16px 20px; }
-.perfil-dados h3 { font-size:16px; margin-bottom:12px; color:#aaa; }
-.perfil-linha { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid #2a2a2a; font-size:16px; }
-.perfil-linha span { color:#888; }
-.perfil-linha b { color:#fff; }
-
-/* =============================================
-   HEADER
-============================================= */
-
-.header-topo {
-    position:relative; height:220px;
-    background:url("imagens/capa.png") no-repeat center center / cover;
-    display:flex; align-items:center; justify-content:center; overflow:hidden;
-}
-.overlay { position:absolute; inset:0; background:rgba(0,0,0,0.28); z-index:1; }
-.logo-container { position:relative; z-index:2; text-align:center; }
-.logo-grande { width:auto; height:110px; max-width:90%; object-fit:contain; filter:drop-shadow(0 5px 20px rgba(0,0,0,0.8)); transition:transform 0.3s; }
-.logo-grande:hover { transform:scale(1.04); }
-
-/* =============================================
-   STATUS HORARIO
-============================================= */
-
-#statusHorario { text-align:center; padding:12px 16px; font-size:16px; font-weight:700; }
-.horario-aberto  { background:#0d2e0d; color:#4ade80; border-bottom:2px solid #2ecc7133; }
-.horario-fechado { background:#2e0d0d; color:#fca5a5; border-bottom:2px solid #e5393533; }
-
-/* =============================================
-   RELAMPAGO
-============================================= */
-
-#bannerRelampago {
-    display:none; background:linear-gradient(135deg,#ff6600,#ffcc00); color:#000;
-    padding:13px 16px; text-align:center; align-items:center; justify-content:center;
-    gap:10px; font-weight:800; font-size:16px; flex-wrap:wrap;
-}
-#bannerRelampago .rel-countdown {
-    background:#000; color:#ffcc00; border-radius:8px; padding:5px 14px;
-    font-size:20px; font-weight:900; font-family:monospace;
-}
-
-/* =============================================
-   BARRA FIDELIDADE
-============================================= */
-
-#barraFidelidade { max-width:1000px; margin:8px auto; padding:0 16px; }
-
-.fid-barra-topo {
-    background:var(--bg-card); border-radius:var(--radius); padding:13px 16px;
-    display:flex; align-items:center; gap:10px; cursor:pointer; border:1px solid #333;
-}
-.fid-barra-topo:hover { background:#2a2a2a; }
-.fid-nivel-badge  { font-weight:800; font-size:15px; white-space:nowrap; }
-.fid-barra-mini-bg { flex:1; height:9px; background:#333; border-radius:5px; overflow:hidden; }
-.fid-barra-mini-fill { height:100%; border-radius:5px; transition:width 0.5s ease; }
-.fid-falta-texto  { font-size:13px; color:#aaa; white-space:nowrap; }
-.fid-ver-btn      { font-size:14px; color:var(--laranja); font-weight:800; white-space:nowrap; }
-
-/* =============================================
-   ENDERECO
-============================================= */
-
-.endereco {
-    background:var(--bg-card); padding:16px; text-align:center;
-    font-size:16px; margin:10px auto; border-radius:var(--radius); line-height:1.6; max-width:1000px;
-}
-.endereco button {
-    margin-top:10px; padding:11px 20px; border:none; border-radius:10px;
-    background:var(--laranja); color:white; font-weight:700; font-size:15px;
-    box-shadow:0 3px 12px rgba(255,152,0,0.4);
-}
-.endereco button:hover { background:var(--laranja-esc); transform:scale(1.04); }
 
 /* =============================================
    BANNER
 ============================================= */
 
-#banner {
-    width:100%; max-width:1000px; height:220px; margin:12px auto;
-    border-radius:var(--radius); background-size:cover; background-position:center;
-    transition:background-image 0.5s ease-in-out; cursor:pointer; box-shadow:var(--shadow);
+#banner{
+    width:100%;
+    max-width:1100px;
+    height:240px;
+
+    margin:14px auto;
+
+    border-radius:18px;
+
+    background-size:cover;
+    background-position:center;
+
+    transition:
+    background-image .5s ease,
+    transform .3s ease;
+
+    cursor:pointer;
+
+    box-shadow:var(--shadow);
+
+    overflow:hidden;
+}
+
+#banner:hover{
+    transform:scale(1.01);
 }
 
 /* =============================================
    CONTAINER
 ============================================= */
 
-.container { padding:16px; max-width:1000px; margin:auto; }
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:18px;
+}
 
 /* =============================================
    BUSCA
 ============================================= */
 
-.busca {
-    width:100%; padding:15px 18px; border-radius:14px; border:2px solid transparent;
-    margin-bottom:16px; background:white; color:black; font-size:var(--fs-input); outline:none;
-    font-family:var(--font-body); transition:border-color 0.2s, box-shadow 0.2s;
+.busca{
+    width:100%;
+
+    padding:16px 18px;
+
+    border-radius:16px;
+
+    border:2px solid transparent;
+
+    background:#fff;
+
+    color:#111;
+
+    outline:none;
+
+    font-size:var(--fs-input);
+
+    font-family:var(--font-body);
+
+    transition:
+    border-color .2s,
+    box-shadow .2s,
+    transform .2s;
+
+    margin-bottom:18px;
 }
-.busca:focus { border-color:var(--laranja); box-shadow:0 0 0 3px rgba(255,152,0,0.25); }
-.busca-vazia { text-align:center; padding:30px; color:#888; font-size:16px; }
-.busca-qtd   { color:#aaa; font-size:14px; margin-bottom:14px; }
+
+.busca:focus{
+    border-color:var(--laranja);
+
+    box-shadow:
+    0 0 0 4px rgba(255,152,0,.18);
+}
+
+.busca::placeholder{
+    color:#888;
+}
 
 /* =============================================
-   BOTOES FILTRO
+   FILTROS
 ============================================= */
 
-.btn-flutuantes { display:flex; flex-direction:column; gap:10px; margin-bottom:18px; }
-.linha { display:flex; gap:10px; justify-content:center; }
-.linha button {
-    flex:1; background:var(--laranja); border:none; padding:15px;
-    border-radius:12px; color:white; font-size:var(--fs-btn); font-weight:700;
-    box-shadow:0 4px 14px rgba(255,152,0,0.35);
-}
-.linha button:hover { background:var(--laranja-esc); transform:scale(1.04); }
-
-h2 { font-family:var(--font-titulo); margin:16px 0 12px; font-size:22px; }
-
-/* =============================================
-   CARROSSEL HORIZONTAL DOS COMBOS
-============================================= */
-
-.combos-carrossel-wrap {
-    position:relative;
-    margin-bottom:22px;
-}
-
-.combos-carrossel {
+.btn-flutuantes{
     display:flex;
     flex-direction:column;
-    gap:16px;
-    overflow:visible;
-    padding-bottom:12px;
+    gap:10px;
+
+    margin-bottom:20px;
 }
 
-.combos-carrossel::-webkit-scrollbar { height:5px; }
-.combos-carrossel::-webkit-scrollbar-track { background:#222; border-radius:5px; }
-.combos-carrossel::-webkit-scrollbar-thumb { background:var(--laranja); border-radius:5px; }
-
-.combo-slide {
-    flex:0 0 280px;
-    scroll-snap-align:start;
+.linha{
+    display:flex;
+    gap:10px;
 }
 
-/* Hint visual de que ha mais combos */
-.combos-carrossel-wrap::after {
-    content:"";
-    position:absolute;
-    right:0; top:0; bottom:12px;
-    width:40px;
-    background:linear-gradient(to left, #111, transparent);
-    pointer-events:none;
-    border-radius:0 14px 14px 0;
+.linha button{
+    flex:1;
+
+    background:
+    linear-gradient(135deg,
+    var(--laranja),
+    #ffb300);
+
+    border:none;
+
+    padding:15px;
+
+    border-radius:14px;
+
+    color:#fff;
+
+    font-size:16px;
+    font-weight:800;
+
+    box-shadow:
+    0 4px 14px rgba(255,152,0,.35);
+}
+
+.linha button:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 10px 20px rgba(255,152,0,.25);
 }
 
 /* =============================================
-   PRODUTOS GRID
+   TITULOS
 ============================================= */
 
-#produtos { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+h2{
+    font-family:var(--font-titulo);
+    font-size:24px;
+    margin-bottom:14px;
+}
 
 /* =============================================
-   CARD BASE
+   GRID PRODUTOS
 ============================================= */
 
-.card {
-    background:var(--bg-card); border-radius:var(--radius); overflow:hidden;
-    box-shadow:var(--shadow); transition:transform 0.2s, box-shadow 0.2s;
-    animation:fadeIn 0.4s ease; position:relative;
+#produtos{
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(250px,1fr));
+
+    gap:18px;
 }
-.card:hover  { transform:scale(1.03); box-shadow:0 8px 28px rgba(255,152,0,0.3); }
-.card:active { transform:scale(0.98); }
-.card img { width:100%; height:155px; object-fit:cover; transition:transform 0.3s, filter 0.3s; filter:brightness(0.95) contrast(1.05); }
-.card:hover img { transform:scale(1.05); filter:brightness(1.05) contrast(1.1); }
-.card-content { padding:14px; display:flex; flex-direction:column; }
-.card h3 { font-family:var(--font-titulo); font-size:18px; margin-bottom:6px; }
-.card p  { font-size:15px; color:#ccc; line-height:1.5; flex:1; }
-
-/* RODAPE DO CARD */
-.card-rodape {
-    display:flex; align-items:center; justify-content:space-between;
-    gap:10px; margin-top:12px; flex-wrap:wrap;
-}
-
-.preco { color:#00ff88; font-size:var(--fs-preco); font-weight:900; text-shadow:0 0 10px rgba(0,255,136,0.3); white-space:nowrap; }
-.preco-destaque { color:#00ff88; font-size:var(--fs-preco-destaque) !important; font-weight:900; text-shadow:0 0 14px rgba(0,255,136,0.5); white-space:nowrap; }
-
-.card button {
-    background:var(--laranja); border:none; padding:11px 16px;
-    border-radius:10px; color:white; font-weight:700; font-size:15px;
-    box-shadow:0 4px 14px rgba(255,152,0,0.3); white-space:nowrap;
-}
-.card button:hover { background:var(--laranja-esc); transform:scale(1.04); }
-
-@keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
-
-.card.destaque { border:2px solid #ffcc00; box-shadow:0 0 22px rgba(255,204,0,0.6); }
-.combo-desc { font-size:15px; color:#ccc; line-height:1.6; flex:1; }
-
-/* BEBIDAS LATERAL */
-#produtos .card:not(.pizza-card):not(.destaque) { display:flex; flex-direction:row; align-items:center; gap:12px; padding:14px; position:relative; }
-#produtos .card:not(.pizza-card):not(.destaque) img { width:95px; height:95px; object-fit:cover; border-radius:12px; flex-shrink:0; }
-#produtos .card:not(.pizza-card):not(.destaque) .card-content { flex:1; padding:0; }
-#produtos .card:not(.pizza-card):not(.destaque) h3 { font-size:17px; margin-bottom:4px; }
-#produtos .card:not(.pizza-card):not(.destaque) .preco { font-size:22px; color:#00ff88; }
-#produtos .card:not(.pizza-card):not(.destaque) button { padding:9px 14px; font-size:14px; }
 
 /* =============================================
-   CARROSSEL NA MONTAGEM
+   CARD
 ============================================= */
 
-.combo-carrossel-header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
-.combo-carrossel-info { flex:1; text-align:center; }
-.combo-carrossel-info h2 { margin:0 0 6px; font-size:21px; }
-.combo-carrossel-info small { color:#888; font-size:15px; }
-.combo-dots { display:flex; justify-content:center; gap:7px; margin-bottom:5px; }
-.combo-dot { width:12px; height:12px; border-radius:50%; background:#444; cursor:pointer; transition:background 0.2s, transform 0.2s; }
-.combo-dot.ativo { background:var(--laranja); transform:scale(1.4); }
-.combo-nav-btn { background:var(--laranja); border:none; color:#fff; width:46px; height:46px; border-radius:50%; font-size:22px; font-weight:900; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 14px rgba(255,152,0,0.4); flex-shrink:0; }
-.combo-nav-btn:hover { background:var(--laranja-esc); transform:scale(1.1); }
-.combo-preco-destaque { font-family:var(--font-titulo); font-size:34px; font-weight:900; color:#00ff88; text-align:center; margin-bottom:16px; text-shadow:0 0 16px rgba(0,255,136,0.4); }
+.card{
+    background:
+    linear-gradient(180deg,
+    #232323,
+    #1a1a1a);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    position:relative;
+
+    box-shadow:var(--shadow);
+
+    transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    border-color .25s ease;
+
+    animation:fadeIn .4s ease;
+
+    border:1px solid rgba(255,255,255,.04);
+}
+
+.card:hover{
+    transform:translateY(-4px);
+
+    box-shadow:var(--shadow-hover);
+}
+
+.card img{
+    width:100%;
+    height:180px;
+
+    object-fit:cover;
+
+    transition:
+    transform .4s ease,
+    filter .3s ease;
+
+    filter:
+    brightness(.95)
+    contrast(1.05);
+}
+
+.card:hover img{
+    transform:scale(1.05);
+
+    filter:
+    brightness(1.03)
+    contrast(1.08);
+}
+
+.card-content{
+    padding:16px;
+}
+
+.card h3{
+    font-family:var(--font-titulo);
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.card p{
+    color:var(--texto-soft);
+    font-size:15px;
+    line-height:1.6;
+}
+
+.card-rodape{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:12px;
+
+    margin-top:14px;
+}
+
+.preco{
+    color:#00ff88;
+
+    font-size:var(--fs-preco);
+
+    font-weight:900;
+
+    text-shadow:
+    0 0 12px rgba(0,255,136,.2);
+}
+
+.preco-destaque{
+    color:#00ff88;
+
+    font-size:var(--fs-preco-destaque);
+
+    font-weight:900;
+
+    text-shadow:
+    0 0 16px rgba(0,255,136,.35);
+}
+
+.card button{
+    background:
+    linear-gradient(135deg,
+    var(--laranja),
+    #ffb300);
+
+    border:none;
+
+    color:#fff;
+
+    padding:11px 16px;
+
+    border-radius:12px;
+
+    font-size:15px;
+    font-weight:800;
+
+    box-shadow:
+    0 4px 12px rgba(255,152,0,.3);
+}
+
+.card button:hover{
+    transform:scale(1.04);
+}
+
+/* =============================================
+   CARD DESTAQUE
+============================================= */
+
+.card.destaque{
+    border:2px solid #ffcc00;
+
+    animation:
+    glow 3s infinite;
+}
 
 /* =============================================
    CARRINHO
 ============================================= */
 
-#carrinho { background:var(--bg-card); padding:20px; border-radius:var(--radius); margin:22px auto; max-width:1000px; box-shadow:var(--shadow); }
-#lista { margin-top:12px; display:flex; flex-direction:column; gap:10px; }
+#carrinho{
+    background:
+    linear-gradient(180deg,
+    #1f1f1f,
+    #171717);
 
-.item-carr { background:var(--bg-item); border-radius:12px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; gap:10px; border-left:4px solid var(--laranja); transition:transform 0.2s; }
-.item-carr:hover { transform:scale(1.01); }
-.item-carr-info { flex:1; display:flex; flex-direction:column; gap:5px; }
-.item-carr-info b { font-size:15px; line-height:1.4; }
-.item-carr-preco { color:#00ff88; font-weight:800; font-size:17px; }
-.item-carr-ctrl { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+    border-radius:20px;
 
-.btn-qtd { background:var(--laranja); border:none; color:white; width:38px; height:38px; border-radius:10px; font-size:22px; font-weight:900; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(255,152,0,0.4); line-height:1; }
-.btn-qtd:hover { background:var(--laranja-esc); transform:scale(1.12); }
+    padding:22px;
 
-.item-carr-qtd { min-width:34px; text-align:center; font-weight:800; font-size:18px; background:#333; border-radius:8px; padding:5px 9px; }
+    margin-top:28px;
 
-.btn-remover-link { display:flex; align-items:center; gap:5px; cursor:pointer; padding:5px 9px; border-radius:8px; transition:background 0.2s; }
-.btn-remover-link:hover { background:rgba(229,57,53,0.15); }
-.x-vermelho   { color:var(--vermelho); font-weight:900; font-size:17px; line-height:1; }
-.remover-branco { color:#fff; font-weight:700; font-size:14px; }
-
-.total { font-size:24px; margin-top:14px; font-weight:800; color:var(--verde); }
-
-#descontosAtivos { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
-.desc-tag { background:linear-gradient(135deg,#0d2e0d,#1a4a1a); color:#4ade80; border:1px solid #2ecc7155; border-radius:20px; padding:5px 14px; font-size:14px; font-weight:700; }
-
-/* =============================================
-   FRETE BADGES
-============================================= */
-
-.frete-badge { margin-top:14px; border-radius:14px; padding:16px; font-size:16px; font-weight:700; }
-.frete-gratis { background:linear-gradient(135deg,#0d2e0d,#1a4a1a); color:#4ade80; border:2px solid #2ecc7155; text-align:center; font-size:17px; animation:pulsoVerde 2s infinite; }
-@keyframes pulsoVerde { 0%{box-shadow:0 0 0 0 rgba(46,204,113,0.4)} 70%{box-shadow:0 0 0 10px rgba(46,204,113,0)} 100%{box-shadow:0 0 0 0 rgba(46,204,113,0)} }
-.frete-progresso { background:var(--bg-item); border:1px solid #444; }
-.frete-texto { margin-bottom:10px; color:#eee; font-size:16px; }
-.frete-texto b { color:var(--laranja); }
-.frete-barra-bg { height:10px; background:#333; border-radius:5px; overflow:hidden; margin-bottom:10px; }
-.frete-barra-fill { height:100%; background:linear-gradient(90deg,var(--laranja),#ffcc00); border-radius:5px; transition:width 0.5s ease; }
-.frete-steps { display:flex; align-items:center; gap:5px; font-size:15px; color:#aaa; flex-wrap:wrap; }
-.frete-steps span { color:var(--laranja); font-weight:800; margin-left:6px; }
-.frete-info-bairro { background:linear-gradient(135deg,#1a2a3a,#0d1f30); color:#7dd3fc; border:1px solid #3b82f655; text-align:center; font-size:16px; }
-.frete-info-bairro b { color:#fff; }
-
-/* =============================================
-   CUPOM
-============================================= */
-
-.cupom-box { margin-top:18px; display:flex; gap:8px; flex-wrap:wrap; }
-.cupom-box input { flex:1; min-width:150px; padding:14px 16px; border-radius:12px; border:2px solid #444; background:#2a2a2a; color:white; font-size:16px; font-weight:700; text-transform:uppercase; letter-spacing:1px; outline:none; font-family:var(--font-body); }
-.cupom-box input:focus { border-color:var(--laranja); }
-.cupom-box input::placeholder { color:#666; letter-spacing:0; text-transform:none; font-weight:500; }
-.btn-aplicar { background:var(--laranja); border:none; color:white; padding:14px 18px; border-radius:12px; font-weight:800; font-size:16px; }
-.btn-aplicar:hover { background:var(--laranja-esc); }
-.btn-remover-cupom { background:transparent !important; border:2px solid var(--vermelho) !important; color:var(--vermelho) !important; padding:14px; border-radius:12px; font-weight:800; font-size:16px; }
-.btn-remover-cupom:hover { background:var(--vermelho) !important; color:white !important; }
-#msgCupom { font-size:15px; margin-top:8px; font-weight:700; }
-.cupom-sucesso { color:#4ade80; }
-.cupom-erro    { color:#fca5a5; }
-
-/* =============================================
-   FORMULARIO BRANCO — INPUTS MAIORES
-============================================= */
-
-.form-section { background:#ffffff; border-radius:18px; padding:22px; margin-top:20px; box-shadow:0 6px 24px rgba(0,0,0,0.35); }
-
-.form-section h3 { font-family:var(--font-titulo); font-size:var(--fs-label); color:#333; margin-bottom:8px; margin-top:20px; }
-.form-section h3:first-child { margin-top:0; }
-
-.form-input {
-    width:100%; padding:16px 18px; border-radius:14px; border:2px solid #e5e5e5;
-    background:#ffffff; color:#111; font-size:var(--fs-input); font-weight:600;
-    font-family:var(--font-body); outline:none;
-    transition:border-color 0.2s, box-shadow 0.2s; margin-bottom:12px; display:block;
+    box-shadow:var(--shadow);
 }
-.form-input:focus { border-color:var(--laranja); box-shadow:0 0 0 3px rgba(255,152,0,0.15); }
-.form-input::placeholder { color:#bbb; font-weight:500; }
 
-.form-input.bairro-input { cursor:pointer; background:#fffbf2; border-color:#ffd580; color:#555; }
+#lista{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
 
-.form-select {
-    width:100%; padding:16px 18px; border-radius:14px; border:2px solid #e5e5e5;
-    background:#ffffff; color:#111; font-size:var(--fs-input); font-weight:600;
-    font-family:var(--font-body); outline:none; appearance:none; cursor:pointer;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-    background-repeat:no-repeat; background-position:right 18px center;
-    transition:border-color 0.2s; margin-bottom:12px;
+    margin-top:16px;
 }
-.form-select:focus { border-color:var(--laranja); box-shadow:0 0 0 3px rgba(255,152,0,0.15); }
 
-/* =============================================
-   BOTAO WHATSAPP
-============================================= */
+.item-carr{
+    background:#2a2a2a;
 
-.enviar {
-    background:var(--verde-wpp); color:white; font-family:var(--font-titulo);
-    font-size:19px; font-weight:800; padding:18px; margin-top:18px;
-    border-radius:20px; border:none; width:100%;
-    animation:pulse 2s infinite; box-shadow:0 6px 20px rgba(37,211,102,0.4);
-}
-.enviar:hover { background:#1ebe5d; transform:scale(1.04); }
-@keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(37,211,102,0.6)} 70%{box-shadow:0 0 0 12px rgba(37,211,102,0)} 100%{box-shadow:0 0 0 0 rgba(37,211,102,0)} }
-
-/* =============================================
-   BEBIDAS EXTRAS — CARD BRANCO PREMIUM
-============================================= */
-
-.btn-add-bebida {
-    margin:14px auto 0; display:block; background:var(--laranja); border:none;
-    padding:13px 24px; color:#fff; border-radius:12px; font-weight:800; font-size:16px;
-    box-shadow:0 3px 12px rgba(255,152,0,0.35);
-}
-.btn-add-bebida:hover { background:var(--laranja-esc); transform:scale(1.04); }
-
-.bebida-extra-card {
-    background:#ffffff;
     border-radius:14px;
-    border:2px solid #e5e5e5;
+
     padding:14px 16px;
-    margin-top:12px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.08);
-    transition:border-color 0.2s;
-}
-.bebida-extra-card:hover { border-color:var(--laranja); }
 
-.bebida-extra-topo { margin-bottom:12px; }
-
-.bebida-extra-select {
-    width:100%;
-    padding:13px 16px;
-    border-radius:10px;
-    border:2px solid #e0e0e0;
-    background:#ffffff;
-    color:#111;
-    font-size:16px;
-    font-weight:600;
-    font-family:var(--font-body);
-    outline:none;
-    appearance:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-    background-repeat:no-repeat;
-    background-position:right 14px center;
-    cursor:pointer;
-    transition:border-color 0.2s, box-shadow 0.2s;
-}
-.bebida-extra-select:focus { border-color:var(--laranja); box-shadow:0 0 0 3px rgba(255,152,0,0.15); }
-
-.bebida-extra-rodape {
     display:flex;
     align-items:center;
     justify-content:space-between;
-    flex-wrap:wrap;
-    gap:10px;
+
+    gap:12px;
+
+    border-left:4px solid var(--laranja);
+
+    transition:
+    transform .2s ease,
+    background .2s ease;
 }
 
-.bebida-extra-preco {
-    font-size:20px;
+.item-carr:hover{
+    background:#303030;
+    transform:scale(1.01);
+}
+
+.item-carr-info{
+    flex:1;
+}
+
+.item-carr-info b{
+    display:block;
+    margin-bottom:4px;
+}
+
+.item-carr-preco{
+    color:#00ff88;
     font-weight:900;
-    color:#16a34a;
-    min-width:100px;
 }
 
-.bebida-extra-ctrl {
+.item-carr-ctrl{
     display:flex;
     align-items:center;
     gap:8px;
 }
 
-.btn-qtd-branco {
-    background:var(--laranja);
-    border:none;
-    color:#fff;
+.btn-qtd{
     width:38px;
     height:38px;
+
+    border:none;
+
     border-radius:10px;
+
+    background:var(--laranja);
+
+    color:#fff;
+
     font-size:22px;
     font-weight:900;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    box-shadow:0 2px 8px rgba(255,152,0,0.35);
-    line-height:1;
 }
-.btn-qtd-branco:hover { background:var(--laranja-esc); transform:scale(1.12); }
 
-.qtd-bebida-branco {
+.btn-qtd:hover{
+    background:var(--laranja-esc);
+}
+
+.item-carr-qtd{
     min-width:34px;
+
     text-align:center;
-    font-weight:800;
-    font-size:18px;
-    background:#f5f5f5;
-    color:#111;
+
+    font-weight:900;
+
+    background:#3a3a3a;
+
     border-radius:8px;
-    padding:5px 9px;
-    border:2px solid #e0e0e0;
+
+    padding:5px 8px;
 }
 
-.btn-remover-link-escuro {
-    display:flex;
-    align-items:center;
-    gap:4px;
-    cursor:pointer;
-    padding:5px 8px;
-    border-radius:8px;
-    transition:background 0.2s;
+.total{
+    margin-top:16px;
+
+    font-size:25px;
+    font-weight:900;
+
+    color:#4ade80;
 }
-.btn-remover-link-escuro:hover { background:rgba(229,57,53,0.1); }
-.remover-escuro { color:#333; font-weight:700; font-size:14px; }
 
 /* =============================================
-   BOTAO FLUTUANTE
+   FORMULÁRIOS
 ============================================= */
 
-#botaoCarrinho {
-    position:fixed; bottom:20px; right:20px; background:var(--laranja);
-    min-width:65px; height:65px; border-radius:34px; display:flex; align-items:center;
-    justify-content:center; gap:6px; padding:0 18px; font-size:15px; font-weight:800;
-    cursor:pointer; box-shadow:0 6px 22px rgba(255,152,0,0.6); z-index:999; color:#fff;
-    transition:transform 0.2s;
+.form-section{
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:22px;
+
+    margin-top:22px;
+
+    box-shadow:
+    0 8px 24px rgba(0,0,0,.3);
 }
-#botaoCarrinho:hover { transform:scale(1.08); }
-#botaoCarrinho.pulsar { animation:pulsarBtn 0.6s ease; }
-@keyframes pulsarBtn { 0%{transform:scale(1)} 30%{transform:scale(1.25)} 60%{transform:scale(0.95)} 100%{transform:scale(1)} }
-#contador { position:absolute; top:-6px; right:-6px; background:red; color:white; font-size:13px; font-weight:800; padding:4px 7px; border-radius:50%; min-width:24px; text-align:center; }
+
+.form-section h3{
+    color:#333;
+
+    font-family:var(--font-titulo);
+
+    margin-bottom:8px;
+    margin-top:18px;
+}
+
+.form-section h3:first-child{
+    margin-top:0;
+}
+
+.form-input,
+.form-select{
+    width:100%;
+
+    padding:16px 18px;
+
+    border-radius:14px;
+
+    border:2px solid #e5e5e5;
+
+    background:#fff;
+
+    color:#111;
+
+    font-size:16px;
+
+    font-family:var(--font-body);
+
+    outline:none;
+
+    transition:
+    border-color .2s,
+    box-shadow .2s;
+
+    margin-bottom:12px;
+}
+
+.form-input:focus,
+.form-select:focus{
+    border-color:var(--laranja);
+
+    box-shadow:
+    0 0 0 4px rgba(255,152,0,.15);
+}
+
+/* =============================================
+   BOTÃO WHATSAPP
+============================================= */
+
+.enviar{
+    width:100%;
+
+    border:none;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    background:
+    linear-gradient(135deg,
+    #25D366,
+    #1ebe5d);
+
+    color:#fff;
+
+    font-family:var(--font-titulo);
+
+    font-size:19px;
+    font-weight:900;
+
+    margin-top:18px;
+
+    box-shadow:
+    0 6px 22px rgba(37,211,102,.35);
+
+    animation:pulse 2.5s infinite;
+}
+
+.enviar:hover{
+    transform:translateY(-2px);
+}
+
+/* =============================================
+   BOTÃO FLUTUANTE
+============================================= */
+
+#botaoCarrinho{
+    position:fixed;
+
+    bottom:22px;
+    right:22px;
+
+    min-width:68px;
+    height:68px;
+
+    border-radius:40px;
+
+    background:
+    linear-gradient(135deg,
+    var(--laranja),
+    #ffb300);
+
+    color:#fff;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:8px;
+
+    padding:0 18px;
+
+    font-size:15px;
+    font-weight:900;
+
+    z-index:999;
+
+    box-shadow:
+    0 10px 28px rgba(255,152,0,.45);
+
+    transition:
+    transform .2s ease;
+}
+
+#botaoCarrinho:hover{
+    transform:scale(1.08);
+}
+
+#contador{
+    position:absolute;
+
+    top:-5px;
+    right:-5px;
+
+    min-width:24px;
+
+    padding:4px 7px;
+
+    border-radius:50%;
+
+    background:red;
+
+    color:#fff;
+
+    font-size:13px;
+    font-weight:900;
+
+    text-align:center;
+}
 
 /* =============================================
    TOAST
 ============================================= */
 
-#toast { visibility:hidden; min-width:260px; background:rgba(0,0,0,0.9); color:#fff; text-align:center; border-radius:12px; padding:16px 24px; position:fixed; bottom:95px; left:50%; transform:translateX(-50%); z-index:99999; font-size:16px; font-weight:700; max-width:90vw; opacity:0; transition:opacity 0.3s; }
-#toast.show { visibility:visible; opacity:1; animation:toastIn 0.3s ease; }
-@keyframes toastIn { from{opacity:0;transform:translateX(-50%) translateY(10px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
+#toast{
+    visibility:hidden;
 
-/* =============================================
-   MONTAGEM PIZZA
-============================================= */
+    min-width:260px;
 
-.montagem-box { background:var(--bg-card); padding:24px; border-radius:18px; text-align:center; max-width:520px; margin:20px auto; box-shadow:0 0 20px rgba(0,0,0,0.6); }
-.montagem-box h2 { margin-bottom:16px; font-size:22px; }
-.pizza-preview { width:200px; height:200px; object-fit:cover; border-radius:50%; margin:0 auto 16px; box-shadow:0 5px 24px rgba(0,0,0,0.8); transition:transform 0.3s; }
-.pizza-preview:hover { transform:scale(1.06); }
-.opcoes-pizza { display:flex; flex-direction:column; gap:12px; margin-top:12px; }
-.campo { text-align:left; }
-.campo label { font-size:var(--fs-label); font-weight:700; display:block; margin-bottom:6px; }
-.campo select { width:100%; padding:13px; border-radius:10px; border:none; color:#000; font-family:var(--font-body); font-size:15px; }
-.btn-montar { margin-top:22px; width:100%; background:var(--laranja); color:white; border:none; padding:17px; border-radius:12px; font-size:18px; font-weight:800; box-shadow:0 5px 18px rgba(255,152,0,0.4); }
-.btn-montar:hover { background:var(--laranja-esc); transform:scale(1.03); }
-.voltar { display:block; margin-top:16px; cursor:pointer; color:#ccc; font-size:16px; }
-.voltar:hover { color:white; }
+    background:
+    rgba(0,0,0,.92);
 
-/* =============================================
-   PIX MODAL
-============================================= */
+    color:#fff;
 
-.modal-pix { position:fixed; inset:0; background:rgba(0,0,0,0.88); display:flex; justify-content:center; align-items:center; z-index:99999; padding:16px; backdrop-filter:blur(6px); overflow-y:auto; }
-.pix-box { background:#fff; width:100%; max-width:430px; border-radius:22px; padding:28px 24px; text-align:center; animation:pixShow 0.25s ease; box-shadow:0 12px 48px rgba(0,0,0,0.5); margin:auto; }
-@keyframes pixShow { from{transform:scale(0.88);opacity:0} to{transform:scale(1);opacity:1} }
-.pix-topo h2  { font-family:var(--font-titulo); font-size:24px; color:var(--verde-pix); margin-bottom:8px; }
-.pix-valor    { font-family:var(--font-titulo); font-size:44px; font-weight:900; color:#111; margin-bottom:6px; line-height:1; }
-.pix-topo p   { color:#666; font-size:15px; }
-.pix-qrcode-area { margin:18px 0 14px; display:flex; justify-content:center; }
-#qrcode { padding:14px; background:#fff; border-radius:16px; border:3px solid #e0e0e0; display:inline-block; line-height:0; }
-#qrcode img, #qrcode canvas { border-radius:6px; display:block; }
-.pix-copia-box { text-align:left; margin-bottom:14px; }
-.pix-copia-box label { font-weight:800; font-size:14px; display:block; margin-bottom:6px; color:#333; }
-.pix-copia-box textarea { width:100%; height:82px; resize:none; border:2px solid #e0e0e0; background:#f9f9f9; border-radius:12px; padding:10px; font-size:11px; font-family:monospace; outline:none; color:#444; line-height:1.5; }
-.pix-steps { background:#f5f5f5; border-radius:12px; padding:14px; margin-bottom:14px; text-align:left; }
-.pix-step { display:flex; align-items:center; gap:12px; padding:8px 0; font-size:15px; color:#444; font-weight:700; border-bottom:1px solid #eee; }
-.pix-step:last-child { border-bottom:none; }
-.pix-step span { background:var(--laranja); color:#fff; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px; flex-shrink:0; }
-.pix-botoes { display:flex; gap:10px; margin-bottom:14px; }
-.pix-botoes button { flex:1; border:none; padding:15px 10px; border-radius:14px; font-weight:800; font-size:15px; }
-.btn-copiar { background:#ff9800; color:#fff; box-shadow:0 4px 14px rgba(255,152,0,0.4); }
-.btn-copiar:hover { background:#e68900; transform:scale(1.04); }
-.btn-pago { background:var(--verde-pix); color:#fff; box-shadow:0 4px 14px rgba(46,125,50,0.4); }
-.btn-pago:hover { background:#1b5e20; transform:scale(1.04); }
-.pix-info { background:#fff8e1; border:1px solid #ffe082; border-radius:12px; padding:14px; color:#5d4037; font-size:14px; line-height:1.7; margin-bottom:10px; text-align:left; }
-.fechar-pix { margin-top:4px; border:none; background:none; color:var(--vermelho); font-weight:700; font-size:15px; cursor:pointer; padding:8px 14px; border-radius:8px; }
-.fechar-pix:hover { background:#ffeaea; }
+    text-align:center;
 
-/* =============================================
-   MODAL FIDELIDADE
-============================================= */
+    border-radius:14px;
 
-.modal-fid { position:fixed; inset:0; background:rgba(0,0,0,0.92); display:flex; justify-content:center; align-items:flex-start; z-index:99998; padding:16px; backdrop-filter:blur(6px); overflow-y:auto; }
-.fid-box { background:#1a1a1a; width:100%; max-width:460px; border-radius:20px; overflow:hidden; box-shadow:0 16px 60px rgba(0,0,0,0.7); margin:auto; animation:pixShow 0.25s ease; }
-.fid-header { padding:24px; display:flex; align-items:center; gap:16px; position:relative; }
-.fid-header h2 { font-size:22px; margin-bottom:4px; }
-.fid-header p  { color:#ccc; font-size:15px; }
-.fid-fechar { position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.1); border:none; color:white; width:34px; height:34px; border-radius:50%; font-size:15px; font-weight:800; cursor:pointer; }
-.fid-stats { display:flex; border-top:1px solid #333; border-bottom:1px solid #333; }
-.fid-stat  { flex:1; padding:16px; text-align:center; border-right:1px solid #333; }
-.fid-stat:last-child { border-right:none; }
-.fid-stat-num   { display:block; font-size:22px; font-weight:900; color:var(--laranja); }
-.fid-stat-label { display:block; font-size:13px; color:#888; margin-top:2px; }
-.fid-progresso-box { padding:16px 20px; background:#222; }
-.fid-progresso-box p { font-size:15px; margin-bottom:8px; }
-.fid-progresso-box small { font-size:13px; color:#888; }
-.fid-barra-bg   { height:10px; background:#333; border-radius:5px; overflow:hidden; margin-bottom:4px; }
-.fid-barra-fill { height:100%; border-radius:5px; transition:width 0.6s ease; }
-.fid-missao      { display:flex; gap:14px; padding:14px 20px; border-top:1px solid #2a2a2a; align-items:flex-start; }
-.fid-missao-icone{ font-size:13px; font-weight:800; color:var(--laranja); flex-shrink:0; padding-top:2px; min-width:44px; }
-.fid-missao-info { flex:1; }
-.fid-missao-info b     { font-size:15px; display:block; margin-bottom:4px; }
-.fid-missao-info small { font-size:14px; color:#888; display:block; margin-top:2px; }
-.fid-mini-barra-bg   { height:7px; background:#333; border-radius:4px; overflow:hidden; margin:6px 0 2px; }
-.fid-mini-barra-fill { height:100%; background:var(--laranja); border-radius:4px; transition:width 0.5s; }
-.fid-cupons    { padding:16px 20px; border-top:1px solid #2a2a2a; }
-.fid-cupons h3 { font-size:16px; margin-bottom:12px; }
-.fid-cupom-item { display:flex; align-items:center; gap:8px; padding:12px; background:#222; border-radius:10px; margin-bottom:8px; font-size:15px; flex-wrap:wrap; }
-.fid-cupom-item button { margin-left:auto; background:var(--laranja); border:none; color:#fff; padding:7px 16px; border-radius:8px; font-weight:700; font-size:14px; cursor:pointer; }
-.fid-cupom-item.locked { opacity:0.5; }
-.fid-btn-fechar { width:100%; padding:17px; background:#2a2a2a; border:none; color:#aaa; font-size:16px; font-weight:700; cursor:pointer; }
-.fid-btn-fechar:hover { background:#333; color:white; }
+    padding:16px 22px;
+
+    position:fixed;
+
+    bottom:95px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    z-index:99999;
+
+    font-size:16px;
+    font-weight:800;
+
+    opacity:0;
+
+    transition:
+    opacity .3s ease;
+}
+
+#toast.show{
+    visibility:visible;
+    opacity:1;
+}
 
 /* =============================================
    FOOTER
 ============================================= */
 
-footer { text-align:center; font-size:15px; color:#aaa; padding:30px 0 95px; max-width:1000px; margin:30px auto 0; }
+footer{
+    text-align:center;
+
+    color:#999;
+
+    font-size:15px;
+
+    padding:
+    35px 0 100px;
+}
 
 /* =============================================
    RESPONSIVO
 ============================================= */
 
-@media (min-width:1200px) {
+@media (max-width:900px){
 
-    body{
-        background:#0b0b0b;
+    #produtos{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    #banner{
+        height:190px;
+    }
+
+    .header-topo{
+        height:200px;
+    }
+}
+
+@media (max-width:600px){
+
+    :root{
+        --fs-base:16px;
+        --fs-input:16px;
+        --fs-preco:20px;
+        --fs-preco-destaque:24px;
     }
 
     .container{
-        max-width:1400px;
-        margin:auto;
-        padding:24px;
+        padding:12px;
+    }
+
+    .header-topo{
+        height:160px;
+    }
+
+    .logo-grande{
+        height:82px;
+    }
+
+    #banner{
+        height:150px;
+        border-radius:14px;
     }
 
     #produtos{
-        grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-        gap:24px;
+        grid-template-columns:1fr;
+        gap:14px;
     }
 
-    #produtos .card{
-        max-width:100%;
-        margin:0;
+    .linha{
+        flex-direction:column;
+    }
+
+    .linha button{
+        width:100%;
+    }
+
+    .card img{
+        height:170px;
+    }
+
+    .card-content{
+        padding:14px;
+    }
+
+    .item-carr{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .item-carr-ctrl{
+        align-self:flex-end;
+    }
+
+    #botaoCarrinho{
+        bottom:14px;
+        right:14px;
+
+        height:60px;
+
+        font-size:14px;
+    }
+
+    h2{
+        font-size:21px;
+    }
+
+    .form-section{
+        padding:16px;
+    }
+}
+
+@media (min-width:1200px){
+
+    .container{
+        max-width:1400px;
+    }
+
+    #produtos{
+        grid-template-columns:
+        repeat(auto-fit,minmax(320px,1fr));
+
+        gap:24px;
     }
 
     .header-topo{
@@ -695,65 +1012,26 @@ footer { text-align:center; font-size:15px; color:#aaa; padding:30px 0 95px; max
     }
 
     #banner{
-        height:320px;
         max-width:1400px;
-    }
-
-    .combos-carrossel{
-        display:grid;
-        grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-        gap:20px;
-    }
-
-    .combo-slide{
-        flex:none;
+        height:320px;
     }
 
     #carrinho{
         max-width:1400px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+}
+
+@supports (padding-bottom:env(safe-area-inset-bottom)){
+
+    #botaoCarrinho{
+        bottom:
+        calc(20px + env(safe-area-inset-bottom));
     }
 
     footer{
-        max-width:1400px;
+        padding-bottom:
+        calc(100px + env(safe-area-inset-bottom));
     }
-
-}
-
-@media (min-width:601px) and (max-width:900px) {
-    .header-topo { height:190px; }
-    #banner { height:180px; }
-    #produtos { grid-template-columns:repeat(2,1fr); }
-    .combo-slide { flex:0 0 260px; }
-}
-
-@media (max-width:600px) {
-    :root { --fs-base:17px; --fs-input:17px; --fs-preco:21px; --fs-preco-destaque:25px; }
-    .header-topo { height:155px; }
-    .logo-grande  { height:80px; }
-    #banner       { height:150px; }
-    .container    { padding:12px; }
-    .endereco     { margin:10px 12px; }
-    .linha button { font-size:15px; padding:13px 8px; }
-    #produtos     { grid-template-columns:1fr; }
-    h2 { font-size:20px; }
-    .combo-slide  { flex:0 0 260px; }
-    .item-carr    { flex-direction:column; align-items:flex-start; }
-    .item-carr-ctrl { align-self:flex-end; }
-    #botaoCarrinho { bottom:14px; right:14px; height:60px; font-size:14px; padding:0 14px; }
-    .pix-box    { padding:20px 16px; }
-    .pix-valor  { font-size:36px; }
-    .pix-botoes { flex-direction:column; }
-    #qrcode img, #qrcode canvas { width:200px !important; height:200px !important; }
-    .montagem-box { padding:16px; }
-    .pizza-preview { width:160px; height:160px; }
-    .cadastro-beneficios { grid-template-columns:1fr; }
-    .cupom-box { flex-direction:column; }
-    .combo-nav-btn { width:40px; height:40px; font-size:18px; }
-    .form-section { padding:16px; }
-    .bebida-extra-rodape { flex-direction:column; align-items:flex-start; }
-}
-
-@supports (padding-bottom:env(safe-area-inset-bottom)) {
-    #botaoCarrinho { bottom:calc(20px + env(safe-area-inset-bottom)); }
-    footer { padding-bottom:calc(95px + env(safe-area-inset-bottom)); }
 }
