@@ -6,6 +6,45 @@ let numeroPedido = Number(localStorage.getItem("numeroPedido")) || 0
 const whatsappNumero = "5531983391576"
 
 // ===============================
+// BANCO DE CLIENTES LOCAL
+// ===============================
+
+function getClientes(){
+    return JSON.parse(localStorage.getItem("bancoclientes") || "[]")
+}
+
+function salvarClienteNoBanco(dados){
+    const lista = getClientes()
+    const idx   = lista.findIndex(c => c.whatsapp && c.whatsapp === dados.whatsapp)
+    if(idx >= 0){
+        lista[idx] = { ...lista[idx], ...dados, atualizado: new Date().toISOString() }
+    } else {
+        lista.push({ ...dados, id: Date.now(), cadastrado: new Date().toISOString() })
+    }
+    localStorage.setItem("bancoclientes", JSON.stringify(lista))
+}
+
+function verificarAniversariantesProximos(){
+    const lista = getClientes()
+    const hoje  = new Date()
+    const aviso = []
+    lista.forEach(c => {
+        if(!c.aniversario) return
+        const parts = c.aniversario.split("-")
+        if(parts.length < 2) return
+        // aniversario pode ser YYYY-MM-DD ou MM-DD
+        const mes = parts.length === 3 ? Number(parts[1]) : Number(parts[0])
+        const dia = parts.length === 3 ? Number(parts[2]) : Number(parts[1])
+        const anivEsteAno = new Date(hoje.getFullYear(), mes-1, dia)
+        const diff = Math.ceil((anivEsteAno - hoje) / (1000*60*60*24))
+        if(diff >= 0 && diff <= 2){
+            aviso.push({ ...c, diasRestantes: diff })
+        }
+    })
+    return aviso
+}
+
+// ===============================
 // CADASTRO DO CLIENTE
 // ===============================
 
@@ -14,25 +53,22 @@ let cliente = JSON.parse(localStorage.getItem("clienteCadastro")) || null
 function salvarCliente(dados){
     localStorage.setItem("clienteCadastro", JSON.stringify(dados))
     cliente = dados
+    salvarClienteNoBanco(dados)
 }
 
-function verificarCadastro(){
-    if(!cliente){
-        mostrarModalCadastro()
-    } else {
-        mostrarBoasVindas()
+function mostrarCadastroCheckout(callback){
+    if(cliente){
+        callback()
+        return
     }
-}
-
-function mostrarModalCadastro(){
-    document.getElementById("modalCadastro")?.remove()
+    document.getElementById("modalCadastroCheckout")?.remove()
     document.body.insertAdjacentHTML("beforeend", `
-    <div id="modalCadastro" class="modal-cadastro">
+    <div id="modalCadastroCheckout" class="modal-cadastro">
       <div class="cadastro-box">
         <div class="cadastro-header">
-          <div class="cadastro-logo">Pizza</div>
-          <h2>Bem-vindo ao<br><span>Sabore In Casa!</span></h2>
-          <p>Cadastre-se e ganhe vantagens exclusivas</p>
+          <div class="cadastro-logo">Sabore In Casa</div>
+          <h2>Quase la!<br><span>So mais alguns dados</span></h2>
+          <p>Rapido, so uma vez - promessa!</p>
         </div>
         <div class="cadastro-beneficios">
           <div class="beneficio-item">Desconto no aniversario</div>
@@ -41,32 +77,40 @@ function mostrarModalCadastro(){
           <div class="beneficio-item">Frete gratis progressivo</div>
         </div>
         <div class="cadastro-form">
-          <label>Nome completo</label>
+          <label>Seu nome completo *</label>
           <input class="cadastro-input" id="cadNome" placeholder="Ex: Joao Silva" type="text">
-          <label>WhatsApp</label>
+          <label>Seu WhatsApp *</label>
           <input class="cadastro-input" id="cadWhats" placeholder="Ex: 31987654321" type="tel" maxlength="11">
-          <label>Data de nascimento</label>
+          <label>Data de nascimento (opcional)</label>
           <input class="cadastro-input" id="cadAniv" type="date">
           <div id="cadastroErro" class="cadastro-erro"></div>
-          <button class="btn-cadastrar" onclick="concluirCadastro()">Cadastrar e aproveitar!</button>
-          <button class="btn-pular" onclick="pularCadastro()">Pular por agora</button>
+          <button class="btn-cadastrar" onclick="concluirCadastroCheckout()">
+            Continuar e enviar pedido!
+          </button>
+          <button class="btn-pular" onclick="pularCadastroCheckout()">Pular e enviar sem cadastro</button>
         </div>
       </div>
     </div>`)
+    window._checkoutCallback = callback
 }
 
-function concluirCadastro(){
+function concluirCadastroCheckout(){
     const nome  = document.getElementById("cadNome")?.value?.trim()
     const whats = document.getElementById("cadWhats")?.value?.trim()
     const aniv  = document.getElementById("cadAniv")?.value
 
     if(!nome){
-        document.getElementById("cadastroErro").innerText = "Digite seu nome!"
+        document.getElementById("cadastroErro").innerText = "Digite seu nome para continuar!"
         document.getElementById("cadNome").focus()
         return
     }
+    if(!whats){
+        document.getElementById("cadastroErro").innerText = "Digite seu WhatsApp para continuar!"
+        document.getElementById("cadWhats").focus()
+        return
+    }
 
-    const dados = { nome, whatsapp: whats || "", aniversario: aniv || "", dataCadastro: new Date().toISOString() }
+    const dados = { nome, whatsapp: whats, aniversario: aniv || "", dataCadastro: new Date().toISOString() }
     salvarCliente(dados)
 
     if(aniv){
@@ -75,18 +119,20 @@ function concluirCadastro(){
         salvarFidelidade()
     }
 
-    document.getElementById("modalCadastro")?.remove()
-    mostrarToastSimples(`Bem-vindo(a) ${nome.split(" ")[0]}!`)
+    document.getElementById("modalCadastroCheckout")?.remove()
+    mostrarToastSimples(`Bem-vindo(a) ${nome.split(" ")[0]}! Enviando pedido...`)
 
-    if(verificarAniversario()){
-        setTimeout(()=> mostrarToastSimples("Feliz Aniversario! Use SABOREANIV para 10% off!"), 2500)
-    }
+    const campoNome = document.getElementById("nomeCliente")
+    if(campoNome && !campoNome.value.trim()) campoNome.value = nome
 
-    mostrarBoasVindas()
+    setTimeout(()=>{
+        if(window._checkoutCallback) window._checkoutCallback()
+    }, 800)
 }
 
-function pularCadastro(){
-    document.getElementById("modalCadastro")?.remove()
+function pularCadastroCheckout(){
+    document.getElementById("modalCadastroCheckout")?.remove()
+    if(window._checkoutCallback) window._checkoutCallback()
 }
 
 function mostrarBoasVindas(){
@@ -121,7 +167,7 @@ function abrirPerfilCliente(){
     <div id="modalPerfil" class="modal-fid">
       <div class="fid-box">
         <div class="fid-header" style="background:linear-gradient(135deg,${info.cor}44,#1a1a1a)">
-          <span style="font-size:44px;font-weight:900;color:${info.cor}">${info.nome}</span>
+          <span style="font-size:36px;font-weight:900;color:${info.cor}">${info.nome}</span>
           <div><h2 style="color:${info.cor}">${nomeExibir}</h2><p>${info.desc}</p></div>
           <button class="fid-fechar" onclick="document.getElementById('modalPerfil').remove()">X</button>
         </div>
@@ -153,7 +199,8 @@ function abrirPerfilCliente(){
 
 function editarCadastro(){
     document.getElementById("modalPerfil")?.remove()
-    mostrarModalCadastro()
+    document.getElementById("modalCadastroCheckout")?.remove()
+    mostrarCadastroCheckout(()=>{ mostrarToastSimples("Dados atualizados!") })
     setTimeout(()=>{
         if(cliente){
             const nome  = document.getElementById("cadNome")
@@ -261,7 +308,7 @@ function verificarAniversario(){
     const anivFid = fidelidade.aniversario
     const anivCli = cliente?.aniversario ? (() => {
         const parts = cliente.aniversario.split("-")
-        return parts.length === 3 ? `${parts[1]}-${parts[2]}` : ""
+        return parts.length === 3 ? `${parts[1]}-${parts[2]}` : cliente.aniversario
     })() : ""
     const aniv = anivFid || anivCli
     if(!aniv) return false
@@ -340,7 +387,7 @@ function mostrarPainelFidelidade(){
     <div id="modalFidelidade" class="modal-fid">
       <div class="fid-box">
         <div class="fid-header" style="background:linear-gradient(135deg,${info.cor}44,#1a1a1a)">
-          <span style="font-size:40px;font-weight:900;color:${info.cor}">${info.nome}</span>
+          <span style="font-size:36px;font-weight:900;color:${info.cor}">${info.nome}</span>
           <div><h2 style="color:${info.cor}">Cliente ${info.nome}</h2><p>${info.desc}</p></div>
           <button class="fid-fechar" onclick="document.getElementById('modalFidelidade').remove()">X</button>
         </div>
@@ -352,8 +399,8 @@ function mostrarPainelFidelidade(){
         ${progresso}
         <div class="fid-missao"><div class="fid-missao-icone">Pizza</div><div class="fid-missao-info"><b>Pizza gratis na 10a!</b><div class="fid-mini-barra-bg"><div class="fid-mini-barra-fill" style="width:${pizzasPct}%"></div></div><small>Faltam ${pizzasRest} pizza(s)</small></div></div>
         <div class="fid-missao"><div class="fid-missao-icone">Frete</div><div class="fid-missao-info"><b>Frete gratis no 5o pedido com comida!</b><div class="fid-mini-barra-bg"><div class="fid-mini-barra-fill" style="width:${Math.min(100,(fidelidade.pedidosComComida/5*100)).toFixed(0)}%"></div></div><small>${pedRest > 0 ? `Faltam ${pedRest} pedido(s) com comida` : "Frete gratis desbloqueado!"}</small></div></div>
-        <div class="fid-missao"><div class="fid-missao-icone">Aniv</div><div class="fid-missao-info"><b>Desconto de aniversario - 10% off!</b>${fidelidade.aniversario ? `<small style="color:#2ecc71">Cadastrado: ${fidelidade.aniversario}</small>` : `<button onclick="editarCadastro()" style="margin-top:6px;background:#ff9800;border:none;color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:800;width:100%;font-size:14px">Cadastrar aniversario</button>`}</div></div>
-        <div class="fid-missao"><div class="fid-missao-icone">Amigos</div><div class="fid-missao-info"><b>Indique um amigo!</b><small>Compartilhe o app pelo WhatsApp</small><button onclick="indicarAmigo()" style="margin-top:6px;background:#25D366;border:none;color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:800;width:100%;font-size:14px">Compartilhar app</button></div></div>
+        <div class="fid-missao"><div class="fid-missao-icone">Aniv</div><div class="fid-missao-info"><b>Desconto de aniversario - 10% off!</b>${fidelidade.aniversario ? `<small style="color:#2ecc71">Cadastrado: ${fidelidade.aniversario}</small>` : `<button onclick="editarCadastro()" style="margin-top:6px;background:#ff9800;border:none;color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:800;width:100%;font-size:15px">Cadastrar aniversario</button>`}</div></div>
+        <div class="fid-missao"><div class="fid-missao-icone">Amigos</div><div class="fid-missao-info"><b>Indique um amigo!</b><small>Compartilhe o app pelo WhatsApp</small><button onclick="indicarAmigo()" style="margin-top:6px;background:#25D366;border:none;color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:800;width:100%;font-size:15px">Compartilhar app</button></div></div>
         <div class="fid-cupons"><h3>Seus Cupons</h3>${gerarListaCupons()}</div>
         <button onclick="document.getElementById('modalFidelidade').remove()" class="fid-btn-fechar">Fechar</button>
       </div>
@@ -388,7 +435,7 @@ function mostrarModalSubiuNivel(info){
     document.body.insertAdjacentHTML("beforeend",`
     <div id="modalNivel" style="position:fixed;inset:0;background:rgba(0,0,0,0.92);display:flex;justify-content:center;align-items:center;z-index:999999;padding:20px;">
       <div style="background:#1f1f1f;border-radius:22px;padding:32px 24px;text-align:center;max-width:340px;width:100%;border:2px solid ${info.cor};box-shadow:0 0 50px ${info.cor}88;animation:pixShow .3s ease">
-        <div style="font-size:52px;font-weight:900;color:${info.cor};margin-bottom:12px">${info.nome}</div>
+        <div style="font-size:48px;font-weight:900;color:${info.cor};margin-bottom:12px">${info.nome}</div>
         <h2 style="color:${info.cor};font-size:26px;margin-bottom:8px">Voce subiu de nivel!</h2>
         <p style="font-size:20px;font-weight:800;margin-bottom:6px">Cliente ${info.nome}</p>
         <p style="color:#ccc;font-size:15px;margin-bottom:22px">${info.desc}</p>
@@ -438,16 +485,67 @@ function mostrarBarraFidelidade(){
 }
 
 // ===============================
-// BUSCA
+// BUSCA GLOBAL
 // ===============================
+
+const pizzasFixas = [
+    {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola",img:"imagens/pizzas/calabresa.png",preco:42.90,categoria:"pizza"},
+    {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry",img:"imagens/pizzas/franco_com_catupiry.png",preco:42.90,categoria:"pizza"},
+    {nome:"4 Queijos",desc:"Mussarela, provolone, parmesao, catupiry",img:"imagens/pizzas/quatro_queijos.png",preco:42.90,categoria:"pizza"},
+    {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha",img:"imagens/pizzas/portuguesa.png",preco:42.90,categoria:"pizza"},
+    {nome:"Marguerita",desc:"Mussarela, tomate, manjericao",img:"imagens/pizzas/marguerita.png",preco:42.90,categoria:"pizza"},
+    {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola",img:"imagens/pizzas/baiana.png",preco:42.90,categoria:"pizza"},
+    {nome:"Napolitana",desc:"Mussarela, tomate, parmesao",img:"imagens/pizzas/napolitana.png",preco:42.90,categoria:"pizza"},
+    {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela",img:"imagens/pizzas/milho_com_bacon.png",preco:42.90,categoria:"pizza"},
+    {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry",img:"imagens/pizzas/moda_da_casa.png",preco:42.90,categoria:"pizza"}
+]
 
 function iniciarBusca(){
     const input = document.getElementById("busca")
     if(!input) return
     input.addEventListener("input", function(){
         const termo = this.value.toLowerCase().trim()
-        document.querySelectorAll(".card").forEach(c=>{
-            c.style.display = (!termo || c.innerText.toLowerCase().includes(termo)) ? "" : "none"
+        if(!termo){
+            document.getElementById("resultadoBusca")?.remove()
+            document.getElementById("tituloCombos").style.display = "block"
+            document.querySelector(".combos-carrossel-wrap").style.display = "block"
+            document.getElementById("produtos").innerHTML = ""
+            carregarCombosSemana()
+            return
+        }
+        document.getElementById("tituloCombos").style.display = "none"
+        document.querySelector(".combos-carrossel-wrap").style.display = "none"
+        document.getElementById("produtos").innerHTML = ""
+        fetch("produtos.json").then(r=>r.json()).then(produtos=>{
+            const todos = [...pizzasFixas, ...produtos]
+            const resultado = todos.filter(p =>
+                p.nome.toLowerCase().includes(termo) ||
+                (p.desc||p.descricao||"").toLowerCase().includes(termo) ||
+                (p.categoria||"").toLowerCase().includes(termo)
+            )
+            let html = `<div id="resultadoBusca"><h2>Resultados para "${this.value}"</h2>`
+            if(resultado.length === 0){
+                html += `<div class="busca-vazia">Nenhum produto encontrado para "${this.value}"</div>`
+            } else {
+                html += `<p class="busca-qtd">${resultado.length} produto(s) encontrado(s)</p>`
+                resultado.forEach(p => {
+                    const nome  = p.nome
+                    const desc  = p.desc || p.descricao || ""
+                    const img   = p.img  || p.foto || "imagens/sem-imagem.png"
+                    const preco = Number(p.preco || 0)
+                    const cat   = p.categoria || "outro"
+                    if(cat === "pizza"){
+                        html += `<div class="card pizza-card"><img src="${img}" onerror="this.src='imagens/pizza-padrao.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">A partir R$42,90</span><button onclick="abrirMontagemPizza('${nome}')">Montar</button></div></div></div>`
+                    } else if(cat === "combos"){
+                        html += `<div class="card destaque"><img src="${img}" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p class="combo-desc">${desc.split("+").map(i=>i.trim()).join(" + ")}</p><div class="card-rodape"><span class="preco preco-destaque">R$ ${preco.toFixed(2)}</span><button onclick="abrirMontagemCombo('${nome}')">Montar</button></div></div></div>`
+                    } else {
+                        html += `<div class="card"><img src="${img}" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">R$ ${preco.toFixed(2)}</span><button onclick="addCarrinho('${nome}',${preco},'${cat}')">Adicionar</button></div></div></div>`
+                    }
+                })
+            }
+            html += `</div>`
+            document.getElementById("resultadoBusca")?.remove()
+            document.getElementById("produtos").innerHTML = html
         })
     })
 }
@@ -464,7 +562,13 @@ window.onload = function(){
     iniciarBusca()
     mostrarBarraFidelidade()
     setInterval(mostrarHorario, 60000)
-    setTimeout(verificarCadastro, 1000)
+    if(cliente) mostrarBoasVindas()
+
+    // Aviso de aniversariantes proximos (para o admin)
+    const anivProximos = verificarAniversariantesProximos()
+    if(anivProximos.length > 0){
+        console.log("Aniversariantes proximos:", anivProximos)
+    }
 }
 
 // ===============================
@@ -473,35 +577,31 @@ window.onload = function(){
 
 function esconderCombos(){
     document.getElementById("combosSemana").innerHTML = ""
+    document.querySelector(".combos-carrossel-wrap").style.display = "none"
     document.getElementById("tituloCombos").style.display = "none"
 }
 
 function mostrarCombos(){
     document.getElementById("tituloCombos").style.display = "block"
+    document.querySelector(".combos-carrossel-wrap").style.display = "block"
     carregarCombosSemana()
     document.getElementById("produtos").innerHTML = ""
+    document.getElementById("busca").value = ""
 }
 
 function abrirPizzas(){
     esconderCombos()
+    document.getElementById("busca").value = ""
     let html = "<h2>Escolha sua Pizza</h2>"
-    const pizzas = [
-        {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola",img:"imagens/pizzas/calabresa.png"},
-        {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry",img:"imagens/pizzas/franco_com_catupiry.png"},
-        {nome:"4 Queijos",desc:"Mussarela, provolone, parmesao, catupiry",img:"imagens/pizzas/quatro_queijos.png"},
-        {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha",img:"imagens/pizzas/portuguesa.png"},
-        {nome:"Marguerita",desc:"Mussarela, tomate, manjericao",img:"imagens/pizzas/marguerita.png"},
-        {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola",img:"imagens/pizzas/baiana.png"},
-        {nome:"Napolitana",desc:"Mussarela, tomate, parmesao",img:"imagens/pizzas/napolitana.png"},
-        {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela",img:"imagens/pizzas/milho_com_bacon.png"},
-        {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry",img:"imagens/pizzas/moda_da_casa.png"}
-    ]
-    pizzas.forEach(p=>{
+    pizzasFixas.forEach(p=>{
         html += `<div class="card pizza-card">
             <img src="${p.img}" onerror="this.src='imagens/pizza-padrao.png'">
             <div class="card-content">
                 <h3>${p.nome}</h3><p>${p.desc}</p>
-                <button onclick="abrirMontagemPizza('${p.nome}')">Montar Pizza</button>
+                <div class="card-rodape">
+                    <span class="preco">A partir R$42,90</span>
+                    <button onclick="abrirMontagemPizza('${p.nome}')">Montar Pizza</button>
+                </div>
             </div></div>`
     })
     document.getElementById("produtos").innerHTML = html
@@ -560,27 +660,26 @@ function adicionarPizza(nome){
 function filtrar(tipo){
     if(tipo === "combo"){ mostrarCombos(); return }
     esconderCombos()
+    document.getElementById("busca").value = ""
     fetch("produtos.json").then(r=>r.json()).then(produtos=>{
         let html = ""
         produtos.filter(p=>p.categoria===tipo).forEach(p=>{
             html += `<div class="card">
                 <img src="${p.foto}" onerror="this.src='imagens/sem-imagem.png'">
                 <div class="card-content">
-                    <h3>${p.nome}</h3>
-                    <p>${p.descricao}</p>
+                    <h3>${p.nome}</h3><p>${p.descricao}</p>
                     <div class="card-rodape">
                         <span class="preco">R$ ${Number(p.preco).toFixed(2)}</span>
                         <button onclick="addCarrinho('${p.nome}',${p.preco},'${tipo}')">Adicionar</button>
                     </div>
-                </div>
-            </div>`
+                </div></div>`
         })
         document.getElementById("produtos").innerHTML = html
     })
 }
 
 // ===============================
-// CARROSSEL DE COMBOS
+// CARROSSEL COMBOS DA SEMANA
 // ===============================
 
 let combosLista = []
@@ -591,14 +690,16 @@ function carregarCombosSemana(){
         combosLista = produtos.filter(p=>p.categoria==="combos")
         let html = ""
         combosLista.forEach(c=>{
-            html += `<div class="card destaque">
-                <img src="${c.foto}" onerror="this.src='imagens/sem-imagem.png'">
-                <div class="card-content">
-                    <h3>${c.nome}</h3>
-                    <p class="combo-desc">${c.descricao.split("+").map(i=>`${i.trim()}`).join(" + ")}</p>
-                    <div class="card-rodape">
-                        <span class="preco preco-destaque">R$ ${Number(c.preco).toFixed(2)}</span>
-                        <button onclick="abrirMontagemCombo('${c.nome}')">Montar Combo</button>
+            html += `<div class="combo-slide">
+                <div class="card destaque">
+                    <img src="${c.foto}" onerror="this.src='imagens/sem-imagem.png'">
+                    <div class="card-content">
+                        <h3>${c.nome}</h3>
+                        <p class="combo-desc">${c.descricao.split("+").map(i=>i.trim()).join(" + ")}</p>
+                        <div class="card-rodape">
+                            <span class="preco preco-destaque">R$ ${Number(c.preco).toFixed(2)}</span>
+                            <button onclick="abrirMontagemCombo('${c.nome}')">Montar Combo</button>
+                        </div>
                     </div>
                 </div>
             </div>`
@@ -612,6 +713,7 @@ function abrirMontagemCombo(nome){
         combosLista = produtos.filter(p=>p.categoria==="combos")
         comboAtualIndex = combosLista.findIndex(c=>c.nome===nome)
         if(comboAtualIndex < 0) comboAtualIndex = 0
+        esconderCombos()
         renderizarMontagemCombo()
     })
 }
@@ -702,7 +804,7 @@ function adicionarComboFinal(nome,preco,qtdPizzas,semRefri){
         if(nb){ detalhes.push(`${qtd}x ${nb}`); total+=pb*qtd }
     })
     const descCompleta = detalhes.length > 0 ? ` (${detalhes.join(" | ")})` : ""
-    addCarrinho(nome + descCompleta, total, "combo")
+    addCarrinho(nome+descCompleta, total, "combo")
     mostrarCombos()
 }
 
@@ -711,9 +813,9 @@ function adicionarComboFinal(nome,preco,qtdPizzas,semRefri){
 // ===============================
 
 let banners = [
-    {nome:"Combo Familia",  preco:168.90, foto:"imagens/banners/combo-familia.png"},
-    {nome:"Combo Amigos",   preco:169.90, foto:"imagens/banners/combo-amigos.png"},
-    {nome:"Combo Casal",    preco:82.90,  foto:"imagens/banners/combo-casal.png"}
+    {nome:"Combo Familia", preco:168.90, foto:"imagens/banners/combo-familia.png"},
+    {nome:"Combo Amigos",  preco:169.90, foto:"imagens/banners/combo-amigos.png"},
+    {nome:"Combo Casal",   preco:82.90,  foto:"imagens/banners/combo-casal.png"}
 ]
 let bannerIndex = 0, bannerDiv
 
@@ -779,7 +881,7 @@ function atualizarCarrinho(){
         </div>`
     })
     if(contador) contador.innerText = carrinho.length
-    let descRelampago = verificarRelampago() ? subtotal * 0.05 : 0
+    let descRelampago = verificarRelampago() ? subtotal*0.05 : 0
     let descCupom     = cupomAplicado ? (subtotal-descRelampago)*(cupomAplicado.desconto/100) : 0
     let descDiamante  = (calcularNivel()==="diamante"&&!cupomAplicado) ? subtotal*0.15 : 0
     let totalComDesc  = subtotal - descRelampago - descCupom - descDiamante
@@ -802,13 +904,13 @@ function atualizarCarrinho(){
         } else {
             const falta = 5-itens
             const pct = Math.min(100,(itens/5)*100)
-            const pizzasFeitas = Array(itens).fill("[X]").join(" ")
-            const pizzasFaltam = Array(Math.max(0,5-itens)).fill("[ ]").join(" ")
+            const feitos = Array(itens).fill("[X]").join(" ")
+            const faltam = Array(Math.max(0,5-itens)).fill("[ ]").join(" ")
             infoEl.innerHTML = `
             <div class="frete-badge frete-progresso">
                 <div class="frete-texto">Adicione mais <b>${falta} item(s)</b> com comida para ganhar <b>frete gratis!</b></div>
                 <div class="frete-barra-bg"><div class="frete-barra-fill" style="width:${pct}%"></div></div>
-                <div class="frete-steps">${pizzasFeitas} ${pizzasFaltam} <span>${itens}/5</span></div>
+                <div class="frete-steps">${feitos} ${faltam} <span>${itens}/5</span></div>
             </div>`
         }
     }
@@ -855,28 +957,13 @@ const bairrosMedios   = ["Justinopolis","Floramar","Heliopolis","Planalto","Itap
 const bairrosLongos   = ["Centro De Ribeirao Das Neves","Belo Vale","Barcelona","Alterosa","Bom Sossego","Rosaneves","Sevilha","Contagem","Santa Luzia","Pampulha","Castelo","Ouro Preto","Caicara","Padre Eustachio","Dom Bosco","Alipio De Melo","Guarani","Centro De Belo Horizonte","Lagoa Da Pampulha","Vespasiano","Jardim Europa"]
 
 function norm(b){ return b.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"") }
-
-function calcularFretePorBairro(b){
-    if(!b) return 20
-    const bn = norm(b)
-    if(bairrosProximos.some(x=>norm(x)===bn)) return 7
-    if(bairrosMedios.some(x=>norm(x)===bn))   return 10
-    if(bairrosLongos.some(x=>norm(x)===bn))   return 20
-    return 20
-}
-
-function tempoEstimadoPorBairro(b){
-    if(!b) return "40-60 min"
-    const bn = norm(b)
-    if(bairrosProximos.some(x=>norm(x)===bn)) return "20-30 min"
-    if(bairrosMedios.some(x=>norm(x)===bn))   return "30-45 min"
-    return "45-60 min"
-}
+function calcularFretePorBairro(b){ if(!b) return 20; const bn=norm(b); if(bairrosProximos.some(x=>norm(x)===bn)) return 7; if(bairrosMedios.some(x=>norm(x)===bn)) return 10; return 20 }
+function tempoEstimadoPorBairro(b){ if(!b) return "40-60 min"; const bn=norm(b); if(bairrosProximos.some(x=>norm(x)===bn)) return "20-30 min"; if(bairrosMedios.some(x=>norm(x)===bn)) return "30-45 min"; return "45-60 min" }
 
 function abrirModalBairros(){
     document.getElementById("modalBairro")?.remove()
     const todos = [...bairrosProximos,...bairrosMedios,...bairrosLongos]
-    const lista = todos.map(b=>`<div onclick="selecionarBairro('${b}')" style="padding:14px 12px;border-bottom:1px solid #eee;cursor:pointer;font-size:16px;font-weight:600">- ${b}</div>`).join("")
+    const lista = todos.map(b=>`<div onclick="selecionarBairro('${b}')" style="padding:14px 12px;border-bottom:1px solid #eee;cursor:pointer;font-size:17px;font-weight:600">- ${b}</div>`).join("")
     document.body.insertAdjacentHTML("beforeend",`
     <div id="modalBairro" style="position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:99999;display:flex;justify-content:center;align-items:center">
       <div style="background:#fff;color:#000;width:92%;max-width:420px;padding:20px;border-radius:18px;max-height:85vh;display:flex;flex-direction:column;">
@@ -901,29 +988,45 @@ function selecionarBairro(nome){
 }
 
 // ===============================
-// BEBIDAS EXTRAS
+// BEBIDAS EXTRAS — CARD BRANCO PREMIUM
 // ===============================
 
 function adicionarLinhaBebida(){
     fetch("produtos.json").then(r=>r.json()).then(produtos=>{
-        const bebidas=produtos.filter(p=>p.categoria==="bebidas")
-        let opts=`<option value="">Selecione</option>`
-        bebidas.forEach(b=>{ opts+=`<option value="${b.nome}" data-preco="${b.preco}">${b.nome} - R$${b.preco.toFixed(2)}</option>` })
-        const id=Date.now()
-        document.getElementById("extrasBebidas").insertAdjacentHTML("beforeend",`
-        <div id="bebida_${id}" class="linha-bebida-extra">
-            <select class="bebidaSelect">${opts}</select>
-            <div class="ctrl-bebida-extra">
-                <button class="btn-qtd" onclick="diminuirBebida(${id})">-</button>
-                <span id="qtd_${id}" class="qtd-bebida">1</span>
-                <button class="btn-qtd" onclick="aumentarBebida(${id})">+</button>
-                <span class="btn-remover-link" onclick="removerLinhaBebida(${id})">
-                    <span class="x-vermelho">X</span>
-                    <span class="remover-branco">Remover</span>
-                </span>
+        const bebidas = produtos.filter(p=>p.categoria==="bebidas")
+        const id = Date.now()
+        const linhaHTML = `
+        <div id="bebida_${id}" class="bebida-extra-card">
+            <div class="bebida-extra-topo">
+                <select class="bebidaSelect bebida-extra-select" onchange="atualizarPrecoBebida(${id})">
+                    <option value="">Selecione a bebida...</option>
+                    ${bebidas.map(b=>`<option value="${b.nome}" data-preco="${b.preco}">${b.nome} — R$${b.preco.toFixed(2)}</option>`).join("")}
+                </select>
             </div>
-        </div>`)
+            <div class="bebida-extra-rodape">
+                <span class="bebida-extra-preco" id="precoBebida_${id}">Selecione uma bebida</span>
+                <div class="bebida-extra-ctrl">
+                    <button class="btn-qtd-branco" onclick="diminuirBebida(${id})">-</button>
+                    <span id="qtd_${id}" class="qtd-bebida-branco">1</span>
+                    <button class="btn-qtd-branco" onclick="aumentarBebida(${id})">+</button>
+                    <span class="btn-remover-link-escuro" onclick="removerLinhaBebida(${id})">
+                        <span class="x-vermelho">X</span>
+                        <span class="remover-escuro">Remover</span>
+                    </span>
+                </div>
+            </div>
+        </div>`
+        document.getElementById("extrasBebidas").insertAdjacentHTML("beforeend", linhaHTML)
     })
+}
+
+function atualizarPrecoBebida(id){
+    const sel   = document.querySelector(`#bebida_${id} .bebidaSelect`)
+    const preco = Number(sel?.selectedOptions[0]?.dataset.preco || 0)
+    const el    = document.getElementById(`precoBebida_${id}`)
+    if(!el) return
+    if(preco > 0){ el.innerText = `R$ ${preco.toFixed(2)}`; el.style.color = "#16a34a" }
+    else { el.innerText = "Selecione uma bebida"; el.style.color = "#999" }
 }
 
 function aumentarBebida(id){ const e=document.getElementById("qtd_"+id); e.innerText=Number(e.innerText)+1 }
@@ -950,8 +1053,17 @@ function gerarCodigoPix(chave,nome,cidade,valor,txid="PEDIDO"){
 // ===============================
 
 function enviarPedido(){
-    const status = verificarHorario()
     if(carrinho.length===0){ mostrarToastSimples("Seu carrinho esta vazio!"); return }
+    const nomeDigitado = document.getElementById("nomeCliente")?.value?.trim()
+    if(!cliente && !nomeDigitado){
+        mostrarCadastroCheckout(()=> processarEnvio())
+        return
+    }
+    processarEnvio()
+}
+
+function processarEnvio(){
+    const status = verificarHorario()
     const nomeCliente = document.getElementById("nomeCliente")?.value?.trim() || cliente?.nome?.trim() || ""
     if(!nomeCliente){
         const el=document.getElementById("nomeCliente")
@@ -980,7 +1092,6 @@ function enviarPedido(){
     const dd=(calcularNivel()==="diamante"&&!cupomAplicado)?sub*0.15:0
     const total=sub-dr-dc-dd+frete
     const nivelInfo=getNivelInfo(calcularNivel())
-
     let msg=""
     msg+="*SABORE IN CASA*\n"
     msg+=`*Pedido No ${nf}*\n`
@@ -1000,7 +1111,6 @@ function enviarPedido(){
     msg+=`\nTempo estimado: *${tempo}*\n`
     msg+=`Endereco: ${end}\n`
     msg+=`Pagamento: ${pagamento}\n`
-
     if(pagamento==="Pix"){
         const cod=gerarCodigoPix("31983391576","Carlos Henrique","Belo Horizonte",total,"SABORECASA"+nf)
         msg+="\n-------------------------\n"
@@ -1021,7 +1131,6 @@ function enviarPedido(){
         mostrarModalPix(total,cod,()=>finalizarPedido(msg))
         return
     }
-
     if(pagamento==="Dinheiro"&&troco) msg+=`Troco para: R$ ${troco}\n`
     msg+="\nObrigado pela preferencia!\n"
     msg+="Acompanhe seu pedido pelo WhatsApp."
@@ -1071,7 +1180,6 @@ function mostrarModalPix(valor,codigoPix,callback){
         <button class="fechar-pix" onclick="fecharModalPix()">Fechar</button>
       </div>
     </div>`)
-
     if(typeof QRCode!=="undefined"){
         new QRCode(document.getElementById("qrcode"),{text:codigoPix,width:220,height:220,colorDark:"#000",colorLight:"#fff",correctLevel:QRCode.CorrectLevel.H})
     } else {
