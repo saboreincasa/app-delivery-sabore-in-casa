@@ -244,13 +244,10 @@ h2 { font-family:var(--font-titulo); margin:16px 0 12px; font-size:22px; }
 
 .combos-carrossel {
     display:flex;
+    flex-direction:column;
     gap:16px;
-    overflow-x:auto;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
+    overflow:visible;
     padding-bottom:12px;
-    scrollbar-width:thin;
-    scrollbar-color:var(--laranja) #222;
 }
 
 .combos-carrossel::-webkit-scrollbar { height:5px; }
