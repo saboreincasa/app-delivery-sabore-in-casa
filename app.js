@@ -1,3 +1,8 @@
+function setDisplay(seletor, valor){
+    const el = document.querySelector(seletor)
+    if(el) el.style.display = valor
+}
+
 // ===============================
 // CARRINHO
 // ===============================
@@ -488,36 +493,43 @@ function mostrarBarraFidelidade(){
 // BUSCA GLOBAL
 // ===============================
 
-const pizzasFixas = [
-    {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola",img:"imagens/pizzas/calabresa.png",preco:42.90,categoria:"pizza"},
-    {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry",img:"imagens/pizzas/franco_com_catupiry.png",preco:42.90,categoria:"pizza"},
-    {nome:"4 Queijos",desc:"Mussarela, provolone, parmesao, catupiry",img:"imagens/pizzas/quatro_queijos.png",preco:42.90,categoria:"pizza"},
-    {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha",img:"imagens/pizzas/portuguesa.png",preco:42.90,categoria:"pizza"},
-    {nome:"Marguerita",desc:"Mussarela, tomate, manjericao",img:"imagens/pizzas/marguerita.png",preco:42.90,categoria:"pizza"},
-    {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola",img:"imagens/pizzas/baiana.png",preco:42.90,categoria:"pizza"},
-    {nome:"Napolitana",desc:"Mussarela, tomate, parmesao",img:"imagens/pizzas/napolitana.png",preco:42.90,categoria:"pizza"},
-    {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela",img:"imagens/pizzas/milho_com_bacon.png",preco:42.90,categoria:"pizza"},
-    {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry",img:"imagens/pizzas/moda_da_casa.png",preco:42.90,categoria:"pizza"}
+// Cardapio real (pizzas e bebidas) agora vem do sistema de gestao via Supabase
+// (integracao-sistema.js). Estas listas so sao usadas se o sistema estiver
+// indisponivel, para o app de delivery nunca ficar fora do ar.
+const PIZZAS_FALLBACK = [
+    {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola",img:"imagens/pizzas/calabresa.png",precoP:34.90,precoM:42.90,precoG:49.90},
+    {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry",img:"imagens/pizzas/franco_com_catupiry.png",precoP:34.90,precoM:42.90,precoG:49.90},
+    {nome:"4 Queijos",desc:"Mussarela, provolone, parmesao, catupiry",img:"imagens/pizzas/quatro_queijos.png",precoP:34.90,precoM:42.90,precoG:49.90},
+    {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha",img:"imagens/pizzas/portuguesa.png",precoP:34.90,precoM:42.90,precoG:49.90},
+    {nome:"Marguerita",desc:"Mussarela, tomate, manjericao",img:"imagens/pizzas/marguerita.png",precoP:34.90,precoM:42.90,precoG:49.90},
+    {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola",img:"imagens/pizzas/baiana.png",precoP:34.90,precoM:42.90,precoG:49.90},
+    {nome:"Napolitana",desc:"Mussarela, tomate, parmesao",img:"imagens/pizzas/napolitana.png",precoP:34.90,precoM:42.90,precoG:49.90},
+    {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela",img:"imagens/pizzas/milho_com_bacon.png",precoP:34.90,precoM:42.90,precoG:49.90},
+    {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry",img:"imagens/pizzas/moda_da_casa.png",precoP:34.90,precoM:42.90,precoG:49.90}
 ]
 
 function iniciarBusca(){
     const input = document.getElementById("busca")
     if(!input) return
-    input.addEventListener("input", function(){
+    input.addEventListener("input", async function(){
         const termo = this.value.toLowerCase().trim()
         if(!termo){
             document.getElementById("resultadoBusca")?.remove()
             document.getElementById("tituloCombos").style.display = "block"
-            document.querySelector(".combos-carrossel-wrap").style.display = "block"
+            setDisplay(".combos-carrossel-wrap","block")
             document.getElementById("produtos").innerHTML = ""
             carregarCombosSemana()
             return
         }
         document.getElementById("tituloCombos").style.display = "none"
-        document.querySelector(".combos-carrossel-wrap").style.display = "none"
+        setDisplay(".combos-carrossel-wrap","none")
         document.getElementById("produtos").innerHTML = ""
+        await cardapioProntoPromise
+        const pizzas = cardapioPizzas.length ? cardapioPizzas : PIZZAS_FALLBACK
+        const bebidas = cardapioBebidas.length ? cardapioBebidas.map(b=>({...b, categoria:"bebidas"})) : []
         fetch("produtos.json").then(r=>r.json()).then(produtos=>{
-            const todos = [...pizzasFixas, ...produtos]
+            const outros = bebidas.length ? produtos.filter(p=>p.categoria!=="bebidas") : produtos
+            const todos = [...pizzas.map(p=>({...p,categoria:"pizza"})), ...bebidas, ...outros]
             const resultado = todos.filter(p =>
                 p.nome.toLowerCase().includes(termo) ||
                 (p.desc||p.descricao||"").toLowerCase().includes(termo) ||
@@ -532,14 +544,17 @@ function iniciarBusca(){
                     const nome  = p.nome
                     const desc  = p.desc || p.descricao || ""
                     const img   = p.img  || p.foto || "imagens/sem-imagem.png"
-                    const preco = Number(p.preco || 0)
+                    const preco = Number(p.preco ?? p.precoM ?? 0)
                     const cat   = p.categoria || "outro"
                     if(cat === "pizza"){
-                        html += `<div class="card pizza-card"><img src="${img}" onerror="this.src='imagens/pizza-padrao.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">A partir R$42,90</span><button onclick="abrirMontagemPizza('${nome}')">Montar</button></div></div></div>`
+                        const precoTxt = p.precoP ? `A partir R$${Number(p.precoP).toFixed(2).replace(".",",")}` : "Consulte"
+                        html += `<div class="card pizza-card"><img src="${img}" onerror="this.src='imagens/pizza-padrao.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">${precoTxt}</span><button onclick='abrirMontagemPizza(${JSON.stringify(nome)})'>Montar</button></div></div></div>`
                     } else if(cat === "combos"){
-                        html += `<div class="card destaque"><img src="${img}" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p class="combo-desc">${desc.split("+").map(i=>i.trim()).join(" + ")}</p><div class="card-rodape"><span class="preco preco-destaque">R$ ${preco.toFixed(2)}</span><button onclick="abrirMontagemCombo('${nome}')">Montar</button></div></div></div>`
+                        html += `<div class="card destaque"><img src="${img}" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p class="combo-desc">${desc.split("+").map(i=>i.trim()).join(" + ")}</p><div class="card-rodape"><span class="preco preco-destaque">R$ ${preco.toFixed(2)}</span><button onclick='abrirMontagemCombo(${JSON.stringify(nome)})'>Montar</button></div></div></div>`
+                    } else if(cat === "bebidas"){
+                        html += `<div class="card"><img src="${img}" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">R$ ${preco.toFixed(2)}</span><button onclick='addCarrinho(${JSON.stringify(nome)},${preco},"bebidas",{bebidaId:${JSON.stringify(p.id||null)}})'>Adicionar</button></div></div></div>`
                     } else {
-                        html += `<div class="card"><img src="${img}" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">R$ ${preco.toFixed(2)}</span><button onclick="addCarrinho('${nome}',${preco},'${cat}')">Adicionar</button></div></div></div>`
+                        html += `<div class="card"><img src="${img}" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">R$ ${preco.toFixed(2)}</span><button onclick='addCarrinho(${JSON.stringify(nome)},${preco},${JSON.stringify(cat)})'>Adicionar</button></div></div></div>`
                     }
                 })
             }
@@ -577,53 +592,60 @@ window.onload = function(){
 
 function esconderCombos(){
     document.getElementById("combosSemana").innerHTML = ""
-    document.querySelector(".combos-carrossel-wrap").style.display = "none"
+    setDisplay(".combos-carrossel-wrap","none")
     document.getElementById("tituloCombos").style.display = "none"
 }
 
 function mostrarCombos(){
     document.getElementById("tituloCombos").style.display = "block"
-    document.querySelector(".combos-carrossel-wrap").style.display = "block"
+    setDisplay(".combos-carrossel-wrap","block")
     carregarCombosSemana()
     document.getElementById("produtos").innerHTML = ""
     document.getElementById("busca").value = ""
 }
 
-function abrirPizzas(){
+function listaPizzasAtual(){
+    return cardapioPizzas.length ? cardapioPizzas : PIZZAS_FALLBACK
+}
+
+async function abrirPizzas(){
     esconderCombos()
     document.getElementById("busca").value = ""
+    document.getElementById("produtos").innerHTML = `<p style="text-align:center;padding:24px">Carregando cardapio...</p>`
+    await cardapioProntoPromise
+    const pizzas = listaPizzasAtual()
     let html = "<h2>Escolha sua Pizza</h2>"
-    pizzasFixas.forEach(p=>{
+    pizzas.forEach(p=>{
+        const precoTxt = p.precoP ? `A partir R$${Number(p.precoP).toFixed(2).replace(".",",")}` : "Consulte"
         html += `<div class="card pizza-card">
             <img src="${p.img}" onerror="this.src='imagens/pizza-padrao.png'">
             <div class="card-content">
                 <h3>${p.nome}</h3><p>${p.desc}</p>
                 <div class="card-rodape">
-                    <span class="preco">A partir R$42,90</span>
-                    <button onclick="abrirMontagemPizza('${p.nome}')">Montar Pizza</button>
+                    <span class="preco">${precoTxt}</span>
+                    <button onclick='abrirMontagemPizza(${JSON.stringify(p.nome)})'>Montar Pizza</button>
                 </div>
             </div></div>`
     })
     document.getElementById("produtos").innerHTML = html
 }
 
+const TAMANHO_CM = { P:"25cm", M:"30cm", G:"35cm" }
+
 function abrirMontagemPizza(nome){
-    const imgs = {
-        "Calabresa":"imagens/pizzas/calabresa.png","Frango com Catupiry":"imagens/pizzas/franco_com_catupiry.png",
-        "4 Queijos":"imagens/pizzas/quatro_queijos.png","Portuguesa":"imagens/pizzas/portuguesa.png",
-        "Marguerita":"imagens/pizzas/marguerita.png","Baiana":"imagens/pizzas/baiana.png",
-        "Napolitana":"imagens/pizzas/napolitana.png","Milho com Bacon":"imagens/pizzas/milho_com_bacon.png",
-        "Moda da Casa":"imagens/pizzas/moda_da_casa.png"
-    }
+    const pizzas = listaPizzasAtual()
+    const p = pizzas.find(x=>x.nome===nome)
+    if(!p){ abrirPizzas(); return }
+    const outrosSabores = pizzas.filter(x=>x.nome!==nome)
     document.getElementById("produtos").innerHTML = `
     <div class="montagem-box">
-        <h2>Pizza ${nome}</h2>
-        <img class="pizza-preview" src="${imgs[nome]}" onerror="this.src='imagens/pizza-padrao.png'">
+        <h2>Pizza ${p.nome}</h2>
+        <img class="pizza-preview" src="${p.img}" onerror="this.src='imagens/pizza-padrao.png'">
         <div class="opcoes-pizza">
             <div class="campo"><label>Tamanho:</label><select id="tamanho">
-                <option value="25">Pequena 25cm - R$42,90</option>
-                <option value="30">Grande 30cm - R$54,90</option>
-                <option value="35">Gigante 35cm - R$69,90</option>
+                <option value="P">Pequena 25cm - R$${p.precoP.toFixed(2).replace(".",",")}</option>
+                <option value="M" selected>Grande 30cm - R$${p.precoM.toFixed(2).replace(".",",")}</option>
+                <option value="G">Gigante 35cm - R$${p.precoG.toFixed(2).replace(".",",")}</option>
             </select></div>
             <div class="campo"><label>Borda:</label><select id="borda">
                 <option value="0">Normal</option>
@@ -632,35 +654,61 @@ function abrirMontagemPizza(nome){
             </select></div>
             <div class="campo"><label>Meio a Meio:</label><select id="meio">
                 <option value="">Nao</option>
-                <option>Calabresa</option><option>Frango com Catupiry</option><option>4 Queijos</option>
-                <option>Portuguesa</option><option>Marguerita</option><option>Baiana</option>
-                <option>Napolitana</option><option>Milho com Bacon</option><option>Moda da Casa</option>
+                ${outrosSabores.map(s=>`<option>${s.nome}</option>`).join("")}
             </select></div>
         </div>
-        <button class="btn-montar" onclick="adicionarPizza('${nome}')">Adicionar ao Carrinho</button>
+        <button class="btn-montar" onclick='adicionarPizza(${JSON.stringify(nome)})'>Adicionar ao Carrinho</button>
         <span class="voltar" onclick="abrirPizzas()">Voltar</span>
     </div>`
 }
 
 function adicionarPizza(nome){
+    const p = listaPizzasAtual().find(x=>x.nome===nome)
+    if(!p) return
     const tam = document.getElementById("tamanho").value
     const bordaEl = document.getElementById("borda")
     const borda = Number(bordaEl.value)
     const bordaTxt = bordaEl.options[bordaEl.selectedIndex].text
     const meio = document.getElementById("meio").value
-    let preco = tam==25?42.90:tam==30?54.90:69.90
-    preco += borda
-    let nomeFinal = `Pizza ${nome} ${tam}cm`
+    const precoBase = tam==="P" ? p.precoP : tam==="G" ? p.precoG : p.precoM
+    let preco = precoBase + borda
+    let nomeFinal = `Pizza ${nome} ${TAMANHO_CM[tam]}`
     if(meio) nomeFinal += " / Meio: " + meio
     if(borda) nomeFinal += " / Borda: " + bordaTxt
-    addCarrinho(nomeFinal, preco, "pizza")
+    // So conseguimos vincular a venda ao sabor certo no sistema de gestao
+    // quando nao e meio a meio (senao ficaria ambiguo qual sabor "vendeu").
+    const refs = (!meio && p.id) ? { saborId: p.id, tamanho: tam } : {}
+    addCarrinho(nomeFinal, preco, "pizza", refs)
     abrirPizzas()
 }
 
-function filtrar(tipo){
+async function filtrar(tipo){
     if(tipo === "combo"){ mostrarCombos(); return }
     esconderCombos()
     document.getElementById("busca").value = ""
+
+    if(tipo === "bebidas"){
+        document.getElementById("produtos").innerHTML = `<p style="text-align:center;padding:24px">Carregando cardapio...</p>`
+        await cardapioProntoPromise
+        if(cardapioBebidas.length){
+            let html = ""
+            cardapioBebidas.forEach(b=>{
+                html += `<div class="card">
+                    <img src="${b.img}" onerror="this.src='imagens/sem-imagem.png'">
+                    <div class="card-content">
+                        <h3>${b.nome}</h3>
+                        <div class="card-rodape">
+                            <span class="preco">R$ ${b.preco.toFixed(2)}</span>
+                            <button onclick='addCarrinho(${JSON.stringify(b.nome)},${b.preco},"bebidas",{bebidaId:${JSON.stringify(b.id)}})'>Adicionar</button>
+                        </div>
+                    </div></div>`
+            })
+            document.getElementById("produtos").innerHTML = html
+            return
+        }
+        // Sistema fora do ar: cai para o produtos.json local como reserva
+    }
+
     fetch("produtos.json").then(r=>r.json()).then(produtos=>{
         let html = ""
         produtos.filter(p=>p.categoria===tipo).forEach(p=>{
@@ -726,21 +774,22 @@ function navegarCombo(direcao){
 }
 
 function renderizarMontagemCombo(){
-    fetch("produtos.json").then(r=>r.json()).then(produtos=>{
+    (async () => {
+        await cardapioProntoPromise
         const combo = combosLista[comboAtualIndex]
         if(!combo) return
         const desc     = combo.descricao.toLowerCase()
         const semRefri = combo.nome.toLowerCase().includes("amigos")
         const qtdPizzas = desc.includes("familia") ? 2 : 1
-        const bebidas = produtos.filter(p=>{
-            if(p.categoria!=="bebidas") return false
+        const fonteBebidas = cardapioBebidas.length ? cardapioBebidas : await fetch("produtos.json").then(r=>r.json()).then(produtos=>produtos.filter(p=>p.categoria==="bebidas"))
+        const bebidas = fonteBebidas.filter(b=>{
             if(semRefri) return false
-            const nb = p.nome.toLowerCase()
+            const nb = b.nome.toLowerCase()
             if(desc.includes("refrigerante")) return nb.includes("2l")||nb.includes("2000")
             if(desc.includes("lata")||desc.includes("350ml")) return nb.includes("350")||nb.includes("lata")
             return false
         })
-        const pOpts = `<option value="">Selecione</option><option>Calabresa</option><option>Frango com Catupiry</option><option>4 Queijos</option><option>Portuguesa</option><option>Marguerita</option><option>Baiana</option><option>Napolitana</option><option>Milho com Bacon</option><option>Moda da Casa</option>`
+        const pOpts = `<option value="">Selecione</option>` + listaPizzasAtual().map(s=>`<option>${s.nome}</option>`).join("")
         let rOpts = `<option value="">Selecione</option>`
         bebidas.forEach(b=>{ rOpts += `<option value="${b.nome}">${b.nome}</option>` })
         const dots = combosLista.map((c,i)=>`<span class="combo-dot ${i===comboAtualIndex?"ativo":""}" onclick="comboAtualIndex=${i};renderizarMontagemCombo()"></span>`).join("")
@@ -775,7 +824,7 @@ function renderizarMontagemCombo(){
         </div>`
         document.getElementById("produtos").innerHTML = html
         setTimeout(()=>document.getElementById("produtos").scrollIntoView({behavior:"smooth"}),100)
-    })
+    })()
 }
 
 function adicionarComboFinal(nome,preco,qtdPizzas,semRefri){
@@ -837,10 +886,10 @@ function mostrarBanner(){
 // CARRINHO
 // ===============================
 
-function addCarrinho(nome, preco, tipo="outro"){
+function addCarrinho(nome, preco, tipo="outro", refs={}){
     let item = carrinho.find(i=>i.nome===nome)
     if(item) item.qtd++
-    else carrinho.push({nome, preco:Number(preco), qtd:1, tipo})
+    else carrinho.push({nome, preco:Number(preco), qtd:1, tipo, ...refs})
     const btn = document.getElementById("botaoCarrinho")
     if(btn){ btn.classList.add("pulsar"); setTimeout(()=>btn.classList.remove("pulsar"),600) }
     atualizarCarrinho()
@@ -992,8 +1041,7 @@ function selecionarBairro(nome){
 // ===============================
 
 function adicionarLinhaBebida(){
-    fetch("produtos.json").then(r=>r.json()).then(produtos=>{
-        const bebidas = produtos.filter(p=>p.categoria==="bebidas")
+    (cardapioBebidas.length ? Promise.resolve(cardapioBebidas) : fetch("produtos.json").then(r=>r.json()).then(produtos=>produtos.filter(p=>p.categoria==="bebidas"))).then(bebidas=>{
         const id = Date.now()
         const linhaHTML = `
         <div id="bebida_${id}" class="bebida-extra-card">
@@ -1062,7 +1110,7 @@ function enviarPedido(){
     processarEnvio()
 }
 
-function processarEnvio(){
+async function processarEnvio(){
     const status = verificarHorario()
     const nomeCliente = document.getElementById("nomeCliente")?.value?.trim() || cliente?.nome?.trim() || ""
     if(!nomeCliente){
@@ -1111,6 +1159,7 @@ function processarEnvio(){
     msg+=`\nTempo estimado: *${tempo}*\n`
     msg+=`Endereco: ${end}\n`
     msg+=`Pagamento: ${pagamento}\n`
+    const sincronizacaoPromise = sincronizarPedidoComSistema(nomeCliente, end, nf)
     if(pagamento==="Pix"){
         const cod=gerarCodigoPix("31983391576","Carlos Henrique","Belo Horizonte",total,"SABORECASA"+nf)
         msg+="\n-------------------------\n"
@@ -1135,12 +1184,37 @@ function processarEnvio(){
     msg+="\nObrigado pela preferencia!\n"
     msg+="Acompanhe seu pedido pelo WhatsApp."
     mostrarProgressoFidelidade(total,temComidaNoCarrinho())
+    await sincronizacaoPromise
     finalizarPedido(msg)
 }
 
 function finalizarPedido(msg){
     carrinho=[]; atualizarCarrinho(); cupomAplicado=null
     window.location.href=`https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
+}
+
+// Registra as pizzas e bebidas do pedido como vendas no sistema de gestao
+// (Supabase). Roda em segundo plano - se falhar, so avisa no console; o
+// pedido pelo WhatsApp (fonte oficial do pedido) nunca fica bloqueado por isso.
+function sincronizarPedidoComSistema(nomeCliente, enderecoTexto, numeroPedidoTexto){
+    const observacoes = `Pedido delivery #${numeroPedidoTexto}`
+    const itens = []
+    carrinho.forEach(item=>{
+        if(item.tipo === "pizza" && item.saborId && item.tamanho){
+            itens.push({ tipo:"pizza", sabor_id:item.saborId, tamanho:item.tamanho, quantidade:item.qtd, preco_unitario:item.preco, observacoes })
+        } else if(item.tipo === "bebidas" && item.bebidaId){
+            itens.push({ tipo:"bebida", bebida_id:item.bebidaId, quantidade:item.qtd, preco_unitario:item.preco, observacoes })
+        }
+    })
+    if(itens.length === 0) return Promise.resolve(null)
+    return enviarPedidoParaSistema({
+        itens,
+        nome: nomeCliente,
+        telefone: cliente?.whatsapp || null,
+        endereco: enderecoTexto,
+        aniversario: cliente?.aniversario || null,
+        observacoes
+    })
 }
 
 // ===============================
