@@ -516,7 +516,7 @@ function iniciarBusca(){
         if(!termo){
             document.getElementById("resultadoBusca")?.remove()
             document.getElementById("tituloCombos").style.display = "block"
-            setDisplay(".combos-carrossel-wrap","block")
+            setDisplay(".combos-carrossel-wrap","")
             document.getElementById("produtos").innerHTML = ""
             carregarCombosSemana()
             return
@@ -598,7 +598,7 @@ function esconderCombos(){
 
 function mostrarCombos(){
     document.getElementById("tituloCombos").style.display = "block"
-    setDisplay(".combos-carrossel-wrap","block")
+    setDisplay(".combos-carrossel-wrap","")
     carregarCombosSemana()
     document.getElementById("produtos").innerHTML = ""
     document.getElementById("busca").value = ""
