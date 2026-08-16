@@ -573,6 +573,24 @@ h2 { font-family:var(--font-titulo); margin:16px 0 12px; font-size:22px; }
 @keyframes toastIn { from{opacity:0;transform:translateX(-50%) translateY(10px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
 
 /* =============================================
+   INSTALAR APP
+============================================= */
+
+#instalarBanner {
+    display:none; position:fixed; left:0; right:0; bottom:0; z-index:9998;
+    background:linear-gradient(135deg,#ff6600,#ff9800); color:#000;
+    padding:14px 16px; align-items:center; justify-content:center; gap:12px;
+    flex-wrap:wrap; font-weight:700; font-size:15px; text-align:center;
+    box-shadow:0 -4px 16px rgba(0,0,0,0.3);
+}
+#instalarBanner button {
+    background:#000; color:#fff; border:none; padding:9px 18px; border-radius:10px;
+    font-weight:800; font-size:14px; cursor:pointer;
+}
+#instalarBanner span { cursor:pointer; font-weight:900; padding:4px 8px; opacity:0.7; }
+#instalarBanner span:hover { opacity:1; }
+
+/* =============================================
    MONTAGEM PIZZA
 ============================================= */
 
@@ -701,6 +719,18 @@ h2 { font-family:var(--font-titulo); margin:16px 0 12px; font-size:22px; }
 .cardapio-item-corpo { padding:0 14px 14px 70px; }
 .cardapio-item-corpo p { font-size:14px; color:#bbb; line-height:1.5; }
 .cardapio-item-precos-detalhe { margin-top:6px; color:#aaa !important; font-size:13px !important; }
+
+/* =============================================
+   SOBRE NOS
+============================================= */
+
+#sobreNos {
+    max-width:1000px; margin:22px auto; padding:20px;
+    background:var(--bg-card); border-radius:var(--radius); box-shadow:var(--shadow);
+}
+#sobreNos h2 { margin-top:0; margin-bottom:12px; font-size:20px; }
+#sobreNos p { color:#ccc; font-size:15px; line-height:1.7; margin-bottom:10px; }
+#sobreNos p:last-child { margin-bottom:0; }
 
 /* =============================================
    FOOTER

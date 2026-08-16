@@ -7,6 +7,7 @@ function setDisplay(seletor, valor){
 // CARRINHO
 // ===============================
 let carrinho = []
+try{ carrinho = JSON.parse(localStorage.getItem("carrinhoAtual")) || [] }catch(e){ carrinho = [] }
 let numeroPedido = Number(localStorage.getItem("numeroPedido")) || 0
 const whatsappNumero = "5531983391576"
 
@@ -905,6 +906,7 @@ function temComidaNoCarrinho(){
 }
 
 function atualizarCarrinho(){
+    localStorage.setItem("carrinhoAtual", JSON.stringify(carrinho))
     const lista    = document.getElementById("lista")
     const contador = document.getElementById("contador")
     if(!lista) return
@@ -1191,8 +1193,41 @@ async function processarEnvio(){
 
 function finalizarPedido(msg){
     carrinho=[]; atualizarCarrinho(); cupomAplicado=null
-    window.location.href=`https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
+    mostrarToastSimples("Pedido pronto! Abrindo o WhatsApp...")
+    setTimeout(()=>{
+        window.location.href=`https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
+    }, 700)
 }
+
+// ===============================
+// INSTALAR COMO APP (PWA)
+// ===============================
+
+let promptInstalacao = null
+
+window.addEventListener("beforeinstallprompt", (e)=>{
+    e.preventDefault()
+    promptInstalacao = e
+    if(localStorage.getItem("instalarBannerFechado") === "sim") return
+    const el = document.getElementById("instalarBanner")
+    if(el) el.style.display = "flex"
+})
+
+function instalarApp(){
+    if(!promptInstalacao) return
+    promptInstalacao.prompt()
+    promptInstalacao.userChoice.finally(()=>{
+        promptInstalacao = null
+        fecharInstalarBanner()
+    })
+}
+
+function fecharInstalarBanner(){
+    document.getElementById("instalarBanner").style.display = "none"
+    localStorage.setItem("instalarBannerFechado", "sim")
+}
+
+window.addEventListener("appinstalled", fecharInstalarBanner)
 
 // Registra as pizzas e bebidas do pedido como vendas no sistema de gestao
 // (Supabase). Roda em segundo plano - se falhar, so avisa no console; o

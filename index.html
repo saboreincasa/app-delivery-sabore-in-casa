@@ -117,6 +117,17 @@
   <div class="overlay"></div>
 </header>
 
+<div id="statusHorario"></div>
+
+<div id="boasVindas" onclick="abrirPerfilCliente()"></div>
+
+<div id="bannerRelampago">
+  ⚡ <b>Happy Hour: 5% OFF por tempo limitado!</b>
+  <span id="countdownRelampago" class="rel-countdown"></span>
+</div>
+
+<div id="barraFidelidade"></div>
+
 <div class="endereco">
 <h1 style="font-size:17px;margin-bottom:6px;">🍕 Sabore In Casa — Pizzaria Delivery</h1>
 📍 Rua Maria de Lourdes da Cruz Nº 378<br>
@@ -164,6 +175,15 @@ Bairro Mantiqueira – Belo Horizonte
 <div class="total">
 Total + entrega: R$ <span id="total">0.00</span>
 </div>
+<div id="descontosAtivos"></div>
+<div id="infoFrete"></div>
+
+<div class="cupom-box">
+<input id="campoCupom" placeholder="Cupom de desconto" onkeydown="if(event.key==='Enter') aplicarCupom()">
+<button class="btn-aplicar" onclick="aplicarCupom()">Aplicar</button>
+<button class="btn-remover-cupom" onclick="removerCupom()">X</button>
+</div>
+<div id="msgCupom"></div>
 
 <!-- 📍 ENDEREÇO NOVO -->
 <div class="endereco-box">
@@ -188,7 +208,9 @@ Total + entrega: R$ <span id="total">0.00</span>
 <option>Cartão</option>
 </select>
 
+<div id="trocoBox">
 <input id="troco" placeholder="Troco para quanto?">
+</div>
 
 <button class="enviar" onclick="enviarPedido()">
 Enviar pedido no WhatsApp
@@ -200,6 +222,12 @@ Enviar pedido no WhatsApp
 
 <details id="cardapioCompleto" aria-label="Cardápio completo"></details>
 
+<section id="sobreNos">
+  <h2>🌾 Nossa massa é 100% integral</h2>
+  <p>Na Sabore In Casa, toda pizza é feita com massa 100% integral — mais fibras, mais sabor e a mesma leveza de sempre. É o que nos diferencia das outras pizzarias da região: você não abre mão do sabor pra comer melhor.</p>
+  <p>Ficamos no Bairro Mantiqueira, Belo Horizonte, e entregamos em dezenas de bairros ao redor — de Venda Nova a Vespasiano, Santa Luzia, Ribeirão das Neves e Contagem.</p>
+</section>
+
 <div id="botaoCarrinho" onclick="scrollCarrinho()">
 🛒 <div id="contador">0</div>
 </div>
@@ -210,6 +238,12 @@ Desenvolvido por <b>Carlos Henrique</b>
 </footer>
 
 <div id="toast"></div>
+
+<div id="instalarBanner">
+  📲 <b>Instale nosso app!</b> Peça mais rápido da próxima vez.
+  <button onclick="instalarApp()">Instalar</button>
+  <span onclick="fecharInstalarBanner()">✕</span>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3" integrity="sha384-l8ah+VgaWtk1mvOe9VC+OirC6qHFF4yH7l7mKRidV9MSti3E9F463bMp6ZVN4kuC" crossorigin="anonymous"></script>
 <script src="integracao-sistema.js"></script>
