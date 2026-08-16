@@ -34,6 +34,13 @@ const DESCRICOES_SABORES = {
     "À Moda da Casa": "Frango, bacon, milho, catupiry"
 }
 
+// Diferencial da casa: toda pizza e feita com massa 100% integral. Sempre
+// aparece na descricao, ate para sabores novos sem ingredientes cadastrados
+// acima (cadastrados direto no painel de gestao).
+function descricaoComMassaIntegral(ingredientes){
+    return ingredientes ? `Massa 100% integral. ${ingredientes}` : "Massa 100% integral."
+}
+
 let cardapioPizzas = []
 let cardapioBebidas = []
 
@@ -50,7 +57,7 @@ async function carregarCardapioDoSistema(){
             cardapioPizzas = pizzasRes.data.map(s => ({
                 id: s.id,
                 nome: s.nome,
-                desc: DESCRICOES_SABORES[s.nome] || "",
+                desc: descricaoComMassaIntegral(DESCRICOES_SABORES[s.nome]),
                 img: s.imagem_url || "imagens/pizza-padrao.png",
                 precoP: Number(s.preco_p || 0),
                 precoM: Number(s.preco_m || 0),
