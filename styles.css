@@ -127,7 +127,7 @@ button:active { transform:scale(0.95) !important; }
 
 .header-topo {
     position:relative; height:260px;
-    background:url("imagens/capa.png") no-repeat center 70% / cover;
+    background:url("imagens/capa.png") no-repeat center 62% / cover;
     display:flex; align-items:center; justify-content:center; overflow:hidden;
 }
 .overlay { position:absolute; inset:0; background:rgba(0,0,0,0.28); z-index:1; }
