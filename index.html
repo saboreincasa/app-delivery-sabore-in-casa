@@ -5,10 +5,65 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Sabore In Casa</title>
+<title>Sabore In Casa — Pizzaria Delivery em Belo Horizonte (Mantiqueira)</title>
+<meta name="description" content="Peça pizza online em Belo Horizonte — cardápio de pizzas, bebidas e combos com entrega no Bairro Mantiqueira e região. Pedido rápido direto pelo WhatsApp.">
+<link rel="canonical" href="https://saboreincasa.github.io/app-delivery-sabore-in-casa/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sabore In Casa — Pizzaria Delivery em Belo Horizonte">
+<meta property="og:description" content="Cardápio de pizzas, bebidas e combos com entrega em Belo Horizonte. Peça pelo WhatsApp.">
+<meta property="og:url" content="https://saboreincasa.github.io/app-delivery-sabore-in-casa/">
+<meta property="og:image" content="https://saboreincasa.github.io/app-delivery-sabore-in-casa/imagens/capa.png">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
 
 <link rel="manifest" href="manifest.json">
+<link rel="icon" href="imagens/icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="imagens/icons/icon-512.png">
 <link rel="stylesheet" href="styles.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Montserrat:wght@700;800;900&display=swap">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "@id": "https://saboreincasa.github.io/app-delivery-sabore-in-casa/#restaurant",
+  "name": "Sabore In Casa",
+  "url": "https://saboreincasa.github.io/app-delivery-sabore-in-casa/",
+  "image": "https://saboreincasa.github.io/app-delivery-sabore-in-casa/imagens/capa.png",
+  "telephone": "+55 31 98339-1576",
+  "priceRange": "R$35 - R$170",
+  "servesCuisine": "Pizza",
+  "acceptsReservations": false,
+  "paymentAccepted": "PIX, Dinheiro, Cartão de Crédito/Débito",
+  "currenciesAccepted": "BRL",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Rua Maria de Lourdes da Cruz, 378 - Bairro Mantiqueira",
+    "addressLocality": "Belo Horizonte",
+    "addressRegion": "MG",
+    "addressCountry": "BR"
+  },
+  "areaServed": [
+    { "@type": "City", "name": "Belo Horizonte" },
+    { "@type": "City", "name": "Vespasiano" },
+    { "@type": "City", "name": "Ribeirão das Neves" },
+    { "@type": "City", "name": "Santa Luzia" },
+    { "@type": "City", "name": "Contagem" }
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "18:00",
+      "closes": "23:59"
+    }
+  ]
+}
+</script>
 
 <style>
 #toast {
@@ -63,8 +118,12 @@
 </header>
 
 <div class="endereco">
+<h1 style="font-size:17px;margin-bottom:6px;">🍕 Sabore In Casa — Pizzaria Delivery</h1>
 📍 Rua Maria de Lourdes da Cruz Nº 378<br>
 Bairro Mantiqueira – Belo Horizonte
+<br>
+📞 <a href="https://wa.me/5531983391576" style="color:inherit;">(31) 98339-1576</a>
+&nbsp;|&nbsp; 🕕 Ter a Dom, 18h às 00h (fechado às segundas)
 <br>
 <button onclick="abrirMapa()">📍 Ver no mapa</button>
 </div>
@@ -137,6 +196,8 @@ Enviar pedido no WhatsApp
 
 </div>
 
+<section id="cardapioCompleto" aria-label="Cardápio completo"></section>
+
 <div id="botaoCarrinho" onclick="scrollCarrinho()">
 🛒 <div id="contador">0</div>
 </div>
@@ -148,7 +209,7 @@ Desenvolvido por <b>Carlos Henrique</b>
 
 <div id="toast"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3" integrity="sha384-l8ah+VgaWtk1mvOe9VC+OirC6qHFF4yH7l7mKRidV9MSti3E9F463bMp6ZVN4kuC" crossorigin="anonymous"></script>
 <script src="integracao-sistema.js"></script>
 <script src="app.js"></script>
 

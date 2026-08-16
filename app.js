@@ -548,13 +548,13 @@ function iniciarBusca(){
                     const cat   = p.categoria || "outro"
                     if(cat === "pizza"){
                         const precoTxt = p.precoP ? `A partir R$${Number(p.precoP).toFixed(2).replace(".",",")}` : "Consulte"
-                        html += `<div class="card pizza-card"><img src="${img}" onerror="this.src='imagens/pizza-padrao.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">${precoTxt}</span><button onclick='abrirMontagemPizza(${JSON.stringify(nome)})'>Montar</button></div></div></div>`
+                        html += `<div class="card pizza-card"><img src="${img}" loading="lazy" onerror="this.src='imagens/pizza-padrao.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">${precoTxt}</span><button onclick='abrirMontagemPizza(${JSON.stringify(nome)})'>Montar</button></div></div></div>`
                     } else if(cat === "combos"){
-                        html += `<div class="card destaque"><img src="${img}" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p class="combo-desc">${desc.split("+").map(i=>i.trim()).join(" + ")}</p><div class="card-rodape"><span class="preco preco-destaque">R$ ${preco.toFixed(2)}</span><button onclick='abrirMontagemCombo(${JSON.stringify(nome)})'>Montar</button></div></div></div>`
+                        html += `<div class="card destaque"><img src="${img}" loading="lazy" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p class="combo-desc">${desc.split("+").map(i=>i.trim()).join(" + ")}</p><div class="card-rodape"><span class="preco preco-destaque">R$ ${preco.toFixed(2)}</span><button onclick='abrirMontagemCombo(${JSON.stringify(nome)})'>Montar</button></div></div></div>`
                     } else if(cat === "bebidas"){
-                        html += `<div class="card"><img src="${img}" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">R$ ${preco.toFixed(2)}</span><button onclick='addCarrinho(${JSON.stringify(nome)},${preco},"bebidas",{bebidaId:${JSON.stringify(p.id||null)}})'>Adicionar</button></div></div></div>`
+                        html += `<div class="card"><img src="${img}" loading="lazy" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">R$ ${preco.toFixed(2)}</span><button onclick='addCarrinho(${JSON.stringify(nome)},${preco},"bebidas",{bebidaId:${JSON.stringify(p.id||null)}})'>Adicionar</button></div></div></div>`
                     } else {
-                        html += `<div class="card"><img src="${img}" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">R$ ${preco.toFixed(2)}</span><button onclick='addCarrinho(${JSON.stringify(nome)},${preco},${JSON.stringify(cat)})'>Adicionar</button></div></div></div>`
+                        html += `<div class="card"><img src="${img}" loading="lazy" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">R$ ${preco.toFixed(2)}</span><button onclick='addCarrinho(${JSON.stringify(nome)},${preco},${JSON.stringify(cat)})'>Adicionar</button></div></div></div>`
                     }
                 })
             }
@@ -576,6 +576,7 @@ window.onload = function(){
     mostrarBannerRelampago()
     iniciarBusca()
     mostrarBarraFidelidade()
+    renderizarCardapioSEO()
     setInterval(mostrarHorario, 60000)
     if(cliente) mostrarBoasVindas()
 
@@ -618,7 +619,7 @@ async function abrirPizzas(){
     pizzas.forEach(p=>{
         const precoTxt = p.precoP ? `A partir R$${Number(p.precoP).toFixed(2).replace(".",",")}` : "Consulte"
         html += `<div class="card pizza-card">
-            <img src="${p.img}" onerror="this.src='imagens/pizza-padrao.png'">
+            <img src="${p.img}" loading="lazy" onerror="this.src='imagens/pizza-padrao.png'">
             <div class="card-content">
                 <h3>${p.nome}</h3><p>${p.desc}</p>
                 <div class="card-rodape">
@@ -640,7 +641,7 @@ function abrirMontagemPizza(nome){
     document.getElementById("produtos").innerHTML = `
     <div class="montagem-box">
         <h2>Pizza ${p.nome}</h2>
-        <img class="pizza-preview" src="${p.img}" onerror="this.src='imagens/pizza-padrao.png'">
+        <img class="pizza-preview" src="${p.img}" loading="lazy" onerror="this.src='imagens/pizza-padrao.png'">
         <div class="opcoes-pizza">
             <div class="campo"><label>Tamanho:</label><select id="tamanho">
                 <option value="P">Pequena 25cm - R$${p.precoP.toFixed(2).replace(".",",")}</option>
@@ -694,7 +695,7 @@ async function filtrar(tipo){
             let html = ""
             cardapioBebidas.forEach(b=>{
                 html += `<div class="card">
-                    <img src="${b.img}" onerror="this.src='imagens/sem-imagem.png'">
+                    <img src="${b.img}" loading="lazy" onerror="this.src='imagens/sem-imagem.png'">
                     <div class="card-content">
                         <h3>${b.nome}</h3>
                         <div class="card-rodape">
@@ -713,7 +714,7 @@ async function filtrar(tipo){
         let html = ""
         produtos.filter(p=>p.categoria===tipo).forEach(p=>{
             html += `<div class="card">
-                <img src="${p.foto}" onerror="this.src='imagens/sem-imagem.png'">
+                <img src="${p.foto}" loading="lazy" onerror="this.src='imagens/sem-imagem.png'">
                 <div class="card-content">
                     <h3>${p.nome}</h3><p>${p.descricao}</p>
                     <div class="card-rodape">
@@ -740,7 +741,7 @@ function carregarCombosSemana(){
         combosLista.forEach(c=>{
             html += `<div class="combo-slide">
                 <div class="card destaque">
-                    <img src="${c.foto}" onerror="this.src='imagens/sem-imagem.png'">
+                    <img src="${c.foto}" loading="lazy" onerror="this.src='imagens/sem-imagem.png'">
                     <div class="card-content">
                         <h3>${c.nome}</h3>
                         <p class="combo-desc">${c.descricao.split("+").map(i=>i.trim()).join(" + ")}</p>
@@ -804,7 +805,7 @@ function renderizarMontagemCombo(){
             </div>
             <button class="combo-nav-btn" onclick="navegarCombo(1)">&#8594;</button>
           </div>
-          <img class="pizza-preview" src="${combo.foto}" onerror="this.src='imagens/sem-imagem.png'">
+          <img class="pizza-preview" src="${combo.foto}" loading="lazy" onerror="this.src='imagens/sem-imagem.png'">
           <p class="combo-preco-destaque">R$ ${Number(combo.preco).toFixed(2)}</p>
           <div class="opcoes-pizza">`
         for(let i=1;i<=qtdPizzas;i++) html += `<div class="campo"><label>Pizza ${i}:</label><select id="pizza${i}">${pOpts}</select></div>`
@@ -1215,6 +1216,123 @@ function sincronizarPedidoComSistema(nomeCliente, enderecoTexto, numeroPedidoTex
         aniversario: cliente?.aniversario || null,
         observacoes
     })
+}
+
+// ===============================
+// CARDAPIO COMPLETO (SEO) + SCHEMA.ORG
+// ===============================
+// O cardapio interativo (Pizzas/Bebidas/Combos/Snacks) so aparece apos um
+// clique, entao nunca existe no HTML carregado - o que o torna invisivel
+// para crawlers. Esta secao renderiza o cardapio completo, sempre, assim
+// que a pagina carrega (nao depende de clique), e a partir dos mesmos dados
+// monta o JSON-LD de Menu (schema.org), garantindo que o que o Google ve
+// bate com o que o cliente ve.
+
+function absoluteUrl(caminho){
+    if(!caminho) return undefined
+    try{ return new URL(caminho, "https://saboreincasa.github.io/app-delivery-sabore-in-casa/").href }
+    catch(e){ return undefined }
+}
+
+async function renderizarCardapioSEO(){
+    await cardapioProntoPromise
+    const pizzas = listaPizzasAtual()
+    let bebidas = cardapioBebidas
+    let combos = [], snacks = []
+    try{
+        const produtos = await fetch("produtos.json").then(r=>r.json())
+        if(!bebidas.length) bebidas = produtos.filter(p=>p.categoria==="bebidas")
+        combos = produtos.filter(p=>p.categoria==="combos")
+        snacks = produtos.filter(p=>p.categoria==="snacks")
+    }catch(e){
+        console.warn("Nao foi possivel carregar produtos.json para o cardapio completo.", e)
+    }
+
+    function secaoHtml(titulo, itens, item){
+        if(!itens.length) return ""
+        return `<div class="cardapio-secao"><h3>${titulo}</h3><ul>${itens.map(item).join("")}</ul></div>`
+    }
+
+    const el = document.getElementById("cardapioCompleto")
+    if(el){
+        let html = `<h2>Cardápio Completo</h2>`
+        html += secaoHtml("Pizzas — Pequena (25cm) / Média (30cm) / Grande (35cm)", pizzas, p=>
+            `<li><b>${p.nome}</b>${p.desc ? ` — ${p.desc}` : ""} — R$${p.precoP.toFixed(2)} / R$${p.precoM.toFixed(2)} / R$${p.precoG.toFixed(2)}</li>`)
+        html += secaoHtml("Bebidas", bebidas, b=>
+            `<li><b>${b.nome}</b> — R$${Number(b.preco).toFixed(2)}</li>`)
+        html += secaoHtml("Combos", combos, c=>
+            `<li><b>${c.nome}</b> — ${c.descricao} — R$${Number(c.preco).toFixed(2)}</li>`)
+        html += secaoHtml("Snacks", snacks, s=>
+            `<li><b>${s.nome}</b>${s.descricao ? ` — ${s.descricao}` : ""} — R$${Number(s.preco).toFixed(2)}</li>`)
+        el.innerHTML = html
+    }
+
+    injetarMenuJsonLd(pizzas, bebidas, combos, snacks)
+}
+
+function injetarMenuJsonLd(pizzas, bebidas, combos, snacks){
+    document.getElementById("menuJsonLd")?.remove()
+    const menu = {
+        "@context": "https://schema.org",
+        "@type": "Menu",
+        "@id": "https://saboreincasa.github.io/app-delivery-sabore-in-casa/#menu",
+        "name": "Cardápio Sabore In Casa",
+        "inLanguage": "pt-BR",
+        "hasMenuSection": [
+            {
+                "@type": "MenuSection",
+                "name": "Pizzas",
+                "description": "Pizzas em 3 tamanhos: Pequena (25cm), Média (30cm) e Grande (35cm)",
+                "hasMenuItem": pizzas.map(p=>({
+                    "@type": "MenuItem",
+                    "name": p.nome,
+                    "description": p.desc || undefined,
+                    "image": absoluteUrl(p.img),
+                    "offers": [
+                        { "@type": "Offer", "name": "Pequena (25cm)", "price": p.precoP.toFixed(2), "priceCurrency": "BRL" },
+                        { "@type": "Offer", "name": "Média (30cm)", "price": p.precoM.toFixed(2), "priceCurrency": "BRL" },
+                        { "@type": "Offer", "name": "Grande (35cm)", "price": p.precoG.toFixed(2), "priceCurrency": "BRL" }
+                    ]
+                }))
+            },
+            {
+                "@type": "MenuSection",
+                "name": "Bebidas",
+                "hasMenuItem": bebidas.map(b=>({
+                    "@type": "MenuItem",
+                    "name": b.nome,
+                    "offers": { "@type": "Offer", "price": Number(b.preco).toFixed(2), "priceCurrency": "BRL" }
+                }))
+            },
+            {
+                "@type": "MenuSection",
+                "name": "Combos",
+                "hasMenuItem": combos.map(c=>({
+                    "@type": "MenuItem",
+                    "name": c.nome,
+                    "description": c.descricao || undefined,
+                    "image": absoluteUrl(c.foto),
+                    "offers": { "@type": "Offer", "price": Number(c.preco).toFixed(2), "priceCurrency": "BRL" }
+                }))
+            },
+            {
+                "@type": "MenuSection",
+                "name": "Snacks",
+                "hasMenuItem": snacks.map(s=>({
+                    "@type": "MenuItem",
+                    "name": s.nome,
+                    "description": s.descricao || undefined,
+                    "image": absoluteUrl(s.foto),
+                    "offers": { "@type": "Offer", "price": Number(s.preco).toFixed(2), "priceCurrency": "BRL" }
+                }))
+            }
+        ]
+    }
+    const script = document.createElement("script")
+    script.type = "application/ld+json"
+    script.id = "menuJsonLd"
+    script.textContent = JSON.stringify(menu)
+    document.head.appendChild(script)
 }
 
 // ===============================

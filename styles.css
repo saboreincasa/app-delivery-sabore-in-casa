@@ -1,8 +1,8 @@
 /* =============================================
    SABORE IN CASA — CSS COMPLETO v5
 ============================================= */
-
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Montserrat:wght@700;800;900&display=swap');
+/* Fonte Google Fonts carregada via <link> em index.html/admin.html
+   (preconnect + link, em vez de @import, para nao bloquear o render) */
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
@@ -653,6 +653,22 @@ h2 { font-family:var(--font-titulo); margin:16px 0 12px; font-size:22px; }
 .fid-cupom-item.locked { opacity:0.5; }
 .fid-btn-fechar { width:100%; padding:17px; background:#2a2a2a; border:none; color:#aaa; font-size:16px; font-weight:700; cursor:pointer; }
 .fid-btn-fechar:hover { background:#333; color:white; }
+
+/* =============================================
+   CARDAPIO COMPLETO (referencia + SEO)
+============================================= */
+
+#cardapioCompleto {
+    max-width:1000px; margin:22px auto; padding:20px;
+    background:var(--bg-card); border-radius:var(--radius); box-shadow:var(--shadow);
+}
+#cardapioCompleto h2 { margin-top:0; }
+.cardapio-secao { margin-top:18px; }
+.cardapio-secao:first-of-type { margin-top:0; }
+.cardapio-secao h3 { font-family:var(--font-titulo); font-size:17px; color:var(--laranja); margin-bottom:8px; }
+.cardapio-secao ul { list-style:none; display:flex; flex-direction:column; gap:6px; }
+.cardapio-secao li { font-size:15px; color:#ddd; line-height:1.5; padding:8px 0; border-bottom:1px solid #2a2a2a; }
+.cardapio-secao li b { color:#fff; }
 
 /* =============================================
    FOOTER

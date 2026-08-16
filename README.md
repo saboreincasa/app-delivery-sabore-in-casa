@@ -23,30 +23,34 @@ Aplicativo de delivery desenvolvido para a pizzaria **Sabore In Casa**.
 
 ## 🧾 Estrutura do projeto
 
-/imagens -> imagens das pizzas e logo
+/imagens -> imagens das pizzas, bebidas, combos e logo
 index.html -> página principal
-estilo.css -> design do aplicativo
+styles.css -> design do aplicativo
 app.js -> lógica do cardápio e carrinho
-produtos.json -> lista de pizzas e produtos
+integracao-sistema.js -> cardápio ao vivo + registro de vendas no sistema de gestão (Supabase)
+produtos.json -> combos e snacks (pizzas/bebidas vêm do sistema de gestão)
 pix.js -> geração de pagamento Pix
 mapa.js -> cálculo de entrega
 impressao.js -> impressão de pedidos
 notificacao.js -> notificações do app
-service-worker.js -> funcionamento offline
-manifesto.json -> instalação como app
-servidor.js -> servidor local
+service-worker.js -> funcionamento offline (PWA)
+manifest.json -> instalação como app
+admin.html -> link para o painel de gestão (não indexado)
+server.js -> servidor local (requer `npm install express`, ou use o comando abaixo sem dependências)
 
 ## 🚀 Como rodar o projeto
 
-1. Instale o Node.js
+Não precisa de Node nem de instalar nada — é só servir os arquivos estáticos:
 
-2. Execute:
+```
+python -m http.server 8000
+```
 
-node servidor.js
+Depois abra http://localhost:8000 no navegador.
 
-3. Abra no navegador:
+## 🔗 Integração com o sistema de gestão
 
-http://localhost:3000
+O cardápio (pizzas e bebidas, com preço por sabor/tamanho) vem ao vivo do mesmo banco Supabase do [painel de gestão Sabore In Casa](https://saboreincasa.github.io/sabore-in-casa-sistema/), e cada pedido de pizza inteira ou bebida gera uma venda automaticamente lá. Se o Supabase ficar indisponível, o app cai para um cardápio de reserva local — o pedido pelo WhatsApp nunca fica bloqueado por isso. Detalhes em `integracao-sistema.js`.
 
 ## 👨‍🍳 Desenvolvido para
 
