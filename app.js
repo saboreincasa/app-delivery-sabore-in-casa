@@ -497,15 +497,15 @@ function mostrarBarraFidelidade(){
 // (integracao-sistema.js). Estas listas so sao usadas se o sistema estiver
 // indisponivel, para o app de delivery nunca ficar fora do ar.
 const PIZZAS_FALLBACK = [
-    {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola",img:"imagens/pizzas/calabresa.png",precoP:26.90,precoM:38.90,precoG:51.90},
-    {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry",img:"imagens/pizzas/franco_com_catupiry.png",precoP:26.90,precoM:38.90,precoG:51.90},
-    {nome:"4 Queijos",desc:"Mussarela, provolone, parmesao, catupiry",img:"imagens/pizzas/quatro_queijos.png",precoP:26.90,precoM:38.90,precoG:51.90},
-    {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha",img:"imagens/pizzas/portuguesa.png",precoP:26.90,precoM:38.90,precoG:51.90},
-    {nome:"Marguerita",desc:"Mussarela, tomate, manjericao",img:"imagens/pizzas/marguerita.png",precoP:26.90,precoM:38.90,precoG:51.90},
-    {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola",img:"imagens/pizzas/baiana.png",precoP:26.90,precoM:38.90,precoG:51.90},
-    {nome:"Napolitana",desc:"Mussarela, tomate, parmesao",img:"imagens/pizzas/napolitana.png",precoP:26.90,precoM:38.90,precoG:51.90},
-    {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela",img:"imagens/pizzas/milho_com_bacon.png",precoP:26.90,precoM:38.90,precoG:51.90},
-    {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry",img:"imagens/pizzas/moda_da_casa.png",precoP:26.90,precoM:38.90,precoG:51.90}
+    {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola",img:"imagens/pizzas/calabresa.png",precoP:29.90,precoM:42.90,precoG:57.90},
+    {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry",img:"imagens/pizzas/franco_com_catupiry.png",precoP:29.90,precoM:42.90,precoG:57.90},
+    {nome:"4 Queijos",desc:"Mussarela, provolone, parmesao, catupiry",img:"imagens/pizzas/quatro_queijos.png",precoP:29.90,precoM:42.90,precoG:57.90},
+    {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha",img:"imagens/pizzas/portuguesa.png",precoP:29.90,precoM:42.90,precoG:57.90},
+    {nome:"Marguerita",desc:"Mussarela, tomate, manjericao",img:"imagens/pizzas/marguerita.png",precoP:29.90,precoM:42.90,precoG:57.90},
+    {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola",img:"imagens/pizzas/baiana.png",precoP:29.90,precoM:42.90,precoG:57.90},
+    {nome:"Napolitana",desc:"Mussarela, tomate, parmesao",img:"imagens/pizzas/napolitana.png",precoP:29.90,precoM:42.90,precoG:57.90},
+    {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela",img:"imagens/pizzas/milho_com_bacon.png",precoP:29.90,precoM:42.90,precoG:57.90},
+    {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry",img:"imagens/pizzas/moda_da_casa.png",precoP:29.90,precoM:42.90,precoG:57.90}
 ]
 
 function iniciarBusca(){
@@ -863,9 +863,9 @@ function adicionarComboFinal(nome,preco,qtdPizzas,semRefri){
 // ===============================
 
 let banners = [
-    {nome:"Combo Familia", preco:168.90, foto:"imagens/banners/combo-familia.png"},
+    {nome:"Combo Familia", preco:134.90, foto:"imagens/banners/combo-familia.png"},
     {nome:"Combo Amigos",  preco:169.90, foto:"imagens/banners/combo-amigos.png"},
-    {nome:"Combo Casal",   preco:82.90,  foto:"imagens/banners/combo-casal.png"}
+    {nome:"Combo Casal",   preco:79.90,  foto:"imagens/banners/combo-casal.png"}
 ]
 let bannerIndex = 0, bannerDiv
 
@@ -1272,7 +1272,7 @@ async function renderizarCardapioSEO(){
 
     const el = document.getElementById("cardapioCompleto")
     if(el){
-        let html = `<h2>📖 Cardápio Completo</h2><p class="cardapio-completo-sub">Consulte todos os sabores, bebidas e combos disponíveis.</p>`
+        let html = `<summary>📖 Ver Cardápio Completo</summary><p class="cardapio-completo-sub">Consulte todos os sabores, bebidas e combos disponíveis.</p>`
         html += secaoHtml("Pizzas", "🍕", pizzas, p => itemAccordion({
             nome: p.nome, desc: p.desc, img: p.img,
             precoResumo: `a partir de R$${precoFmt(p.precoP)}`,

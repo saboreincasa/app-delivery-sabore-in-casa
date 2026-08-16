@@ -126,8 +126,8 @@ button:active { transform:scale(0.95) !important; }
 ============================================= */
 
 .header-topo {
-    position:relative; height:220px;
-    background:url("imagens/capa.png") no-repeat center center / cover;
+    position:relative; height:260px;
+    background:url("imagens/capa.png") no-repeat center 70% / cover;
     display:flex; align-items:center; justify-content:center; overflow:hidden;
 }
 .overlay { position:absolute; inset:0; background:rgba(0,0,0,0.28); z-index:1; }
@@ -662,8 +662,18 @@ h2 { font-family:var(--font-titulo); margin:16px 0 12px; font-size:22px; }
     max-width:1000px; margin:22px auto; padding:20px;
     background:var(--bg-card); border-radius:var(--radius); box-shadow:var(--shadow);
 }
-#cardapioCompleto h2 { margin-top:0; margin-bottom:4px; }
-.cardapio-completo-sub { color:#999; font-size:14px; margin-bottom:18px; }
+#cardapioCompleto summary {
+    list-style:none; cursor:pointer; font-family:var(--font-titulo);
+    font-size:20px; font-weight:800; color:#fff; display:flex; align-items:center;
+    justify-content:space-between; gap:10px;
+}
+#cardapioCompleto summary::-webkit-details-marker { display:none; }
+#cardapioCompleto summary::after {
+    content:"▾"; color:var(--laranja); font-size:18px; transition:transform 0.2s; flex-shrink:0;
+}
+#cardapioCompleto[open] summary::after { transform:rotate(180deg); }
+#cardapioCompleto[open] summary { margin-bottom:0; }
+.cardapio-completo-sub { color:#999; font-size:14px; margin:6px 0 18px; }
 
 .cardapio-secao { margin-top:22px; }
 .cardapio-secao:first-of-type { margin-top:0; }
@@ -725,7 +735,7 @@ footer { text-align:center; font-size:15px; color:#aaa; padding:30px 0 95px; max
     }
 
     .header-topo{
-        height:320px;
+        height:380px;
     }
 
     .logo-grande{
@@ -758,7 +768,7 @@ footer { text-align:center; font-size:15px; color:#aaa; padding:30px 0 95px; max
 }
 
 @media (min-width:601px) and (max-width:900px) {
-    .header-topo { height:190px; }
+    .header-topo { height:210px; }
     #banner { height:180px; }
     #produtos { grid-template-columns:repeat(2,1fr); }
     .combo-slide { flex:0 0 260px; }
@@ -766,7 +776,7 @@ footer { text-align:center; font-size:15px; color:#aaa; padding:30px 0 95px; max
 
 @media (max-width:600px) {
     :root { --fs-base:17px; --fs-input:17px; --fs-preco:21px; --fs-preco-destaque:25px; }
-    .header-topo { height:155px; }
+    .header-topo { height:175px; }
     .logo-grande  { height:80px; }
     #banner       { height:150px; }
     .container    { padding:12px; }
