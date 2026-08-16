@@ -497,15 +497,15 @@ function mostrarBarraFidelidade(){
 // (integracao-sistema.js). Estas listas so sao usadas se o sistema estiver
 // indisponivel, para o app de delivery nunca ficar fora do ar.
 const PIZZAS_FALLBACK = [
-    {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola",img:"imagens/pizzas/calabresa.png",precoP:34.90,precoM:42.90,precoG:49.90},
-    {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry",img:"imagens/pizzas/franco_com_catupiry.png",precoP:34.90,precoM:42.90,precoG:49.90},
-    {nome:"4 Queijos",desc:"Mussarela, provolone, parmesao, catupiry",img:"imagens/pizzas/quatro_queijos.png",precoP:34.90,precoM:42.90,precoG:49.90},
-    {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha",img:"imagens/pizzas/portuguesa.png",precoP:34.90,precoM:42.90,precoG:49.90},
-    {nome:"Marguerita",desc:"Mussarela, tomate, manjericao",img:"imagens/pizzas/marguerita.png",precoP:34.90,precoM:42.90,precoG:49.90},
-    {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola",img:"imagens/pizzas/baiana.png",precoP:34.90,precoM:42.90,precoG:49.90},
-    {nome:"Napolitana",desc:"Mussarela, tomate, parmesao",img:"imagens/pizzas/napolitana.png",precoP:34.90,precoM:42.90,precoG:49.90},
-    {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela",img:"imagens/pizzas/milho_com_bacon.png",precoP:34.90,precoM:42.90,precoG:49.90},
-    {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry",img:"imagens/pizzas/moda_da_casa.png",precoP:34.90,precoM:42.90,precoG:49.90}
+    {nome:"Calabresa",desc:"Molho, mussarela, calabresa, cebola",img:"imagens/pizzas/calabresa.png",precoP:26.90,precoM:38.90,precoG:51.90},
+    {nome:"Frango com Catupiry",desc:"Molho, frango desfiado, catupiry",img:"imagens/pizzas/franco_com_catupiry.png",precoP:26.90,precoM:38.90,precoG:51.90},
+    {nome:"4 Queijos",desc:"Mussarela, provolone, parmesao, catupiry",img:"imagens/pizzas/quatro_queijos.png",precoP:26.90,precoM:38.90,precoG:51.90},
+    {nome:"Portuguesa",desc:"Presunto, ovo, cebola, ervilha",img:"imagens/pizzas/portuguesa.png",precoP:26.90,precoM:38.90,precoG:51.90},
+    {nome:"Marguerita",desc:"Mussarela, tomate, manjericao",img:"imagens/pizzas/marguerita.png",precoP:26.90,precoM:38.90,precoG:51.90},
+    {nome:"Baiana",desc:"Calabresa, ovo, pimenta, cebola",img:"imagens/pizzas/baiana.png",precoP:26.90,precoM:38.90,precoG:51.90},
+    {nome:"Napolitana",desc:"Mussarela, tomate, parmesao",img:"imagens/pizzas/napolitana.png",precoP:26.90,precoM:38.90,precoG:51.90},
+    {nome:"Milho com Bacon",desc:"Milho, bacon, mussarela",img:"imagens/pizzas/milho_com_bacon.png",precoP:26.90,precoM:38.90,precoG:51.90},
+    {nome:"Moda da Casa",desc:"Frango, bacon, milho, catupiry",img:"imagens/pizzas/moda_da_casa.png",precoP:26.90,precoM:38.90,precoG:51.90}
 ]
 
 function iniciarBusca(){
