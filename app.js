@@ -1248,22 +1248,45 @@ async function renderizarCardapioSEO(){
         console.warn("Nao foi possivel carregar produtos.json para o cardapio completo.", e)
     }
 
-    function secaoHtml(titulo, itens, item){
+    function precoFmt(v){ return Number(v).toFixed(2).replace(".",",") }
+
+    function itemAccordion({nome, desc, img, precoResumo, precoDetalhe}){
+        return `<details class="cardapio-item">
+            <summary>
+                ${img ? `<img src="${img}" alt="${nome}" loading="lazy" onerror="this.style.display='none'">` : `<span class="cardapio-item-sem-img">🍽️</span>`}
+                <span class="cardapio-item-nome">${nome}</span>
+                <span class="cardapio-item-preco">${precoResumo}</span>
+                <span class="cardapio-item-seta">▾</span>
+            </summary>
+            <div class="cardapio-item-corpo">
+                ${desc ? `<p>${desc}</p>` : ""}
+                ${precoDetalhe ? `<p class="cardapio-item-precos-detalhe">${precoDetalhe}</p>` : ""}
+            </div>
+        </details>`
+    }
+
+    function secaoHtml(titulo, icone, itens, item){
         if(!itens.length) return ""
-        return `<div class="cardapio-secao"><h3>${titulo}</h3><ul>${itens.map(item).join("")}</ul></div>`
+        return `<div class="cardapio-secao"><h3>${icone} ${titulo}</h3><div class="cardapio-lista">${itens.map(item).join("")}</div></div>`
     }
 
     const el = document.getElementById("cardapioCompleto")
     if(el){
-        let html = `<h2>Cardápio Completo</h2>`
-        html += secaoHtml("Pizzas — Pequena (25cm) / Média (30cm) / Grande (35cm)", pizzas, p=>
-            `<li><b>${p.nome}</b>${p.desc ? ` — ${p.desc}` : ""} — R$${p.precoP.toFixed(2)} / R$${p.precoM.toFixed(2)} / R$${p.precoG.toFixed(2)}</li>`)
-        html += secaoHtml("Bebidas", bebidas, b=>
-            `<li><b>${b.nome}</b> — R$${Number(b.preco).toFixed(2)}</li>`)
-        html += secaoHtml("Combos", combos, c=>
-            `<li><b>${c.nome}</b> — ${c.descricao} — R$${Number(c.preco).toFixed(2)}</li>`)
-        html += secaoHtml("Snacks", snacks, s=>
-            `<li><b>${s.nome}</b>${s.descricao ? ` — ${s.descricao}` : ""} — R$${Number(s.preco).toFixed(2)}</li>`)
+        let html = `<h2>📖 Cardápio Completo</h2><p class="cardapio-completo-sub">Consulte todos os sabores, bebidas e combos disponíveis.</p>`
+        html += secaoHtml("Pizzas", "🍕", pizzas, p => itemAccordion({
+            nome: p.nome, desc: p.desc, img: p.img,
+            precoResumo: `a partir de R$${precoFmt(p.precoP)}`,
+            precoDetalhe: `Pequena (25cm) R$${precoFmt(p.precoP)} · Média (30cm) R$${precoFmt(p.precoM)} · Grande (35cm) R$${precoFmt(p.precoG)}`
+        }))
+        html += secaoHtml("Bebidas", "🥤", bebidas, b => itemAccordion({
+            nome: b.nome, img: b.img, precoResumo: `R$${precoFmt(b.preco)}`
+        }))
+        html += secaoHtml("Combos", "🎁", combos, c => itemAccordion({
+            nome: c.nome, desc: c.descricao, img: c.foto, precoResumo: `R$${precoFmt(c.preco)}`
+        }))
+        html += secaoHtml("Snacks", "🍟", snacks, s => itemAccordion({
+            nome: s.nome, desc: s.descricao, img: s.foto, precoResumo: `R$${precoFmt(s.preco)}`
+        }))
         el.innerHTML = html
     }
 

@@ -662,13 +662,35 @@ h2 { font-family:var(--font-titulo); margin:16px 0 12px; font-size:22px; }
     max-width:1000px; margin:22px auto; padding:20px;
     background:var(--bg-card); border-radius:var(--radius); box-shadow:var(--shadow);
 }
-#cardapioCompleto h2 { margin-top:0; }
-.cardapio-secao { margin-top:18px; }
+#cardapioCompleto h2 { margin-top:0; margin-bottom:4px; }
+.cardapio-completo-sub { color:#999; font-size:14px; margin-bottom:18px; }
+
+.cardapio-secao { margin-top:22px; }
 .cardapio-secao:first-of-type { margin-top:0; }
-.cardapio-secao h3 { font-family:var(--font-titulo); font-size:17px; color:var(--laranja); margin-bottom:8px; }
-.cardapio-secao ul { list-style:none; display:flex; flex-direction:column; gap:6px; }
-.cardapio-secao li { font-size:15px; color:#ddd; line-height:1.5; padding:8px 0; border-bottom:1px solid #2a2a2a; }
-.cardapio-secao li b { color:#fff; }
+.cardapio-secao h3 { font-family:var(--font-titulo); font-size:16px; color:var(--laranja); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.5px; }
+.cardapio-lista { display:flex; flex-direction:column; gap:8px; }
+
+.cardapio-item {
+    background:var(--bg-item); border-radius:12px; overflow:hidden;
+    border:1px solid #333; transition:border-color 0.2s;
+}
+.cardapio-item[open] { border-color:var(--laranja); }
+.cardapio-item summary {
+    display:flex; align-items:center; gap:12px; padding:10px 14px;
+    cursor:pointer; list-style:none; font-weight:700;
+}
+.cardapio-item summary::-webkit-details-marker { display:none; }
+.cardapio-item summary img {
+    width:44px; height:44px; border-radius:8px; object-fit:cover; flex-shrink:0;
+}
+.cardapio-item-sem-img { font-size:22px; width:44px; text-align:center; flex-shrink:0; }
+.cardapio-item-nome { flex:1; font-size:15px; color:#fff; }
+.cardapio-item-preco { color:#00ff88; font-weight:800; font-size:14px; white-space:nowrap; }
+.cardapio-item-seta { color:#888; font-size:13px; transition:transform 0.2s; flex-shrink:0; }
+.cardapio-item[open] .cardapio-item-seta { transform:rotate(180deg); color:var(--laranja); }
+.cardapio-item-corpo { padding:0 14px 14px 70px; }
+.cardapio-item-corpo p { font-size:14px; color:#bbb; line-height:1.5; }
+.cardapio-item-precos-detalhe { margin-top:6px; color:#aaa !important; font-size:13px !important; }
 
 /* =============================================
    FOOTER
