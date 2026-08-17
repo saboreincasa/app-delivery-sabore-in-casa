@@ -1085,21 +1085,6 @@ function diminuirBebida(id){ const e=document.getElementById("qtd_"+id); const v
 function removerLinhaBebida(id){ document.getElementById("bebida_"+id)?.remove() }
 
 // ===============================
-// PIX EMV
-// ===============================
-
-function gerarCodigoPix(chave,nome,cidade,valor,txid="PEDIDO"){
-    const vf=valor.toFixed(2)
-    const lim=(s,n)=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-zA-Z0-9 ]/g,"").substring(0,n).trim()
-    const c=(id,v)=>`${id}${String(v.length).padStart(2,"0")}${v}`
-    const mai=c("26",c("00","BR.GOV.BCB.PIX")+c("01",chave))
-    const ad=c("62",c("05",lim(txid,25).replace(/ /g,"")||"***"))
-    let p=c("00","01")+mai+c("52","0000")+c("53","986")+c("54",vf)+c("58","BR")+c("59",lim(nome,25))+c("60",lim(cidade,15))+ad+"6304"
-    function crc(s){ let r=0xFFFF; for(let i=0;i<s.length;i++){ r^=s.charCodeAt(i)<<8; for(let j=0;j<8;j++){ r=(r&0x8000)?(r<<1)^0x1021:r<<1; r&=0xFFFF } } return r.toString(16).toUpperCase().padStart(4,"0") }
-    return p+crc(p)
-}
-
-// ===============================
 // ENVIAR PEDIDO
 // ===============================
 
@@ -1163,26 +1148,28 @@ async function processarEnvio(){
     msg+=`Endereco: ${end}\n`
     msg+=`Pagamento: ${pagamento}\n`
     const sincronizacaoPromise = sincronizarPedidoComSistema(nomeCliente, end, nf)
-    if(pagamento==="Pix"){
-        const cod=gerarCodigoPix("31983391576","Carlos Henrique","Belo Horizonte",total,"SABORECASA"+nf)
-        msg+="\n-------------------------\n"
-        msg+="*PAGAMENTO VIA PIX*\n\n"
-        msg+=`Valor: *R$ ${total.toFixed(2)}*\n`
-        msg+=`Recebedor: Carlos Henrique\n\n`
-        msg+="*PIX Copia e Cola:*\n"
-        msg+=`${cod}\n\n`
-        msg+="*Como pagar:*\n"
-        msg+="  1. Abra o app do seu banco\n"
-        msg+="  2. Va em PIX > Copia e Cola\n"
-        msg+="  3. Cole o codigo - o valor ja aparece preenchido!\n"
-        msg+="  4. Confirme o pagamento\n\n"
-        msg+="*Apos pagar:* Envie o comprovante aqui no WhatsApp\n"
-        msg+="*Assim que recebermos, seu pedido entra imediatamente em preparo!*\n"
-        msg+="-------------------------\n"
+
+    if(pagamento==="PIX" || pagamento==="Cartão"){
+        const dadosPedido = montarDadosPedido(nomeCliente, end, total, sub, freteGratis?0:frete, dr+dc+dd)
+        msg+=`\n*TOTAL PAGO: R$ ${total.toFixed(2)}*\n`
+        msg+="\nPagamento confirmado automaticamente. Obrigado pela preferencia!\n"
+        msg+="Acompanhe seu pedido pelo WhatsApp."
+
+        const pago = pagamento==="PIX"
+            ? await pagarComPix(dadosPedido, total)
+            : await pagarComCartao(dadosPedido, total)
+
+        if(!pago){
+            numeroPedido--
+            localStorage.setItem("numeroPedido",numeroPedido)
+            return
+        }
         mostrarProgressoFidelidade(total,temComidaNoCarrinho())
-        mostrarModalPix(total,cod,()=>finalizarPedido(msg))
+        await sincronizacaoPromise
+        finalizarPedido(msg)
         return
     }
+
     if(pagamento==="Dinheiro"&&troco) msg+=`Troco para: R$ ${troco}\n`
     msg+="\nObrigado pela preferencia!\n"
     msg+="Acompanhe seu pedido pelo WhatsApp."
@@ -1393,60 +1380,7 @@ function injetarMenuJsonLd(pizzas, bebidas, combos, snacks){
     document.head.appendChild(script)
 }
 
-// ===============================
-// MODAL PIX
-// ===============================
-
-function mostrarModalPix(valor,codigoPix,callback){
-    document.getElementById("modalPix")?.remove()
-    document.body.insertAdjacentHTML("beforeend",`
-    <div id="modalPix" class="modal-pix">
-      <div class="pix-box">
-        <div class="pix-topo">
-          <h2>Pagamento PIX</h2>
-          <div class="pix-valor">R$ ${valor.toFixed(2).replace(".",",")}</div>
-          <p>Escaneie o QR Code ou copie o codigo abaixo</p>
-        </div>
-        <div class="pix-qrcode-area"><div id="qrcode"></div></div>
-        <div class="pix-copia-box">
-          <label>PIX Copia e Cola</label>
-          <textarea id="codigoPixTexto" readonly>${codigoPix}</textarea>
-        </div>
-        <div class="pix-steps">
-          <div class="pix-step"><span>1</span> Abra o app do seu banco</div>
-          <div class="pix-step"><span>2</span> Va em PIX > Copia e Cola</div>
-          <div class="pix-step"><span>3</span> Cole o codigo - valor preenchido automaticamente!</div>
-          <div class="pix-step"><span>4</span> Confirme o pagamento</div>
-        </div>
-        <div class="pix-botoes">
-          <button class="btn-copiar" onclick="copiarCodigoPix()">Copiar Codigo PIX</button>
-          <button class="btn-pago" onclick="confirmarPix()">Enviei o Comprovante</button>
-        </div>
-        <div class="pix-info">
-          Recebedor: <b>Carlos Henrique</b><br>
-          Envie o comprovante no WhatsApp apos pagar<br>
-          <b>Assim que recebermos, seu pedido entra imediatamente em preparo!</b>
-        </div>
-        <button class="fechar-pix" onclick="fecharModalPix()">Fechar</button>
-      </div>
-    </div>`)
-    if(typeof QRCode!=="undefined"){
-        new QRCode(document.getElementById("qrcode"),{text:codigoPix,width:220,height:220,colorDark:"#000",colorLight:"#fff",correctLevel:QRCode.CorrectLevel.H})
-    } else {
-        document.getElementById("qrcode").innerHTML=`<img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(codigoPix)}" style="width:220px;height:220px;border-radius:8px">`
-    }
-    window._callbackPix=callback
-}
-
-function copiarCodigoPix(){
-    const cod=document.getElementById("codigoPixTexto")?.value?.trim()
-    if(!cod) return
-    if(navigator.clipboard) navigator.clipboard.writeText(cod).then(()=>mostrarToastSimples("Codigo PIX copiado!")).catch(()=>copiarFallback(cod))
-    else copiarFallback(cod)
-}
-function copiarFallback(t){ const el=document.createElement("textarea"); el.value=t; document.body.appendChild(el); el.select(); document.execCommand("copy"); document.body.removeChild(el); mostrarToastSimples("Codigo PIX copiado!") }
-function fecharModalPix(){ document.getElementById("modalPix")?.remove() }
-function confirmarPix(){ fecharModalPix(); window._callbackPix?.() }
+function copiarFallback(t){ const el=document.createElement("textarea"); el.value=t; document.body.appendChild(el); el.select(); document.execCommand("copy"); document.body.removeChild(el); mostrarToastSimples("Codigo Pix copiado!") }
 
 document.addEventListener("DOMContentLoaded",()=>{
     document.getElementById("pagamento")?.addEventListener("change", atualizarCarrinho)

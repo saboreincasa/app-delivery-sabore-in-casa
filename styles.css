@@ -638,6 +638,46 @@ h2 { font-family:var(--font-titulo); margin:16px 0 12px; font-size:22px; }
 .fechar-pix:hover { background:#ffeaea; }
 
 /* =============================================
+   PAGAMENTO MERCADO PAGO (estados: carregando/aguardando/sucesso/erro)
+============================================= */
+
+.mp-spinner {
+    width:52px; height:52px; margin:28px auto; border-radius:50%;
+    border:5px solid #eee; border-top-color:var(--laranja);
+    animation:mpGirar 0.8s linear infinite;
+}
+.mp-spinner-inline { width:20px; height:20px; margin:0; border-width:3px; flex-shrink:0; }
+@keyframes mpGirar { to { transform:rotate(360deg); } }
+
+.mp-status-aguardando {
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    background:#fff8e1; border:1px solid #ffe082; border-radius:12px;
+    padding:14px; margin:14px 0; color:#5d4037; font-size:14px; font-weight:700;
+}
+
+.mp-sucesso { padding:20px 0; animation:pixShow 0.3s ease; }
+.mp-sucesso-check {
+    width:72px; height:72px; margin:0 auto 18px; border-radius:50%;
+    background:var(--verde-pix); color:#fff; font-size:38px; font-weight:900;
+    display:flex; align-items:center; justify-content:center;
+    animation:mpPulso 0.5s ease;
+}
+@keyframes mpPulso { 0%{transform:scale(0)} 70%{transform:scale(1.15)} 100%{transform:scale(1)} }
+.mp-sucesso h2 { color:var(--verde-pix); font-family:var(--font-titulo); font-size:22px; margin-bottom:8px; }
+.mp-sucesso p { color:#666; font-size:15px; }
+
+.mp-erro { padding:10px 0; }
+.mp-erro-icone {
+    width:60px; height:60px; margin:0 auto 16px; border-radius:50%;
+    background:var(--vermelho); color:#fff; font-size:30px; font-weight:900;
+    display:flex; align-items:center; justify-content:center;
+}
+.mp-erro h2 { color:var(--vermelho); font-family:var(--font-titulo); font-size:20px; margin-bottom:8px; }
+.mp-erro p { color:#666; font-size:15px; margin-bottom:6px; }
+
+#mpCardBrick { min-height:280px; margin:10px 0; text-align:left; }
+
+/* =============================================
    MODAL FIDELIDADE
 ============================================= */
 
