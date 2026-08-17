@@ -98,15 +98,49 @@
 }
 
 .endereco-box input{
-    padding:10px;
-    border-radius:6px;
-    border:1px solid #ccc;
+    width:100%;
+    padding:15px 16px;
+    border-radius:14px;
+    border:2px solid #444;
+    background:#2a2a2a;
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    font-family:'Nunito', sans-serif;
+    outline:none;
+    transition:border-color 0.2s, box-shadow 0.2s;
 }
+.endereco-box input::placeholder{ color:#888; font-weight:500; }
+.endereco-box input:focus{ border-color:#ff9800; box-shadow:0 0 0 3px rgba(255,152,0,0.2); }
 
 #bairroSelecionado{
-    background:#f5f5f5;
+    background:#2a2a2a;
     cursor:pointer;
 }
+
+.troco-label{
+    font-family:'Montserrat', sans-serif;
+    font-size:15px;
+    font-weight:700;
+    color:#ccc;
+    display:block;
+    margin:14px 0 8px;
+}
+#troco{
+    width:100%;
+    padding:15px 16px;
+    border-radius:14px;
+    border:2px solid #444;
+    background:#2a2a2a;
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    font-family:'Nunito', sans-serif;
+    outline:none;
+    transition:border-color 0.2s, box-shadow 0.2s;
+}
+#troco::placeholder{ color:#888; font-weight:500; }
+#troco:focus{ border-color:#ff9800; box-shadow:0 0 0 3px rgba(255,152,0,0.2); }
 </style>
 
 </head>
@@ -221,7 +255,8 @@ Total + entrega: R$ <span id="total">0.00</span>
 </select>
 
 <div id="trocoBox">
-<input id="troco" placeholder="Troco para quanto?">
+<label class="troco-label" for="troco">💵 Precisa de troco para quanto?</label>
+<input id="troco" placeholder="Ex: R$ 100,00">
 </div>
 
 <button class="enviar" onclick="enviarPedido()">
