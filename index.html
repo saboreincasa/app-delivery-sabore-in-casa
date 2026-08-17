@@ -202,7 +202,19 @@ Total + entrega: R$ <span id="total">0.00</span>
 
 </div>
 
-<select id="pagamento">
+<h3 class="pagamento-titulo">💰 Forma de pagamento</h3>
+<div class="pagamento-opcoes">
+<button type="button" class="pagamento-opcao ativo" data-valor="PIX" onclick="selecionarPagamento('PIX')">
+  <span class="pagamento-icone">💠</span> Pix
+</button>
+<button type="button" class="pagamento-opcao" data-valor="Dinheiro" onclick="selecionarPagamento('Dinheiro')">
+  <span class="pagamento-icone">💵</span> Dinheiro
+</button>
+<button type="button" class="pagamento-opcao" data-valor="Cartão" onclick="selecionarPagamento('Cartão')">
+  <span class="pagamento-icone">💳</span> Cartão
+</button>
+</div>
+<select id="pagamento" style="display:none">
 <option>PIX</option>
 <option>Dinheiro</option>
 <option>Cartão</option>

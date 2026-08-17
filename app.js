@@ -1382,6 +1382,14 @@ function injetarMenuJsonLd(pizzas, bebidas, combos, snacks){
 
 function copiarFallback(t){ const el=document.createElement("textarea"); el.value=t; document.body.appendChild(el); el.select(); document.execCommand("copy"); document.body.removeChild(el); mostrarToastSimples("Codigo Pix copiado!") }
 
+function selecionarPagamento(valor){
+    const select = document.getElementById("pagamento")
+    if(!select) return
+    select.value = valor
+    select.dispatchEvent(new Event("change"))
+    document.querySelectorAll(".pagamento-opcao").forEach(b => b.classList.toggle("ativo", b.dataset.valor === valor))
+}
+
 document.addEventListener("DOMContentLoaded",()=>{
     document.getElementById("pagamento")?.addEventListener("change", atualizarCarrinho)
 })

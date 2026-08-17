@@ -430,6 +430,25 @@ h2 { font-family:var(--font-titulo); margin:16px 0 12px; font-size:22px; }
 .form-select:focus { border-color:var(--laranja); box-shadow:0 0 0 3px rgba(255,152,0,0.15); }
 
 /* =============================================
+   FORMA DE PAGAMENTO
+============================================= */
+
+.pagamento-titulo { font-family:var(--font-titulo); font-size:16px; margin:18px 0 10px; color:#333; }
+.pagamento-opcoes { display:flex; gap:10px; margin-bottom:12px; }
+.pagamento-opcao {
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;
+    background:#f5f5f5; border:2px solid #e5e5e5; border-radius:14px;
+    padding:14px 8px; color:#666; font-weight:800; font-size:14px; cursor:pointer;
+    font-family:var(--font-body); transition:transform 0.15s, border-color 0.15s, background 0.15s, color 0.15s;
+}
+.pagamento-opcao:hover { border-color:var(--laranja); transform:scale(1.02); }
+.pagamento-opcao.ativo {
+    background:linear-gradient(135deg,#ff6600,#ff9800); border-color:transparent; color:#fff;
+    box-shadow:0 5px 16px rgba(255,152,0,0.4);
+}
+.pagamento-icone { font-size:26px; line-height:1; }
+
+/* =============================================
    BOTAO WHATSAPP
 ============================================= */
 
