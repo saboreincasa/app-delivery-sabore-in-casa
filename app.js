@@ -562,6 +562,7 @@ function iniciarBusca(){
             html += `</div>`
             document.getElementById("resultadoBusca")?.remove()
             document.getElementById("produtos").innerHTML = html
+            setTimeout(() => document.getElementById("resultadoBusca")?.scrollIntoView({behavior:"smooth", block:"start"}), 100)
         })
     })
 }
