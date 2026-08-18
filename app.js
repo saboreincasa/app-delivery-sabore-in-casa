@@ -498,15 +498,15 @@ function mostrarBarraFidelidade(){
 // (integracao-sistema.js). Estas listas so sao usadas se o sistema estiver
 // indisponivel, para o app de delivery nunca ficar fora do ar.
 const PIZZAS_FALLBACK = [
-    {nome:"Calabresa",desc:"Massa 100% integral. Molho, mussarela, calabresa, cebola",img:"imagens/pizzas/calabresa.png",precoP:32.90,precoM:47.90,precoG:64.90},
-    {nome:"Frango com Catupiry",desc:"Massa 100% integral. Molho, frango desfiado, catupiry",img:"imagens/pizzas/franco_com_catupiry.png",precoP:32.90,precoM:47.90,precoG:64.90},
-    {nome:"4 Queijos",desc:"Massa 100% integral. Mussarela, provolone, parmesao, catupiry",img:"imagens/pizzas/quatro_queijos.png",precoP:32.90,precoM:47.90,precoG:64.90},
-    {nome:"Portuguesa",desc:"Massa 100% integral. Presunto, ovo, cebola, ervilha",img:"imagens/pizzas/portuguesa.png",precoP:32.90,precoM:47.90,precoG:64.90},
-    {nome:"Marguerita",desc:"Massa 100% integral. Mussarela, tomate, manjericao",img:"imagens/pizzas/marguerita.png",precoP:32.90,precoM:47.90,precoG:64.90},
-    {nome:"Baiana",desc:"Massa 100% integral. Calabresa, ovo, pimenta, cebola",img:"imagens/pizzas/baiana.png",precoP:32.90,precoM:47.90,precoG:64.90},
-    {nome:"Napolitana",desc:"Massa 100% integral. Mussarela, tomate, parmesao",img:"imagens/pizzas/napolitana.png",precoP:32.90,precoM:47.90,precoG:64.90},
-    {nome:"Milho com Bacon",desc:"Massa 100% integral. Milho, bacon, mussarela",img:"imagens/pizzas/milho_com_bacon.png",precoP:32.90,precoM:47.90,precoG:64.90},
-    {nome:"Moda da Casa",desc:"Massa 100% integral. Frango, bacon, milho, catupiry",img:"imagens/pizzas/moda_da_casa.png",precoP:32.90,precoM:47.90,precoG:64.90}
+    {nome:"Calabresa",desc:"Massa 100% integral. Molho, mussarela, calabresa, cebola",img:"imagens/pizzas/calabresa.webp",precoP:32.90,precoM:47.90,precoG:64.90},
+    {nome:"Frango com Catupiry",desc:"Massa 100% integral. Molho, frango desfiado, catupiry",img:"imagens/pizzas/franco_com_catupiry.webp",precoP:32.90,precoM:47.90,precoG:64.90},
+    {nome:"4 Queijos",desc:"Massa 100% integral. Mussarela, provolone, parmesao, catupiry",img:"imagens/pizzas/quatro_queijos.webp",precoP:32.90,precoM:47.90,precoG:64.90},
+    {nome:"Portuguesa",desc:"Massa 100% integral. Presunto, ovo, cebola, ervilha",img:"imagens/pizzas/portuguesa.webp",precoP:32.90,precoM:47.90,precoG:64.90},
+    {nome:"Marguerita",desc:"Massa 100% integral. Mussarela, tomate, manjericao",img:"imagens/pizzas/marguerita.webp",precoP:32.90,precoM:47.90,precoG:64.90},
+    {nome:"Baiana",desc:"Massa 100% integral. Calabresa, ovo, pimenta, cebola",img:"imagens/pizzas/baiana.webp",precoP:32.90,precoM:47.90,precoG:64.90},
+    {nome:"Napolitana",desc:"Massa 100% integral. Mussarela, tomate, parmesao",img:"imagens/pizzas/napolitana.webp",precoP:32.90,precoM:47.90,precoG:64.90},
+    {nome:"Milho com Bacon",desc:"Massa 100% integral. Milho, bacon, mussarela",img:"imagens/pizzas/milho_com_bacon.webp",precoP:32.90,precoM:47.90,precoG:64.90},
+    {nome:"Moda da Casa",desc:"Massa 100% integral. Frango, bacon, milho, catupiry",img:"imagens/pizzas/moda_da_casa.webp",precoP:32.90,precoM:47.90,precoG:64.90}
 ]
 
 function iniciarBusca(){
@@ -865,9 +865,9 @@ function adicionarComboFinal(nome,preco,qtdPizzas,semRefri){
 // ===============================
 
 let banners = [
-    {nome:"Combo Familia", preco:134.90, foto:"imagens/banners/combo-familia.png"},
-    {nome:"Combo Amigos",  preco:169.90, foto:"imagens/banners/combo-amigos.png"},
-    {nome:"Combo Casal",   preco:79.90,  foto:"imagens/banners/combo-casal.png"}
+    {nome:"Combo Familia", preco:134.90, foto:"imagens/banners/combo-familia.webp"},
+    {nome:"Combo Amigos",  preco:169.90, foto:"imagens/banners/combo-amigos.webp"},
+    {nome:"Combo Casal",   preco:79.90,  foto:"imagens/banners/combo-casal.webp"}
 ]
 let bannerIndex = 0, bannerDiv
 
