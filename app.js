@@ -1001,13 +1001,16 @@ function atualizarCarrinho(){
         } else {
             const falta = 5-itens
             const pct = Math.min(100,(itens/5)*100)
-            const feitos = Array(itens).fill("[X]").join(" ")
-            const faltam = Array(Math.max(0,5-itens)).fill("[ ]").join(" ")
+            const quaseLa = falta === 1
+            let dots = ""
+            for(let i=1;i<=5;i++){
+                dots += `<span class="frete-dot${i<=itens?" cheio":""}">${i<=itens?'<svg viewBox="0 0 20 20" width="11" height="11"><path d="M4 10.5l3.5 3.5L16 5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>':""}</span>`
+            }
             infoEl.innerHTML = `
-            <div class="frete-badge frete-progresso">
-                <div class="frete-texto">Adicione mais <b>${falta} item(s)</b> com comida para ganhar <b>frete gratis!</b></div>
-                <div class="frete-barra-bg"><div class="frete-barra-fill" style="width:${pct}%"></div></div>
-                <div class="frete-steps">${feitos} ${faltam} <span>${itens}/5</span></div>
+            <div class="frete-badge frete-progresso${quaseLa?" quase":""}">
+                <div class="frete-texto">${quaseLa?"Falta só <b>1 item</b> com comida pro seu <b>frete grátis!</b>":`Adicione mais <b>${falta} itens</b> com comida para ganhar <b>frete grátis!</b>`}</div>
+                <div class="frete-barra-bg"><div class="frete-barra-fill" style="width:${pct}%"><span class="frete-shine"></span></div></div>
+                <div class="frete-steps"><div class="frete-dots">${dots}</div><span class="frete-contagem">${itens}/5</span></div>
             </div>`
         }
     }
