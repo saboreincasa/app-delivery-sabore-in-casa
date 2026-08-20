@@ -813,8 +813,9 @@ function renderizarMontagemCombo(){
         const combo = combosLista[comboAtualIndex]
         if(!combo) return
         const desc     = combo.descricao.toLowerCase()
-        const semRefri = combo.nome.toLowerCase().includes("amigos")
-        const qtdPizzas = desc.includes("familia") ? 2 : 1
+        const nomeNorm = norm(combo.nome)
+        const semRefri = nomeNorm.includes("amigos")
+        const qtdPizzas = nomeNorm.includes("familia") ? 2 : 1
         const fonteBebidas = cardapioBebidas.length ? cardapioBebidas : await fetch("produtos.json").then(r=>r.json()).then(produtos=>produtos.filter(p=>p.categoria==="bebidas"))
         const bebidas = fonteBebidas.filter(b=>{
             if(semRefri) return false
@@ -844,7 +845,7 @@ function renderizarMontagemCombo(){
         for(let i=1;i<=qtdPizzas;i++) html += `<div class="campo"><label>Pizza ${i}:</label><select id="pizza${i}">${pOpts}</select></div>`
         html += `<div class="campo"><label>Borda:</label><select id="borda"><option value="0">Normal</option><option value="10">Catupiry +R$10</option><option value="10">Cheddar +R$10</option></select></div>`
         if(!semRefri){
-            const qtdR = desc.includes("familia")?2:1
+            const qtdR = nomeNorm.includes("familia")?2:1
             for(let i=1;i<=qtdR;i++) html += `<div class="campo"><label>Refrigerante ${i}:</label><select id="refri${i}">${rOpts}</select></div>`
         }
         html += `</div>
@@ -873,7 +874,7 @@ function adicionarComboFinal(nome,preco,qtdPizzas,semRefri){
     const borda=Number(bordaEl?.value)
     if(borda===10){ detalhes.push(`Borda: ${bordaEl.selectedOptions[0].text}`); total+=10 }
     if(!semRefri){
-        const qtdR=nome.toLowerCase().includes("familia")?2:1
+        const qtdR=norm(nome).includes("familia")?2:1
         for(let i=1;i<=qtdR;i++){
             const sel=document.getElementById(`refri${i}`)
             const bebidaId=sel?.value
