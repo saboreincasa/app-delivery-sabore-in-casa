@@ -712,6 +712,28 @@ async function filtrar(tipo){
         // Sistema fora do ar: cai para o produtos.json local como reserva
     }
 
+    if(tipo === "snacks"){
+        document.getElementById("produtos").innerHTML = `<p style="text-align:center;padding:24px">Carregando cardapio...</p>`
+        await cardapioProntoPromise
+        if(cardapioLanches.length){
+            let html = ""
+            cardapioLanches.forEach(l=>{
+                html += `<div class="card">
+                    <img src="${l.img}" loading="lazy" onerror="this.src='imagens/sem-imagem.png'">
+                    <div class="card-content">
+                        <h3>${l.nome}</h3>
+                        <div class="card-rodape">
+                            <span class="preco">R$ ${l.preco.toFixed(2)}</span>
+                            <button onclick='addCarrinho(${JSON.stringify(l.nome)},${l.preco},"snacks",{lancheId:${JSON.stringify(l.id)}})'>Adicionar</button>
+                        </div>
+                    </div></div>`
+            })
+            document.getElementById("produtos").innerHTML = html
+            return
+        }
+        // Sistema fora do ar: cai para o produtos.json local como reserva
+    }
+
     fetch("produtos.json").then(r=>r.json()).then(produtos=>{
         let html = ""
         produtos.filter(p=>p.categoria===tipo).forEach(p=>{
@@ -736,9 +758,18 @@ async function filtrar(tipo){
 let combosLista = []
 let comboAtualIndex = 0
 
-function carregarCombosSemana(){
-    fetch("produtos.json").then(r=>r.json()).then(produtos=>{
-        combosLista = produtos.filter(p=>p.categoria==="combos")
+// Combos vem do sistema de gestao (com id real, usado pra sincronizar a venda
+// e baixar o estoque das bebidas/lanches inclusos). Se o sistema estiver fora
+// do ar, cai pro produtos.json local (sem id - o combo so nao sincroniza).
+async function listaCombosAtual(){
+    await cardapioProntoPromise
+    if(cardapioCombos.length) return cardapioCombos
+    return fetch("produtos.json").then(r=>r.json()).then(produtos=>produtos.filter(p=>p.categoria==="combos"))
+}
+
+async function carregarCombosSemana(){
+    listaCombosAtual().then(lista=>{
+        combosLista = lista
         let html = ""
         combosLista.forEach(c=>{
             html += `<div class="combo-slide">
@@ -760,8 +791,8 @@ function carregarCombosSemana(){
 }
 
 function abrirMontagemCombo(nome){
-    fetch("produtos.json").then(r=>r.json()).then(produtos=>{
-        combosLista = produtos.filter(p=>p.categoria==="combos")
+    listaCombosAtual().then(lista=>{
+        combosLista = lista
         comboAtualIndex = combosLista.findIndex(c=>c.nome===nome)
         if(comboAtualIndex < 0) comboAtualIndex = 0
         esconderCombos()
@@ -794,7 +825,7 @@ function renderizarMontagemCombo(){
         })
         const pOpts = `<option value="">Selecione</option>` + listaPizzasAtual().map(s=>`<option>${s.nome}</option>`).join("")
         let rOpts = `<option value="">Selecione</option>`
-        bebidas.forEach(b=>{ rOpts += `<option value="${b.nome}">${b.nome}</option>` })
+        bebidas.forEach(b=>{ rOpts += `<option value="${b.id||""}">${b.nome}</option>` })
         const dots = combosLista.map((c,i)=>`<span class="combo-dot ${i===comboAtualIndex?"ativo":""}" onclick="comboAtualIndex=${i};renderizarMontagemCombo()"></span>`).join("")
         let html = `
         <div class="montagem-box">
@@ -833,6 +864,7 @@ function renderizarMontagemCombo(){
 function adicionarComboFinal(nome,preco,qtdPizzas,semRefri){
     let detalhes = []
     let total = preco
+    let itensInclusos = []
     for(let i=1;i<=qtdPizzas;i++){
         const p=document.getElementById(`pizza${i}`)?.value
         if(p) detalhes.push(`Pizza ${i}: ${p}`)
@@ -843,20 +875,31 @@ function adicionarComboFinal(nome,preco,qtdPizzas,semRefri){
     if(!semRefri){
         const qtdR=nome.toLowerCase().includes("familia")?2:1
         for(let i=1;i<=qtdR;i++){
-            const r=document.getElementById(`refri${i}`)?.value
-            if(r) detalhes.push(`Refri ${i}: ${r}`)
+            const sel=document.getElementById(`refri${i}`)
+            const bebidaId=sel?.value
+            const nomeBebida=sel?.selectedOptions[0]?.text
+            if(bebidaId){
+                detalhes.push(`Refri ${i}: ${nomeBebida}`)
+                itensInclusos.push({ tipo:"bebida", bebida_id:bebidaId, quantidade:1 })
+            }
         }
     }
     document.querySelectorAll("#extrasBebidas > div").forEach(div=>{
         const sel=div.querySelector(".bebidaSelect")
         const id=div.id.split("_")[1]
         const qtd=Number(document.getElementById("qtd_"+id).innerText)
-        const nb=sel.value
+        const bebidaId=sel.value
+        const nb=sel.selectedOptions[0]?.text
         const pb=Number(sel.selectedOptions[0]?.dataset.preco||0)
-        if(nb){ detalhes.push(`${qtd}x ${nb}`); total+=pb*qtd }
+        if(bebidaId){
+            detalhes.push(`${qtd}x ${nb}`)
+            total+=pb*qtd
+            itensInclusos.push({ tipo:"bebida", bebida_id:bebidaId, quantidade:qtd })
+        }
     })
     const descCompleta = detalhes.length > 0 ? ` (${detalhes.join(" | ")})` : ""
-    addCarrinho(nome+descCompleta, total, "combo")
+    const comboId = combosLista[comboAtualIndex]?.id
+    addCarrinho(nome+descCompleta, total, "combo", { comboId, itensInclusos })
     mostrarCombos()
 }
 
@@ -1052,7 +1095,7 @@ function adicionarLinhaBebida(){
             <div class="bebida-extra-topo">
                 <select class="bebidaSelect bebida-extra-select" onchange="atualizarPrecoBebida(${id})">
                     <option value="">Selecione a bebida...</option>
-                    ${bebidas.map(b=>`<option value="${b.nome}" data-preco="${b.preco}">${b.nome} — R$${b.preco.toFixed(2)}</option>`).join("")}
+                    ${bebidas.map(b=>`<option value="${b.id||""}" data-preco="${b.preco}">${b.nome} — R$${b.preco.toFixed(2)}</option>`).join("")}
                 </select>
             </div>
             <div class="bebida-extra-rodape">
@@ -1228,6 +1271,10 @@ function sincronizarPedidoComSistema(nomeCliente, enderecoTexto, numeroPedidoTex
             itens.push({ tipo:"pizza", sabor_id:item.saborId, tamanho:item.tamanho, quantidade:item.qtd, preco_unitario:item.preco, observacoes })
         } else if(item.tipo === "bebidas" && item.bebidaId){
             itens.push({ tipo:"bebida", bebida_id:item.bebidaId, quantidade:item.qtd, preco_unitario:item.preco, observacoes })
+        } else if(item.tipo === "snacks" && item.lancheId){
+            itens.push({ tipo:"lanche", lanche_id:item.lancheId, quantidade:item.qtd, preco_unitario:item.preco, observacoes })
+        } else if(item.tipo === "combo" && item.comboId){
+            itens.push({ tipo:"combo", combo_id:item.comboId, quantidade:item.qtd, preco_unitario:item.preco, itens_inclusos:item.itensInclusos||[], observacoes })
         }
     })
     if(itens.length === 0) return Promise.resolve(null)

@@ -43,15 +43,19 @@ function descricaoComMassaIntegral(ingredientes){
 
 let cardapioPizzas = []
 let cardapioBebidas = []
+let cardapioLanches = []
+let cardapioCombos = []
 
 const cardapioProntoPromise = carregarCardapioDoSistema()
 
 async function carregarCardapioDoSistema(){
     if(!sistemaSupabase) return
     try{
-        const [pizzasRes, bebidasRes] = await Promise.all([
+        const [pizzasRes, bebidasRes, lanchesRes, combosRes] = await Promise.all([
             sistemaSupabase.from("v_delivery_pizzas").select("*"),
-            sistemaSupabase.from("v_delivery_bebidas").select("*")
+            sistemaSupabase.from("v_delivery_bebidas").select("*"),
+            sistemaSupabase.from("v_delivery_lanches").select("*"),
+            sistemaSupabase.from("v_delivery_combos").select("*")
         ])
         if(!pizzasRes.error && pizzasRes.data && pizzasRes.data.length){
             cardapioPizzas = pizzasRes.data.map(s => ({
@@ -70,6 +74,23 @@ async function carregarCardapioDoSistema(){
                 nome: b.nome,
                 preco: Number(b.preco || 0),
                 img: b.imagem_url || "imagens/sem-imagem.png"
+            }))
+        }
+        if(!lanchesRes.error && lanchesRes.data && lanchesRes.data.length){
+            cardapioLanches = lanchesRes.data.map(l => ({
+                id: l.id,
+                nome: l.nome,
+                preco: Number(l.preco || 0),
+                img: l.imagem_url || "imagens/sem-imagem.png"
+            }))
+        }
+        if(!combosRes.error && combosRes.data && combosRes.data.length){
+            cardapioCombos = combosRes.data.map(c => ({
+                id: c.id,
+                nome: c.nome,
+                preco: Number(c.preco || 0),
+                descricao: c.descricao || "",
+                foto: c.imagem_url || "imagens/sem-imagem.png"
             }))
         }
     }catch(e){
