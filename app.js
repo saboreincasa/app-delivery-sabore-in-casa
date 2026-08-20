@@ -909,9 +909,9 @@ function adicionarComboFinal(nome,preco,qtdPizzas,semRefri){
 // ===============================
 
 let banners = [
-    {nome:"Combo Familia", preco:134.90, foto:"imagens/banners/combo-familia.webp"},
+    {nome:"Combo Familia", preco:124.90, foto:"imagens/banners/combo-familia.webp"},
     {nome:"Combo Amigos",  preco:169.90, foto:"imagens/banners/combo-amigos.webp"},
-    {nome:"Combo Casal",   preco:79.90,  foto:"imagens/banners/combo-casal.webp"}
+    {nome:"Combo Casal",   preco:59.90,  foto:"imagens/banners/combo-casal.webp"}
 ]
 let bannerIndex = 0, bannerDiv
 

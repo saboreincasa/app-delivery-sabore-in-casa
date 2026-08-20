@@ -2,21 +2,21 @@
   {
     "nome": "Combo Casal",
     "categoria": "combos",
-    "preco": 79.90,
+    "preco": 59.90,
     "descricao": "1 Pizza Gigante 35cm + 1 Refrigerante 2l",
     "foto": "imagens/combos/combo-casal.webp"
   },
   {
     "nome": "Combo Solteiro",
     "categoria": "combos",
-    "preco": 37.90,
+    "preco": 29.90,
     "descricao": "1 Pizza Pequena 25cm + 1 Coca-Cola 350ml",
     "foto": "imagens/combos/combo-solteiro.webp"
   },
   {
     "nome": "Combo Família",
     "categoria": "combos",
-    "preco": 134.90,
+    "preco": 124.90,
     "descricao": "2 Pizzas Gigantes 35cm + 2 Refrigerantes 2l",
     "foto": "imagens/combos/combo-familia.webp"
   },
