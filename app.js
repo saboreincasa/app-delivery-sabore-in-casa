@@ -232,12 +232,18 @@ function salvarFidelidade(){
     localStorage.setItem("fidelidade", JSON.stringify(fidelidade))
 }
 
-function calcularNivel(){
-    let g = fidelidade.totalGasto
-    if(g >= 1000) return "diamante"
-    if(g >= 500)  return "ouro"
-    if(g >= 200)  return "prata"
+function calcularNivelDe(gasto){
+    if(gasto >= 1000) return "diamante"
+    if(gasto >= 500)  return "ouro"
+    if(gasto >= 200)  return "prata"
     return "bronze"
+}
+
+// Estimativa local (leitura rapida, sem ida ao servidor) - usada so pra preview
+// enquanto o carrinho e montado. O valor que realmente conta o desconto/frete
+// e conferido no Supabase em calcularDescontosServidor() na hora de finalizar.
+function calcularNivel(){
+    return calcularNivelDe(fidelidade.totalGasto)
 }
 
 function getNivelInfo(nivel){
@@ -372,23 +378,43 @@ function removerCupom(){
 // PAINEL FIDELIDADE
 // ===============================
 
-function mostrarPainelFidelidade(){
+// Busca os numeros reais no Supabase (gasto total, contador de pizza) em vez
+// de confiar no que ficou salvo no localStorage deste aparelho - o mesmo
+// numero que decide o desconto na hora de pagar e o que aparece aqui.
+async function buscarFidelidadeReal(){
+    const telefone = cliente?.whatsapp || null
+    if(!telefone) return { gasto: fidelidade.totalGasto, contadorPizza: 0, temTelefone: false }
+    try{
+        const [{data:gasto}, {data:clienteRow}] = await Promise.all([
+            sistemaSupabase.rpc("cliente_total_gasto", {p_telefone: telefone}),
+            sistemaSupabase.from("clientes").select("contador_pedidos_pizza").eq("telefone", telefone).maybeSingle(),
+        ])
+        return { gasto: Number(gasto||0), contadorPizza: Number(clienteRow?.contador_pedidos_pizza||0), temTelefone: true }
+    }catch(e){
+        console.warn("Nao foi possivel buscar fidelidade real, usando dado local:", e)
+        return { gasto: fidelidade.totalGasto, contadorPizza: 0, temTelefone: true }
+    }
+}
+
+async function mostrarPainelFidelidade(){
     document.getElementById("modalFidelidade")?.remove()
-    const nivel = calcularNivel()
+    document.body.insertAdjacentHTML("beforeend", `<div id="modalFidelidade" class="modal-fid"><div class="fid-box"><p style="padding:40px;text-align:center">Carregando...</p></div></div>`)
+
+    const { gasto, contadorPizza } = await buscarFidelidadeReal()
+    const nivel = calcularNivelDe(gasto)
     const info  = getNivelInfo(nivel)
     const metas = { bronze:200, prata:500, ouro:1000, diamante:null }
     const proxNomes = { bronze:"Prata", prata:"Ouro", ouro:"Diamante", diamante:null }
     const meta = metas[nivel]
-    const pct  = meta ? Math.min(100,(fidelidade.totalGasto/meta)*100).toFixed(0) : 100
-    const falta = meta ? Math.max(0,meta-fidelidade.totalGasto).toFixed(2) : 0
-    const pizzasPct  = ((fidelidade.pizzasContadas%10)/10*100).toFixed(0)
-    const pizzasRest = 10-(fidelidade.pizzasContadas%10)
-    const pedRest    = Math.max(0,5-fidelidade.pedidosComComida)
+    const pct  = meta ? Math.min(100,(gasto/meta)*100).toFixed(0) : 100
+    const falta = meta ? Math.max(0,meta-gasto).toFixed(2) : 0
+    const pedRest = Math.max(0,5-contadorPizza)
 
     const progresso = meta
         ? `<div class="fid-progresso-box"><p>Faltam <b>R$${falta}</b> para <b>${proxNomes[nivel]}</b></p><div class="fid-barra-bg"><div class="fid-barra-fill" style="width:${pct}%;background:${info.cor}"></div></div><small>${pct}% concluido</small></div>`
         : `<div class="fid-progresso-box"><p>Voce esta no nivel maximo!</p></div>`
 
+    document.getElementById("modalFidelidade")?.remove()
     document.body.insertAdjacentHTML("beforeend", `
     <div id="modalFidelidade" class="modal-fid">
       <div class="fid-box">
@@ -398,27 +424,25 @@ function mostrarPainelFidelidade(){
           <button class="fid-fechar" onclick="document.getElementById('modalFidelidade').remove()">X</button>
         </div>
         <div class="fid-stats">
-          <div class="fid-stat"><span class="fid-stat-num">R$${fidelidade.totalGasto.toFixed(2)}</span><span class="fid-stat-label">Total gasto</span></div>
-          <div class="fid-stat"><span class="fid-stat-num">${fidelidade.totalPedidos}</span><span class="fid-stat-label">Pedidos</span></div>
-          <div class="fid-stat"><span class="fid-stat-num">${fidelidade.pizzasContadas}</span><span class="fid-stat-label">Pizzas</span></div>
+          <div class="fid-stat"><span class="fid-stat-num">R$${gasto.toFixed(2)}</span><span class="fid-stat-label">Total gasto</span></div>
+          <div class="fid-stat"><span class="fid-stat-num">${contadorPizza}/5</span><span class="fid-stat-label">Pedidos c/ pizza</span></div>
         </div>
         ${progresso}
-        <div class="fid-missao"><div class="fid-missao-icone">Pizza</div><div class="fid-missao-info"><b>Pizza gratis na 10a!</b><div class="fid-mini-barra-bg"><div class="fid-mini-barra-fill" style="width:${pizzasPct}%"></div></div><small>Faltam ${pizzasRest} pizza(s)</small></div></div>
-        <div class="fid-missao"><div class="fid-missao-icone">Frete</div><div class="fid-missao-info"><b>Frete gratis no 5o pedido com comida!</b><div class="fid-mini-barra-bg"><div class="fid-mini-barra-fill" style="width:${Math.min(100,(fidelidade.pedidosComComida/5*100)).toFixed(0)}%"></div></div><small>${pedRest > 0 ? `Faltam ${pedRest} pedido(s) com comida` : "Frete gratis desbloqueado!"}</small></div></div>
-        <div class="fid-missao"><div class="fid-missao-icone">Aniv</div><div class="fid-missao-info"><b>Desconto de aniversario - 10% off!</b>${fidelidade.aniversario ? `<small style="color:#2ecc71">Cadastrado: ${fidelidade.aniversario}</small>` : `<button onclick="editarCadastro()" style="margin-top:6px;background:#ff9800;border:none;color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:800;width:100%;font-size:15px">Cadastrar aniversario</button>`}</div></div>
+        <div class="fid-missao"><div class="fid-missao-icone">Frete</div><div class="fid-missao-info"><b>Frete gratis a cada 5 pedidos com pizza!</b><div class="fid-mini-barra-bg"><div class="fid-mini-barra-fill" style="width:${Math.min(100,(contadorPizza/5*100)).toFixed(0)}%"></div></div><small>${pedRest > 0 ? `Faltam ${pedRest} pedido(s) com pizza` : "Frete gratis no proximo pedido com pizza!"}</small></div></div>
+        <div class="fid-missao"><div class="fid-missao-icone">Aniv</div><div class="fid-missao-info"><b>Desconto de aniversario - 10% off!</b>${fidelidade.aniversario || cliente?.aniversario ? `<small style="color:#2ecc71">Cadastrado</small>` : `<button onclick="editarCadastro()" style="margin-top:6px;background:#ff9800;border:none;color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:800;width:100%;font-size:15px">Cadastrar aniversario</button>`}</div></div>
         <div class="fid-missao"><div class="fid-missao-icone">Amigos</div><div class="fid-missao-info"><b>Indique um amigo!</b><small>Compartilhe o app pelo WhatsApp</small><button onclick="indicarAmigo()" style="margin-top:6px;background:#25D366;border:none;color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:800;width:100%;font-size:15px">Compartilhar app</button></div></div>
-        <div class="fid-cupons"><h3>Seus Cupons</h3>${gerarListaCupons()}</div>
+        <div class="fid-cupons"><h3>Seus Cupons</h3>${gerarListaCupons(gasto)}</div>
         <button onclick="document.getElementById('modalFidelidade').remove()" class="fid-btn-fechar">Fechar</button>
       </div>
     </div>`)
 }
 
-function gerarListaCupons(){
+function gerarListaCupons(gasto){
     let html = ""
-    if(fidelidade.totalGasto >= 500) html += `<div class="fid-cupom-item"><b>SABORE10</b> - 10% off <button onclick="usarCupomDireto('SABORE10')">Usar</button></div>`
-    else html += `<div class="fid-cupom-item locked">BLOQUEADO - SABORE10 - Falta R$${(500-fidelidade.totalGasto).toFixed(2)}</div>`
-    if(fidelidade.totalGasto >= 1000) html += `<div class="fid-cupom-item"><b>SABORE15</b> - 15% off <button onclick="usarCupomDireto('SABORE15')">Usar</button></div>`
-    else html += `<div class="fid-cupom-item locked">BLOQUEADO - SABORE15 - Falta R$${(1000-fidelidade.totalGasto).toFixed(2)}</div>`
+    if(gasto >= 500) html += `<div class="fid-cupom-item"><b>SABORE10</b> - 10% off <button onclick="usarCupomDireto('SABORE10')">Usar</button></div>`
+    else html += `<div class="fid-cupom-item locked">BLOQUEADO - SABORE10 - Falta R$${(500-gasto).toFixed(2)}</div>`
+    if(gasto >= 1000) html += `<div class="fid-cupom-item"><b>SABORE15</b> - 15% off <button onclick="usarCupomDireto('SABORE15')">Usar</button></div>`
+    else html += `<div class="fid-cupom-item locked">BLOQUEADO - SABORE15 - Falta R$${(1000-gasto).toFixed(2)}</div>`
     if(verificarAniversario()) html += `<div class="fid-cupom-item"><b>SABOREANIV</b> - 10% off aniversario <button onclick="usarCupomDireto('SABOREANIV')">Usar</button></div>`
     return html || `<p style="color:#888;font-size:14px">Continue comprando para desbloquear cupons!</p>`
 }
@@ -950,6 +974,59 @@ function temComidaNoCarrinho(){
     return carrinho.some(i=>["pizza","combo","snacks"].includes(i.tipo))
 }
 
+function temPizzaNoCarrinho(){
+    return carrinho.some(i=>i.tipo==="pizza"||i.tipo==="combo")
+}
+
+// Confere os descontos de verdade no Supabase (mesma logica usada na edge
+// function do Pix/cartao) - vale pra Pix/Cartao/Dinheiro igual, porque o
+// pedido em Dinheiro nao passa por nenhum servidor hoje, so pela mensagem
+// de WhatsApp. Sem isso, o total mostrado/enviado seria so um calculo local
+// que qualquer um podia adulterar, e nao bateria com o que o Pix/cartao cobra.
+async function calcularDescontosServidor(subtotal, temPizza, freteBase, cupomCodigo){
+    const telefone = cliente?.whatsapp || null
+    let descontoPct = 0
+    let motivo = ""
+    let freteGratis = false
+
+    if(telefone){
+        try{
+            const [{data:ehNovo}, {data:totalGasto}] = await Promise.all([
+                sistemaSupabase.rpc("cliente_e_novo", {p_telefone: telefone}),
+                sistemaSupabase.rpc("cliente_total_gasto", {p_telefone: telefone}),
+            ])
+            const gastoReal = Number(totalGasto || 0)
+
+            if(ehNovo === true){ descontoPct = 15; motivo = "Boas-vindas (1a compra)" }
+            if(gastoReal >= 1000 && 15 > descontoPct){ descontoPct = 15; motivo = "Cliente Diamante" }
+
+            if(cupomCodigo){
+                const codigo = cupomCodigo.toUpperCase()
+                if(codigo === "SABORECASA" && 10 > descontoPct){ descontoPct = 10; motivo = "Cupom SABORECASA" }
+                else if(codigo === "SABOREANIV"){
+                    const {data:ehAniversariante} = await sistemaSupabase.rpc("cliente_e_aniversariante", {p_telefone: telefone})
+                    if(ehAniversariante === true && 10 > descontoPct){ descontoPct = 10; motivo = "Desconto de aniversario" }
+                }
+                else if(codigo === "SABORE10" && gastoReal >= 500 && 10 > descontoPct){ descontoPct = 10; motivo = "Cupom SABORE10" }
+                else if(codigo === "SABORE15" && gastoReal >= 1000 && 15 > descontoPct){ descontoPct = 15; motivo = "Cupom SABORE15" }
+            }
+
+            if(temPizza){
+                const {data:elegivelFrete} = await sistemaSupabase.rpc("cliente_elegivel_frete_gratis", {p_telefone: telefone})
+                if(elegivelFrete === true) freteGratis = true
+            }
+        }catch(e){
+            console.warn("Nao foi possivel confirmar descontos no servidor, seguindo sem desconto automatico:", e)
+        }
+    }
+
+    return {
+        desconto: subtotal * (descontoPct/100),
+        frete: freteGratis ? 0 : freteBase,
+        freteGratis, descontoPct, motivo,
+    }
+}
+
 function atualizarCarrinho(){
     localStorage.setItem("carrinhoAtual", JSON.stringify(carrinho))
     const lista    = document.getElementById("lista")
@@ -1165,31 +1242,31 @@ async function processarEnvio(){
     if(compl) end+=` (${compl})`
     const pagamento = document.getElementById("pagamento")?.value||"Nao informado"
     const troco     = document.getElementById("troco")?.value||""
-    let frete=calcularFretePorBairro(bairro)
+    const freteBase=calcularFretePorBairro(bairro)
     const tempo=tempoEstimadoPorBairro(bairro)
-    const itens=contarItensFreteGratis()
-    const freteGratis=itens>=5||fidelidade.pedidosComComida>=5||calcularNivel()==="diamante"
-    if(freteGratis) frete=0
     const sub=carrinho.reduce((a,i)=>a+i.preco*i.qtd,0)
     const dr=verificarRelampago()?sub*0.05:0
-    const dc=cupomAplicado?(sub-dr)*(cupomAplicado.desconto/100):0
-    const dd=(calcularNivel()==="diamante"&&!cupomAplicado)?sub*0.15:0
-    const total=sub-dr-dc-dd+frete
-    const nivelInfo=getNivelInfo(calcularNivel())
+
+    // Desconto de boas-vindas/Diamante/cupom e frete gratis do 5o pedido com
+    // pizza: conferidos no Supabase agora, nao mais calculados so no
+    // navegador - vale pra Pix, Cartao e Dinheiro igual.
+    const descServ = await calcularDescontosServidor(sub-dr, temPizzaNoCarrinho(), freteBase, cupomAplicado?.codigo || null)
+    const frete = descServ.frete
+    const freteGratis = descServ.freteGratis
+    const dc = descServ.desconto
+    const total=Math.max(0, sub-dr-dc+frete)
     let msg=""
     msg+="*SABORE IN CASA*\n"
     msg+=`*Pedido No ${nf}*\n`
     if(!status.aberto) msg+=`*PEDIDO AGENDADO - Entrara na fila as 18h*\n`
     msg+="-------------------------\n\n"
-    msg+=`*Cliente:* ${nomeCliente}\n`
-    msg+=`*Nivel:* ${nivelInfo.nome}\n\n`
+    msg+=`*Cliente:* ${nomeCliente}\n\n`
     msg+="*ITENS DO PEDIDO:*\n"
     carrinho.forEach(i=>{ msg+=`  - ${i.qtd}x ${i.nome}\n` })
     msg+="\n-------------------------\n"
     msg+=`Subtotal: R$ ${sub.toFixed(2)}\n`
     if(dr>0) msg+=`Desconto relampago (5%): -R$ ${dr.toFixed(2)}\n`
-    if(dc>0) msg+=`Cupom ${cupomAplicado.codigo}: -R$ ${dc.toFixed(2)}\n`
-    if(dd>0) msg+=`Desconto Diamante (15%): -R$ ${dd.toFixed(2)}\n`
+    if(dc>0) msg+=`${descServ.motivo} (-${descServ.descontoPct}%): -R$ ${dc.toFixed(2)}\n`
     msg+=`Frete: ${freteGratis?"GRATIS":"R$ "+frete.toFixed(2)}\n`
     msg+=`\n*TOTAL A PAGAR: R$ ${total.toFixed(2)}*\n`
     msg+=`\nTempo estimado: *${tempo}*\n`
@@ -1198,7 +1275,7 @@ async function processarEnvio(){
     const sincronizacaoPromise = sincronizarPedidoComSistema(nomeCliente, end, nf)
 
     if(pagamento==="PIX" || pagamento==="Cartão"){
-        const dadosPedido = montarDadosPedido(nomeCliente, end, total, sub, freteGratis?0:frete, dr+dc+dd)
+        const dadosPedido = montarDadosPedido(nomeCliente, end, total, sub, freteGratis?0:frete, dr+dc)
         msg+=`\n*TOTAL PAGO: R$ ${total.toFixed(2)}*\n`
         msg+="\nPagamento confirmado automaticamente. Obrigado pela preferencia!\n"
         msg+="Acompanhe seu pedido pelo WhatsApp."

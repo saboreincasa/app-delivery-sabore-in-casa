@@ -702,6 +702,11 @@ h2 { font-family:var(--font-titulo); margin:16px 0 12px; font-size:22px; }
 @keyframes mpPulso { 0%{transform:scale(0)} 70%{transform:scale(1.15)} 100%{transform:scale(1)} }
 .mp-sucesso h2 { color:var(--verde-pix); font-family:var(--font-titulo); font-size:22px; margin-bottom:8px; }
 .mp-sucesso p { color:#666; font-size:15px; }
+.mp-selo {
+    margin:10px auto 0; max-width:280px; background:#eafaf0; color:var(--verde-pix);
+    border:1px solid var(--verde-pix); border-radius:10px; padding:8px 14px;
+    font-size:14px; font-weight:700;
+}
 
 .mp-erro { padding:10px 0; }
 .mp-erro-icone {

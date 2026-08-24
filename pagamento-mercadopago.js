@@ -143,7 +143,7 @@ function pagarComPix(dadosPedido, total){
             resolve(false)
         })
 
-        esperarConfirmacaoPix(resultado.pedido_id, resolve)
+        esperarConfirmacaoPix(resultado.pedido_id, resolve, resultado)
     })
 }
 
@@ -164,14 +164,14 @@ function pararEsperaPix(){
     _mpPixTimeout = null
 }
 
-function esperarConfirmacaoPix(pedidoId, resolve){
+function esperarConfirmacaoPix(pedidoId, resolve, resultado){
     pararEsperaPix()
     _mpPixInterval = setInterval(async () => {
         try{
             const { data } = await sistemaSupabase.from("v_pedido_status").select("status").eq("id", pedidoId).single()
             if(data?.status === "pago"){
                 pararEsperaPix()
-                mostrarSucessoPagamento()
+                mostrarSucessoPagamento(resultado)
                 setTimeout(() => { fecharModalPagamento(); resolve(true) }, 1600)
             }else if(data?.status === "pagamento_recusado" || data?.status === "cancelado"){
                 pararEsperaPix()
@@ -190,12 +190,17 @@ function esperarConfirmacaoPix(pedidoId, resolve){
     }, 10 * 60 * 1000)
 }
 
-function mostrarSucessoPagamento(){
+function mostrarSucessoPagamento(info){
+    let selos = ""
+    if(info?.cliente_novo && info?.desconto_aplicado > 0) selos += `<div class="mp-selo">🎉 Desconto de boas-vindas aplicado: -R$ ${precoBR(info.desconto_aplicado)}</div>`
+    else if(info?.desconto_aplicado > 0) selos += `<div class="mp-selo">🎉 Desconto aplicado: -R$ ${precoBR(info.desconto_aplicado)}</div>`
+    if(info?.frete_gratis_aplicado) selos += `<div class="mp-selo">🚚 Frete grátis desbloqueado!</div>`
     atualizarCorpoModalPagamento(`
         <div class="mp-sucesso">
             <div class="mp-sucesso-check">✓</div>
             <h2>Pagamento confirmado!</h2>
             <p>Seu pedido já está sendo enviado para a cozinha.</p>
+            ${selos}
         </div>
     `)
 }
@@ -264,7 +269,7 @@ function pagarComCartao(dadosPedido, total){
                             issuerId: cardFormData.issuer_id,
                         })
                         if(resultado?.status === "approved"){
-                            mostrarSucessoPagamento()
+                            mostrarSucessoPagamento(resultado)
                             setTimeout(() => { fecharModalPagamento(); resolve(true) }, 1600)
                         }else{
                             atualizarCorpoModalPagamento(mpErroHtml("O cartão foi recusado. Tente outro cartão ou escolha outra forma de pagamento.", true))
