@@ -46,6 +46,9 @@ function montarDadosPedido(nomeCliente, enderecoTexto, total, subtotal, frete, d
         },
         subtotal, frete, desconto, total,
         email: cliente?.email || undefined,
+        // O servidor e quem decide de verdade se esse cupom vale (nunca confia
+        // no %/condicao calculado aqui no navegador) - manda so o codigo.
+        cupom_codigo: cupomAplicado?.codigo || null,
     }
 }
 
