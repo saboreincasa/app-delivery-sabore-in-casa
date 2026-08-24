@@ -18,9 +18,27 @@ let brickCartaoAtual = null
 function precoBR(v){ return Number(v).toFixed(2).replace(".", ",") }
 
 // Monta o payload comum (itens/cliente) a partir do carrinho e dos campos do checkout.
+// itens_completos leva sabor_id/bebida_id/lanche_id/combo_id (mesmo formato usado no
+// pedido por WhatsApp) - e o que permite o pedido virar venda de verdade sozinho quando
+// o pagamento for confirmado (trigger criar_vendas_do_pedido_pago no Supabase). itens
+// (nome/qtd/preco) continua existindo por compatibilidade com o que ja lia esse campo.
 function montarDadosPedido(nomeCliente, enderecoTexto, total, subtotal, frete, desconto){
+    const observacoes = `Pedido delivery (Mercado Pago)`
+    const itensCompletos = []
+    carrinho.forEach(item=>{
+        if(item.tipo === "pizza" && item.saborId && item.tamanho){
+            itensCompletos.push({ tipo:"pizza", sabor_id:item.saborId, tamanho:item.tamanho, quantidade:item.qtd, preco_unitario:item.preco, observacoes })
+        } else if(item.tipo === "bebidas" && item.bebidaId){
+            itensCompletos.push({ tipo:"bebida", bebida_id:item.bebidaId, quantidade:item.qtd, preco_unitario:item.preco, observacoes })
+        } else if(item.tipo === "snacks" && item.lancheId){
+            itensCompletos.push({ tipo:"lanche", lanche_id:item.lancheId, quantidade:item.qtd, preco_unitario:item.preco, observacoes })
+        } else if(item.tipo === "combo" && item.comboId){
+            itensCompletos.push({ tipo:"combo", combo_id:item.comboId, quantidade:item.qtd, preco_unitario:item.preco, itens_inclusos:item.itensInclusos||[], observacoes })
+        }
+    })
     return {
         itens: carrinho.map(i => ({ nome: i.nome, qtd: i.qtd, preco: i.preco })),
+        itens_completos: itensCompletos,
         cliente: {
             nome: nomeCliente,
             telefone: cliente?.whatsapp || null,
