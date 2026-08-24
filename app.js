@@ -1238,6 +1238,12 @@ function finalizarPedido(msg){
 // INSTALAR COMO APP (PWA)
 // ===============================
 
+// O navegador so oferece "Instalar app" com um service worker ativo -
+// sem isso, o manifest.json sozinho nao e suficiente.
+if("serviceWorker" in navigator){
+    window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(()=>{}))
+}
+
 let promptInstalacao = null
 
 window.addEventListener("beforeinstallprompt", (e)=>{
