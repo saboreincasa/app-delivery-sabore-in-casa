@@ -28,6 +28,27 @@ function salvarClienteNoBanco(dados){
         lista.push({ ...dados, id: Date.now(), cadastrado: new Date().toISOString() })
     }
     localStorage.setItem("bancoclientes", JSON.stringify(lista))
+    salvarClienteNoSupabase(dados)
+}
+
+// Grava de verdade no Supabase (nao so no navegador do proprio cliente) -
+// e o que permite a loja ver o cadastro mesmo se a pessoa nunca chegar a
+// fazer um pedido, usar como lista de leads em campanha paga, e mostrar
+// aniversariantes da semana no sistema de gestao. Via RPC (nao insert/update
+// direto) porque a tabela clientes so aceita escrita autenticada por RLS -
+// a funcao valida e faz o upsert por telefone do lado do servidor.
+async function salvarClienteNoSupabase(dados){
+    if(!dados.whatsapp) return
+    try{
+        const { error } = await sistemaSupabase.rpc("cadastrar_lead_delivery", {
+            p_nome: dados.nome,
+            p_telefone: dados.whatsapp,
+            p_aniversario: dados.aniversario || null,
+        })
+        if(error) console.warn("Nao foi possivel salvar o cadastro no Supabase:", error)
+    }catch(e){
+        console.warn("Nao foi possivel salvar o cadastro no Supabase:", e)
+    }
 }
 
 function verificarAniversariantesProximos(){
@@ -62,19 +83,21 @@ function salvarCliente(dados){
     salvarClienteNoBanco(dados)
 }
 
-function mostrarCadastroCheckout(callback){
+function mostrarCadastroCheckout(callback, contexto){
     if(cliente){
         callback()
         return
     }
+    const ehBoasVindas = contexto === "boasVindas"
     document.getElementById("modalCadastroCheckout")?.remove()
     document.body.insertAdjacentHTML("beforeend", `
     <div id="modalCadastroCheckout" class="modal-cadastro">
       <div class="cadastro-box">
         <div class="cadastro-header">
           <div class="cadastro-logo">Sabore In Casa</div>
-          <h2>Quase la!<br><span>So mais alguns dados</span></h2>
-          <p>Rapido, so uma vez - promessa!</p>
+          ${ehBoasVindas
+            ? `<h2>App instalado!<br><span>Só mais alguns dados</span></h2><p>Pra já deixar seus benefícios prontos</p>`
+            : `<h2>Quase la!<br><span>So mais alguns dados</span></h2><p>Rapido, so uma vez - promessa!</p>`}
         </div>
         <div class="cadastro-beneficios">
           <div class="beneficio-item">Desconto no aniversario</div>
@@ -91,9 +114,9 @@ function mostrarCadastroCheckout(callback){
           <input class="cadastro-input" id="cadAniv" type="date">
           <div id="cadastroErro" class="cadastro-erro"></div>
           <button class="btn-cadastrar" onclick="concluirCadastroCheckout()">
-            Continuar e enviar pedido!
+            ${ehBoasVindas ? "Concluir cadastro" : "Continuar e enviar pedido!"}
           </button>
-          <button class="btn-pular" onclick="pularCadastroCheckout()">Pular e enviar sem cadastro</button>
+          <button class="btn-pular" onclick="pularCadastroCheckout()">${ehBoasVindas ? "Agora não" : "Pular e enviar sem cadastro"}</button>
         </div>
       </div>
     </div>`)
@@ -1354,6 +1377,16 @@ function fecharInstalarBanner(){
 }
 
 window.addEventListener("appinstalled", fecharInstalarBanner)
+
+// Aproveita o momento de instalar o app pra capturar o cadastro (nome/
+// WhatsApp/aniversario) de quem ainda nao tem - vira lead de verdade no
+// Supabase mesmo que a pessoa nao feche pedido nenhum ainda.
+window.addEventListener("appinstalled", ()=>{
+    if(cliente) return
+    setTimeout(()=>{
+        mostrarCadastroCheckout(()=> mostrarToastSimples("Cadastro completo! Já pode aproveitar os benefícios."), "boasVindas")
+    }, 1200)
+})
 
 // Registra as pizzas e bebidas do pedido como vendas no sistema de gestao
 // (Supabase). Roda em segundo plano - se falhar, so avisa no console; o
