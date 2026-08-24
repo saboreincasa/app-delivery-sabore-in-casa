@@ -89,8 +89,10 @@ function atualizarCorpoModalPagamento(html){
 // ===============================
 
 // Retorna uma Promise<boolean> - true se o pagamento foi confirmado, false
-// se o cliente cancelou ou algo deu errado.
-function pagarComPix(dadosPedido, total){
+// se o cliente cancelou ou algo deu errado. msgPedido e o texto completo do
+// pedido (mesmo formato do WhatsApp) - usado na tela de sucesso pra montar
+// o comprovante com o pedido inteiro junto, nao so o valor solto.
+function pagarComPix(dadosPedido, total, msgPedido){
     return new Promise(async (resolve) => {
         abrirModalPagamento(`
             <div class="pix-topo">
@@ -143,7 +145,7 @@ function pagarComPix(dadosPedido, total){
             resolve(false)
         })
 
-        esperarConfirmacaoPix(resultado.pedido_id, resolve, resultado)
+        esperarConfirmacaoPix(resultado.pedido_id, resolve, { ...resultado, msgPedido })
     })
 }
 
@@ -172,7 +174,7 @@ function esperarConfirmacaoPix(pedidoId, resolve, resultado){
             if(data?.status === "pago"){
                 pararEsperaPix()
                 mostrarSucessoPagamento(resultado)
-                setTimeout(() => { fecharModalPagamento(); resolve(true) }, 1600)
+                resolve(true)
             }else if(data?.status === "pagamento_recusado" || data?.status === "cancelado"){
                 pararEsperaPix()
                 atualizarCorpoModalPagamento(mpErroHtml("O pagamento não foi aprovado. Tente novamente.", true))
@@ -195,14 +197,24 @@ function mostrarSucessoPagamento(info){
     if(info?.cliente_novo && info?.desconto_aplicado > 0) selos += `<div class="mp-selo">🎉 Desconto de boas-vindas aplicado: -R$ ${precoBR(info.desconto_aplicado)}</div>`
     else if(info?.desconto_aplicado > 0) selos += `<div class="mp-selo">🎉 Desconto aplicado: -R$ ${precoBR(info.desconto_aplicado)}</div>`
     if(info?.frete_gratis_aplicado) selos += `<div class="mp-selo">🚚 Frete grátis desbloqueado!</div>`
+
+    // Manda o pedido inteiro (mesmo texto que iria pro WhatsApp) junto com o
+    // aviso de comprovante, pra loja receber tudo numa mensagem so.
+    const textoBase = info?.msgPedido || `Pedido #${info?.pedido_id?.slice(0,8) || ""} - R$ ${precoBR(info?.total_cobrado || 0)}`
+    const msgComprovante = encodeURIComponent(`${textoBase}\n\nAqui está o comprovante do pagamento, segue em anexo 👇`)
+    const linkComprovante = `https://wa.me/${whatsappNumero}?text=${msgComprovante}`
+
     atualizarCorpoModalPagamento(`
         <div class="mp-sucesso">
             <div class="mp-sucesso-check">✓</div>
             <h2>Pagamento confirmado!</h2>
-            <p>Seu pedido já está sendo enviado para a cozinha.</p>
+            <p>Recebemos seu pagamento. Pra já mandarmos seu pedido pra cozinha, clique abaixo, mande junto o print/comprovante e confirmamos rapidinho:</p>
             ${selos}
+            <a href="${linkComprovante}" target="_blank" class="btn-copiar" style="display:inline-block;text-decoration:none;margin-top:12px;">📄 Enviar pedido + comprovante no WhatsApp</a>
+            <button class="fechar-pix" id="mpBtnFecharSucesso" style="margin-top:10px;">Fechar</button>
         </div>
     `)
+    document.getElementById("mpBtnFecharSucesso")?.addEventListener("click", fecharModalPagamento)
 }
 
 function mpErroHtml(mensagem, mostrarBotaoFechar){
@@ -220,7 +232,7 @@ function mpErroHtml(mensagem, mostrarBotaoFechar){
 // CARTÃO (Card Payment Brick)
 // ===============================
 
-function pagarComCartao(dadosPedido, total){
+function pagarComCartao(dadosPedido, total, msgPedido){
     return new Promise((resolve) => {
         if(!mpSDK){
             abrirModalPagamento(mpErroHtml("Não foi possível carregar o pagamento por cartão agora.", true))
@@ -269,8 +281,8 @@ function pagarComCartao(dadosPedido, total){
                             issuerId: cardFormData.issuer_id,
                         })
                         if(resultado?.status === "approved"){
-                            mostrarSucessoPagamento(resultado)
-                            setTimeout(() => { fecharModalPagamento(); resolve(true) }, 1600)
+                            mostrarSucessoPagamento({ ...resultado, msgPedido })
+                            resolve(true)
                         }else{
                             atualizarCorpoModalPagamento(mpErroHtml("O cartão foi recusado. Tente outro cartão ou escolha outra forma de pagamento.", true))
                             document.getElementById("mpBtnFechar")?.addEventListener("click", () => { fecharModalPagamento(); resolve(false) })

@@ -1281,8 +1281,8 @@ async function processarEnvio(){
         msg+="Acompanhe seu pedido pelo WhatsApp."
 
         const pago = pagamento==="PIX"
-            ? await pagarComPix(dadosPedido, total)
-            : await pagarComCartao(dadosPedido, total)
+            ? await pagarComPix(dadosPedido, total, msg)
+            : await pagarComCartao(dadosPedido, total, msg)
 
         if(!pago){
             numeroPedido--
@@ -1291,7 +1291,11 @@ async function processarEnvio(){
         }
         mostrarProgressoFidelidade(total,temComidaNoCarrinho())
         await sincronizacaoPromise
-        finalizarPedido(msg)
+        // Nao redireciona pro WhatsApp sozinho aqui - a tela de sucesso do
+        // pagamento (mostrarSucessoPagamento) ja mostra o botao de enviar o
+        // comprovante, que e o unico contato com o WhatsApp que faz sentido
+        // depois de um pagamento ja confirmado automaticamente.
+        limparCarrinhoPosPedido()
         return
     }
 
@@ -1303,8 +1307,12 @@ async function processarEnvio(){
     finalizarPedido(msg)
 }
 
-function finalizarPedido(msg){
+function limparCarrinhoPosPedido(){
     carrinho=[]; atualizarCarrinho(); cupomAplicado=null
+}
+
+function finalizarPedido(msg){
+    limparCarrinhoPosPedido()
     mostrarToastSimples("Pedido pronto! Abrindo o WhatsApp...")
     setTimeout(()=>{
         window.location.href=`https://wa.me/${whatsappNumero}?text=${encodeURIComponent(msg)}`
