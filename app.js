@@ -1295,9 +1295,12 @@ async function processarEnvio(){
     msg+=`\nTempo estimado: *${tempo}*\n`
     msg+=`Endereco: ${end}\n`
     msg+=`Pagamento: ${pagamento}\n`
-    const sincronizacaoPromise = sincronizarPedidoComSistema(nomeCliente, end, nf)
-
     if(pagamento==="PIX" || pagamento==="Cartão"){
+        // Nao chama sincronizarPedidoComSistema aqui - pro Pix/cartao, quem
+        // cria a venda de verdade e o pagamento sendo confirmado (trigger
+        // criar_vendas_do_pedido_pago no Supabase), so quando o dinheiro cai
+        // mesmo. Chamar os dois contaria a mesma venda em dobro (estoque
+        // baixando duas vezes, Caixa somando o valor duas vezes).
         const dadosPedido = montarDadosPedido(nomeCliente, end, total, sub, freteGratis?0:frete, dr+dc)
         msg+=`\n*TOTAL PAGO: R$ ${total.toFixed(2)}*\n`
         msg+="\nPagamento confirmado automaticamente. Obrigado pela preferencia!\n"
@@ -1313,7 +1316,6 @@ async function processarEnvio(){
             return
         }
         mostrarProgressoFidelidade(total,temComidaNoCarrinho())
-        await sincronizacaoPromise
         // Nao redireciona pro WhatsApp sozinho aqui - a tela de sucesso do
         // pagamento (mostrarSucessoPagamento) ja mostra o botao de enviar o
         // comprovante, que e o unico contato com o WhatsApp que faz sentido
@@ -1322,6 +1324,10 @@ async function processarEnvio(){
         return
     }
 
+    // Dinheiro (e qualquer forma paga na entrega): nao ha pagamento online
+    // pra confirmar, entao a sincronizacao com o sistema aqui e a unica
+    // fonte de verdade - dispara direto, sem gate nenhum.
+    const sincronizacaoPromise = sincronizarPedidoComSistema(nomeCliente, end, nf)
     if(pagamento==="Dinheiro"&&troco) msg+=`Troco para: R$ ${troco}\n`
     msg+="\nObrigado pela preferencia!\n"
     msg+="Acompanhe seu pedido pelo WhatsApp."
