@@ -187,7 +187,7 @@ function abrirPerfilCliente(){
     const proxNomes = { bronze:"Prata", prata:"Ouro", ouro:"Diamante", diamante:null }
     const meta = metas[nivel]
     const pct  = meta ? Math.min(100,(fidelidade.totalGasto/meta)*100).toFixed(0) : 100
-    const faltaTexto = meta ? `R$${Math.max(0,meta-fidelidade.totalGasto).toFixed(2)} para ${proxNomes[nivel]}` : "Nivel maximo!"
+    const faltaTexto = meta ? `R$${(Math.max(0,meta-fidelidade.totalGasto)).toFixed(2).replace(".",",")} para ${proxNomes[nivel]}` : "Nivel maximo!"
     const nomeExibir  = cliente?.nome || "Cliente"
     const whatsExibir = cliente?.whatsapp || "Nao informado"
     const anivExibir  = cliente?.aniversario ? new Date(cliente.aniversario + "T00:00:00").toLocaleDateString("pt-BR") : "Nao informado"
@@ -201,7 +201,7 @@ function abrirPerfilCliente(){
           <button class="fid-fechar" onclick="document.getElementById('modalPerfil').remove()">X</button>
         </div>
         <div class="fid-stats">
-          <div class="fid-stat"><span class="fid-stat-num">R$${fidelidade.totalGasto.toFixed(2)}</span><span class="fid-stat-label">Total gasto</span></div>
+          <div class="fid-stat"><span class="fid-stat-num">R$${(fidelidade.totalGasto).toFixed(2).replace(".",",")}</span><span class="fid-stat-label">Total gasto</span></div>
           <div class="fid-stat"><span class="fid-stat-num">${fidelidade.totalPedidos}</span><span class="fid-stat-label">Pedidos</span></div>
           <div class="fid-stat"><span class="fid-stat-num">${fidelidade.pizzasContadas}</span><span class="fid-stat-label">Pizzas</span></div>
         </div>
@@ -371,7 +371,7 @@ function aplicarCupom(){
     const cupom = cupons[codigo]
     if(!cupom){ mostrarMsgCupom("Cupom invalido","erro"); return }
     if(!cupom.condicao()){
-        if(codigo === "SABORE10") mostrarMsgCupom(`Faltam R$${(500-fidelidade.totalGasto).toFixed(2)} em compras para este cupom`,"erro")
+        if(codigo === "SABORE10") mostrarMsgCupom(`Faltam R$${((500-fidelidade.totalGasto)).toFixed(2).replace(".",",")} em compras para este cupom`,"erro")
         else if(codigo === "SABOREANIV") mostrarMsgCupom("Valido apenas no seu mes de aniversario","erro")
         else mostrarMsgCupom("Cupom nao disponivel agora","erro")
         return
@@ -447,7 +447,7 @@ async function mostrarPainelFidelidade(){
           <button class="fid-fechar" onclick="document.getElementById('modalFidelidade').remove()">X</button>
         </div>
         <div class="fid-stats">
-          <div class="fid-stat"><span class="fid-stat-num">R$${gasto.toFixed(2)}</span><span class="fid-stat-label">Total gasto</span></div>
+          <div class="fid-stat"><span class="fid-stat-num">R$${(gasto).toFixed(2).replace(".",",")}</span><span class="fid-stat-label">Total gasto</span></div>
           <div class="fid-stat"><span class="fid-stat-num">${contadorPizza}/5</span><span class="fid-stat-label">Pedidos c/ pizza</span></div>
         </div>
         ${progresso}
@@ -463,9 +463,9 @@ async function mostrarPainelFidelidade(){
 function gerarListaCupons(gasto){
     let html = ""
     if(gasto >= 500) html += `<div class="fid-cupom-item"><b>SABORE10</b> - 10% off <button onclick="usarCupomDireto('SABORE10')">Usar</button></div>`
-    else html += `<div class="fid-cupom-item locked">BLOQUEADO - SABORE10 - Falta R$${(500-gasto).toFixed(2)}</div>`
+    else html += `<div class="fid-cupom-item locked">BLOQUEADO - SABORE10 - Falta R$${((500-gasto)).toFixed(2).replace(".",",")}</div>`
     if(gasto >= 1000) html += `<div class="fid-cupom-item"><b>SABORE15</b> - 15% off <button onclick="usarCupomDireto('SABORE15')">Usar</button></div>`
-    else html += `<div class="fid-cupom-item locked">BLOQUEADO - SABORE15 - Falta R$${(1000-gasto).toFixed(2)}</div>`
+    else html += `<div class="fid-cupom-item locked">BLOQUEADO - SABORE15 - Falta R$${((1000-gasto)).toFixed(2).replace(".",",")}</div>`
     if(verificarAniversario()) html += `<div class="fid-cupom-item"><b>SABOREANIV</b> - 10% off aniversario <button onclick="usarCupomDireto('SABOREANIV')">Usar</button></div>`
     return html || `<p style="color:#888;font-size:14px">Continue comprando para desbloquear cupons!</p>`
 }
@@ -515,7 +515,7 @@ function mostrarProgressoFidelidade(totalFinal, temComida){
     const metas = { bronze:200, prata:500, ouro:1000, diamante:null }
     const proxNomes = { bronze:"Prata", prata:"Ouro", ouro:"Diamante" }
     const meta = metas[nivelDepois]
-    if(meta) mostrarToastSimples(`Faltam R$${Math.max(0,meta-fidelidade.totalGasto).toFixed(2)} para virar ${proxNomes[nivelDepois]}!`)
+    if(meta) mostrarToastSimples(`Faltam R$${(Math.max(0,meta-fidelidade.totalGasto)).toFixed(2).replace(".",",")} para virar ${proxNomes[nivelDepois]}!`)
 }
 
 function mostrarBarraFidelidade(){
@@ -527,7 +527,7 @@ function mostrarBarraFidelidade(){
     const proxNomes = { bronze:"Prata", prata:"Ouro", ouro:"Diamante", diamante:null }
     const meta = metas[nivel]
     const pct  = meta ? Math.min(100,(fidelidade.totalGasto/meta)*100) : 100
-    const faltaTexto = meta ? `R$${Math.max(0,meta-fidelidade.totalGasto).toFixed(2)} para ${proxNomes[nivel]}` : "Nivel maximo!"
+    const faltaTexto = meta ? `R$${(Math.max(0,meta-fidelidade.totalGasto)).toFixed(2).replace(".",",")} para ${proxNomes[nivel]}` : "Nivel maximo!"
     el.innerHTML = `
     <div class="fid-barra-topo" onclick="mostrarPainelFidelidade()">
       <span class="fid-nivel-badge" style="color:${info.cor}">${info.nome}</span>
@@ -599,11 +599,11 @@ function iniciarBusca(){
                         const precoTxt = p.precoP ? `A partir R$${Number(p.precoP).toFixed(2).replace(".",",")}` : "Consulte"
                         html += `<div class="card pizza-card"><img src="${img}" loading="lazy" onerror="this.src='imagens/pizza-padrao.png'"><div class="card-content">${p.selo ? `<span class="pizza-selo${p.destaque?" pizza-selo-destaque":""}">${p.selo}</span>` : ""}<h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">${precoTxt}</span><button onclick='abrirMontagemPizza(${JSON.stringify(nome)})'>Montar</button></div></div></div>`
                     } else if(cat === "combos"){
-                        html += `<div class="card destaque"><img src="${img}" loading="lazy" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p class="combo-desc">${desc.split("+").map(i=>i.trim()).join(" + ")}</p><div class="card-rodape"><span class="preco preco-destaque">R$ ${preco.toFixed(2)}</span><button onclick='abrirMontagemCombo(${JSON.stringify(nome)})'>Montar</button></div></div></div>`
+                        html += `<div class="card destaque"><img src="${img}" loading="lazy" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p class="combo-desc">${desc.split("+").map(i=>i.trim()).join(" + ")}</p><div class="card-rodape"><span class="preco preco-destaque">R$ ${(preco).toFixed(2).replace(".",",")}</span><button onclick='abrirMontagemCombo(${JSON.stringify(nome)})'>Montar</button></div></div></div>`
                     } else if(cat === "bebidas"){
-                        html += `<div class="card"><img src="${img}" loading="lazy" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">R$ ${preco.toFixed(2)}</span><button onclick='addCarrinho(${JSON.stringify(nome)},${preco},"bebidas",{bebidaId:${JSON.stringify(p.id||null)}})'>Adicionar</button></div></div></div>`
+                        html += `<div class="card"><img src="${img}" loading="lazy" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">R$ ${(preco).toFixed(2).replace(".",",")}</span><button onclick='addCarrinho(${JSON.stringify(nome)},${preco},"bebidas",{bebidaId:${JSON.stringify(p.id||null)}})'>Adicionar</button></div></div></div>`
                     } else {
-                        html += `<div class="card"><img src="${img}" loading="lazy" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">R$ ${preco.toFixed(2)}</span><button onclick='addCarrinho(${JSON.stringify(nome)},${preco},${JSON.stringify(cat)})'>Adicionar</button></div></div></div>`
+                        html += `<div class="card"><img src="${img}" loading="lazy" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">R$ ${(preco).toFixed(2).replace(".",",")}</span><button onclick='addCarrinho(${JSON.stringify(nome)},${preco},${JSON.stringify(cat)})'>Adicionar</button></div></div></div>`
                     }
                 })
             }
@@ -695,7 +695,7 @@ function abrirMontagemPizza(nome){
         <div class="opcoes-pizza">
             <div class="campo"><label>Tamanho:</label><select id="tamanho">
                 <option value="P">Pequena 25cm - R$${p.precoP.toFixed(2).replace(".",",")}</option>
-                <option value="M" selected>Grande 30cm - R$${p.precoM.toFixed(2).replace(".",",")}</option>
+                <option value="M" selected>Média 30cm - R$${p.precoM.toFixed(2).replace(".",",")}</option>
                 <option value="G">Gigante 35cm - R$${p.precoG.toFixed(2).replace(".",",")}</option>
             </select></div>
             <div class="campo"><label>Borda:</label><select id="borda">
@@ -749,7 +749,7 @@ async function filtrar(tipo){
                     <div class="card-content">
                         <h3>${b.nome}</h3>
                         <div class="card-rodape">
-                            <span class="preco">R$ ${b.preco.toFixed(2)}</span>
+                            <span class="preco">R$ ${(b.preco).toFixed(2).replace(".",",")}</span>
                             <button onclick='addCarrinho(${JSON.stringify(b.nome)},${b.preco},"bebidas",{bebidaId:${JSON.stringify(b.id)}})'>Adicionar</button>
                         </div>
                     </div></div>`
@@ -771,7 +771,7 @@ async function filtrar(tipo){
                     <div class="card-content">
                         <h3>${l.nome}</h3>
                         <div class="card-rodape">
-                            <span class="preco">R$ ${l.preco.toFixed(2)}</span>
+                            <span class="preco">R$ ${(l.preco).toFixed(2).replace(".",",")}</span>
                             <button onclick='addCarrinho(${JSON.stringify(l.nome)},${l.preco},"snacks",{lancheId:${JSON.stringify(l.id)}})'>Adicionar</button>
                         </div>
                     </div></div>`
@@ -790,7 +790,7 @@ async function filtrar(tipo){
                 <div class="card-content">
                     <h3>${p.nome}</h3><p>${p.descricao}</p>
                     <div class="card-rodape">
-                        <span class="preco">R$ ${Number(p.preco).toFixed(2)}</span>
+                        <span class="preco">R$ ${(Number(p.preco)).toFixed(2).replace(".",",")}</span>
                         <button onclick="addCarrinho('${p.nome}',${p.preco},'${tipo}')">Adicionar</button>
                     </div>
                 </div></div>`
@@ -827,7 +827,7 @@ async function carregarCombosSemana(){
                         <h3>${c.nome}</h3>
                         <p class="combo-desc">${c.descricao.split("+").map(i=>i.trim()).join(" + ")}</p>
                         <div class="card-rodape">
-                            <span class="preco preco-destaque">R$ ${Number(c.preco).toFixed(2)}</span>
+                            <span class="preco preco-destaque">R$ ${(Number(c.preco)).toFixed(2).replace(".",",")}</span>
                             <button onclick="abrirMontagemCombo('${c.nome}')">Montar Combo</button>
                         </div>
                     </div>
@@ -888,7 +888,7 @@ function renderizarMontagemCombo(){
             <button class="combo-nav-btn" onclick="navegarCombo(1)">&#8594;</button>
           </div>
           <img class="pizza-preview" src="${combo.foto}" loading="lazy" onerror="this.src='imagens/sem-imagem.png'">
-          <p class="combo-preco-destaque">R$ ${Number(combo.preco).toFixed(2)}</p>
+          <p class="combo-preco-destaque">R$ ${(Number(combo.preco)).toFixed(2).replace(".",",")}</p>
           <div class="opcoes-pizza">`
         for(let i=1;i<=qtdPizzas;i++) html += `<div class="campo"><label>Pizza ${i}:</label><select id="pizza${i}">${pOpts}</select></div>`
         html += `<div class="campo"><label>Borda:</label><select id="borda"><option value="0">Normal</option><option value="10">Catupiry +R$10</option><option value="10">Cheddar +R$10</option></select></div>`
@@ -1088,9 +1088,9 @@ function atualizarCarrinho(){
     const descEl = document.getElementById("descontosAtivos")
     if(descEl){
         let tags = ""
-        if(descRelampago > 0) tags += `<span class="desc-tag">Relampago -R$${descRelampago.toFixed(2)}</span>`
-        if(descCupom > 0)     tags += `<span class="desc-tag">Cupom -R$${descCupom.toFixed(2)}</span>`
-        if(descDiamante > 0)  tags += `<span class="desc-tag">Diamante -R$${descDiamante.toFixed(2)}</span>`
+        if(descRelampago > 0) tags += `<span class="desc-tag">Relampago -R$${(descRelampago).toFixed(2).replace(".",",")}</span>`
+        if(descCupom > 0)     tags += `<span class="desc-tag">Cupom -R$${(descCupom).toFixed(2).replace(".",",")}</span>`
+        if(descDiamante > 0)  tags += `<span class="desc-tag">Diamante -R$${(descDiamante).toFixed(2).replace(".",",")}</span>`
         descEl.innerHTML = tags
     }
     const infoEl = document.getElementById("infoFrete")
@@ -1200,7 +1200,7 @@ function adicionarLinhaBebida(){
             <div class="bebida-extra-topo">
                 <select class="bebidaSelect bebida-extra-select" onchange="atualizarPrecoBebida(${id})">
                     <option value="">Selecione a bebida...</option>
-                    ${bebidas.map(b=>`<option value="${b.id||""}" data-preco="${b.preco}">${b.nome} — R$${b.preco.toFixed(2)}</option>`).join("")}
+                    ${bebidas.map(b=>`<option value="${b.id||""}" data-preco="${b.preco}">${b.nome} — R$${(b.preco).toFixed(2).replace(".",",")}</option>`).join("")}
                 </select>
             </div>
             <div class="bebida-extra-rodape">
@@ -1225,7 +1225,7 @@ function atualizarPrecoBebida(id){
     const preco = Number(sel?.selectedOptions[0]?.dataset.preco || 0)
     const el    = document.getElementById(`precoBebida_${id}`)
     if(!el) return
-    if(preco > 0){ el.innerText = `R$ ${preco.toFixed(2)}`; el.style.color = "#16a34a" }
+    if(preco > 0){ el.innerText = `R$ ${(preco).toFixed(2).replace(".",",")}`; el.style.color = "#16a34a" }
     else { el.innerText = "Selecione uma bebida"; el.style.color = "#999" }
 }
 
@@ -1288,11 +1288,11 @@ async function processarEnvio(){
     msg+="*ITENS DO PEDIDO:*\n"
     carrinho.forEach(i=>{ msg+=`  - ${i.qtd}x ${i.nome}\n` })
     msg+="\n-------------------------\n"
-    msg+=`Subtotal: R$ ${sub.toFixed(2)}\n`
-    if(dr>0) msg+=`Desconto relampago (5%): -R$ ${dr.toFixed(2)}\n`
-    if(dc>0) msg+=`${descServ.motivo} (-${descServ.descontoPct}%): -R$ ${dc.toFixed(2)}\n`
-    msg+=`Frete: ${freteGratis?"GRATIS":"R$ "+frete.toFixed(2)}\n`
-    msg+=`\n*TOTAL A PAGAR: R$ ${total.toFixed(2)}*\n`
+    msg+=`Subtotal: R$ ${(sub).toFixed(2).replace(".",",")}\n`
+    if(dr>0) msg+=`Desconto relampago (5%): -R$ ${(dr).toFixed(2).replace(".",",")}\n`
+    if(dc>0) msg+=`${descServ.motivo} (-${descServ.descontoPct}%): -R$ ${(dc).toFixed(2).replace(".",",")}\n`
+    msg+=`Frete: ${freteGratis?"GRATIS":"R$ "+frete.toFixed(2).replace(".",",")}\n`
+    msg+=`\n*TOTAL A PAGAR: R$ ${(total).toFixed(2).replace(".",",")}*\n`
     msg+=`\nTempo estimado: *${tempo}*\n`
     msg+=`Endereco: ${end}\n`
     msg+=`Pagamento: ${pagamento}\n`
@@ -1303,7 +1303,7 @@ async function processarEnvio(){
         // mesmo. Chamar os dois contaria a mesma venda em dobro (estoque
         // baixando duas vezes, Caixa somando o valor duas vezes).
         const dadosPedido = montarDadosPedido(nomeCliente, end, total, sub, freteGratis?0:frete, dr+dc)
-        msg+=`\n*TOTAL PAGO: R$ ${total.toFixed(2)}*\n`
+        msg+=`\n*TOTAL PAGO: R$ ${(total).toFixed(2).replace(".",",")}*\n`
         msg+="\nPagamento confirmado automaticamente. Obrigado pela preferencia!\n"
         msg+="Acompanhe seu pedido pelo WhatsApp."
 
@@ -1481,7 +1481,7 @@ async function renderizarCardapioSEO(){
         html += secaoHtml("Pizzas", "🍕", pizzas, p => itemAccordion({
             nome: p.nome, desc: p.desc, img: p.img,
             precoResumo: `a partir de R$${precoFmt(p.precoP)}`,
-            precoDetalhe: `Pequena (25cm) R$${precoFmt(p.precoP)} · Média (30cm) R$${precoFmt(p.precoM)} · Grande (35cm) R$${precoFmt(p.precoG)}`
+            precoDetalhe: `Pequena (25cm) R$${precoFmt(p.precoP)} · Média (30cm) R$${precoFmt(p.precoM)} · Gigante (35cm) R$${precoFmt(p.precoG)}`
         }))
         html += secaoHtml("Bebidas", "🥤", bebidas, b => itemAccordion({
             nome: b.nome, img: b.img, precoResumo: `R$${precoFmt(b.preco)}`
@@ -1510,7 +1510,7 @@ function injetarMenuJsonLd(pizzas, bebidas, combos, snacks){
             {
                 "@type": "MenuSection",
                 "name": "Pizzas",
-                "description": "Pizzas em 3 tamanhos: Pequena (25cm), Média (30cm) e Grande (35cm)",
+                "description": "Pizzas em 3 tamanhos: Pequena (25cm), Média (30cm) e Gigante (35cm)",
                 "hasMenuItem": pizzas.map(p=>({
                     "@type": "MenuItem",
                     "name": p.nome,
@@ -1519,7 +1519,7 @@ function injetarMenuJsonLd(pizzas, bebidas, combos, snacks){
                     "offers": [
                         { "@type": "Offer", "name": "Pequena (25cm)", "price": p.precoP.toFixed(2), "priceCurrency": "BRL" },
                         { "@type": "Offer", "name": "Média (30cm)", "price": p.precoM.toFixed(2), "priceCurrency": "BRL" },
-                        { "@type": "Offer", "name": "Grande (35cm)", "price": p.precoG.toFixed(2), "priceCurrency": "BRL" }
+                        { "@type": "Offer", "name": "Gigante (35cm)", "price": p.precoG.toFixed(2), "priceCurrency": "BRL" }
                     ]
                 }))
             },
