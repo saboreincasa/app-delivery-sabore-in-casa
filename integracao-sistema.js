@@ -16,22 +16,24 @@ const sistemaSupabase = (typeof window.supabase !== "undefined")
     ? window.supabase.createClient(SISTEMA_SUPABASE_URL, SISTEMA_SUPABASE_ANON_KEY)
     : null
 
-// O banco de dados nao guarda a descricao/ingredientes dos sabores, entao
-// mantemos aqui um texto para os sabores classicos. Sabores novos cadastrados
-// no painel de gestao aparecem sem essa linha (nao impede o funcionamento).
+// A descricao e o selo de cada sabor agora vem do banco (sabores_pizza.descricao
+// / .selo, editaveis no painel de gestao > Cardapio). Este dicionario so e
+// usado quando o sabor ainda nao tem descricao cadastrada no banco.
+// Textos conforme o Manual de Producao Sabore In Casa.
 const DESCRICOES_SABORES = {
-    "Calabresa": "Molho, mussarela, calabresa, cebola",
-    "Frango com Catupiry": "Molho, frango desfiado, catupiry",
-    "Quatro Queijos": "Mussarela, provolone, parmesao, catupiry",
-    "4 Queijos": "Mussarela, provolone, parmesao, catupiry",
-    "Portuguesa": "Presunto, ovo, cebola, ervilha",
-    "Marguerita": "Mussarela, tomate, manjericao",
-    "Baiana": "Calabresa, ovo, pimenta, cebola",
-    "A Baiana": "Calabresa, ovo, pimenta, cebola",
-    "Napolitana": "Mussarela, tomate, parmesao",
-    "Milho com Bacon": "Milho, bacon, mussarela",
-    "Moda da Casa": "Frango, bacon, milho, catupiry",
-    "À Moda da Casa": "Frango, bacon, milho, catupiry"
+    "Sabore In Casa": "Mussarela, provolone, calabresa, bacon crocante, cebola caramelizada, catupiry e parmesão gratinado, finalizada com manjericão fresco. Nossa pizza assinatura: todos os sabores da casa em uma só.",
+    "Calabresa": "Molho, mussarela, calabresa, cebola.",
+    "Frango com Catupiry": "Molho, frango desfiado, catupiry.",
+    "Quatro Queijos": "Mussarela, provolone, parmesão, catupiry.",
+    "4 Queijos": "Mussarela, provolone, parmesão, catupiry.",
+    "Portuguesa": "Presunto, ovo, cebola, ervilha.",
+    "Marguerita": "Mussarela, tomate, manjericão.",
+    "Baiana": "Calabresa, ovo, pimenta, cebola.",
+    "A Baiana": "Calabresa, ovo, pimenta, cebola.",
+    "Napolitana": "Mussarela, tomate, parmesão.",
+    "Milho com Bacon": "Milho, bacon, mussarela.",
+    "Moda da Casa": "Frango, bacon, milho, catupiry.",
+    "À Moda da Casa": "Frango, bacon, milho, catupiry."
 }
 
 // Diferencial da casa: toda pizza e feita com massa 100% integral. Sempre
@@ -61,7 +63,9 @@ async function carregarCardapioDoSistema(){
             cardapioPizzas = pizzasRes.data.map(s => ({
                 id: s.id,
                 nome: s.nome,
-                desc: descricaoComMassaIntegral(DESCRICOES_SABORES[s.nome]),
+                desc: descricaoComMassaIntegral(s.descricao || DESCRICOES_SABORES[s.nome]),
+                selo: s.selo || "",
+                destaque: !!s.destaque,
                 img: s.imagem_url || "imagens/pizza-padrao.png",
                 precoP: Number(s.preco_p || 0),
                 precoM: Number(s.preco_m || 0),

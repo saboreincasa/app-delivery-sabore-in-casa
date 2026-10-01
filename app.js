@@ -545,15 +545,16 @@ function mostrarBarraFidelidade(){
 // (integracao-sistema.js). Estas listas so sao usadas se o sistema estiver
 // indisponivel, para o app de delivery nunca ficar fora do ar.
 const PIZZAS_FALLBACK = [
-    {nome:"Calabresa",desc:"Massa 100% integral. Molho, mussarela, calabresa, cebola",img:"imagens/pizzas/calabresa.webp",precoP:39.90,precoM:56.90,precoG:75.90},
-    {nome:"Frango com Catupiry",desc:"Massa 100% integral. Molho, frango desfiado, catupiry",img:"imagens/pizzas/franco_com_catupiry.webp",precoP:39.90,precoM:56.90,precoG:75.90},
-    {nome:"4 Queijos",desc:"Massa 100% integral. Mussarela, provolone, parmesao, catupiry",img:"imagens/pizzas/quatro_queijos.webp",precoP:39.90,precoM:56.90,precoG:75.90},
-    {nome:"Portuguesa",desc:"Massa 100% integral. Presunto, ovo, cebola, ervilha",img:"imagens/pizzas/portuguesa.webp",precoP:39.90,precoM:56.90,precoG:75.90},
-    {nome:"Marguerita",desc:"Massa 100% integral. Mussarela, tomate, manjericao",img:"imagens/pizzas/marguerita.webp",precoP:39.90,precoM:56.90,precoG:75.90},
-    {nome:"Baiana",desc:"Massa 100% integral. Calabresa, ovo, pimenta, cebola",img:"imagens/pizzas/baiana.webp",precoP:39.90,precoM:56.90,precoG:75.90},
-    {nome:"Napolitana",desc:"Massa 100% integral. Mussarela, tomate, parmesao",img:"imagens/pizzas/napolitana.webp",precoP:39.90,precoM:56.90,precoG:75.90},
-    {nome:"Milho com Bacon",desc:"Massa 100% integral. Milho, bacon, mussarela",img:"imagens/pizzas/milho_com_bacon.webp",precoP:39.90,precoM:56.90,precoG:75.90},
-    {nome:"Moda da Casa",desc:"Massa 100% integral. Frango, bacon, milho, catupiry",img:"imagens/pizzas/moda_da_casa.webp",precoP:39.90,precoM:56.90,precoG:75.90}
+    {nome:"Sabore In Casa",selo:"Pizza da Casa · Assinatura",destaque:true,desc:"Massa 100% integral. Mussarela, provolone, calabresa, bacon crocante, cebola caramelizada, catupiry e parmesão gratinado, finalizada com manjericão fresco. Nossa pizza assinatura: todos os sabores da casa em uma só.",img:"imagens/pizzas/sabore_in_casa.webp",precoP:39.90,precoM:56.90,precoG:75.90},
+    {nome:"A Baiana",selo:"Picante",destaque:false,desc:"Massa 100% integral. Calabresa, ovo, pimenta, cebola.",img:"imagens/pizzas/baiana.webp",precoP:39.90,precoM:56.90,precoG:75.90},
+    {nome:"À Moda da Casa",selo:"Mais completa",destaque:false,desc:"Massa 100% integral. Frango, bacon, milho, catupiry.",img:"imagens/pizzas/moda_da_casa.webp",precoP:39.90,precoM:56.90,precoG:75.90},
+    {nome:"Calabresa",selo:"Clássica",destaque:false,desc:"Massa 100% integral. Molho, mussarela, calabresa, cebola.",img:"imagens/pizzas/calabresa.webp",precoP:39.90,precoM:56.90,precoG:75.90},
+    {nome:"Frango com Catupiry",selo:"Mais pedida no Brasil",destaque:false,desc:"Massa 100% integral. Molho, frango desfiado, catupiry.",img:"imagens/pizzas/franco_com_catupiry.webp",precoP:39.90,precoM:56.90,precoG:75.90},
+    {nome:"Marguerita",selo:"Tradicional",destaque:false,desc:"Massa 100% integral. Mussarela, tomate, manjericão.",img:"imagens/pizzas/marguerita.webp",precoP:39.90,precoM:56.90,precoG:75.90},
+    {nome:"Milho com Bacon",selo:"Favorita da criançada",destaque:false,desc:"Massa 100% integral. Milho, bacon, mussarela.",img:"imagens/pizzas/milho_com_bacon.webp",precoP:39.90,precoM:56.90,precoG:75.90},
+    {nome:"Napolitana",selo:"Leve",destaque:false,desc:"Massa 100% integral. Mussarela, tomate, parmesão.",img:"imagens/pizzas/napolitana.webp",precoP:39.90,precoM:56.90,precoG:75.90},
+    {nome:"Portuguesa",selo:"Clássica",destaque:false,desc:"Massa 100% integral. Presunto, ovo, cebola, ervilha.",img:"imagens/pizzas/portuguesa.webp",precoP:39.90,precoM:56.90,precoG:75.90},
+    {nome:"Quatro Queijos",selo:"Para quem ama queijo",destaque:false,desc:"Massa 100% integral. Mussarela, provolone, parmesão, catupiry.",img:"imagens/pizzas/quatro_queijos.webp",precoP:39.90,precoM:56.90,precoG:75.90}
 ]
 
 function iniciarBusca(){
@@ -596,7 +597,7 @@ function iniciarBusca(){
                     const cat   = p.categoria || "outro"
                     if(cat === "pizza"){
                         const precoTxt = p.precoP ? `A partir R$${Number(p.precoP).toFixed(2).replace(".",",")}` : "Consulte"
-                        html += `<div class="card pizza-card"><img src="${img}" loading="lazy" onerror="this.src='imagens/pizza-padrao.png'"><div class="card-content"><h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">${precoTxt}</span><button onclick='abrirMontagemPizza(${JSON.stringify(nome)})'>Montar</button></div></div></div>`
+                        html += `<div class="card pizza-card"><img src="${img}" loading="lazy" onerror="this.src='imagens/pizza-padrao.png'"><div class="card-content">${p.selo ? `<span class="pizza-selo${p.destaque?" pizza-selo-destaque":""}">${p.selo}</span>` : ""}<h3>${nome}</h3><p>${desc}</p><div class="card-rodape"><span class="preco">${precoTxt}</span><button onclick='abrirMontagemPizza(${JSON.stringify(nome)})'>Montar</button></div></div></div>`
                     } else if(cat === "combos"){
                         html += `<div class="card destaque"><img src="${img}" loading="lazy" onerror="this.src='imagens/sem-imagem.png'"><div class="card-content"><h3>${nome}</h3><p class="combo-desc">${desc.split("+").map(i=>i.trim()).join(" + ")}</p><div class="card-rodape"><span class="preco preco-destaque">R$ ${preco.toFixed(2)}</span><button onclick='abrirMontagemCombo(${JSON.stringify(nome)})'>Montar</button></div></div></div>`
                     } else if(cat === "bebidas"){
@@ -670,7 +671,7 @@ async function abrirPizzas(){
         html += `<div class="card pizza-card">
             <img src="${p.img}" loading="lazy" onerror="this.src='imagens/pizza-padrao.png'">
             <div class="card-content">
-                <h3>${p.nome}</h3><p>${p.desc}</p>
+                ${p.selo ? `<span class="pizza-selo${p.destaque?" pizza-selo-destaque":""}">${p.destaque?"★ ":""}${p.selo}</span>` : ""}<h3>${p.nome}</h3><p>${p.desc}</p>
                 <div class="card-rodape">
                     <span class="preco">${precoTxt}</span>
                     <button onclick='abrirMontagemPizza(${JSON.stringify(p.nome)})'>Montar Pizza</button>
